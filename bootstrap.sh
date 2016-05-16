@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Copy dotfiles into place
+cp .bash_profile ~
+cp -r .emacs.d ~
+cp .exports ~
+cp .git-template ~
+cp .zshrc ~
+
+# Add custom Emacs config
+cp init-local.el ~/.emacs.d/lisp
+
+# Configure emacs
+
+
+# Run scripts
+./brew.sh
+./.osx
+. ~/.zshrc
+. ~/.bash_profile
