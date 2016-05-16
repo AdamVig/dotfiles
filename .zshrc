@@ -1,5 +1,5 @@
 # Install Oh My Zsh if folder not found
-if [ ! -d ".oh-my-zsh" ]; then
+if [ ! -d "~/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
