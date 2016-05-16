@@ -6,9 +6,10 @@ brew upgrade
 
 # Command line upgrades
 brew install bash
+brew install curl
 brew install git
+brew install wget
 brew install zsh
-brew install oh-my-zsh
 
 # Utilities
 brew install cheat
