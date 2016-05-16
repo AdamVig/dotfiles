@@ -10,9 +10,6 @@ cp .zshrc ~
 # Add custom Emacs config
 cp init-local.el ~/.emacs.d/lisp
 
-# Configure emacs
-
-
 # Run scripts
 ./brew.sh
 ./.osx
