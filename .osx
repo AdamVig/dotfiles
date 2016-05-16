@@ -26,6 +26,12 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Disable automatic opening of Photos when device plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
+# Hide Finder tags
+defaults write com.apple.finder ShowRecentTags -bool false
+
+# Hide username in menu bar
+sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
+
 # Restart Dock and Finder
 killall Dock
 killall Finder
