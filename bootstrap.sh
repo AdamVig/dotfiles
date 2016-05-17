@@ -15,3 +15,9 @@ cp init-local.el ~/.emacs.d/lisp
 ./.osx
 . ~/.zshrc
 . ~/.bash_profile
+
+# Install npm tools
+npm install -g bower
+npm install -g gulp
+npm install -g grunt
+npm install -g jshint
