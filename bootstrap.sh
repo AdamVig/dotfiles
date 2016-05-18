@@ -1,15 +1,15 @@
 #!/bin/sh
 
 # Symlink dotfiles into place
-ln -sf .aliases ~
-ln -sf .bash_profile ~
-ln -sf .emacs.d ~
-ln -sf .exports ~
-ln -sf .git-template ~
-ln -sf .zshrc ~
+ln -sf "$PWD/.aliases" ~
+ln -sf "$PWD/.bash_profile" ~
+ln -sf "$PWD/.emacs.d" ~
+ln -sf "$PWD/.exports" ~
+ln -sf "$PWD/.git-template" ~
+ln -sf "$PWD/.zshrc" ~
 
 # Add custom Emacs config
-ln -sf init-local.el ~/.emacs.d/lisp
+ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
 # Run scripts
 ./brew.sh
