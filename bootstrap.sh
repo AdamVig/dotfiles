@@ -14,8 +14,11 @@ ln -sf init-local.el ~/.emacs.d/lisp
 # Run scripts
 ./brew.sh
 ./.osx
-. ~/.zshrc
-. ~/.bash_profile
+
+# Source dotfiles with installation steps
+cd ~
+. .zshrc
+. .bash_profile
 
 # Install npm tools
 npm install -g bower
