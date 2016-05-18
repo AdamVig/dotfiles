@@ -21,3 +21,4 @@ npm install -g bower
 npm install -g gulp
 npm install -g grunt
 npm install -g jshint
+npm install -g tldr
