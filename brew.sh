@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: Convert to loop, pipe warnings to /dev/null
+
 # Refresh homebrew
 brew update
 brew upgrade
