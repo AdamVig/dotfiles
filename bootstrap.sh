@@ -15,9 +15,12 @@ ln -sf init-local.el ~/.emacs.d/lisp
 ./brew.sh
 ./.osx
 
+# Install Oh My Zsh and  Zsh Syntax Highlighting
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
 # Source dotfiles with installation steps
 cd ~
-. .zshrc
 . .bash_profile
 
 # Install npm tools
