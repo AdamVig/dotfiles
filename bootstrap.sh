@@ -1,14 +1,15 @@
 #!/bin/sh
 
-# Copy dotfiles into place
-cp .bash_profile ~
-cp -r .emacs.d ~
-cp .exports ~
-cp .git-template ~
-cp .zshrc ~
+# Symlink dotfiles into place
+ln -sf .aliases ~
+ln -sf .bash_profile ~
+ln -sf .emacs.d ~
+ln -sf .exports ~
+ln -sf .git-template ~
+ln -sf .zshrc ~
 
 # Add custom Emacs config
-cp init-local.el ~/.emacs.d/lisp
+ln -sf init-local.el ~/.emacs.d/lisp
 
 # Run scripts
 ./brew.sh
