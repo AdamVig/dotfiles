@@ -1,0 +1,7 @@
+explain_command() {
+    printf "CHEAT:\n";
+    cheat "$1";
+    printf "TLDR:\n";
+    tldr "$1";
+}
+alias what=explain_command
