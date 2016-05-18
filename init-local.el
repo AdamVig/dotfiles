@@ -23,6 +23,9 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
+;; Add Jade mode
+(require-package 'jade-mode)
+
 ;; Add Java mode
 (require-package 'malabar-mode)
 
