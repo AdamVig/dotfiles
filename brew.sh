@@ -22,6 +22,7 @@ brew install z
 
 # Languages
 brew install node
+brew install python
 brew install python3
 
 # Applications

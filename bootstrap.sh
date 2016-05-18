@@ -26,3 +26,6 @@ npm install -g grunt
 npm install -g gulp
 npm install -g jshint
 npm install -g tldr
+
+# Install pip tools
+pip install grip # GitHub README instant preview
