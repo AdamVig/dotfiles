@@ -8,5 +8,6 @@ DEFAULT_USER="adam"
 plugins=(git npm python z zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+source ~/.bash_profile
 
 export EDITOR='emacs'
