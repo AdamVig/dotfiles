@@ -29,6 +29,9 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 # Hide Finder tags
 defaults write com.apple.finder ShowRecentTags -bool false
 
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
 # Hide username in menu bar
 sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
 
