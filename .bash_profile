@@ -1,3 +1,3 @@
 # Load files
-source .aliases
-source .exports
+source ~/.aliases
+source ~/.exports
