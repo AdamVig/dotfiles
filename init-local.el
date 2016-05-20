@@ -3,14 +3,15 @@
 
 ;;; Code:
 
-;; Enable Monokai
-;; NOTE: Requires disabling (require 'init-themes) in init.el
-(require-package 'monokai-theme)
-(load-theme 'monokai)
-(setq-default custom-enabled-themes '(monokai))
+
+;; --------------------------------- ;;
+;; Overrides of purcell/.emacs.d
+;; --------------------------------- ;;
 
 ;; Disable saving list of open files
 (desktop-save-mode 0)
+
+;; Disable Company autocomplete
 (setq company-global-modes 'nil)
 
 ;; Store all backup and autosave files in the tmp dir
@@ -20,36 +21,45 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; Enable colors in *shell* instances
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
-;; Add Jade mode
+;; --------------------------------- ;;
+;; Package Installs
+;; --------------------------------- ;;
+
+(require-package 'buffer-move) ;; Switch buffers between panes
+(require-package 'git-gutter)
+(require-package 'fill-column-indicator) ;; Draw line at column
 (require-package 'jade-mode)
+(require-package 'malabar-mode) ;; Java mode
+(require-package 'monokai-theme)
+(require-package 'web-mode)
 
-;; Add Java mode
-(require-package 'malabar-mode)
+
+;; --------------------------------- ;;
+;; Configuration
+;; --------------------------------- ;;
+
+;; Enable Monokai theme
+(load-theme 'monokai)
+(setq-default custom-enabled-themes '(monokai))
+
+;; Enable web mode
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;; Force .h files to open in C++ Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;; Add web-mode
-(require-package 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;; Enable time display
 (display-time-mode 1)
 (setq display-time-format "%l:%M %p")
 
 ;; Enable Git highlighting in gutter
-(require-package 'git-gutter)
 (global-git-gutter-mode +1)
 (set-face-background 'git-gutter:modified "purple4")
 (set-face-foreground 'git-gutter:added "green4")
 (set-face-foreground 'git-gutter:deleted "red4")
 
 ;; Enable highlighted column 80
-(require-package 'fill-column-indicator)
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkgray")
 (add-hook 'after-change-major-mode-hook 'fci-mode)
@@ -62,6 +72,8 @@
 (windmove-default-keybindings)
 
 ;; Customize mode line
+;; The changes from the default configuration are the
+;; commented out lines
 (setq-default mode-line-format '(" "
                                  ;;    mode-line-mule-info
                                  ;;    mode-line-modified
