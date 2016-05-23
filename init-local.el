@@ -60,7 +60,9 @@
 (set-face-foreground 'git-gutter:deleted "red4")
 
 ;; Enable highlighting text that goes beyond column 80
-(setq-default whitespace-line-column 80)
+(setq-default
+ whitespace-line-column 80 ;; Highlight text after column 80
+ whitespace-style 'nil) ;; Disable dots representing spaces
 (set-face-attribute 'whitespace-line nil
                     :foreground "Red3"
                     :background nil
