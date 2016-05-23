@@ -35,6 +35,9 @@ defaults write com.apple.dock mru-spaces -bool false
 # Hide username in menu bar
 sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
 
+# Disable interface sound effects
+defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
+
 # Restart Dock and Finder
 killall Dock
 killall Finder
