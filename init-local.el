@@ -61,13 +61,13 @@
 
 ;; Enable highlighting text that goes beyond column 80
 (setq-default
- whitespace-line-column 80 ;; Highlight text after column 80
- whitespace-style 'nil) ;; Disable dots representing spaces
+ whitespace-line-column 80 ;; Set column 80 to length limit
+ whitespace-style '(face lines-tail)) ;; Highlight text beyond length limit
 (set-face-attribute 'whitespace-line nil
                     :foreground "Red3"
                     :background nil
                     :weight 'bold)
-(add-hook 'prog-mode-hook #'whitespace-mode) ;; Only activate when programming mode is active
+(add-hook 'prog-mode-hook #'whitespace-mode) ;; Activate in programming mode
 
 ;; Enable Zsh in Emacs shell-mode
 (setq system-uses-terminfo nil)
