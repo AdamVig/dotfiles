@@ -59,11 +59,13 @@
 (set-face-foreground 'git-gutter:added "green4")
 (set-face-foreground 'git-gutter:deleted "red4")
 
-;; Enable highlighted column 80
-(setq fci-rule-width 1)
-(setq fci-rule-color "darkgray")
-(add-hook 'after-change-major-mode-hook 'fci-mode)
-(fci-mode 1)
+;; Enable highlighting text that goes beyond column 80
+(setq-default whitespace-line-column 80)
+(set-face-attribute 'whitespace-line nil
+                    :foreground "Red3"
+                    :background nil
+                    :weight 'bold)
+(add-hook 'prog-mode-hook #'whitespace-mode) ;; Only activate when programming mode is active
 
 ;; Enable Zsh in Emacs shell-mode
 (setq system-uses-terminfo nil)
