@@ -36,18 +36,23 @@
 
 
 ;; --------------------------------- ;;
-;; Configuration
+;; Language Configuration
 ;; --------------------------------- ;;
-
-;; Enable Monokai theme
-(load-theme 'monokai)
-(setq-default custom-enabled-themes '(monokai))
 
 ;; Enable web mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;; Force .h files to open in C++ Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+
+;; --------------------------------- ;;
+;; Editor Configuration
+;; --------------------------------- ;;
+
+;; Enable Monokai theme
+(load-theme 'monokai)
+(setq-default custom-enabled-themes '(monokai))
 
 ;; Enable time display
 (display-time-mode 1)
