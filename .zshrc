@@ -11,3 +11,5 @@ source $ZSH/oh-my-zsh.sh
 source ~/.bash_profile
 
 export EDITOR='emacs'
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
