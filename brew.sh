@@ -1,32 +1,51 @@
-#!/bin/sh
+#!/bin/bash
 
-# TODO: Convert to loop, pipe warnings to /dev/null
+declare -a brew_formulas=(
+    # Upgrade default command line tools
+    bash
+    curl
+    git
+    wget
+    zsh
 
-# Refresh homebrew
+    # Utilities
+    cheat
+    emacs
+    httpie
+    markdown
+    ssh-copy-id
+    z
+
+    # Languages
+    node
+    python
+    python3
+)
+
+declare -a cask_formulas=(
+    flux
+    google-chrome
+    spotify
+)
+
+echo "Updating Homebrew package lists..."
 brew update
+
+echo "Upgrading installed packages..."
 brew upgrade
 
-# Command line upgrades
-brew install bash
-brew install curl
-brew install git
-brew install wget
-brew install zsh
+echo "Installing Brew formulas..."
 
-# Utilities
-brew install cheat
-brew install emacs
-brew install httpie
-brew install markdown
-brew install ssh-copy-id
-brew install z
+# Install Brew formulas, suppress "already installed" warnings
+for formula in "${brew_formulas[@]}"; do
+    brew install "$formula" 2> /dev/null
+done
 
-# Languages
-brew install node
-brew install python
-brew install python3
+echo "Installing Brew Cask formulas..."
 
-# Applications
-brew cask install flux
-brew cask install google-chrome
-brew cask install spotify
+# Install Cask formulas, suppress "already installed" warnings
+for formula in "${cask_formulas[@]}"; do
+    brew cask install "$formula" 2> /dev/null
+done
+
+echo "Brew done."
