@@ -45,6 +45,8 @@
 ;; Force .h files to open in C++ Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
+;; Set default indentation
+(setq-default js2-basic-offset 4)
 
 ;; --------------------------------- ;;
 ;; Editor Configuration
