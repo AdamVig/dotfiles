@@ -17,6 +17,7 @@ brew install zsh
 brew install cheat
 brew install emacs
 brew install httpie
+brew install markdown
 brew install ssh-copy-id
 brew install z
 
