@@ -80,7 +80,7 @@
 (setq system-uses-terminfo nil)
 
 ;; Set Zsh to default terminal for ansi-term
-(setq-default explicit-shell-file-name "/bin/zsh")
+(setq-default explicit-shell-file-name "/usr/local/bin/zsh")
 
 ;; Use Shift+arrow_keys to move cursor around split panes
 (windmove-default-keybindings)
