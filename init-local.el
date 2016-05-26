@@ -82,6 +82,14 @@
 ;; Set Zsh to default terminal for ansi-term
 (setq-default explicit-shell-file-name "/usr/local/bin/zsh")
 
+
+(defadvice ansi-term (before force-bash)
+  "Suppress 'ansi-term' Run program prompt.
+When 'ansi-term' command is run, supply the value of the
+explicit shell variable set above."
+  (interactive (list explicit-shell-file-name)))
+(ad-activate 'ansi-term)
+
 ;; Use Shift+arrow_keys to move cursor around split panes
 (windmove-default-keybindings)
 
