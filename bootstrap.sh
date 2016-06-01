@@ -8,6 +8,9 @@ ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
 ln -sf "$PWD/.zshrc" ~
 
+# Clone .emacs.d submodule
+git submodule update --init --recursive
+
 # Add custom Emacs config
 ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
