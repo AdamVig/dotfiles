@@ -13,6 +13,10 @@ curl -sL https://deb.nodesource.com/setup | sudo bash -  # Add repositories
 sudo apt-get install -y nodejs
 sudo ln -s /usr/bin/nodejs /usr/bin/node  # Make the binary available as just "node"
 
+# Configure npm global package directory
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+
 sudo apt-get install -y python-pip
 
 # Install tools

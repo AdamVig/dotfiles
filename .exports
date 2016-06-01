@@ -2,3 +2,8 @@
 
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# Use alternative npm global directory on Linux
+if [[ $(uname) == 'Linux' ]]; then
+   export PATH=~/.npm-global/bin:$PATH
+fi
