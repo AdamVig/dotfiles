@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Symlink dotfiles into place
 ln -sf "$PWD/.aliases" ~
@@ -11,9 +11,15 @@ ln -sf "$PWD/.zshrc" ~
 # Add custom Emacs config
 ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
-# Run scripts
-./brew.sh
-./.osx
+# Run OS X install scripts
+if [[ $(uname) == 'Darwin' ]]; then
+    ./.osx
+    ./brew.sh
+
+# Run Linux install scripts
+elif [[ $(uname) == 'Linux' ]]; then
+    ./apt.sh
+fi
 
 # Install Oh My Zsh and  Zsh Syntax Highlighting
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
