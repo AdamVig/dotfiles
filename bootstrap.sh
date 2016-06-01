@@ -28,6 +28,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 # Source dotfiles with installation steps
 cd ~
 . .bash_profile
+source .zshrc
 
 # Install npm tools
 npm install -g bower
