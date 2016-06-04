@@ -3,6 +3,7 @@
 # Symlink dotfiles into place
 ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~
+ln -sf "$PWD/.bashrc" ~
 ln -sf "$PWD/.emacs.d" ~
 ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
