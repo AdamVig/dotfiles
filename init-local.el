@@ -3,7 +3,8 @@
 
 ;;; Code:
 
-
+(declare-function require-package "init-elpa")
+(declare-function global-git-gutter-mode "git-gutter")
 ;; --------------------------------- ;;
 ;; Overrides of purcell/.emacs.d
 ;; --------------------------------- ;;
@@ -12,7 +13,7 @@
 (desktop-save-mode 0)
 
 ;; Disable Company autocomplete
-(setq company-global-modes 'nil)
+(setq-default company-global-modes 'nil)
 
 ;; Store all backup and autosave files in the tmp dir
 ;; Overrides default of saving in current directory
@@ -48,6 +49,9 @@
 ;; Set default indentation
 (setq-default js2-basic-offset 4)
 
+;; Ignore "Not following external source" bash error
+(setq-default flycheck-shellcheck-excluded-warnings '("SC1091"))
+
 ;; --------------------------------- ;;
 ;; Editor Configuration
 ;; --------------------------------- ;;
@@ -58,7 +62,7 @@
 
 ;; Enable time display
 (display-time-mode 1)
-(setq display-time-format "%l:%M %p")
+(setq-default display-time-format "%l:%M %p")
 
 ;; Enable Git highlighting in gutter
 (global-git-gutter-mode +1)
