@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Symlink dotfiles into place
+echo "Symlinking dotfiles into your home directory..."
 ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~
 ln -sf "$PWD/.bashrc" ~
@@ -9,13 +9,13 @@ ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
 ln -sf "$PWD/.zshrc" ~
 
-# Clone .emacs.d submodule
+echo "Cloning .emacs.d submodule..."
 git submodule update --init --recursive
 
-# Add custom Emacs config
+echo "Symlinking .emacs.d to your home directory..."
 ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
-# Run OS X install scripts
+echo "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
     ./.osx
     ./brew.sh
@@ -25,21 +25,21 @@ elif [[ $(uname) == 'Linux' ]]; then
     ./apt.sh
 fi
 
-# Install Oh My Zsh and  Zsh Syntax Highlighting
+echo "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
-# Source dotfiles with installation steps
-cd ~
+echo "Loading .bash_profile and .zshrc..."
+cd ~ || exit
 . .bash_profile
 source .zshrc
 
-# Install npm tools
+echo "Installing npm tools..."
 npm install -g bower
 npm install -g grunt
 npm install -g gulp
 npm install -g jshint
 npm install -g tldr
 
-# Install pip tools
+echo "Installing pip tools..."
 pip install grip # GitHub README instant preview
