@@ -41,5 +41,8 @@ npm install -g gulp
 npm install -g jshint
 npm install -g tldr
 
+echo "Updating pip..."
+pip install --upgrade pip
+
 echo "Installing pip tools..."
 pip install grip # GitHub README instant preview
