@@ -7,3 +7,9 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 if [[ $(uname) == 'Linux' ]]; then
    export PATH=~/.npm-global/bin:$PATH
 fi
+
+# Path to oh-my-zsh installation
+export ZSH=~/.oh-my-zsh
+
+# Default editor
+export EDITOR='emacs'

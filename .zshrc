@@ -1,5 +1,4 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+source ~/.bash_profile
 
 # Favorite: nicoulaj, agnoster
 ZSH_THEME="nicoulaj"
@@ -8,8 +7,5 @@ DEFAULT_USER="adam"
 plugins=(git npm python z zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-source ~/.bash_profile
-
-export EDITOR='emacs'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
