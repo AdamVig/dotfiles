@@ -28,6 +28,7 @@
 ;; --------------------------------- ;;
 
 (require-package 'buffer-move) ;; Switch buffers between panes
+(require-package 'editorconfig) ;; Support .editorconfig settings
 (require-package 'git-gutter)
 (require-package 'fill-column-indicator) ;; Draw line at column
 (require-package 'jade-mode)
@@ -55,6 +56,9 @@
 ;; --------------------------------- ;;
 ;; Editor Configuration
 ;; --------------------------------- ;;
+
+;; Enable editorconfig
+(editorconfig-mode 1)
 
 ;; Enable Monokai theme
 (load-theme 'monokai)
@@ -85,7 +89,6 @@
 
 ;; Set Zsh to default terminal for ansi-term
 (setq-default explicit-shell-file-name "/usr/local/bin/zsh")
-
 
 (defadvice ansi-term (before force-bash)
   "Suppress 'ansi-term' Run program prompt.
