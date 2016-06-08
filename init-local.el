@@ -87,8 +87,12 @@
 ;; Enable Zsh in Emacs shell-mode
 (setq system-uses-terminfo nil)
 
-;; Set Zsh to default terminal for ansi-term
-(setq-default explicit-shell-file-name "/usr/local/bin/zsh")
+;; Set Zsh to default shell
+(setq-default explicit-shell-file-name
+              ;; Remove newline from end of command output
+              (replace-regexp-in-string "\n$" ""
+                                        ;; Get location of zsh executable
+                                        (shell-command-to-string "which zsh")))
 
 (defadvice ansi-term (before force-bash)
   "Suppress 'ansi-term' Run program prompt.
