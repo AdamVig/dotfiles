@@ -9,7 +9,6 @@ declare -a brew_formulas=(
     zsh
 
     # Utilities
-    cheat
     emacs
     httpie
     markdown

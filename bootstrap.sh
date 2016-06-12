@@ -45,4 +45,5 @@ echo "Updating pip..."
 pip install --upgrade pip
 
 echo "Installing pip tools..."
+pip install cheat # Bash command cheatsheets
 pip install grip # GitHub README instant preview
