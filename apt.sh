@@ -24,5 +24,4 @@ sudo apt-get install -y python-pip
 sudo apt-get install -y emacs
 sudo apt-get install -y httpie
 sudo apt-get install -y mosh
-sudo apt-get install -y ssh-copy-id
 sudo apt-get install -y zsh
