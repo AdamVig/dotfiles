@@ -27,7 +27,13 @@ fi
 
 echo "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+# Install Zsh Syntax highlighting if not already installed
+ZSH_SYNTAX_FOLDER=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+        "$ZSH_SYNTAX_FOLDER"
+fi
 
 echo "Loading .bash_profile and .zshrc..."
 cd ~ || exit
