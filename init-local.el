@@ -116,7 +116,7 @@ explicit shell variable set above."
                                  mode-line-position
                                  (vc-mode vc-mode)
                                  "   "
-                                 mode-line-modes
+                                 ;;mode-line-modes
                                  (which-func-mode ("" which-func-format "--"))
                                  (global-mode-string ("--" global-mode-string))
                                  "-%-"))
