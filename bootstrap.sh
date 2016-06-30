@@ -29,7 +29,9 @@ elif [[ $(uname) == 'Linux' ]]; then
 fi
 
 echo "Installing Oh My Zsh and Zsh Syntax Highlighting..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+OH_MY_ZSH_URL=https://raw.githubusercontent.com
+OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
+sh -c "$(curl -fsSL "$OH_MY_ZSH_URL")"
 
 # Install Zsh Syntax highlighting if not already installed
 ZSH_SYNTAX_FOLDER=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
@@ -42,17 +44,17 @@ echo "Loading .bash_profile and .zshrc..."
 source ~/.zshrc
 
 echo "Installing npm tools..."
-npm install -g bower
-npm install -g emoj
-npm install -g eslint
-npm install -g grunt
-npm install -g gulp
-npm install -g jshint
-npm install -g tldr
+npm install -g bower    # Frontend package manager
+npm install -g emoj    # Emoji search engine
+npm install -g eslint    # JavaScript style linter
+npm install -g grunt    # Task runner
+npm install -g gulp    # Task runner
+npm install -g jshint    # JavaScript linter
+npm install -g tldr    # Simple Bash command docs; used by 'what' alias
 
 echo "Updating pip..."
 pip install --upgrade pip
 
 echo "Installing pip tools..."
-pip install cheat # Bash command cheatsheets
-pip install grip # GitHub README instant preview
+pip install cheat    # Bash command cheatsheets
+pip install grip    # GitHub README instant preview
