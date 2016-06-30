@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Ask for password at start
 sudo -v
