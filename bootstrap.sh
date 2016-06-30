@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Ask for password at start
+sudo -v
+
 echo "Symlinking dotfiles into your home directory..."
 ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~

@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Ask for password
-sudo -v
-
 # Refresh apt
 sudo apt-get update
 sudo apt-get upgrade -y
