@@ -39,9 +39,7 @@ if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
 fi
 
 echo "Loading .bash_profile and .zshrc..."
-cd ~ || exit
-. .bash_profile
-source .zshrc
+source ~/.zshrc
 
 echo "Installing npm tools..."
 npm install -g bower
