@@ -1,9 +1,20 @@
 #!/bin/zsh
 
+# Use Zsh colors function to enable friendly color names
+autoload -U colors && colors
+
+# Colorized output
+# $1: string to print, must be quoted
+# $2: optional, name of color, defaults to blue
+function message() {
+    COLOR=${2:=blue}
+    printf "%s\n" "$fg[$COLOR]$1$fg[default]"
+}
+
 # Ask for password at start
 sudo -v
 
-echo "Symlinking dotfiles into your home directory..."
+message "Symlinking dotfiles into your home directory..."
 ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~
 ln -sf "$PWD/.bashrc" ~
@@ -12,13 +23,13 @@ ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
 ln -sf "$PWD/.zshrc" ~
 
-echo "Cloning .emacs.d submodule..."
+message "Cloning .emacs.d submodule..."
 git submodule update --init --recursive
 
-echo "Symlinking .emacs.d to your home directory..."
+message "Symlinking .emacs.d to your home directory..."
 ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
-echo "Running OS-specific scripts..."
+message "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
     ./.osx
     ./brew.sh
@@ -28,7 +39,7 @@ elif [[ $(uname) == 'Linux' ]]; then
     ./apt.sh
 fi
 
-echo "Installing Oh My Zsh and Zsh Syntax Highlighting..."
+message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
 OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
 sh -c "$(curl -fsSL "$OH_MY_ZSH_URL")"
@@ -40,10 +51,10 @@ if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
         "$ZSH_SYNTAX_FOLDER"
 fi
 
-echo "Loading .bash_profile and .zshrc..."
+message "Loading .bash_profile and .zshrc..."
 source ~/.zshrc
 
-echo "Installing npm tools..."
+message "Installing npm tools..."
 npm install -g bower    # Frontend package manager
 npm install -g emoj    # Emoji search engine
 npm install -g eslint    # JavaScript style linter
@@ -52,9 +63,9 @@ npm install -g gulp    # Task runner
 npm install -g jshint    # JavaScript linter
 npm install -g tldr    # Simple Bash command docs; used by 'what' alias
 
-echo "Updating pip..."
+message "Updating pip..."
 pip install --upgrade pip
 
-echo "Installing pip tools..."
+message "Installing pip tools..."
 pip install --user cheat    # Bash command cheatsheets
 pip install --user grip    # GitHub README instant preview
