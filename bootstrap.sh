@@ -43,6 +43,8 @@ source ~/.zshrc
 
 echo "Installing npm tools..."
 npm install -g bower
+npm install -g emoj
+npm install -g eslint
 npm install -g grunt
 npm install -g gulp
 npm install -g jshint
