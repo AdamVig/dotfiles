@@ -31,7 +31,7 @@ ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
 message "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
-    ./.osx
+    ./.macos
     ./brew.sh
 
 # Run Linux install scripts
