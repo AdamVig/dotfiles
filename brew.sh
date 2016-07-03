@@ -22,7 +22,6 @@ declare -a brew_formulas=(
 )
 
 declare -a cask_formulas=(
-    dash
     flux
     google-chrome
     spotify
