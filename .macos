@@ -21,7 +21,8 @@ defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 
 # Disable automatic emoji substitution (i.e. use plain text smileys)
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings \
+         -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
 
 # Disable automatic opening of Photos when device plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
@@ -33,7 +34,8 @@ defaults write com.apple.finder ShowRecentTags -bool false
 defaults write com.apple.dock mru-spaces -bool false
 
 # Hide username in menu bar
-sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
+sudo defaults write /Library/Preferences/.GlobalPreferences \
+     MultipleSessionEnabled -bool NO
 
 # Disable interface sound effects
 defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0

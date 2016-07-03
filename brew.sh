@@ -30,7 +30,7 @@ declare -a cask_formulas=(
 # Check if directory is writable, if not, take ownership of it
 if [ ! -w /usr/local ]; then
     printf "%s\n" "Taking ownership of /usr/local..."
-    sudo chown -R $(whoami) /usr/local
+    sudo chown -R "$(whoami)" /usr/local
 fi
 
 printf "%s\n" "Updating Homebrew package lists..."
