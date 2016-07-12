@@ -29,6 +29,7 @@
 
 (require-package 'buffer-move) ;; Switch buffers between panes
 (require-package 'editorconfig) ;; Support .editorconfig settings
+(require-package 'emmet-mode) ;; HTML expansion
 (require-package 'git-gutter)
 (require-package 'fill-column-indicator) ;; Draw line at column
 (require-package 'jade-mode)
@@ -43,6 +44,10 @@
 
 ;; Enable web mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+;; Enable Emmet HTML expansion for markup and CSS modes
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook  'emmet-mode)
 
 ;; Force .h files to open in C++ Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
