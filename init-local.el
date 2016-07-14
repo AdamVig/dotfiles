@@ -35,6 +35,7 @@
 (require-package 'jade-mode)
 (require-package 'malabar-mode) ;; Java mode
 (require-package 'monokai-theme)
+(require-package 'restclient) ;; REST API exploration tool
 (require-package 'web-mode)
 
 
