@@ -9,9 +9,9 @@
 (declare-function editorconfig-mode "editorconfig-mode")
 
 
-;; --------------------------------- ;;
+;; ---------------------------------
 ;; Overrides of purcell/.emacs.d
-;; --------------------------------- ;;
+;; ---------------------------------
 
 ;; Disable saving list of open files
 (desktop-save-mode 0)
@@ -27,25 +27,25 @@
       `((".*" ,temporary-file-directory t)))
 
 
-;; --------------------------------- ;;
+;; ---------------------------------
 ;; Package Installs
-;; --------------------------------- ;;
+;; ---------------------------------
 
-(require-package 'buffer-move) ;; Switch buffers between panes
-(require-package 'editorconfig) ;; Support .editorconfig settings
-(require-package 'emmet-mode) ;; HTML expansion
+(require-package 'buffer-move)    ;; Switch buffers between panes
+(require-package 'editorconfig)    ;; Support .editorconfig settings
+(require-package 'emmet-mode)    ;; HTML expansion
 (require-package 'git-gutter)
-(require-package 'fill-column-indicator) ;; Draw line at column
+(require-package 'fill-column-indicator)    ;; Draw line at column
 (require-package 'jade-mode)
-(require-package 'malabar-mode) ;; Java mode
+(require-package 'malabar-mode)    ;; Java mode
 (require-package 'monokai-theme)
-(require-package 'restclient) ;; REST API exploration tool
+(require-package 'restclient)    ;; REST API exploration tool
 (require-package 'web-mode)
 
 
-;; --------------------------------- ;;
+;; ---------------------------------
 ;; Language Configuration
-;; --------------------------------- ;;
+;; ---------------------------------
 
 ;; Enable web mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
@@ -63,9 +63,9 @@
 ;; Ignore "Not following external source" bash error
 (setq-default flycheck-shellcheck-excluded-warnings '("SC1091"))
 
-;; --------------------------------- ;;
+;; ---------------------------------
 ;; Editor Configuration
-;; --------------------------------- ;;
+;; ---------------------------------
 
 ;; Enable editorconfig
 (editorconfig-mode 1)
@@ -86,13 +86,13 @@
 
 ;; Enable highlighting text that goes beyond column 80
 (setq-default
- whitespace-line-column 80 ;; Set column 80 to length limit
- whitespace-style '(face lines-tail)) ;; Highlight text beyond length limit
+ whitespace-line-column 80    ;; Set column 80 to length limit
+ whitespace-style '(face lines-tail))    ;; Highlight text beyond length limit
 (set-face-attribute 'whitespace-line nil
                     :foreground "Red3"
                     :background nil
                     :weight 'bold)
-(add-hook 'prog-mode-hook #'whitespace-mode) ;; Activate in programming mode
+(add-hook 'prog-mode-hook #'whitespace-mode)    ;; Activate in programming mode
 
 ;; Enable Zsh in Emacs shell-mode
 (setq system-uses-terminfo nil)
