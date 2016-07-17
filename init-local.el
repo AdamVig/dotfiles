@@ -3,8 +3,12 @@
 
 ;;; Code:
 
+;; Declare functions that will be available in the global scope
 (declare-function require-package "init-elpa")
 (declare-function global-git-gutter-mode "git-gutter")
+(declare-function editorconfig-mode "editorconfig-mode")
+
+
 ;; --------------------------------- ;;
 ;; Overrides of purcell/.emacs.d
 ;; --------------------------------- ;;
