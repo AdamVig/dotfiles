@@ -94,6 +94,16 @@
                     :weight 'bold)
 (add-hook 'prog-mode-hook #'whitespace-mode)    ;; Activate in programming mode
 
+;; Disable display of trailing whitespace in Markdown mode
+(defun disable-show-trailing-whitespace ()
+  "Disable display of trailing whitespace."
+  (setq show-trailing-whitespace nil)
+  )
+(add-hook 'markdown-mode-hook 'disable-show-trailing-whitespace)
+
+;; Customize color of trailing whitespace highlight
+(set-face-background 'trailing-whitespace "coral")
+
 ;; Enable Zsh in Emacs shell-mode
 (setq system-uses-terminfo nil)
 
