@@ -11,7 +11,6 @@ declare -a brew_formulas=(
     # Utilities
     colordiff
     emacs
-    httpie
     markdown
     mobile-shell
     ssh-copy-id
