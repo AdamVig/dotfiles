@@ -9,6 +9,7 @@ declare -a brew_formulas=(
     zsh
 
     # Utilities
+    colordiff
     emacs
     httpie
     markdown
