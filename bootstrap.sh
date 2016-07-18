@@ -55,17 +55,27 @@ message "Loading .bash_profile and .zshrc..."
 source ~/.zshrc
 
 message "Installing npm tools..."
-npm install -g bower    # Frontend package manager
-npm install -g emoj    # Emoji search engine
-npm install -g eslint    # JavaScript style linter
-npm install -g grunt    # Task runner
-npm install -g gulp    # Task runner
-npm install -g jshint    # JavaScript linter
-npm install -g tldr    # Simple Bash command docs; used by 'what' alias
+npm_packages=(
+    bower    # Frontend package manager
+    emoj    # Emoji search engine
+    eslint    # JavaScript style linter
+    grunt    # Task runner
+    gulp    # Task runner
+    jshint    # JavaScript linter
+    tldr    # Simple Bash command docs; used by 'what' alias
+)
 
-message "Updating pip..."
-pip install --upgrade pip
+for package in "${npm_packages[@]}"; do
+    npm install -g "$package"
+done
 
 message "Installing pip tools..."
-pip install --user cheat    # Bash command cheatsheets
-pip install --user grip    # GitHub README instant preview
+pip_packages=(
+    pip
+    cheat    # Bash command cheatsheets
+    grip    # GitHub README instant preview
+)
+
+for package in "${pip_packages[@]}"; do
+    pip install --upgrade "$package"
+done
