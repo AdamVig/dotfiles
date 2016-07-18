@@ -13,6 +13,7 @@ declare -a brew_formulas=(
     emacs
     httpie
     markdown
+    mobile-shell
     ssh-copy-id
     z
 
