@@ -1,14 +1,12 @@
-#!/bin/zsh
-
-# Use Zsh colors function to enable friendly color names
-autoload -U colors && colors
+#!/bin/bash
 
 # Colorized output
 # $1: string to print, must be quoted
 # $2: optional, name of color, defaults to blue
 function message() {
-    COLOR=${2:=blue}
-    printf "%s\n" "$fg[$COLOR]$1$fg[default]"
+    BLUE="\e[34m"
+    DEFAULT="\e[0m"
+    printf "$BLUE%s$DEFAULT\n" "$1"
 }
 
 # Ask for password at start
@@ -51,9 +49,6 @@ if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
         "$ZSH_SYNTAX_FOLDER"
 fi
 
-message "Loading .bash_profile and .zshrc..."
-source ~/.zshrc
-
 message "Installing npm tools..."
 npm_packages=(
     bower    # Frontend package manager
@@ -80,3 +75,5 @@ pip_packages=(
 for package in "${pip_packages[@]}"; do
     pip install --upgrade "$package"
 done
+
+message "Done. Start a new login shell or run 'source .zshrc'."
