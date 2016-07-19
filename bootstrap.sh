@@ -52,6 +52,7 @@ fi
 message "Installing npm tools..."
 npm_packages=(
     bower    # Frontend package manager
+    diff-so-fancy    # Git diff prettifier
     emoj    # Emoji search engine
     eslint    # JavaScript style linter
     grunt    # Task runner
@@ -75,5 +76,9 @@ pip_packages=(
 for package in "${pip_packages[@]}"; do
     pip install --upgrade "$package"
 done
+
+message "Configuring git..."
+# TODO check for ~/.gitconfig, if not exist, prompt for settings
+git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
 
 message "Done. Start a new login shell or run 'source .zshrc'."
