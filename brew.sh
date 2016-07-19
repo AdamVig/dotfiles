@@ -23,6 +23,7 @@ declare -a brew_formulas=(
 )
 
 declare -a cask_formulas=(
+    emacs
     flux
     google-chrome
     spotify
