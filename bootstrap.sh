@@ -17,6 +17,7 @@ ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~
 ln -sf "$PWD/.bashrc" ~
 ln -sf "$PWD/.emacs.d" ~
+ln -sf "$PWD/.eslintrc.json" ~
 ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
 ln -sf "$PWD/.zshrc" ~
@@ -55,6 +56,7 @@ npm_packages=(
     diff-so-fancy    # Git diff prettifier
     emoj    # Emoji search engine
     eslint    # JavaScript style linter
+    eslint-config-defaults    # Baseline ESLint settings
     grunt    # Task runner
     gulp    # Task runner
     jshint    # JavaScript linter
