@@ -76,7 +76,7 @@ pip_packages=(
 )
 
 for package in "${pip_packages[@]}"; do
-    pip install --upgrade "$package"
+    pip install --upgrade --user "$package"
 done
 
 message "Configuring git..."
