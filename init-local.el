@@ -80,10 +80,11 @@
 (setq-default display-time-format "%l:%M %p")
 
 ;; Enable Git highlighting in gutter
-(global-git-gutter-mode +1)
-(set-face-background 'git-gutter:modified "purple4")
-(set-face-foreground 'git-gutter:added "green4")
-(set-face-foreground 'git-gutter:deleted "red4")
+(unless (display-graphic-p)
+  (global-git-gutter-mode t)
+  (set-face-background 'git-gutter:modified "purple4")
+  (set-face-foreground 'git-gutter:added "green4")
+  (set-face-foreground 'git-gutter:deleted "red4"))
 
 ;; Enable highlighting text that goes beyond column 80
 (setq-default
