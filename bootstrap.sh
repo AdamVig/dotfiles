@@ -57,6 +57,7 @@ npm_packages=(
     emoj    # Emoji search engine
     eslint    # JavaScript style linter
     eslint-config-defaults    # Baseline ESLint settings
+    fileicon    # Manage custom macOS file icons
     grunt    # Task runner
     gulp    # Task runner
     jshint    # JavaScript linter
@@ -82,5 +83,11 @@ done
 message "Configuring git..."
 # TODO check for ~/.gitconfig, if not exist, prompt for settings
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+
+# Set app icons if on macOS
+if [[ $(uname) == 'Darwin' ]]; then
+    message "Setting custom app icons..."
+    fileicon set "/Applications/Emacs.app" "./assets/FlatEmacs.icns"
+fi
 
 message "Done. Start a new login shell or run 'source .zshrc'."
