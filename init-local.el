@@ -3,7 +3,7 @@
 
 ;;; Code:
 
-;; Declare functions that will be available in the global scope
+;; Declare functions and variables that will be available in the global scope
 (declare-function require-package "init-elpa")
 (declare-function global-git-gutter-mode "git-gutter")
 (declare-function editorconfig-mode "editorconfig-mode")
@@ -16,7 +16,7 @@
 ;; Disable saving list of open files
 (desktop-save-mode 0)
 
-;; Disable Company quickhelp popup in terminal mode
+;; Show Company quickhelp popup only in graphical mode
 (when (display-graphic-p)
   (company-quickhelp-mode 1))
 
@@ -69,6 +69,7 @@
 
 ;; Ignore "Not following external source" bash error
 (setq-default flycheck-shellcheck-excluded-warnings '("SC1091"))
+
 
 ;; ---------------------------------
 ;; Editor Configuration
