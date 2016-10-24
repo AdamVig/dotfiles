@@ -51,6 +51,12 @@
 ;; Enable web mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
+;; Enable JSX mode
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+
+;; Enable Prolog mode
+(add-to-list 'auto-mode-alist '("\\.pro?\\'" . prolog-mode))
+
 ;; Enable Emmet HTML expansion for markup and CSS modes
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode)
