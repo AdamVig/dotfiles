@@ -54,6 +54,9 @@
 ;; Enable JSX mode
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
 
+;; Enable web mode for Vue files
+(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
+
 ;; Enable Prolog mode
 (add-to-list 'auto-mode-alist '("\\.pro?\\'" . prolog-mode))
 
