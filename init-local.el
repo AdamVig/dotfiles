@@ -7,7 +7,7 @@
 (declare-function require-package "init-elpa")
 (declare-function global-git-gutter-mode "git-gutter")
 (declare-function editorconfig-mode "editorconfig-mode")
-
+(declare-function company-quickhelp-mode "company-quickhelp-mode")
 
 ;; ---------------------------------
 ;; Overrides of purcell/.emacs.d
