@@ -41,7 +41,6 @@
 (require-package 'malabar-mode)    ;; Java mode
 (require-package 'monokai-theme)
 (require-package 'restclient)    ;; REST API exploration tool
-(require-package 'vue-mode)
 (require-package 'web-mode)
 
 
@@ -56,7 +55,7 @@
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
 
 ;; Enable web mode for Vue files
-(add-to-list 'auto-mode-alist '("\\.vue?\\'" . vue-mode))
+(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 
 ;; Enable Prolog mode
 (add-to-list 'auto-mode-alist '("\\.pro?\\'" . prolog-mode))
@@ -64,7 +63,6 @@
 ;; Enable Emmet HTML expansion for markup and CSS modes
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode)
-(add-hook 'web-mode-hook  'emmet-mode)
 
 ;; Force .h files to open in C++ Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -150,7 +148,7 @@ explicit shell variable set above."
                                  mode-line-position
                                  (vc-mode vc-mode)
                                  "   "
-                                        ;mode-line-modes
+                                 ;;mode-line-modes
                                  (which-func-mode ("" which-func-format "--"))
                                  (global-mode-string ("--" global-mode-string))
                                  "-%-"))
