@@ -31,6 +31,11 @@ declare -a cask_formulas=(
     spotify
 )
 
+if [ ! -f "`which brew`" ]; then
+    printf "%s\n" "Installing Homebrew..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
 # Check if directory is writable, if not, take ownership of it
 if [ ! -w /usr/local ]; then
     printf "%s\n" "Taking ownership of /usr/local..."
