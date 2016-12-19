@@ -43,6 +43,12 @@ defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
 # Reduce alert volume to 75%
 osascript -e 'set volume alert volume 75'
 
+# Enable tap to click
+defaults -currentHost write -globalDomain com.apple.mouse.tapBehavior -int 0
+
+# Disable natural scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
 # Restart Dock and Finder
 killall Dock
 killall Finder
