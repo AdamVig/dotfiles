@@ -26,6 +26,7 @@ declare -a cask_formulas=(
     emacs
     flux
     google-chrome
+    iterm2
     qlmarkdown    # Markdown rendering in Finder quick look
     spotify
 )
