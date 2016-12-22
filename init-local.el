@@ -9,6 +9,7 @@
 (declare-function editorconfig-mode "editorconfig-mode")
 (declare-function company-quickhelp-mode "company-quickhelp-mode")
 (defvar org-replace-disputed-keys)
+(defvar js2-mode-map)
 
 ;; ---------------------------------
 ;; Overrides of purcell/.emacs.d
@@ -50,6 +51,7 @@
 (require-package 'git-gutter)
 (require-package 'fill-column-indicator)    ;; Draw line at column
 (require-package 'jade-mode)
+(require-package 'js-doc)    ;; Insert JSDoc style comments
 (require-package 'malabar-mode)    ;; Java mode
 (require-package 'monokai-theme)
 (require-package 'restclient)    ;; REST API exploration tool
@@ -147,6 +149,12 @@ explicit shell variable set above."
 
 ;; Use Shift+arrow_keys to move cursor around split panes
 (windmove-default-keybindings)
+
+;; Add keybindings for js-doc
+(add-hook 'js2-mode-hook
+          #'(lambda ()
+              (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
+              (define-key js2-mode-map "@" 'js-doc-insert-tag)))
 
 ;; Customize mode line
 ;; The changes from the default configuration are the
