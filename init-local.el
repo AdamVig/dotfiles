@@ -8,6 +8,7 @@
 (declare-function global-git-gutter-mode "git-gutter")
 (declare-function editorconfig-mode "editorconfig-mode")
 (declare-function company-quickhelp-mode "company-quickhelp-mode")
+(defvar org-replace-disputed-keys)
 
 ;; ---------------------------------
 ;; Overrides of purcell/.emacs.d
@@ -26,6 +27,17 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+
+;; ----------------------------------
+;; Overrides of standard Emacs config
+;; ----------------------------------
+
+;; Replace S-<cursor> commands with:
+;;   M--, M-+ for org-shiftleft and org-shiftright
+;;   M-p, M-n for org-shiftdown and org-shiftup
+;;   M-S--, M-S-+ for org-shiftcontrolleft and org-shiftcontrolright
+(setq org-replace-disputed-keys t)
 
 
 ;; ---------------------------------
