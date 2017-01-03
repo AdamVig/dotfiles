@@ -123,9 +123,9 @@
 ;; Disable display of trailing whitespace in Markdown mode
 (defun disable-show-trailing-whitespace ()
   "Disable display of trailing whitespace."
-  (setq show-trailing-whitespace nil)
-  )
+  (setq show-trailing-whitespace nil))
 (add-hook 'markdown-mode-hook 'disable-show-trailing-whitespace)
+(add-hook 'org-mode-hook 'disable-show-trailing-whitespace)
 
 ;; Customize color of trailing whitespace highlight
 (set-face-background 'trailing-whitespace "coral")
