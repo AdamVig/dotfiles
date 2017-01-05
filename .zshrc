@@ -1,7 +1,7 @@
 source ~/.bash_profile
 
-# Favorite: nicoulaj, agnoster
-ZSH_THEME="nicoulaj"
+# Favorite: nicoulaj, agnoster, simple
+ZSH_THEME="simple"
 DEFAULT_USER="adam"
 
 plugins=(git npm python z zsh-syntax-highlighting)
