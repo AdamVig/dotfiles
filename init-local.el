@@ -18,9 +18,8 @@
 ;; Disable saving list of open files
 (desktop-save-mode 0)
 
-;; Show Company quickhelp popup only in graphical mode
-(when (display-graphic-p)
-  (company-quickhelp-mode 1))
+;; Disable Company autocomplete
+(setq-default company-global-modes 'nil)
 
 ;; Store all backup and autosave files in the tmp dir
 ;; Overrides default of saving in current directory
