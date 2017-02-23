@@ -154,6 +154,7 @@ explicit shell variable set above."
           #'(lambda ()
               (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
               (define-key js2-mode-map "@" 'js-doc-insert-tag)))
+(setq-default js2-indent-switch-body t)
 
 ;; Customize mode line
 ;; The changes from the default configuration are the
