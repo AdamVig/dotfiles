@@ -18,9 +18,6 @@
 ;; Disable saving list of open files
 (desktop-save-mode 0)
 
-;; Disable Company autocomplete
-(setq-default company-global-modes 'nil)
-
 ;; Store all backup and autosave files in the tmp dir
 ;; Overrides default of saving in current directory
 (setq backup-directory-alist
