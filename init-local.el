@@ -50,6 +50,7 @@
 (require-package 'malabar-mode)    ;; Java mode
 (require-package 'monokai-theme)
 (require-package 'restclient)    ;; REST API exploration tool
+(require-package 'tide)    ;; TypeScript Interactive Development Environment
 (require-package 'web-mode)
 
 
@@ -82,7 +83,24 @@
 ;; Ignore "Not following external source" bash error
 (setq-default flycheck-shellcheck-excluded-warnings '("SC1091"))
 
+;; Set up TypeScript
+(defun setup-tide-mode ()
+  "Set up Tide mode for TypeScript."
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq-default flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
 
+;; Aligns annotation to the right hand side
+(setq-default company-tooltip-align-annotations t)
+
+;; Formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
 ;; ---------------------------------
 ;; Editor Configuration
 ;; ---------------------------------
