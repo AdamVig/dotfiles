@@ -161,7 +161,7 @@ explicit shell variable set above."
 (ad-activate 'ansi-term)
 
 ;; Use Shift+arrow_keys to move cursor around split panes
-(windmove-default-keybindings)
+(windmove-default-keybindings 'meta)
 
 ;; Add keybindings for js-doc
 (setq-default js2-indent-switch-body t)
