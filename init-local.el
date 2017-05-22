@@ -47,7 +47,6 @@
 (require-package 'git-gutter)
 (require-package 'fill-column-indicator)    ;; Draw line at column
 (require-package 'jade-mode)
-(require-package 'malabar-mode)    ;; Java mode
 (require-package 'monokai-theme)
 (require-package 'restclient)    ;; REST API exploration tool
 (require-package 'tide)    ;; TypeScript Interactive Development Environment
