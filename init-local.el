@@ -10,6 +10,7 @@
 (declare-function company-quickhelp-mode "company-quickhelp-mode")
 (defvar org-replace-disputed-keys)
 (defvar js2-mode-map)
+(defvar org-emphasis-regexp-components)
 
 ;; ---------------------------------
 ;; Overrides of purcell/.emacs.d
@@ -36,6 +37,9 @@
 ;;   M-S--, M-S-+ for org-shiftcontrolleft and org-shiftcontrolright
 (setq org-replace-disputed-keys t)
 
+;; Allow org-mode code/verbatim to contain strings containing quotes
+(setcar (nthcdr 2 org-emphasis-regexp-components) " \t\r\n,\"")
+(org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
 ;; ---------------------------------
 ;; Package Installs
