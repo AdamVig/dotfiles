@@ -137,7 +137,7 @@
                     :weight 'bold)
 (add-hook 'prog-mode-hook #'whitespace-mode)    ;; Activate in programming mode
 
-;; Disable display of trailing whitespace in Markdown mode
+;; Disable display of trailing whitespace in Markdown mode and org-mode
 (defun disable-show-trailing-whitespace ()
   "Disable display of trailing whitespace."
   (setq show-trailing-whitespace nil))
