@@ -37,9 +37,11 @@
 ;;   M-S--, M-S-+ for org-shiftcontrolleft and org-shiftcontrolright
 (setq org-replace-disputed-keys t)
 
-;; Allow org-mode code/verbatim to contain strings containing quotes
-(setcar (nthcdr 2 org-emphasis-regexp-components) " \t\r\n,\"")
-(org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+(defun enable-verbatim-string-quotes ()
+  "Allow 'org-mode' code/verbatim to contain strings containing quotes."
+  (setcar (nthcdr 2 org-emphasis-regexp-components) " \t\r\n,\"")
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
+(add-hook 'org-mode-hook 'enable-verbatim-string-quotes)
 
 ;; ---------------------------------
 ;; Package Installs
