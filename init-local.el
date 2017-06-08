@@ -52,6 +52,7 @@
 (require-package 'fill-column-indicator)    ;; Draw line at column
 (require-package 'jade-mode)
 (require-package 'monokai-theme)
+(require-package 'ox-gfm)    ;; Org-Mode GitHub-Flavored Markdown export
 (require-package 'restclient)    ;; REST API exploration tool
 (require-package 'tide)    ;; TypeScript Interactive Development Environment
 (require-package 'web-mode)
