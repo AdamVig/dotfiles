@@ -47,6 +47,7 @@
 ;; Package Installs
 ;; ---------------------------------
 
+(require-package 'add-node-modules-path)    ;; Use Node project-local scripts
 (require-package 'buffer-move)    ;; Switch buffers between panes
 (require-package 'editorconfig)    ;; Support .editorconfig settings
 (require-package 'emmet-mode)    ;; HTML expansion
@@ -85,6 +86,10 @@
 
 ;; Set default indentation
 (setq-default js2-basic-offset 4)
+
+;; Add project-local 'node_modules' folder to Emacs path when JS file is opened
+(eval-after-load 'js2-mode
+  '(add-hook 'js2-mode-hook #'add-node-modules-path))
 
 ;; Ignore "Not following external source" bash error
 (setq-default flycheck-shellcheck-excluded-warnings '("SC1091"))
