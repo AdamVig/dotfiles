@@ -108,9 +108,6 @@
 ;; Aligns annotation to the right hand side
 (setq-default company-tooltip-align-annotations t)
 
-;; Formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 ;; ---------------------------------
 ;; Editor Configuration
