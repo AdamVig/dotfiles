@@ -171,6 +171,11 @@ explicit shell variable set above."
 ;; Use Shift+arrow_keys to move cursor around split panes
 (windmove-default-keybindings)
 
+;; Change meta key to option keys on MacOS
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'none))
+
 ;; Add keybindings for js-doc
 (setq-default js2-indent-switch-body t)
 
