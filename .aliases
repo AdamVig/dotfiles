@@ -5,3 +5,4 @@ explain_command() {
     tldr "$1";
 }
 alias what=explain_command
+alias git=hub
