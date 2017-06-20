@@ -136,7 +136,7 @@
  whitespace-line-column 80    ;; Set column 80 to length limit
  whitespace-style '(face lines-tail))    ;; Highlight text beyond length limit
 (set-face-attribute 'whitespace-line nil
-                    :foreground "Red3"
+                    :foreground "SlateGray1"
                     :background nil
                     :weight 'bold)
 (add-hook 'prog-mode-hook #'whitespace-mode)    ;; Activate in programming mode
