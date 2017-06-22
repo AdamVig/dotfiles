@@ -47,6 +47,7 @@
 ;; Package Installs
 ;; ---------------------------------
 
+(require-package 'ag)    ;; Search library
 (require-package 'add-node-modules-path)    ;; Use Node project-local scripts
 (require-package 'buffer-move)    ;; Switch buffers between panes
 (require-package 'editorconfig)    ;; Support .editorconfig settings
