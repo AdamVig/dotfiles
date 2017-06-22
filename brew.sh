@@ -31,9 +31,20 @@ declare -a cask_formulas=(
     spotify
 )
 
+declare -a cask_font_formulas=(
+    font-fira-code
+    font-lato
+    font-noto-sans
+    font-open-sans
+    font-source-code-pro
+)
+
 if [ ! -f "`which brew`" ]; then
     printf "%s\n" "Installing Homebrew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    printf "%s\n" "Tapping caskroom/fonts..."
+    brew tap caskroom/fonts
 fi
 
 # Check if directory is writable, if not, take ownership of it
@@ -59,6 +70,13 @@ printf "%s\n" "Installing Brew Cask formulas..."
 
 # Install Cask formulas, suppress "already installed" warnings
 for formula in "${cask_formulas[@]}"; do
+    brew cask install "$formula" 2> /dev/null
+done
+
+printf "%s\n" "Installing Brew Cask font formulas..."
+
+# Install Cask font formulas, suppress "already installed" warnings
+for formula in "${cask_font_formulas[@]}"; do
     brew cask install "$formula" 2> /dev/null
 done
 
