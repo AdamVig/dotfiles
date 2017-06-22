@@ -132,9 +132,9 @@
   (set-face-foreground 'git-gutter:added "green4")
   (set-face-foreground 'git-gutter:deleted "red4"))
 
-;; Enable highlighting text that goes beyond column 80
+;; Enable highlighting text that goes beyond length limit
 (setq-default
- whitespace-line-column 80    ;; Set column 80 to length limit
+ whitespace-line-column 100    ;; Set column to length limit
  whitespace-style '(face lines-tail))    ;; Highlight text beyond length limit
 (set-face-attribute 'whitespace-line nil
                     :foreground "SlateGray1"
