@@ -114,6 +114,9 @@
 ;; Editor Configuration
 ;; ---------------------------------
 
+;; Show dired filesizes in human-readable format
+(setq dired-listing-switches "-alh")
+
 ;; Enable editorconfig
 (editorconfig-mode 1)
 
