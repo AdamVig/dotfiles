@@ -12,7 +12,7 @@ fi
 export ZSH=~/.oh-my-zsh
 
 # Default editor
-export EDITOR='emacs'
+export EDITOR='nano'
 
 # Fix ansi-term support in emacs
 export TERM=xterm-256color
