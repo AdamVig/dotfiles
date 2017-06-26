@@ -29,6 +29,7 @@ declare -a cask_formulas=(
     iterm2
     qlmarkdown    # Markdown rendering in Finder quick look
     spotify
+    visual-studio-code
 )
 
 declare -a cask_font_formulas=(
