@@ -5,5 +5,5 @@
 source ~/.aliases
 source ~/.exports
 
-# Ignore error and return success if optional file does not exist
-source ~/.locals || true
+# Load file if exists, suppress error if missing
+source ~/.locals &> /dev/null
