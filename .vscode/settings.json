@@ -1,0 +1,13 @@
+{
+    "workbench.welcome.enabled": false,
+    "editor.fontSize": 12,
+    "editor.fontFamily": "Source Code Pro",
+    "editor.fontLigatures": true,
+    // Disable minimap
+    "editor.minimap.enabled": false,
+    // Disable code folding
+    "editor.folding": false,
+    // Render diffs inline
+    "diffEditor.renderSideBySide": false,
+    "window.zoomLevel": 0
+}

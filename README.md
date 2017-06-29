@@ -24,3 +24,5 @@ Symlink files to your home directory, run OS-specific scripts, and install cross
 Install Homebrew packages on OS X.  
 #### `init-local.el`  
 Overrides and customizations on top of `.emacs.d`.  
+### `.vscode`
+Settings, keybindings, and snippets for Visual Studio Code.

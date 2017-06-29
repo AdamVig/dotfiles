@@ -33,6 +33,11 @@ if [[ $(uname) == 'Darwin' ]]; then
     ./.macos
     ./brew.sh
 
+    message "Symlinking Visual Studio Code settings..."
+    ln -sf "$PWD/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
+    ln -sf "$PWD/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+    ln -sf "$PWD/snippets/" ~/Library/Application\ Support/Code/User/snippets
+
 # Run Linux install scripts
 elif [[ $(uname) == 'Linux' ]]; then
     ./apt.sh
