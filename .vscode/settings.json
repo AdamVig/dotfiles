@@ -9,5 +9,8 @@
     "editor.folding": false,
     // Render diffs inline
     "diffEditor.renderSideBySide": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    // Git Lens
+    "gitlens.blame.line.enabled": false,
+    "gitlens.statusBar.enabled": false
 }
