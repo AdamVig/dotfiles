@@ -12,5 +12,7 @@
     "window.zoomLevel": 0,
     // Git Lens
     "gitlens.blame.line.enabled": false,
-    "gitlens.statusBar.enabled": false
+    "gitlens.statusBar.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.codeLens.authors.enabled": false
 }
