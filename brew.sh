@@ -55,10 +55,10 @@ if [ ! -w /usr/local ]; then
 fi
 
 printf "%s\n" "Updating Homebrew package lists..."
-brew update
+brew update &> /dev/null
 
 printf "%s\n" "Upgrading installed packages..."
-brew upgrade
+brew upgrade &> /dev/null
 
 printf "%s\n" "Installing Brew formulas..."
 

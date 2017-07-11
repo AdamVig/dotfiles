@@ -46,7 +46,7 @@ fi
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
 OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
-sh -c "$(curl -fsSL "$OH_MY_ZSH_URL")"
+sh -c "$(curl -fsSL "$OH_MY_ZSH_URL")" &> /dev/null
 
 # Install Zsh Syntax highlighting if not already installed
 ZSH_SYNTAX_FOLDER=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
@@ -70,7 +70,7 @@ npm_packages=(
 )
 
 for package in "${npm_packages[@]}"; do
-    npm install -g "$package"
+    npm install -g "$package" &> /dev/null
 done
 
 message "Installing pip tools..."
@@ -82,7 +82,7 @@ pip_packages=(
 )
 
 for package in "${pip_packages[@]}"; do
-    pip install --upgrade --user "$package"
+    pip install --upgrade --user "$package" &> /dev/null
 done
 
 message "Configuring git..."
