@@ -1,8 +1,8 @@
 {
-    "workbench.welcome.enabled": false,
     "editor.fontSize": 12,
     "editor.fontFamily": "Source Code Pro",
     "editor.fontLigatures": true,
+    "editor.rulers": [120],
     // Disable minimap
     "editor.minimap.enabled": false,
     // Disable code folding
