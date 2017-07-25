@@ -16,17 +16,10 @@ message "Symlinking dotfiles into your home directory..."
 ln -sf "$PWD/.aliases" ~
 ln -sf "$PWD/.bash_profile" ~
 ln -sf "$PWD/.bashrc" ~
-ln -sf "$PWD/.emacs.d" ~
 ln -sf "$PWD/.eslintrc.json" ~
 ln -sf "$PWD/.exports" ~
 ln -sf "$PWD/.git-template" ~
 ln -sf "$PWD/.zshrc" ~
-
-message "Cloning .emacs.d submodule..."
-git submodule update --init --recursive
-
-message "Symlinking .emacs.d to your home directory..."
-ln -sf "$PWD/init-local.el" ~/.emacs.d/lisp
 
 message "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
@@ -84,11 +77,5 @@ done
 message "Configuring git..."
 # TODO check for ~/.gitconfig, if not exist, prompt for settings
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
-
-# Set app icons if on macOS
-if [[ $(uname) == 'Darwin' ]]; then
-    message "Setting custom app icons..."
-    fileicon set "/Applications/Emacs.app" "./assets/FlatEmacs.icns"
-fi
 
 message "Done. Start a new login shell or run 'source .zshrc'."

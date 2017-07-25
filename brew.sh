@@ -35,7 +35,6 @@ declare -a brew_formulas=(
 )
 
 declare -a cask_formulas=(
-    emacs
     google-chrome
     iterm2
     qlmarkdown    # Markdown rendering in Finder quick look
