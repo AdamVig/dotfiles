@@ -79,7 +79,7 @@ done
 
 message "Configuring git..."
 # If gitconfig does not exist already, create one
-if [ ! -f "~/.gitconfig" ]; then
+if [ ! -e ~/.gitconfig ]; then
     message "  Copying gitconfig to home directory..."
     cp "$DIR/.gitconfig" ~
     
