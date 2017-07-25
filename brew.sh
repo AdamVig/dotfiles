@@ -43,6 +43,7 @@ declare -a cask_formulas=(
 )
 
 declare -a cask_font_formulas=(
+    font-blokk-neue
     font-fira-code
     font-lato
     font-noto-sans
