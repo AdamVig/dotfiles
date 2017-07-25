@@ -75,7 +75,7 @@ message "  Installing Brew formulas..."
 
 # Install Brew formulas, suppress "already installed" warnings
 for formula in "${brew_formulas[@]}"; do
-    brew install "$formula" 2> /dev/null
+    brew install "$formula" &> /dev/null
     message "    Installed $formula"
 done
 
@@ -83,7 +83,7 @@ message "  Installing Brew Cask formulas..."
 
 # Install Cask formulas, suppress "already installed" warnings
 for formula in "${cask_formulas[@]}"; do
-    brew cask install "$formula" 2> /dev/null
+    brew cask install "$formula" &> /dev/null
     message "    Installed $formula"
 done
 
@@ -91,7 +91,7 @@ message "  Installing Brew Cask font formulas..."
 
 # Install Cask font formulas, suppress "already installed" warnings
 for formula in "${cask_font_formulas[@]}"; do
-    brew cask install "$formula" 2> /dev/null
+    brew cask install "$formula" &> /dev/null
     message "    Installed $formula"
 done
 
