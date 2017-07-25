@@ -78,7 +78,20 @@ for package in "${pip_packages[@]}"; do
 done
 
 message "Configuring git..."
-# TODO check for ~/.gitconfig, if not exist, prompt for settings
-git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+# If gitconfig does not exist already, create one
+if [ ! -f "~/.gitconfig" ]; then
+    message "  Copying gitconfig to home directory..."
+    cp "$DIR/.gitconfig" ~
+    
+    message "  Configuring Git..."
+    read -p "  Full name: " NAME
+    read -p "  Email address: " EMAIL
+    read -p "  Github username: " GITHUB
+
+    # Only set values if they are non-empty
+    [[ -n "$NAME" ]] && git config --global user.name "$NAME"
+    [[ -n "$EMAIL" ]] && git config --global user.email "$EMAIL"
+    [[ -n "$GITHUB" ]] && git config --global github.user "$GITHUB"
+fi
 
 message "Done. Start a new login shell or run 'source .zshrc'."
