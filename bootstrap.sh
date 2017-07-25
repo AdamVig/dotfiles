@@ -12,24 +12,27 @@ function message() {
 # Ask for password at start
 sudo -v
 
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$(dirname "$(realpath "$0")")"
+
 message "Symlinking dotfiles into your home directory..."
-ln -sf "$PWD/.aliases" ~
-ln -sf "$PWD/.bash_profile" ~
-ln -sf "$PWD/.bashrc" ~
-ln -sf "$PWD/.eslintrc.json" ~
-ln -sf "$PWD/.exports" ~
-ln -sf "$PWD/.git-template" ~
-ln -sf "$PWD/.zshrc" ~
+ln -sf "$DIR/.aliases" ~
+ln -sf "$DIR/.bash_profile" ~
+ln -sf "$DIR/.bashrc" ~
+ln -sf "$DIR/.eslintrc.json" ~
+ln -sf "$DIR/.exports" ~
+ln -sf "$DIR/.git-template" ~
+ln -sf "$DIR/.zshrc" ~
 
 message "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
-    ./.macos
-    ./brew.sh
-    ./vscode.sh
+    "$DIR/.macos"
+    "$DIR/brew.sh"
+    "$DIR/vscode.sh"
 
 # Run Linux install scripts
 elif [[ $(uname) == 'Linux' ]]; then
-    ./apt.sh
+    "$DIR/apt.sh"
 fi
 
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
