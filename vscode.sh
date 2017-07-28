@@ -19,7 +19,9 @@ ln -sf "$PWD/snippets/" ~/Library/Application\ Support/Code/User/snippets
 declare -a extensions=(
     Compulim.vscode-clock   # Statusbar clock
     KnisterPeter.vscode-github  # GitHub integration
+    dbaeumer.vscode-eslint
     eamodio.gitlens  # Advanced Git integration
+    EditorConfig.editorconfig
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     tootone.org-mode  # Emacs Org-Mode support
