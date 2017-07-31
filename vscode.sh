@@ -24,6 +24,7 @@ declare -a extensions=(
     EditorConfig.editorconfig
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
+    octref.vetur  # Vue.js support
     tootone.org-mode  # Emacs Org-Mode support
 )
 
