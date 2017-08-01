@@ -13,7 +13,7 @@ function message() {
 sudo -v
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$(dirname "$(realpath "$0")")"
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
 message "Symlinking dotfiles into your home directory..."
 ln -sf "$DIR/.aliases" ~
