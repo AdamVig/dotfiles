@@ -22,6 +22,7 @@ declare -a extensions=(
     dbaeumer.vscode-eslint
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig
+    eg2.tslint  # TypeScript linter
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
