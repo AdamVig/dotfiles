@@ -19,8 +19,9 @@ ln -sf "$PWD/snippets/" ~/Library/Application\ Support/Code/User/snippets
 declare -a extensions=(
     Compulim.vscode-clock   # Statusbar clock
     KnisterPeter.vscode-github  # GitHub integration
-    dbaeumer.vscode-eslint
+    dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
+    eg2.tslint  # TypeScript linter
     EditorConfig.editorconfig
     eg2.tslint  # TypeScript linter
     lukehoban.go  # Golang support
