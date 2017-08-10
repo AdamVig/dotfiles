@@ -21,7 +21,6 @@ declare -a extensions=(
     KnisterPeter.vscode-github  # GitHub integration
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
-    eg2.tslint  # TypeScript linter
     EditorConfig.editorconfig
     eg2.tslint  # TypeScript linter
     lukehoban.go  # Golang support
