@@ -7,3 +7,6 @@ source ~/.exports
 
 # Load file if exists, suppress error if missing
 source ~/.locals &> /dev/null
+
+# Initialize Nodenv
+eval "$(nodenv init -)"
