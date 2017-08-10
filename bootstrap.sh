@@ -63,7 +63,9 @@ npm_packages=(
 
 for package in "${npm_packages[@]}"; do
     npm install -g "$package" &> /dev/null
+    message "  Installed $package"    
 done
+message "npm done."
 
 message "Installing pip tools..."
 pip_packages=(
@@ -75,7 +77,9 @@ pip_packages=(
 
 for package in "${pip_packages[@]}"; do
     pip install --upgrade --user "$package" &> /dev/null
+    message "  Installed $package"    
 done
+message "Pip done."
 
 message "Configuring git..."
 # If gitconfig does not exist already, create one
