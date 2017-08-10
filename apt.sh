@@ -21,3 +21,6 @@ sudo apt-get install -y emacs
 sudo apt-get install -y httpie
 sudo apt-get install -y mosh
 sudo apt-get install -y zsh
+
+# Install languages
+sudo apt-get install -y golang-go

@@ -30,6 +30,7 @@ declare -a brew_formulas=(
     z
 
     # Languages
+    golang
     node
     python
     python3

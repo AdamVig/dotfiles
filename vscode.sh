@@ -23,6 +23,7 @@ declare -a extensions=(
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig
     eg2.tslint  # TypeScript linter
+    lukehoban.go  # Golang support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
