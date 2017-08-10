@@ -38,6 +38,7 @@ declare -a brew_formulas=(
 declare -a cask_formulas=(
     google-chrome
     iterm2
+    kap    # Screen recorder
     qlmarkdown    # Markdown rendering in Finder quick look
     spotify
     visual-studio-code
