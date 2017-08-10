@@ -25,6 +25,7 @@ declare -a brew_formulas=(
     hub
     markdown
     mobile-shell
+    nodenv    # Node environment manager
     ssh-copy-id
     z
 
