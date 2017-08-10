@@ -9,12 +9,15 @@ function message() {
     printf "$YELLOW%s$DEFAULT\n" "$1"
 }
 
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
 message "Setting up Visual Studio Code..."
 
 message "  Symlinking Visual Studio Code settings... "
-ln -sf "$PWD/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
-ln -sf "$PWD/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
-ln -sf "$PWD/snippets/" ~/Library/Application\ Support/Code/User/snippets
+ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
+ln -sf "$DIR/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+ln -sf "$DIR/snippets/" ~/Library/Application\ Support/Code/User/snippets
 
 declare -a extensions=(
     Compulim.vscode-clock   # Statusbar clock
