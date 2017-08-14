@@ -16,5 +16,7 @@
     "gitlens.codeLens.recentChange.enabled": false,
     "gitlens.codeLens.authors.enabled": false,
     "git.enableSmartCommit": true,
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    // Fix TypeScript syntax format every time the file is saved
+    "tslint.autoFixOnSave": true
 }
