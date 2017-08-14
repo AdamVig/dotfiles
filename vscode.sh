@@ -24,6 +24,7 @@ declare -a extensions=(
     KnisterPeter.vscode-github  # GitHub integration
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
+    eg2.vscode-npm-script  # package.json linting and npm script detection
     EditorConfig.editorconfig
     eg2.tslint  # TypeScript linter
     lukehoban.go  # Golang support
