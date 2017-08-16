@@ -17,6 +17,15 @@
     "gitlens.codeLens.authors.enabled": false,
     "git.enableSmartCommit": true,
     "workbench.startupEditor": "none",
+
     // Fix TypeScript syntax format every time the file is saved
-    "tslint.autoFixOnSave": true
+    "tslint.autoFixOnSave": true,
+
+    // Configure HTML formatter:
+    // Wrap lines so they're shorter than 120 chars
+    "html.format.wrapLineLength": 110,
+    // Maintain EOF newline
+    "html.format.endWithNewline": true,
+    // Do not add extra lines around `head`, `body`, `/html`
+    "html.format.extraLiners": ""
 }
