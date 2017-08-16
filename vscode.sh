@@ -20,6 +20,7 @@ ln -sf "$DIR/keybindings.json" ~/Library/Application\ Support/Code/User/keybindi
 ln -sf "$DIR/snippets/" ~/Library/Application\ Support/Code/User/snippets
 
 declare -a extensions=(
+    Angular.ng-template  # Angular template IntelliSense support
     Compulim.vscode-clock   # Statusbar clock
     KnisterPeter.vscode-github  # GitHub integration
     dbaeumer.vscode-eslint  # JavaScript linter
