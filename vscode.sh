@@ -26,11 +26,12 @@ declare -a extensions=(
     KnisterPeter.vscode-github  # GitHub integration
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
-    EditorConfig.editorconfig
+    EditorConfig.editorconfig  # Editor text style configuration
     eg2.tslint  # TypeScript linter
     eg2.vscode-npm-script  # package.json linting and npm script detection
     lukehoban.go  # Golang support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
+    ms-vscode.csharp  # C# support
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
