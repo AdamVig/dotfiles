@@ -25,6 +25,7 @@ declare -a extensions=(
     Compulim.vscode-clock   # Statusbar clock
     KnisterPeter.vscode-github  # GitHub integration
     dbaeumer.vscode-eslint  # JavaScript linter
+    donjayamanne.python  # Python support
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.tslint  # TypeScript linter
