@@ -24,17 +24,6 @@ ln -sf "$DIR/.exports" ~
 ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.zshrc" ~
 
-message "Running OS-specific scripts..."
-if [[ $(uname) == 'Darwin' ]]; then
-    "$DIR/.macos"
-    "$DIR/brew.sh"
-    "$DIR/vscode.sh"
-
-# Run Linux install scripts
-elif [[ $(uname) == 'Linux' ]]; then
-    "$DIR/apt.sh"
-fi
-
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
 OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
@@ -45,6 +34,23 @@ ZSH_SYNTAX_FOLDER=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
         "$ZSH_SYNTAX_FOLDER"
+fi
+
+# Install custom Zsh theme
+mkdir -p ~/.oh-my-zsh/custom/themes
+ln -sf "$DIR/adamvig.zsh-theme" ~/.oh-my-zsh/custom/themes
+
+message "Zsh done."
+
+message "Running OS-specific scripts..."
+if [[ $(uname) == 'Darwin' ]]; then
+    "$DIR/.macos"
+    "$DIR/brew.sh"
+    "$DIR/vscode.sh"
+
+# Run Linux install scripts
+elif [[ $(uname) == 'Linux' ]]; then
+    "$DIR/apt.sh"
 fi
 
 message "Installing npm tools..."
