@@ -2,7 +2,8 @@ source ~/.bash_profile
 
 # Favorite: nicoulaj, agnoster, simple
 ZSH_THEME="simple"
-DEFAULT_USER="adam"
+
+# Set DEFAULT_USER in ~/.locals to hide "name@host" when logged in as default user
 
 plugins=(git npm python z zsh-syntax-highlighting)
 
