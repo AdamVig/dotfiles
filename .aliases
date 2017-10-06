@@ -5,3 +5,6 @@ explain_command() {
     tldr "$1";
 }
 alias what=explain_command
+
+# Run an npm script without excessive npm output
+alias npr='npm run --silent'
