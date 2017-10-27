@@ -7,11 +7,6 @@
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "cmd+x",
-        "command": "-editor.action.clipboardCutAction",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
         "key": "ctrl+w",
         "command": "-workbench.action.switchWindow"
     },
