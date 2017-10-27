@@ -1,7 +1,29 @@
 // Place your key bindings in this file to overwrite the defaults
 [
+    // Emacs cut
     {
-        "key": "shift+t",
-        "command": "workbench.action.focusPanel"
+        "key": "ctrl+w",
+        "command": "editor.action.clipboardCutAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+x",
+        "command": "-editor.action.clipboardCutAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.switchWindow"
+    },
+    // Emacs word forward and backward
+    {
+        "command": "cursorWordEndLeft",
+        "key": "cmd+b",
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "cursorWordEndRight",
+        "key": "cmd+f",
+        "when": "editorTextFocus"
     }
 ]
