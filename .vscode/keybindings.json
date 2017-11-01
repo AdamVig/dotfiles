@@ -2,13 +2,13 @@
 [
     // Emacs cut
     {
-        "key": "ctrl+w",
         "command": "editor.action.clipboardCutAction",
+        "key": "ctrl+w",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "ctrl+w",
-        "command": "-workbench.action.switchWindow"
+        "command": "-workbench.action.switchWindow",
+        "key": "ctrl+w"
     },
     // Emacs word forward and backward
     {
@@ -20,5 +20,32 @@
         "command": "cursorWordEndRight",
         "key": "alt+f",
         "when": "editorTextFocus"
+    },
+    // Toggle between editor and terminal
+    {
+        "command": "workbench.action.focusActiveEditorGroup",
+        "key": "ctrl+`",
+        "when": "terminalFocus"
+    },
+    {
+        "command": "workbench.action.terminal.focus",
+        "key": "ctrl+`",
+        "when": "!terminalFocus"
+    },
+    // Toggle terminal
+    {
+        "command": "workbench.action.terminal.toggleTerminal",
+        "key": "ctrl+1"
+    },
+    // Switch between terminals
+    {
+        "command": "workbench.action.terminal.focusNext",
+        "key": "ctrl+tab",
+        "when": "terminalFocus"
+    },
+    {
+        "command": "workbench.action.terminal.focusPrevious",
+        "key": "ctrl+shift+tab",
+        "when": "terminalFocus"
     }
 ]
