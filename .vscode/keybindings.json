@@ -13,12 +13,12 @@
     // Emacs word forward and backward
     {
         "command": "cursorWordEndLeft",
-        "key": "cmd+b",
+        "key": "alt+b",
         "when": "editorTextFocus"
     },
     {
         "command": "cursorWordEndRight",
-        "key": "cmd+f",
+        "key": "alt+f",
         "when": "editorTextFocus"
     }
 ]
