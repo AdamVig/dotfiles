@@ -23,13 +23,14 @@ declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
     christian-kohler.path-intellisense  # File path autocomplete
     Compulim.vscode-clock   # Statusbar clock
-    KnisterPeter.vscode-github  # GitHub integration
+    DavidAnson.vscode-markdownlint  # Markdown linting
     dbaeumer.vscode-eslint  # JavaScript linter
     donjayamanne.python  # Python support
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.tslint  # TypeScript linter
     eg2.vscode-npm-script  # package.json linting and npm script detection
+    KnisterPeter.vscode-github  # GitHub integration
     lukehoban.go  # Golang support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     ms-vscode.csharp  # C# support
@@ -37,6 +38,7 @@ declare -a extensions=(
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
     tootone.org-mode  # Emacs Org-Mode support
+    yzhang.markdown-all-in-one  # Markdown keyboard shortcuts and formatting helpers
 )
 
 message "  Installing Visual Studio Code extensions... "
