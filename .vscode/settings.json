@@ -27,5 +27,11 @@
     // Maintain EOF newline
     "html.format.endWithNewline": true,
     // Do not add extra lines around `head`, `body`, `/html`
-    "html.format.extraLiners": ""
+    "html.format.extraLiners": "",
+    // Change color of bottom bar
+    "workbench.colorCustomizations": {
+      "statusBar.background" : "#303030",
+      "statusBar.noFolderBackground" : "#222225",
+      "statusBar.debuggingBackground": "#511f1f"
+    }
 }
