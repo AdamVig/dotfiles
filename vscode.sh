@@ -39,6 +39,7 @@ declare -a extensions=(
     PeterJausovec.vscode-docker  # Docker support
     tootone.org-mode  # Emacs Org-Mode support
     yzhang.markdown-all-in-one  # Markdown keyboard shortcuts and formatting helpers
+    zhuangtongfa.material-theme  # Atom One theme
 )
 
 message "  Installing Visual Studio Code extensions... "

@@ -28,10 +28,18 @@
     "html.format.endWithNewline": true,
     // Do not add extra lines around `head`, `body`, `/html`
     "html.format.extraLiners": "",
-    // Change color of bottom bar
+
+    // Change theme
+    "workbench.colorTheme": "One Dark Pro",
+
     "workbench.colorCustomizations": {
-      "statusBar.background" : "#303030",
+      // Change color of bottom bar
+      "statusBar.background" : "#1a1d23",
       "statusBar.noFolderBackground" : "#222225",
-      "statusBar.debuggingBackground": "#511f1f"
+      "statusBar.debuggingBackground": "#511f1f",
+      
+      // Darken application frame
+      "activityBar.background": "#1a1d23",
+      "editor.background": "#222429"
     }
 }
