@@ -18,6 +18,12 @@
     "git.enableSmartCommit": true,
     "workbench.startupEditor": "none",
 
+    // Hide panes in Explorer
+    "explorer.openEditors.visible": 0,
+    "docker.showExplorer": false,
+    "gitlens.gitExplorer.enabled": false,
+    "markdown.extension.showExplorer": false,
+
     // Fix TypeScript syntax format every time the file is saved
     "tslint.autoFixOnSave": true,
 
