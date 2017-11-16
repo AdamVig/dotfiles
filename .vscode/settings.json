@@ -24,6 +24,9 @@
     "gitlens.gitExplorer.enabled": false,
     "markdown.extension.showExplorer": false,
 
+    // Remove leading zero from time
+    "clock.dateFormat": "h:MM TT",
+
     // Fix TypeScript syntax format every time the file is saved
     "tslint.autoFixOnSave": true,
 
@@ -47,5 +50,8 @@
       // Darken application frame
       "activityBar.background": "#1a1d23",
       "editor.background": "#222429"
-    }
-}
+    },
+
+    // Disable file delete confirmation
+    "explorer.confirmDelete": false
+  }
