@@ -22,6 +22,8 @@ ln -sf "$DIR/.bashrc" ~
 ln -sf "$DIR/.eslintrc.json" ~
 ln -sf "$DIR/.exports" ~
 ln -sf "$DIR/.git-template" ~
+ln -sf "$DIR/.profile" ~
+ln -sf "$DIR/.zprofile" ~
 ln -sf "$DIR/.zshrc" ~
 
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
