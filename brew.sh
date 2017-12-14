@@ -37,11 +37,14 @@ declare -a brew_formulas=(
 )
 
 declare -a cask_formulas=(
+    firefox
     google-chrome
     iterm2
     kap    # Screen recorder
+    lastpass
     qlmarkdown    # Markdown rendering in Finder quick look
     spotify
+    standard-notes
     visual-studio-code
 )
 
