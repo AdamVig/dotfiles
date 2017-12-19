@@ -3,6 +3,7 @@
     "editor.fontFamily": "Source Code Pro",
     "editor.fontLigatures": true,
     "editor.rulers": [120],
+    "editor.wordWrap": "on",
     // Disable minimap
     "editor.minimap.enabled": false,
     // Disable code folding
