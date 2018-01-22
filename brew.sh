@@ -61,10 +61,10 @@ declare -a cask_font_formulas=(
 if [ ! -f "`which brew`" ]; then
     message "  Installing Homebrew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-    message "  Tapping caskroom/fonts..."
-    brew tap caskroom/fonts
 fi
+
+message "  Tapping caskroom/fonts..."
+brew tap caskroom/fonts
 
 # Check if directory is writable, if not, take ownership of it
 if [ ! -w /usr/local ]; then
