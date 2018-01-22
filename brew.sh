@@ -102,3 +102,5 @@ for formula in "${cask_font_formulas[@]}"; do
 done
 
 message "Homebrew done."
+
+message "Run '/usr/local/Caskroom/lastpass/latest/LastPass Installer/LastPass Installer.app' to install the LastPass browser extension."
