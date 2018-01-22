@@ -43,6 +43,7 @@ declare -a cask_formulas=(
     kap    # Screen recorder
     lastpass
     qlmarkdown    # Markdown rendering in Finder quick look
+    sketch
     spotify
     standard-notes
     visual-studio-code
