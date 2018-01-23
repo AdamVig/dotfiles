@@ -35,7 +35,6 @@ declare -a extensions=(
     KnisterPeter.vscode-github  # GitHub integration
     lukehoban.go  # Golang support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
-    ms-vscode.csharp  # C# support
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
