@@ -44,6 +44,7 @@ declare -a cask_formulas=(
     lastpass
     qlmarkdown    # Markdown rendering in Finder quick look
     sketch
+    spectacle    # Window manager
     spotify
     standard-notes
     visual-studio-code
