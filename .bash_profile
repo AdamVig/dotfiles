@@ -4,6 +4,7 @@
 # Load files
 source ~/.aliases
 source ~/.exports
+source ~/.functions
 
 # Load file if exists, suppress error if missing
 source ~/.locals &> /dev/null

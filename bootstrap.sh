@@ -21,10 +21,13 @@ ln -sf "$DIR/.bash_profile" ~
 ln -sf "$DIR/.bashrc" ~
 ln -sf "$DIR/.eslintrc.json" ~
 ln -sf "$DIR/.exports" ~
+ln -sf "$DIR/.functions" ~
 ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.zprofile" ~
 ln -sf "$DIR/.zshrc" ~
+
+exit
 
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com

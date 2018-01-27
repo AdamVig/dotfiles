@@ -1,10 +1,2 @@
-explain_command() {
-    printf "CHEAT:\n";
-    cheat "$1";
-    printf "TLDR:\n";
-    tldr "$1";
-}
-alias what=explain_command
-
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
