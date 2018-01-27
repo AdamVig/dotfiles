@@ -4,3 +4,19 @@ what() {
     printf "TLDR:\n";
     tldr "$1";
 }
+
+update() {
+    printf "Updating Homebrew...\n";
+    brew update;
+    printf "Upgrading Homebrew formulas...\n";
+    brew upgrade;
+    printf "Upgrading Homebrew Cask formulas...\n";
+    brew cask upgrade;
+    printf "Updating npm...\n";
+    npm i -g npm;
+    printf "Updating global npm...\n";
+    npm update -g;
+    printf "Updating global pip packages...\n";
+    https://stackoverflow.com/a/3452888/1850656
+    pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install --update --user;
+}
