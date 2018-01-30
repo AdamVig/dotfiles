@@ -69,9 +69,9 @@ if [ ! -f "`which brew`" ]; then
 fi
 
 message "  Tapping caskroom/fonts..."
-brew tap caskroom/fonts
+brew tap caskroom/fonts &> /dev/null
 message "  Tapping caskroom/drivers..."
-brew tap caskroom/drivers
+brew tap caskroom/drivers &> /dev/null
 
 # Check if directory is writable, if not, take ownership of it
 if [ ! -w /usr/local ]; then
