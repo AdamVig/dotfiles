@@ -74,10 +74,13 @@ message "  Tapping caskroom/drivers..."
 brew tap caskroom/drivers &> /dev/null
 
 # Check if directory is writable, if not, take ownership of it
-if [ ! -w /usr/local ]; then
-    message "  Taking ownership of /usr/local..."
-    sudo chown -R "$(whoami)" /usr/local
-fi
+message "  Checking ownership of subdirectories of /usr/local..."
+for dir in $(brew --prefix)/*; do
+    if [ ! -w "$dir" ]; then
+        sudo chown -R "$(whoami)" "$dir"
+        message "    Took ownership of $dir"
+    fi
+done
 
 message "  Updating Homebrew package lists..."
 brew update &> /dev/null
