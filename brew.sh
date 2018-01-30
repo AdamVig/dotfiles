@@ -59,6 +59,10 @@ declare -a cask_font_formulas=(
     font-source-code-pro
 )
 
+declare -a cask_driver_formulas=(
+    logitech-options
+)
+
 if [ ! -f "`which brew`" ]; then
     message "  Installing Homebrew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -66,6 +70,8 @@ fi
 
 message "  Tapping caskroom/fonts..."
 brew tap caskroom/fonts
+message "  Tapping caskroom/drivers..."
+brew tap caskroom/drivers
 
 # Check if directory is writable, if not, take ownership of it
 if [ ! -w /usr/local ]; then
@@ -99,6 +105,14 @@ message "  Installing Brew Cask font formulas..."
 
 # Install Cask font formulas, suppress "already installed" warnings
 for formula in "${cask_font_formulas[@]}"; do
+    brew cask install "$formula" &> /dev/null
+    message "    Installed $formula"
+done
+
+message "  Installing Brew driver formulas..."
+
+# Install driver formulas, suppress "already installed" warnings
+for formula in "${cask_driver_formulas[@]}"; do
     brew cask install "$formula" &> /dev/null
     message "    Installed $formula"
 done
