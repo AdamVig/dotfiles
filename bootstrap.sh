@@ -27,8 +27,6 @@ ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.zprofile" ~
 ln -sf "$DIR/.zshrc" ~
 
-exit
-
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
 OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
