@@ -40,9 +40,6 @@ defaults write com.apple.dock mru-spaces -bool false
 sudo defaults write /Library/Preferences/.GlobalPreferences \
      MultipleSessionEnabled -bool NO
 
-# Disable interface sound effects
-defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
-
 # Reduce alert volume to 75%
 osascript -e 'set volume alert volume 75'
 
