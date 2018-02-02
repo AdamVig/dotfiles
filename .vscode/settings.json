@@ -28,9 +28,6 @@
     // Remove leading zero from time
     "clock.dateFormat": "h:MM TT",
 
-    // Fix TypeScript syntax format every time the file is saved
-    "tslint.autoFixOnSave": true,
-
     // Configure HTML formatter:
     // Wrap lines so they're shorter than 120 chars
     "html.format.wrapLineLength": 110,
