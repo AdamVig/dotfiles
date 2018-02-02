@@ -51,5 +51,8 @@
     },
 
     // Disable file delete confirmation
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+
+    // Increase terminal buffer
+    "terminal.integrated.scrollback": 5000
   }
