@@ -1,2 +1,5 @@
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
+
+# Alias Python 3 version of pip to the normal name
+alias pip='pip3'
