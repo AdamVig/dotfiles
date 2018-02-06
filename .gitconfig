@@ -1,10 +1,14 @@
 [core]
     pager = diff-so-fancy | less --tabs=4 -RFX
-    editor = code --reuse-windows --wait
+    editor = code --reuse-window --wait
 [push]
     # make `git push -u` default to `origin` and the current branch
 	default = current
 [diff]
     tool = default-difftool
 [difftool "default-difftool"]
-    cmd = code --wait --diff $LOCAL $REMOTE
+    cmd = code --reuse-window --wait --diff $LOCAL $REMOTE
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
