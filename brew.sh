@@ -1,15 +1,10 @@
 #!/bin/bash
 
-# Colorized output
-# $1: string to print, must be quoted
-# $2: optional, name of color, defaults to magenta
-function message() {
-    MAGENTA="\e[35m"
-    DEFAULT="\e[0m"
-    printf "$MAGENTA%s$DEFAULT\n" "$1"
-}
+MAGENTA="\e[35m"
 
-message "Setting up Homebrew..."
+source helpers.sh
+
+message "Setting up Homebrew..." "$MAGENTA"
 
 declare -a brew_formulas=(
     # Upgrade default command line tools
@@ -64,62 +59,62 @@ declare -a cask_driver_formulas=(
 )
 
 if [ ! -f "`which brew`" ]; then
-    message "  Installing Homebrew..."
+    message "  Installing Homebrew..." "$MAGENTA"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-message "  Tapping caskroom/fonts..."
+message "  Tapping caskroom/fonts..." "$MAGENTA"
 brew tap caskroom/fonts &> /dev/null
-message "  Tapping caskroom/drivers..."
+message "  Tapping caskroom/drivers..." "$MAGENTA"
 brew tap caskroom/drivers &> /dev/null
 
 # Check if directory is writable, if not, take ownership of it
-message "  Checking ownership of subdirectories of /usr/local..."
+message "  Checking ownership of subdirectories of /usr/local..." "$MAGENTA"
 for dir in $(brew --prefix)/*; do
     if [ ! -w "$dir" ]; then
         sudo chown -R "$(whoami)" "$dir"
-        message "    Took ownership of $dir"
+        message "    Took ownership of $dir" "$MAGENTA"
     fi
 done
 
-message "  Updating Homebrew package lists..."
+message "  Updating Homebrew package lists..." "$MAGENTA"
 brew update &> /dev/null
 
-message "  Upgrading installed packages..."
+message "  Upgrading installed packages..." "$MAGENTA"
 brew upgrade &> /dev/null
 
-message "  Installing Brew formulas..."
+message "  Installing Brew formulas..." "$MAGENTA"
 
 # Install Brew formulas, suppress "already installed" warnings
 for formula in "${brew_formulas[@]}"; do
     brew install "$formula" &> /dev/null
-    message "    Installed $formula"
+    message "    Installed $formula" "$MAGENTA"
 done
 
-message "  Installing Brew Cask formulas..."
+message "  Installing Brew Cask formulas..." "$MAGENTA"
 
 # Install Cask formulas, suppress "already installed" warnings
 for formula in "${cask_formulas[@]}"; do
     brew cask install "$formula" &> /dev/null
-    message "    Installed $formula"
+    message "    Installed $formula" "$MAGENTA"
 done
 
-message "  Installing Brew Cask font formulas..."
+message "  Installing Brew Cask font formulas..." "$MAGENTA"
 
 # Install Cask font formulas, suppress "already installed" warnings
 for formula in "${cask_font_formulas[@]}"; do
     brew cask install "$formula" &> /dev/null
-    message "    Installed $formula"
+    message "    Installed $formula" "$MAGENTA"
 done
 
-message "  Installing Brew driver formulas..."
+message "  Installing Brew driver formulas..." "$MAGENTA"
 
 # Install driver formulas, suppress "already installed" warnings
 for formula in "${cask_driver_formulas[@]}"; do
     brew cask install "$formula" &> /dev/null
-    message "    Installed $formula"
+    message "    Installed $formula" "$MAGENTA"
 done
 
-message "Homebrew done."
+message "Homebrew done." "$MAGENTA"
 
-message "Run '/usr/local/Caskroom/lastpass/latest/LastPass Installer/LastPass Installer.app' to install the LastPass browser extension."
+message "Run '/usr/local/Caskroom/lastpass/latest/LastPass Installer/LastPass Installer.app' to install the LastPass browser extension." "$MAGENTA"

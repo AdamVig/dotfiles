@@ -1,13 +1,6 @@
 #!/bin/bash
 
-# Colorized output
-# $1: string to print, must be quoted
-# $2: optional, name of color, defaults to blue
-function message() {
-    BLUE="\e[34m"
-    DEFAULT="\e[0m"
-    printf "$BLUE%s$DEFAULT\n" "$1"
-}
+source helpers.sh
 
 # Ask for password at start
 sudo -v
