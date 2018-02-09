@@ -49,78 +49,9 @@ elif [[ $(uname) == 'Linux' ]]; then
     "$DIR/apt.sh"
 fi
 
-message "Installing npm tools..."
-npm_packages=(
-    bower    # Frontend package manager
-    diff-so-fancy    # Git diff prettifier
-    emoj    # Emoji search engine
-    eslint    # JavaScript style linter
-    eslint-config-defaults    # Baseline ESLint settings
-    fileicon    # Manage custom macOS file icons
-    grunt    # Task runner
-    gulp    # Task runner
-    jshint    # JavaScript linter
-    tldr    # Simple Bash command docs; used by 'what' alias
-)
-
-for package in "${npm_packages[@]}"; do
-    npm install -g "$package" &> /dev/null
-    message "  Installed $package"    
-done
-message "npm done."
-
-message "Installing pip tools..."
-pip_packages=(
-    pip
-    cheat    # Bash command cheatsheets
-    grip    # GitHub README instant preview
-    httpie    # Better curl
-)
-
-for package in "${pip_packages[@]}"; do
-    pip install --upgrade --user "$package" &> /dev/null
-    message "  Installed $package"    
-done
-message "Pip done."
-
-message "Installing golang tools..."
-go_packages=(
-    github.com/acroca/go-symbols  # Extract Go symbols as JSON
-    github.com/cweill/gotests/...    # Generate tests
-    github.com/fatih/gomodifytags  # Modify/update field tags in structs
-    github.com/golang/lint/golint  # Go linter
-    github.com/josharian/impl  # Generate method stubs for an interface
-    github.com/nsf/gocode  # Autocomplete
-    github.com/ramya-rao-a/go-outline  # Extract Go declarations as JSON
-    github.com/rogpeppe/godef  # Print where symbols are defined
-    github.com/sqs/goreturns  # Add zero values to return statements to save time
-    github.com/tpng/gopkgs  # Faster `go list all`
-    golang.org/x/tools/cmd/godoc  # Go documentation tool
-    golang.org/x/tools/cmd/gorename  # Rename identifiers
-    golang.org/x/tools/cmd/guru  # Answers questions about Go code
-)
-
-for package in "${go_packages[@]}"; do
-    go get -u "$package" &> /dev/null
-    message "  Installed $package"
-done
-message "Golang done."
-
-message "Configuring git..."
-# If gitconfig does not exist already, create one
-if [ ! -e ~/.gitconfig ]; then
-    message "  Copying gitconfig to home directory..."
-    cp "$DIR/.gitconfig" ~
-    
-    message "  Configuring Git..."
-    read -p "  Full name: " NAME
-    read -p "  Email address: " EMAIL
-    read -p "  Github username: " GITHUB
-
-    # Only set values if they are non-empty
-    [[ -n "$NAME" ]] && git config --global user.name "$NAME"
-    [[ -n "$EMAIL" ]] && git config --global user.email "$EMAIL"
-    [[ -n "$GITHUB" ]] && git config --global github.user "$GITHUB"
-fi
+bash git.sh
+bash golang.sh
+bash npm.sh
+bash pip.sh
 
 message "Done. Start a new login shell or run 'source .zshrc'."
