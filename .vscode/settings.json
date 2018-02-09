@@ -54,5 +54,8 @@
     "explorer.confirmDelete": false,
 
     // Increase terminal buffer
-    "terminal.integrated.scrollback": 5000
+    "terminal.integrated.scrollback": 5000,
+
+    // Enable Git commit message character counter
+    "git.inputValidation": "always"
   }
