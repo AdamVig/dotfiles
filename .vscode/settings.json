@@ -56,6 +56,9 @@
     // Increase terminal buffer
     "terminal.integrated.scrollback": 5000,
 
+    // Enable commands like opt+b and opt+f for moving cursor
+    "terminal.integrated.macOptionIsMeta": true,
+
     // Enable Git commit message character counter
     "git.inputValidation": "always"
   }
