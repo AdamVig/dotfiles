@@ -47,5 +47,9 @@
         "command": "workbench.action.terminal.focusPrevious",
         "key": "ctrl+shift+tab",
         "when": "terminalFocus"
-    }
+    },
+    {
+        "command": "-workbench.action.quickOpenView",
+        "key": "ctrl+q"
+    },
 ]
