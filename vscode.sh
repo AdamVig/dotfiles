@@ -23,7 +23,6 @@ declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
     christian-kohler.path-intellisense  # File path autocomplete
     Compulim.vscode-clock   # Statusbar clock
-    DavidAnson.vscode-markdownlint  # Markdown linting
     dbaeumer.vscode-eslint  # JavaScript linter
     donjayamanne.python  # Python support
     eamodio.gitlens  # Advanced Git integration
