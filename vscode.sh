@@ -1,20 +1,15 @@
 #!/bin/bash
 
-# Colorized output
-# $1: string to print, must be quoted
-# $2: optional, name of color, defaults to yellow
-function message() {
-    YELLOW="\e[33m"
-    DEFAULT="\e[0m"
-    printf "$YELLOW%s$DEFAULT\n" "$1"
-}
+YELLOW="\e[33m"
+
+source helpers.sh
 
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
-message "Setting up Visual Studio Code..."
+message "Setting up Visual Studio Code..." "$YELLOW"
 
-message "  Symlinking Visual Studio Code settings... "
+message "  Symlinking Visual Studio Code settings... " "$YELLOW"
 ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
 ln -sf "$DIR/.vscode/snippets/" ~/Library/Application\ Support/Code/User/snippets
@@ -42,10 +37,10 @@ declare -a extensions=(
     zhuangtongfa.material-theme  # Atom One theme
 )
 
-message "  Installing Visual Studio Code extensions... "
+message "  Installing Visual Studio Code extensions... " "$YELLOW"
 for extension in "${extensions[@]}"; do
     code --install-extension "$extension" &> /dev/null
-    message "    Installed $extension"
+    message "    Installed $extension" "$YELLOW"
 done
 
-message "Visual Studio Code done."
+message "Visual Studio Code done." "$YELLOW"
