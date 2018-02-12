@@ -36,6 +36,7 @@ declare -a extensions=(
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
+    timonwong.shellcheck  # Shell script linting
     tootone.org-mode  # Emacs Org-Mode support
     yzhang.markdown-all-in-one  # Markdown keyboard shortcuts and formatting helpers
     zhuangtongfa.material-theme  # Atom One theme

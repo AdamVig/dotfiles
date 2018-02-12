@@ -59,5 +59,11 @@
     "terminal.integrated.macOptionIsMeta": true,
 
     // Enable Git commit message character counter
-    "git.inputValidation": "always"
+    "git.inputValidation": "always",
+
+
+    "shellcheck.customArgs": [
+      // Allow 'source' outside of input files
+      "-external-sources"
+    ]
   }

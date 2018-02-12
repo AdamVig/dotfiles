@@ -21,6 +21,7 @@ declare -a brew_formulas=(
     markdown
     mobile-shell
     nodenv    # Node environment manager
+    shellcheck    # Shell script linter
     ssh-copy-id
     z
 
