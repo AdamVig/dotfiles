@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YELLOW="\e[33m"
+YELLOW="33"
 
 source helpers.sh
 

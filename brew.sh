@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAGENTA="\e[35m"
+MAGENTA="35"
 
 source helpers.sh
 
