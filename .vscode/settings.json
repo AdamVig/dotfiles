@@ -65,5 +65,8 @@
     "shellcheck.customArgs": [
       // Allow 'source' outside of input files
       "-external-sources"
-    ]
+    ],
+
+    // Disable confirmation window on drag and drop in file explorer
+    "explorer.confirmDragAndDrop": false
   }
