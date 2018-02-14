@@ -19,7 +19,7 @@ declare -a extensions=(
     christian-kohler.path-intellisense  # File path autocomplete
     Compulim.vscode-clock   # Statusbar clock
     dbaeumer.vscode-eslint  # JavaScript linter
-    donjayamanne.python  # Python support
+    ms-python.python  # Python support
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
