@@ -17,6 +17,7 @@ declare -a brew_formulas=(
     # Utilities
     colordiff
     emacs
+    grv    # Git Repository Viewer
     hub
     jq    # JSON processor
     markdown
