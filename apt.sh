@@ -1,26 +1,32 @@
 #!/bin/sh
 
+message "Setting up apt..."
+
 # Refresh apt
 sudo apt-get update
 sudo apt-get upgrade -y
 
-# Install Node.js and npm
-sudo apt-get remove --purge node  # Remove old version if installed
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo ln -s /usr/bin/nodejs /usr/bin/node  # Make the binary available as "node"
+declare -a apt_packages=(
+    # tools
+    emacs
+    httpie
+    mosh
+    python-pip
+    zsh
 
-# Configure npm global package directory
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
+    # languages
+    golang-go
+)
 
-sudo apt-get install -y python-pip
+message "  Installing packages..."
+for package in "${apt_packages[@]}"; do
+    set +e
+    # Attempt to install package; log message on success, log warning on failure
+    sudo apt-get install -y "$package" &> /dev/null && \
+        message "    Installed $package" || \
+        warn "package $package failed to install"
+    set -e
+done
+message "  Done installing packages."
 
-# Install tools
-sudo apt-get install -y emacs
-sudo apt-get install -y httpie
-sudo apt-get install -y mosh
-sudo apt-get install -y zsh
-
-# Install languages
-sudo apt-get install -y golang-go
+message "Done setting up apt."

@@ -47,6 +47,7 @@ if [[ $(uname) == 'Darwin' ]]; then
 # Run Linux install scripts
 elif [[ $(uname) == 'Linux' ]]; then
     "$DIR/apt.sh"
+    "$DIR/linux.sh"
 fi
 
 "$DIR/git.sh"
