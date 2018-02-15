@@ -68,5 +68,8 @@
     ],
 
     // Disable confirmation window on drag and drop in file explorer
-    "explorer.confirmDragAndDrop": false
+    "explorer.confirmDragAndDrop": false,
+
+    // Set path to Python interpreter
+    "python.pythonPath": "/usr/local/bin/python3"
   }
