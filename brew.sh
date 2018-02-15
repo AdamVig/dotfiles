@@ -6,6 +6,9 @@ source helpers.sh
 
 message "Setting up Homebrew..." "$MAGENTA"
 
+# Refresh existing sudo session or start a new one
+sudo --validate
+
 declare -a brew_formulas=(
     # Upgrade default command line tools
     bash
@@ -35,6 +38,7 @@ declare -a brew_formulas=(
 )
 
 declare -a cask_formulas=(
+    # applications
     firefox
     google-chrome
     iterm2
@@ -46,18 +50,16 @@ declare -a cask_formulas=(
     spotify
     standard-notes
     visual-studio-code
-)
 
-declare -a cask_font_formulas=(
+    # fonts
     font-blokk-neue
     font-fira-code
     font-lato
     font-noto-sans
     font-open-sans
     font-source-code-pro
-)
 
-declare -a cask_driver_formulas=(
+    # drivers
     logitech-options
 )
 
@@ -84,38 +86,24 @@ message "  Updating Homebrew package lists..." "$MAGENTA"
 brew update &> /dev/null
 
 message "  Upgrading installed packages..." "$MAGENTA"
-brew upgrade &> /dev/null
+brew upgrade 1> /dev/null
 
 message "  Installing Brew formulas..." "$MAGENTA"
 
 # Install Brew formulas, suppress "already installed" warnings
 for formula in "${brew_formulas[@]}"; do
-    brew install "$formula" &> /dev/null
-    message "    Installed $formula" "$MAGENTA"
+    brew install "$formula" &> /dev/null && \
+        message "    Installed $formula" "$MAGENTA" || \
+        warn "formula $formula failed to install"
 done
 
 message "  Installing Brew Cask formulas..." "$MAGENTA"
 
 # Install Cask formulas, suppress "already installed" warnings
 for formula in "${cask_formulas[@]}"; do
-    brew cask install "$formula" &> /dev/null
-    message "    Installed $formula" "$MAGENTA"
-done
-
-message "  Installing Brew Cask font formulas..." "$MAGENTA"
-
-# Install Cask font formulas, suppress "already installed" warnings
-for formula in "${cask_font_formulas[@]}"; do
-    brew cask install "$formula" &> /dev/null
-    message "    Installed $formula" "$MAGENTA"
-done
-
-message "  Installing Brew driver formulas..." "$MAGENTA"
-
-# Install driver formulas, suppress "already installed" warnings
-for formula in "${cask_driver_formulas[@]}"; do
-    brew cask install "$formula" &> /dev/null
-    message "    Installed $formula" "$MAGENTA"
+    brew cask install "$formula" &> /dev/null && \
+        message "    Installed $formula" "$MAGENTA" || \
+        warn "formula $formula failed to install"
 done
 
 message "Homebrew done." "$MAGENTA"
