@@ -10,6 +10,7 @@ declare -a apt_packages=(
     # tools
     emacs
     httpie
+    jq    # JSON processor
     mosh
     python-pip
     zsh

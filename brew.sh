@@ -18,6 +18,7 @@ declare -a brew_formulas=(
     colordiff
     emacs
     hub
+    jq    # JSON processor
     markdown
     mobile-shell
     nodenv    # Node environment manager
