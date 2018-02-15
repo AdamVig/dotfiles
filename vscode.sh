@@ -12,7 +12,6 @@ message "Setting up Visual Studio Code..." "$CYAN"
 message "  Symlinking Visual Studio Code settings... " "$CYAN"
 ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
-ln -sf "$DIR/.vscode/snippets/" ~/Library/Application\ Support/Code/User/snippets
 
 declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
