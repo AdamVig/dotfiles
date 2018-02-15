@@ -40,7 +40,7 @@ message "Zsh done."
 
 message "Running OS-specific scripts..."
 if [[ $(uname) == 'Darwin' ]]; then
-    "$DIR/.macos"
+    "$DIR/macos.sh"
     "$DIR/brew.sh"
     "$DIR/vscode.sh"
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# OS X CONFIGURATION
-
 # Disable startup tone
 sudo nvram SystemAudioVolume=" "
 
