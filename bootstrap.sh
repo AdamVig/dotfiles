@@ -49,9 +49,9 @@ elif [[ $(uname) == 'Linux' ]]; then
     "$DIR/apt.sh"
 fi
 
-bash git.sh
-bash golang.sh
-bash npm.sh
-bash pip.sh
+"$DIR/git.sh"
+"$DIR/golang.sh"
+"$DIR/npm.sh"
+"$DIR/pip.sh"
 
 message "Done. Start a new login shell or run 'source .zshrc'."
