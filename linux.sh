@@ -43,8 +43,14 @@ message "Installing nodenv..."
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 cd ~/.nodenv && src/configure && make -C src
 
-# Install node-build to enable 'nodenv install' functionality
+# Plugin for installing versions of Node
 git clone https://github.com/nodenv/node-build.git $(nodenv root)/plugins/node-build
+
+# Plugin for auto-installing list of npm packages
+git clone https://github.com/nodenv/nodenv-default-packages.git $(nodenv root)/plugins/nodenv-default-packages
+
+# Plugin for auto-rehashing when a global package is installed or uninstalled
+git clone https://github.com/nodenv/nodenv-package-rehash.git "$(nodenv root)"/plugins/nodenv-package-rehash
 message "Done installing nodenv."
 
 message "Linux setup done."

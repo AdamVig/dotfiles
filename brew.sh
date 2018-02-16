@@ -26,6 +26,8 @@ declare -a brew_formulas=(
     markdown
     mobile-shell
     nodenv    # Node environment manager
+    nodenv/nodenv/nodenv-default-packages    # Plugin for auto-installing list of npm packages
+    nodenv/nodenv/nodenv-package-rehash    # Plugin for auto-rehashing when a global package is installed or uninstalled
     shellcheck    # Shell script linter
     ssh-copy-id
     z
