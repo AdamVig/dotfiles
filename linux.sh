@@ -39,5 +39,12 @@ fi
 
 message "Done installing Git Repository Viewer."
 
+message "Installing nodenv..."
+git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+cd ~/.nodenv && src/configure && make -C src
+
+# Install node-build to enable 'nodenv install' functionality
+git clone https://github.com/nodenv/node-build.git $(nodenv root)/plugins/node-build
+message "Done installing nodenv."
 
 message "Linux setup done."
