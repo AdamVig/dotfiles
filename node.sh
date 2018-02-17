@@ -7,7 +7,7 @@ source helpers.sh
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
-message "Installing node using nodenv..."
+message "Setting up Node..."
 
 message "  Symlinking default packages file..."
 ln -sf "$DIR/npm-default-packages" "$(nodenv root)/default-packages"
@@ -18,11 +18,13 @@ ln -sf "$DIR/npm-default-packages" "$(nodenv root)/default-packages"
 # 4. Remove the leading spaces
 LATEST_NODE_VERSION=$(nodenv install --list | grep '^\s\s[0-9]' | tail -1 | xargs)
 if [[ -n "$LATEST_NODE_VERSION" ]]; then
-    message "  Latest Node version is $LATEST_NODE_VERSION"
-    nodenv install "$LATEST_NODE_VERSION" 1> /dev/null
-    nodenv global "$LATEST_NODE_VERSION" 1> /dev/null
+    message "  Installing Node $LATEST_NODE_VERSION and default npm packages..."
+    # Feed "yes" to the command in case it prompts to reinstall
+    yes | nodenv install "$LATEST_NODE_VERSION" &> /dev/null
+    nodenv global "$LATEST_NODE_VERSION" &> /dev/null
+    message "  Done installing Node and default npm packages."
 else
     warn "  could not get latest Node version; installation failed"
 fi
 
-message "Done installing node."
+message "Done setting up Node."
