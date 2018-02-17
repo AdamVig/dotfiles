@@ -52,7 +52,7 @@ fi
 
 "$DIR/git.sh"
 "$DIR/golang.sh"
-"$DIR/npm.sh"
+"$DIR/node.sh"
 "$DIR/pip.sh"
 
 message "Done. Start a new login shell or run 'source .zshrc'."
