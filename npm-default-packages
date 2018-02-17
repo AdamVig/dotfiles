@@ -1,9 +1,6 @@
 # https://github.com/nodenv/nodenv-default-packages
 # List of npm packages to install by default in any new version of Node installed by Nodenv
 
-# Frontend package manager
-bower
-
 # Git diff prettifier
 diff-so-fancy
 
@@ -23,13 +20,7 @@ fileicon
 git-run
 
 # Task runner
-grunt
-
-# Task runner
 gulp
-
-# JavaScript linter
-jshint
 
 # update npm
 npm
