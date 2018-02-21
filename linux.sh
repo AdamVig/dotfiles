@@ -42,12 +42,20 @@ git clone https://github.com/nodenv/nodenv-default-packages.git $(nodenv root)/p
 git clone https://github.com/nodenv/nodenv-package-rehash.git "$(nodenv root)"/plugins/nodenv-package-rehash
 message "Done installing nodenv."
 
-message "Linking binaries to their common names..."
+message "Installing Keybase..."
+# See https://keybase.io/docs/the_app/install_linux
+cd /tmp
+curl -O https://prerelease.keybase.io/keybase_amd64.deb
+sudo dpkg -i keybase_amd64.deb
+sudo apt-get install -f
+run_keybase
+cd
+message "Done installing Keybase."
 
-# https://askubuntu.com/a/748059
+message "Linking binaries to their common names..."
+# See https://askubuntu.com/a/748059
 sudo apt remove -y gnupg
 sudo ln -s /usr/bin/gpg2 /usr/bin/gpg
-
 message "Done linking binaries."
 
 message "Linux setup done."

@@ -7,10 +7,10 @@ MAGENTA="35"
 
 source "$DIR/helpers.sh"
 
-message "Setting up Homebrew..." "$MAGENTA"
-
 # Refresh existing sudo session or start a new one
 sudo --validate
+
+message "Setting up Homebrew..." "$MAGENTA"
 
 declare -a brew_formulas=(
     # Upgrade default command line tools
@@ -47,6 +47,7 @@ declare -a cask_formulas=(
     firefox
     google-chrome
     kap    # Screen recorder
+    keybase
     lastpass
     qlmarkdown    # Markdown rendering in Finder quick look
     sketch
