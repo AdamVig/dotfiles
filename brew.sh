@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
 MAGENTA="35"
 
-source helpers.sh
+source "$DIR/helpers.sh"
 
 message "Setting up Homebrew..." "$MAGENTA"
 

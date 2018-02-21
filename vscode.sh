@@ -1,11 +1,11 @@
 #!/bin/bash
 
-CYAN="36"
-
-source helpers.sh
-
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+CYAN="36"
+
+source "$DIR/helpers.sh"
 
 message "Setting up Visual Studio Code..." "$CYAN"
 

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source helpers.sh
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source "$DIR/helpers.sh"
 
 # Ask for password at start
 sudo -v
-
-# Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
 message "Symlinking dotfiles into your home directory..."
 ln -sf "$DIR/.aliases" ~

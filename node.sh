@@ -2,7 +2,10 @@
 
 # This script must run after the OS-specific scripts because it depends on Nodenv.
 
-source helpers.sh
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source "$DIR/helpers.sh"
 
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"

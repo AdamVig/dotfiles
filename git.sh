@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source helpers.sh
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source "$DIR/helpers.sh"
 
 message "Configuring git..."
 # If gitconfig does not exist already, create one
