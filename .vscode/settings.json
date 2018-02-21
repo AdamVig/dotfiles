@@ -71,5 +71,8 @@
     "explorer.confirmDragAndDrop": false,
 
     // Set path to Python interpreter
-    "python.pythonPath": "/usr/local/bin/python3"
+    "python.pythonPath": "/usr/local/bin/python3",
+
+    // Periodically run Git Fetch
+    "git.autofetch": true
   }
