@@ -46,6 +46,7 @@ declare -a cask_formulas=(
     # applications
     firefox
     google-chrome
+    gpg-suite    # Add GPG keys to macOS Keychain
     kap    # Screen recorder
     keybase
     lastpass
