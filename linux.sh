@@ -39,4 +39,12 @@ git clone https://github.com/nodenv/nodenv-default-packages.git $(nodenv root)/p
 git clone https://github.com/nodenv/nodenv-package-rehash.git "$(nodenv root)"/plugins/nodenv-package-rehash
 message "Done installing nodenv."
 
+message "Linking binaries to their common names..."
+
+# https://askubuntu.com/a/748059
+sudo apt remove -y gnupg
+sudo ln -s /usr/bin/gpg2 /usr/bin/gpg
+
+message "Done linking binaries."
+
 message "Linux setup done."

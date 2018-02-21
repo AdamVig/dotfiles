@@ -14,6 +14,7 @@ declare -a brew_formulas=(
     bash
     curl
     git
+    gpg
     wget
     zsh
 

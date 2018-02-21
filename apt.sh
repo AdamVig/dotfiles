@@ -9,6 +9,7 @@ sudo apt-get upgrade -y
 declare -a apt_packages=(
     # tools
     emacs
+    gnupg2
     httpie
     jq    # JSON processor
     mosh

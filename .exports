@@ -24,5 +24,8 @@ export ZSH=~/.oh-my-zsh
 export VISUAL=emacs;
 export EDITOR=emacs;
 
+# Allow GPG to make prompts
+export GPG_TTY=$(tty)
+
 # Fix ansi-term support in emacs
 export TERM=xterm-256color
