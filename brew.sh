@@ -43,7 +43,6 @@ declare -a cask_formulas=(
     # applications
     firefox
     google-chrome
-    iterm2
     kap    # Screen recorder
     lastpass
     qlmarkdown    # Markdown rendering in Finder quick look

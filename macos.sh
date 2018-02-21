@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Get script directory (allows running from outside `dotfiles` dir)
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# Copy terminal settings (symlinking does not work because Terminal.app overwrites the file on close)
+cp "$DIR/apple-terminal-settings.plist" ~/Library/Preferences/com.apple.Terminal.plist
+
 # Disable startup tone
 sudo nvram SystemAudioVolume=" "
 
