@@ -51,6 +51,7 @@ declare -a cask_formulas=(
     keybase
     lastpass
     qlmarkdown    # Markdown rendering in Finder quick look
+    signal    # Encrypted messaging
     sketch
     spectacle    # Window manager
     spotify

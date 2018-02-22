@@ -2,11 +2,20 @@
 
 message "Setting up apt..."
 
+message "Adding apt repositories..."
+curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+message "Done adding apt repositories."
+
 # Refresh apt
 sudo apt-get update
 sudo apt-get upgrade -y
 
+
 declare -a apt_packages=(
+    # applications
+    signal-desktop   # Encrypted messaging
+
     # tools
     emacs
     gnupg2
