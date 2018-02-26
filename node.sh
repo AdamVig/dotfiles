@@ -23,7 +23,7 @@ LATEST_NODE_VERSION=$(nodenv install --list | grep '^\s\s[0-9]' | tail -1 | xarg
 if [[ -n "$LATEST_NODE_VERSION" ]]; then
     message "  Installing Node $LATEST_NODE_VERSION and default npm packages..."
     # Feed "yes" to the command in case it prompts to reinstall
-    yes | nodenv install "$LATEST_NODE_VERSION" &> /dev/null
+    yes | nodenv install "$LATEST_NODE_VERSION" &> /dev/null || true
     nodenv global "$LATEST_NODE_VERSION" &> /dev/null
     message "  Done installing Node and default npm packages."
 else
