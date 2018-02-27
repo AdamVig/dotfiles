@@ -4,6 +4,9 @@
 [push]
     # make `git push -u` default to `origin` and the current branch
 	default = current
+[pull]
+    # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
+    rebase = true
 [diff]
     tool = default-difftool
 [difftool "default-difftool"]
