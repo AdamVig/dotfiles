@@ -74,5 +74,8 @@
     "python.pythonPath": "/usr/local/bin/python3",
 
     // Periodically run Git Fetch
-    "git.autofetch": true
+    "git.autofetch": true,
+    
+    // Languages to validate with ESLint plugin
+    "eslint.validate": ["html", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "vue-html"]
   }
