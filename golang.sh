@@ -23,7 +23,8 @@ go_packages=(
 )
 
 for package in "${go_packages[@]}"; do
-    go get -u "$package" &> /dev/null
-    message "  Installed $package"
+    go get -u "$package" &> /dev/null && \
+        message "    Installed $package" || \
+        warn "package $package failed to install"
 done
 message "Golang done."
