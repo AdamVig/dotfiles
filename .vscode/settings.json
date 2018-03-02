@@ -77,5 +77,5 @@
     "git.autofetch": true,
     
     // Languages to validate with ESLint plugin
-    "eslint.validate": ["html", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "vue-html"]
+    "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "vue-html"]
   }
