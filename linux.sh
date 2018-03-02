@@ -52,6 +52,10 @@ run_keybase
 cd
 message "Done installing Keybase."
 
+message "Installing Golang Delve debugger..."
+go get -u github.com/derekparker/delve/cmd/dlv
+message "Done installing Golang Delve debugger."
+
 message "Linking binaries to their common names..."
 # See https://askubuntu.com/a/748059
 sudo apt remove -y gnupg
