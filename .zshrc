@@ -2,7 +2,14 @@ source ~/.bash_profile
 
 ZSH_THEME="adamvig"
 
-plugins=(git npm python z zsh-syntax-highlighting)
+plugins=(
+    git
+    ng
+    npm
+    python
+    z
+    zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
