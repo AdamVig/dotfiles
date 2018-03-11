@@ -85,5 +85,10 @@
       "vue",
       "vue-html"
     ],
-    "gitlens.keymap": "alternate"
+    "gitlens.keymap": "alternate",
+
+    // Do not lint Markdown files
+    "stylelint.configOverrides": {
+      "ignoreFiles": "*.md"
+    }
   }
