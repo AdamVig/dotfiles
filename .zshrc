@@ -17,3 +17,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Remove alias for "Git remote view" so it can be used for Git Repository Viewer instead
 unalias grv
+
+# Remove alias for "Git remote" so it can be used for Git-run instead
+unalias gr
