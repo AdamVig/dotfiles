@@ -22,6 +22,7 @@ declare -a extensions=(
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
+    fabiospampinato.vscode-terminals  # terminal manager
     formulahendry.auto-close-tag  # close HTML tags automatically
     formulahendry.auto-rename-tag  # edit matching pairs of HTML tags at the same time
     KnisterPeter.vscode-github  # GitHub integration
