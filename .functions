@@ -13,7 +13,7 @@ update() {
     brew upgrade;
 
     printf "Upgrading Homebrew Cask formulas...\n";
-    brew cask upgrade;
+    brew cask upgrade --greedy | true;
 
     printf "Updating npm...\n";
     npm i -g npm;
