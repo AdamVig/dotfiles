@@ -85,7 +85,7 @@
       "vue",
       "vue-html"
     ],
-    "gitlens.keymap": "alternate",
+    "gitlens.keymap": "chorded",
 
     // Do not lint Markdown files
     "stylelint.configOverrides": {

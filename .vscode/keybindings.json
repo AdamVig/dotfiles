@@ -52,4 +52,9 @@
         "command": "-workbench.action.quickOpenView",
         "key": "ctrl+q"
     },
+    // Override GitLens shortcut and restore to default
+    {
+        "command": "workbench.view.scm",
+        "key": "ctrl+shift+g",
+    },
 ]
