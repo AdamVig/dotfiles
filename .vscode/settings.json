@@ -85,10 +85,14 @@
       "vue",
       "vue-html"
     ],
-    "gitlens.keymap": "chorded",
-
+    
     // Do not lint Markdown files
     "stylelint.configOverrides": {
       "ignoreFiles": "*.md"
+    },
+
+    "gitlens.keymap": "chorded",
+    "gitlens.advanced.messages": {
+      "suppressShowKeyBindingsNotice": true
     }
   }
