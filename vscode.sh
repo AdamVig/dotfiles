@@ -31,6 +31,7 @@ declare -a extensions=(
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
+    QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
     stringham.move-ts  # move file and auto update imports in TypeScript
     timonwong.shellcheck  # Shell script linting
     tootone.org-mode  # Emacs Org-Mode support
