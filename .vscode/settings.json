@@ -49,6 +49,9 @@
       "editor.background": "#222429"
     },
 
+    // Hide the feedback smiley in the bar at the bottom
+    "workbench.statusBar.feedback.visible": false,
+
     // Disable file delete confirmation
     "explorer.confirmDelete": false,
 
