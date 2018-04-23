@@ -8,7 +8,8 @@ source "$DIR/helpers.sh"
 message "Installing golang tools..."
 go_packages=(
     github.com/acroca/go-symbols  # Extract Go symbols as JSON
-    github.com/cweill/gotests/...    # Generate tests
+    github.com/cweill/gotests/...  # Generate tests
+    github.com/derekparker/delve/cmd/dlv  # Debugger
     github.com/fatih/gomodifytags  # Modify/update field tags in structs
     github.com/golang/lint/golint  # Go linter
     github.com/josharian/impl  # Generate method stubs for an interface

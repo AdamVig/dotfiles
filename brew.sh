@@ -24,7 +24,6 @@ declare -a brew_formulas=(
     # Utilities
     colordiff
     emacs
-    go-delve/delve/delve    # Golang interactive debugger
     grv    # Git Repository Viewer
     hub
     jq    # JSON processor
