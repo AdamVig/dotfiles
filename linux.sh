@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 source "$DIR/helpers.sh"
 
@@ -33,10 +33,10 @@ git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 cd ~/.nodenv && src/configure && make -C src
 
 # Plugin for installing versions of Node
-git clone https://github.com/nodenv/node-build.git $(nodenv root)/plugins/node-build
+git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build
 
 # Plugin for auto-installing list of npm packages
-git clone https://github.com/nodenv/nodenv-default-packages.git $(nodenv root)/plugins/nodenv-default-packages
+git clone https://github.com/nodenv/nodenv-default-packages.git "$(nodenv root)"/plugins/nodenv-default-packages
 
 # Plugin for auto-rehashing when a global package is installed or uninstalled
 git clone https://github.com/nodenv/nodenv-package-rehash.git "$(nodenv root)"/plugins/nodenv-package-rehash
@@ -44,12 +44,12 @@ message "Done installing nodenv."
 
 message "Installing Keybase..."
 # See https://keybase.io/docs/the_app/install_linux
-cd /tmp
+cd /tmp || exit
 curl -O https://prerelease.keybase.io/keybase_amd64.deb
 sudo dpkg -i keybase_amd64.deb
 sudo apt-get install -f
 run_keybase
-cd
+cd || exit
 message "Done installing Keybase."
 
 message "Installing Golang Delve debugger..."

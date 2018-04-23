@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 CYAN="36"
 

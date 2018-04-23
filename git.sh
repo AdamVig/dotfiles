@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 source "$DIR/helpers.sh"
 
@@ -12,9 +12,9 @@ if [ ! -e ~/.gitconfig ]; then
     cp "$DIR/.gitconfig" ~
     
     message "  Configuring Git..."
-    read -p "  Full name: " NAME
-    read -p "  Email address: " EMAIL
-    read -p "  Github username: " GITHUB
+    read -r -p "  Full name: " NAME
+    read -r -p "  Email address: " EMAIL
+    read -r -p "  Github username: " GITHUB
 
     # Only set values if they are non-empty
     [[ -n "$NAME" ]] && git config --global user.name "$NAME"

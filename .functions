@@ -1,26 +1,28 @@
+#!/bin/bash
+
 what() {
-    printf "CHEAT:\n";
+    printf "%s\\n" "CHEAT:";
     cheat "$1";
-    printf "TLDR:\n";
+    printf "%s\\n" "TLDR:";
     tldr "$1";
 }
 
 update() {
-    printf "Updating Homebrew...\n";
+    printf "%s\\n" "Updating Homebrew...";
     brew update;
 
-    printf "Upgrading Homebrew formulas...\n";
+    printf "%s\\n" "Upgrading Homebrew formulas...";
     brew upgrade;
 
-    printf "Upgrading Homebrew Cask formulas...\n";
+    printf "%s\\n" "Upgrading Homebrew Cask formulas...";
     brew cask upgrade --greedy | true;
 
-    printf "Updating npm...\n";
+    printf "%s\\n" "Updating npm...";
     npm i -g npm;
 
-    printf "Updating global npm...\n";
+    printf "%s\\n" "Updating global npm...";
     npm update -g;
 
-    printf "Updating global pip packages...\n";
-    pip3 install --upgrade --user `pip3 list --outdated --user --format legacy | awk '{ print $1}'`
+    printf "%s\\n" "Updating global pip packages...";
+    pip3 install --upgrade --user "$(pip3 list --outdated --user --format legacy | awk '{ print $1}')"
 }

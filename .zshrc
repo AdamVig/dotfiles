@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 source ~/.bash_profile
 
 ZSH_THEME="adamvig"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 MAGENTA="35"
 
@@ -71,7 +71,7 @@ declare -a cask_formulas=(
     logitech-options
 )
 
-if [ ! -f "`which brew`" ]; then
+if [ ! -f "$(which brew)" ]; then
     message "  Installing Homebrew..." "$MAGENTA"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi

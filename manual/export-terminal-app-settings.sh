@@ -5,7 +5,7 @@
 # settings every time the app is closed.
 
 # Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 source "$DIR/../helpers.sh"
 

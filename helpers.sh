@@ -16,7 +16,7 @@ message() {
     # Use color from $2 if provided, otherwise use blue
     COLOR=${2:-$BLUE}
 
-    printf "\e[${COLOR}m%s\e[${DEFAULT}m\n" "$OUTPUT"
+    printf "\\e[${COLOR}m%s\\e[${DEFAULT}m\\n" "$OUTPUT"
 }
 
 # Log a message and exit with an error code

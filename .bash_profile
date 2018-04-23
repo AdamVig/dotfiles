@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Disable warning about using ~ for paths:
 # shellcheck disable=SC1090
 
