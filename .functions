@@ -26,3 +26,20 @@ update() {
     printf "%s\\n" "Updating global pip packages...";
     pip3 install --upgrade --user "$(pip3 list --outdated --user --format legacy | awk '{ print $1}')"
 }
+
+# Create a pull request:
+# - with the current GitHub user assigned
+# - copy the link to the clipboard
+# - open it in a browser
+# - pass all other arguments directly to `hub pull-request`
+pr() {
+    CMD="hub pull-request --browse --copy"
+
+    GITHUB_USER="$(git config github.user)"
+    if [[ "$GITHUB_USER" ]]; then
+        CMD="$CMD --assign=$GITHUB_USER"
+    fi
+
+    # Run dynamically constructed command, using $@ to pass it all arguments
+    eval "$CMD $@"
+}
