@@ -27,6 +27,8 @@ update() {
     pip3 install --upgrade --user "$(pip3 list --outdated --user --format legacy | awk '{ print $1}')"
 }
 
+alias upgrade=update
+
 # Create a pull request:
 # - with the current GitHub user assigned
 # - copy the link to the clipboard
