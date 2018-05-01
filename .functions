@@ -24,7 +24,7 @@ update() {
     npm update -g;
 
     printf "%s\\n" "Updating global pip packages...";
-    pip3 install --upgrade --user "$(pip3 list --outdated --user --format legacy | awk '{ print $1}')"
+    pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
 }
 
 alias upgrade=update
