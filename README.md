@@ -31,9 +31,9 @@ Uses the packages `cheat` and `tldr` to get usage examples for Bash commands.
 
     TLDR:
 
-    pwd
+    pwd
 
-    Print name of current/working directory.
+    Print name of current/working directory.
 
     - Print the current directory:
         pwd
