@@ -43,5 +43,5 @@ pr() {
     fi
 
     # Run dynamically constructed command, using $@ to pass it all arguments
-    eval "$CMD $@"
+    eval "$CMD" "$@"
 }
