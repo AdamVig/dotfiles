@@ -46,7 +46,10 @@
       
       // Darken application frame
       "activityBar.background": "#1a1d23",
-      "editor.background": "#222429"
+      "editor.background": "#222429",
+
+      // Highlight active indent guide for the current code block
+      "editorIndentGuide.activeBackground": "#ffffff"
     },
 
     // Hide the feedback smiley in the bar at the bottom
