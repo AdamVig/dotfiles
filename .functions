@@ -46,6 +46,27 @@ pr() {
     eval "$CMD" "$@"
 }
 
+# Watch continuous integration for the current HEAD commit, printing out status as it changes
+watch-ci() {
+    CI_STATUS_ALL="$(hub ci-status -v)"
+    printf "%s\\n" "$CI_STATUS_ALL"
+
+    # Check CI status every five seconds, terminate loop if it is no longer pending
+    while [[ "$CI_STATUS" == "pending" ]]; do
+        sleep 5
+
+        # Check if the status of individual checks has changed, only log them if it has
+        CI_STATUS_ALL_NEW="$(hub ci-status -v)"
+        if [[ "$CI_STATUS_ALL" != "$CI_STATUS_ALL_NEW" ]]; then
+            CI_STATUS_ALL="$CI_STATUS_ALL_NEW"
+            printf "\\n%s\\n" "Status updated:"
+            printf "%s\\n" "$CI_STATUS_ALL"
+        fi
+
+        CI_STATUS="$(hub ci-status)"
+    done
+}
+
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
 get-release() {
     # Check if Hub is installed
@@ -60,28 +81,11 @@ get-release() {
     # If CI status is pending, get current list of releases then wait for CI to finish
     CI_STATUS="$(hub ci-status)"
     if [[ "$CI_STATUS" == "pending" ]]; then
-        printf "%s\\n" "Waiting for CI..."
-
-        CI_STATUS_ALL="$(hub ci-status -v)"
-        printf "%s\\n" "$CI_STATUS_ALL"
-
         # Get current list of releases, which will be diffed against later to show the new version
         PREV_RELEASES="$(hub release)"
 
-        # Check CI status every five seconds, terminate loop if it is no longer pending
-        while [[ "$CI_STATUS" == "pending" ]]; do
-            sleep 5
-
-            # Check if the status of individual checks has changed, only log them if it has
-            CI_STATUS_ALL_NEW="$(hub ci-status -v)"
-            if [[ "$CI_STATUS_ALL" != "$CI_STATUS_ALL_NEW" ]]; then
-                CI_STATUS_ALL="$CI_STATUS_ALL_NEW"
-                printf "\\n%s\\n" "Status updated:"
-                printf "%s\\n" "$CI_STATUS_ALL"
-            fi
-
-            CI_STATUS="$(hub ci-status)"
-        done
+        printf "%s\\n" "Waiting for CI..."
+        watch-ci
     fi
 
     # Print list of releases, diffing against previous list of releases if it is set
