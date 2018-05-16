@@ -26,8 +26,8 @@ declare -a extensions=(
     formulahendry.auto-close-tag  # close HTML tags automatically
     formulahendry.auto-rename-tag  # edit matching pairs of HTML tags at the same time
     KnisterPeter.vscode-github  # GitHub integration
-    lukehoban.go  # Golang support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
+    ms-vscode.Go  # Golang support
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
