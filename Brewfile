@@ -22,6 +22,7 @@ brew "gifsicle" # Gif tool
 brew "grv" # Git Repository Viewer
 brew "hub", args: ["devel"] # GitHub CLI
 brew "jq" # JSON processor
+cask "mactex" # LaTeX tools
 brew "mosh" # Mobile shell
 brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
