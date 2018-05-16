@@ -112,6 +112,9 @@
       "rewrap.wrappingColumn": 72
     },
 
+    // Enable automatic line wrapping
+    "rewrap.autoWrap.enabled": true,
+
     // Spell checker configuration
     "cSpell.language": "en",
     // Only enable for text-centric language types
