@@ -101,6 +101,7 @@
     "gitlens.advanced.messages": {
       "suppressShowKeyBindingsNotice": true
     },
+    "gitlens.historyExplorer.enabled": false,
 
     // Add a ruler at 50 characters (for commit subjects)
     "[git-commit]": {
