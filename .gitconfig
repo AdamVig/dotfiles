@@ -8,10 +8,12 @@
     # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
     rebase = true
 [diff]
-    tool = default-difftool
-[difftool "default-difftool"]
-    cmd = code --reuse-window --wait --diff $LOCAL $REMOTE
+    tool = meld
+[diftool]
+  prompt = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
 [merge]
-    tool = vscode
-[mergetool "vscode"]
-    cmd = code --wait $MERGED
+    tool = meld
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
