@@ -20,6 +20,7 @@ declare -a apt_packages=(
     emacs
     gnupg2
     httpie
+    meld    # Comparison tool for version control, files, and directories
     jq    # JSON processor
     mosh
     python-pip
