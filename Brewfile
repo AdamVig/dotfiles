@@ -18,6 +18,7 @@ brew "ruby"
 
 # utilities
 brew "docker"
+brew "fswatch" # Cross-platform file change monitor
 brew "gifsicle" # Gif tool
 brew "grv" # Git Repository Viewer
 brew "hub", args: ["devel"] # GitHub CLI

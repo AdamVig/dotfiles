@@ -2,31 +2,52 @@
 
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
+TEMP_DIR="/tmp"
 
+# shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
 message "Setting up Linux..."
 
 message "Installing Git Repository Viewer..."
 
-# Check if jq is available for JSON parsing
-if command -v jq; then
-    # Get URL of latest release from Github API
-    URL=$(
-        curl -s https://api.github.com/repos/rgburke/grv/releases/latest | \
-        jq --raw-output '.assets[] | .browser_download_url | select(endswith("linux64"))'
-    )
-    # Download the latest release to a file called "grv" in /tmp
-    wget --directory-prefix /tmp --output-document grv "$URL"
+if URL="$(get-release-url rgburke/grv linux64)"; then
+    # Download the latest release to a file called "grv" in TEMP_DIR
+    wget --quiet --output-document "$TEMP_DIR/grv" "$URL"
 
-    # Move into place
-    mv /tmp/grv /usr/local/bin/grv
+    if [[ -f "$TEMP_DIR/grv" ]]; then
+        # Move into place
+        mv "$TEMP_DIR/grv" /usr/local/bin/grv
 
-    # Set permissions on executable
-    chmod +x /usr/local/bin/grv
+        # Set permissions on executable
+        chmod -f +x /usr/local/bin/grv
+
+        message "Done installing Git Repository Viewer."
+    else
+        warn "failed to download Git Repository Viewer (using URL $URL)"
+    fi
+else
+    warn "could not install Git Repository Viewer ($URL)"
 fi
 
-message "Done installing Git Repository Viewer."
+message "Installing fswatch..."
+if URL=$(get-release-url emcrisostomo/fswatch tar.gz); then
+    # Download the latest release to a file called "fswatch.tar.gz" in TEMP_DIR
+    wget --quiet --output-document "$TEMP_DIR/fswatch.tar.gz" "$URL"
+
+    if [[ -f "$TEMP_DIR/fswatch.tar.gz" ]]; then
+        cd "$TEMP_DIR" || exit
+        tar xf "$TEMP_DIR/fswatch.tar.gz"
+        # Filename will change, use a wildcard to cover all possible names
+        cd fswatch-*
+        ./configure && make && make install
+        message "Done installing fswatch."
+    else
+        warn "failed to download fswatch (using URL $URL)"
+    fi
+else
+    warn "could not install fswatch ($URL)"
+fi
 
 message "Installing nodenv..."
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv
