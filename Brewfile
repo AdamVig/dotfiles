@@ -25,6 +25,7 @@ brew "hub", args: ["devel"] # GitHub CLI
 brew "jq" # JSON processor
 cask "mactex" # LaTeX tools
 brew "mosh" # Mobile shell
+brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled

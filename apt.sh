@@ -21,6 +21,7 @@ declare -a apt_packages=(
     gnupg2
     httpie
     meld    # Comparison tool for version control, files, and directories
+    nnn   # Command-line file browser
     jq    # JSON processor
     mosh
     python-pip
