@@ -15,7 +15,6 @@ ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/
 
 declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
-    christian-kohler.path-intellisense  # File path autocomplete
     Compulim.vscode-clock   # Statusbar clock
     dbaeumer.vscode-eslint  # JavaScript linter
     ms-python.python  # Python support
