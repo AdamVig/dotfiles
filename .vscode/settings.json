@@ -8,6 +8,8 @@
     "editor.minimap.enabled": false,
     // Disable code folding
     "editor.folding": false,
+    // Keep the debug toolbar in its panel
+    "debug.toolBarLocation": "docked",
     // Render diffs inline
     "diffEditor.renderSideBySide": false,
     "window.zoomLevel": 0,
