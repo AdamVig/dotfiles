@@ -17,7 +17,6 @@ declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
     Compulim.vscode-clock   # Statusbar clock
     dbaeumer.vscode-eslint  # JavaScript linter
-    ms-python.python  # Python support
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
@@ -27,7 +26,9 @@ declare -a extensions=(
     James-Yu.latex-workshop  # all-in-one features and utilities for LaTeX typesetting
     KnisterPeter.vscode-github  # GitHub integration
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
+    ms-python.python  # Python support
     ms-vscode.Go  # Golang support
+    ms-vsliveshare.vsliveshare  # Live code sharing
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
