@@ -138,4 +138,7 @@
       "*.dll",               // Ignore all .dll files.
       "**/*.dll"             // Ignore all .dll files
     ],
+
+    // Update TypeScript imports when file is moved
+    "typescript.updateImportsOnFileMove.enabled": "always",
   }
