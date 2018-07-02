@@ -69,6 +69,8 @@
     // Enable Git commit message character counter
     "git.inputValidation": "always",
 
+    // Disable automatic detection of Git submodules
+    "git.detectSubmodules": false,
 
     "shellcheck.customArgs": [
       // Allow 'source' outside of input files
