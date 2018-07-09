@@ -42,7 +42,6 @@ cask "google-chrome"
 cask "gpg-suite"
 cask "kap"
 cask "keybase"
-cask "lastpass"
 cask "mailspring"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "qlmarkdown"
