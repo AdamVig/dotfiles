@@ -29,12 +29,14 @@ update() {
 
 alias upgrade=update
 
-# Create a pull request:
+# Push the current branch and create a pull request:
 # - with the current GitHub user assigned
 # - copy the link to the clipboard
 # - open it in a browser
 # - pass all other arguments directly to `hub pull-request`
 pr() {
+    git push --set-upstream
+
     CMD="hub pull-request --browse --copy"
 
     GITHUB_USER="$(git config github.user)"
