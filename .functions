@@ -104,3 +104,13 @@ get-release() {
         hub release
     fi
 }
+
+# Merge the latest upstream changes into the current branch
+# $1: branch name to fetch (defaults to "develop")
+# $2: name of remote to fetch from (defaults to "origin")
+merge-latest() {
+    BRANCH=${1:-develop}
+    REMOTE=${2:-origin}
+    git fetch "$REMOTE" "$BRANCH"
+    git merge "$BRANCH"
+}
