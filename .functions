@@ -50,6 +50,7 @@ pr() {
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
 watch-ci() {
+    CI_STATUS="$(hub ci-status)"
     CI_STATUS_ALL="$(hub ci-status -v)"
     printf "%s\\n" "$CI_STATUS_ALL"
 
@@ -81,8 +82,7 @@ get-release() {
     RELEASES=""
 
     # If CI status is pending, get current list of releases then wait for CI to finish
-    CI_STATUS="$(hub ci-status)"
-    if [[ "$CI_STATUS" == "pending" ]]; then
+    if [[ "$(hub ci-status)" == "pending" ]]; then
         # Get current list of releases, which will be diffed against later to show the new version
         PREV_RELEASES="$(hub release)"
 
