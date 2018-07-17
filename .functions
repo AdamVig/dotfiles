@@ -29,12 +29,29 @@ update() {
 
 alias upgrade=update
 
+# Check if a program is installed
+# $1: name of command to check for
+# $2: URL for information on installing the command
+check-installed() {
+    if [[ -z "$(command -v $1)" ]]; then
+        printf "%s\\n" "error: could not find $1, please install it before trying again"
+        if [[ -n "$2" ]]; then
+            printf "       %s\\n" "$2"
+        fi
+        return 1
+    fi
+}
+
 # Push the current branch and create a pull request:
 # - with the current GitHub user assigned
 # - copy the link to the clipboard
 # - open it in a browser
 # - pass all other arguments directly to `hub pull-request`
 pr() {
+    if ! check-installed hub https://hub.github.com/; then
+        return 1
+    fi
+
     git push --set-upstream
 
     CMD="hub pull-request --browse --copy"
@@ -50,6 +67,10 @@ pr() {
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
 watch-ci() {
+    if ! check-installed hub https://hub.github.com/; then
+        return 1
+    fi
+
     CI_STATUS="$(hub ci-status)"
     CI_STATUS_ALL="$(hub ci-status -v)"
     printf "%s\\n" "$CI_STATUS_ALL"
@@ -72,9 +93,7 @@ watch-ci() {
 
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
 get-release() {
-    # Check if Hub is installed
-    if [[ -z "$(command -v hub)" ]]; then
-        printf "%s\\n" "error: could not find hub, please install it before trying again"
+    if ! check-installed hub https://hub.github.com/; then
         return 1
     fi
 
