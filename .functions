@@ -131,5 +131,5 @@ merge-latest() {
     BRANCH=${1:-develop}
     REMOTE=${2:-origin}
     git fetch "$REMOTE" "$BRANCH"
-    git merge "$BRANCH"
+    git merge "$REMOTE"/"$BRANCH"
 }
