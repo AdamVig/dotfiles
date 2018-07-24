@@ -33,7 +33,7 @@ alias upgrade=update
 # $1: name of command to check for
 # $2: URL for information on installing the command
 check-installed() {
-    if [[ -z "$(command -v $1)" ]]; then
+    if [[ -z "$(command -v "$1")" ]]; then
         printf "%s\\n" "error: could not find $1, please install it before trying again"
         if [[ -n "$2" ]]; then
             printf "       %s\\n" "$2"
@@ -98,7 +98,6 @@ get-release() {
     fi
 
     PREV_RELEASES=""
-    RELEASES=""
 
     # If CI status is pending, get current list of releases then wait for CI to finish
     if [[ "$(hub ci-status)" == "pending" ]]; then
