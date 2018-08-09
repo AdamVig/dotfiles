@@ -92,6 +92,7 @@ watch-ci() {
 }
 
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
+# $1: 'prod' to only get production releases or 'beta' to only get beta releases
 get-release() {
     if ! check-installed hub https://hub.github.com/; then
         return 1
@@ -119,7 +120,13 @@ get-release() {
             <(printf "%s\\n" "$PREV_RELEASES") <(hub release)
     else
         printf "%s\\n" "All releases:"
-        hub release
+        RELEASES="$(hub release)"
+	if [[ "$1" = "prod" ]]; then
+	    RELEASES="$(echo "$RELEASES" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
+	elif [[ "$1" = "beta" ]]; then
+	    RELEASES="$(echo "$RELEASES" | grep 'v[0-9]*\.[0-9]*\.[0-9]*-beta.[0-9]*$')"
+	fi
+	printf "%s\\n" "$RELEASES"
     fi
 }
 
