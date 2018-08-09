@@ -162,3 +162,9 @@ clean-up-branch() {
     git fetch --prune
     git branch --delete "$CURRENT_BRANCH"
 }
+
+# Get all Jira ticket IDs mentioned in commits in develop that are not in master
+get-tickets() {
+    git fetch --all
+    git log origin/master..origin/develop --extended-regexp --grep 'TOOLS|APPS' --pretty=oneline | grep -Po '(APPS|TOOLS)-[0-9]+' | uniq -u
+}
