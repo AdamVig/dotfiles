@@ -20,6 +20,7 @@ declare -a apt_packages=(
     emacs
     gnupg2
     httpie
+    kdiff3    # Merge tool
     meld    # Comparison tool for version control, files, and directories
     nnn   # Command-line file browser
     jq    # JSON processor

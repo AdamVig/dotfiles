@@ -41,6 +41,7 @@ cask "google-backup-and-sync"
 cask "google-chrome"
 cask "gpg-suite"
 cask "kap"
+cask "kdiff3" # Merge tool
 cask "keybase"
 cask "mailspring"
 cask "meld" # Comparison tool for version control, files, and directories
