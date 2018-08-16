@@ -17,6 +17,7 @@ brew "python"
 brew "ruby"
 
 # utilities
+brew "dep" # Golang package manager
 brew "docker"
 brew "fswatch" # Cross-platform file change monitor
 brew "gifsicle" # Gif tool
