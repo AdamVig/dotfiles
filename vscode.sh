@@ -21,8 +21,6 @@ declare -a extensions=(
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
     fabiospampinato.vscode-terminals  # terminal manager
-    formulahendry.auto-close-tag  # close HTML tags automatically
-    formulahendry.auto-rename-tag  # edit matching pairs of HTML tags at the same time
     James-Yu.latex-workshop  # all-in-one features and utilities for LaTeX typesetting
     KnisterPeter.vscode-github  # GitHub integration
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
