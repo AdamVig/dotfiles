@@ -6,7 +6,7 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 source "$DIR/helpers.sh"
 
 # Refresh existing sudo session or start a new one
-sudo --validate
+request-sudo
 
 message "magenta" "Setting up Homebrew..."
 
@@ -19,7 +19,7 @@ fi
 message "magenta" "  %s" "Checking ownership of subdirectories of /usr/local..."
 for dir in $(brew --prefix)/*; do
     if [ ! -w "$dir" ]; then
-        sudo chown -R "$(whoami)" "$dir"
+        request-sudo chown -R "$(whoami)" "$dir"
         message "magenta" "    %s" "Took ownership of $dir"
     fi
 done

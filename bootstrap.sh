@@ -6,7 +6,7 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 source "$DIR/helpers.sh"
 
 # Ask for password at start
-sudo -v
+request-sudo
 
 message "Symlinking dotfiles into your home directory..."
 ln -sf "$DIR/.aliases" ~

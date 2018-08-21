@@ -67,8 +67,8 @@ message "  %s" "Installing Keybase..."
 # See https://keybase.io/docs/the_app/install_linux
 cd /tmp || exit
 curl -O https://prerelease.keybase.io/keybase_amd64.deb
-sudo dpkg -i keybase_amd64.deb
-sudo apt-get install -f
+request-sudo dpkg -i keybase_amd64.deb
+request-sudo apt-get install -f
 run_keybase
 cd || exit
 message "  %s" "Done installing Keybase."
@@ -79,8 +79,8 @@ message "  %s" "Done installing Golang Delve debugger."
 
 message "  %s" "Linking binaries to their common names..."
 # See https://askubuntu.com/a/748059
-sudo apt remove -y gnupg
-sudo ln -s /usr/bin/gpg2 /usr/bin/gpg
+request-sudo apt remove -y gnupg
+request-sudo ln -s /usr/bin/gpg2 /usr/bin/gpg
 message "  %s" "Done linking binaries."
 
 message "Linux setup done."

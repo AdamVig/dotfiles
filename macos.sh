@@ -3,11 +3,14 @@
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
+# shellcheck source=./helpers.sh
+source "$DIR/helpers.sh"
+
 # Copy terminal settings (symlinking does not work because Terminal.app overwrites the file on close)
 cp "$DIR/apple-terminal-settings.plist" ~/Library/Preferences/com.apple.Terminal.plist
 
 # Disable startup tone
-sudo nvram SystemAudioVolume=" "
+request-sudo nvram SystemAudioVolume=" "
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -41,7 +44,7 @@ defaults write com.apple.finder ShowRecentTags -bool false
 defaults write com.apple.dock mru-spaces -bool false
 
 # Hide username in menu bar
-sudo defaults write /Library/Preferences/.GlobalPreferences \
+request-sudo defaults write /Library/Preferences/.GlobalPreferences \
      MultipleSessionEnabled -bool NO
 
 # Reduce alert volume to 75%

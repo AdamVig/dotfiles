@@ -92,3 +92,15 @@ get-release-url() {
         jq --raw-output ".assets[] | .browser_download_url | select(endswith(\"$2\"))"
     )"
 }
+
+# Prompt the user for their password with a custom message
+# If any arguments are provided, they will be passed to sudo
+# If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
+request-sudo() {
+    SUDO_PROMPT="Enter the system password for user %p: "
+    if [[ $# -eq 0 ]]; then
+        sudo --validate --prompt "$SUDO_PROMPT"
+    else
+        sudo --prompt "$SUDO_PROMPT" "$@"
+    fi
+}
