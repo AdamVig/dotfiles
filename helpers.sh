@@ -5,35 +5,75 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Colorized output
-# $1: string to print
-# $2: (optional) color or other formatting number, see https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# $1: color, template string, or string to print
+# $2: template string or string to print
+# all other arguments will be passed directly to printf
 message() {
-    BLUE="34"
-    DEFAULT="0"
+	# Get color from $1 if it matches the preset list of colors, if it does, shift the positional arguments
+	COLOR=34
+	OFF=0
+	# More color codes: https://misc.flogisoft.com/bash/tip_colors_and_formatting
+	case $1 in
+		off)     COLOR=0; shift ;;
+		red)     COLOR=31; shift ;;
+		green)   COLOR=32; shift ;;
+		yellow)  COLOR=33; shift ;;
+		blue)    COLOR=34; shift ;;
+		magenta) COLOR=35; shift ;;
+		cyan)    COLOR=36; shift ;;
+	esac
 
-    OUTPUT=${1:-}
+	# Get template from $1 if it is set, default to empty otherwise
+	TEMPLATE=
+	if [[ -n "$1" ]]; then
+		TEMPLATE=${1:-}
+		shift
+	fi
 
-    # Use color from $2 if provided, otherwise use blue
-    COLOR=${2:-$BLUE}
+	# If template string is not actually a template, add %s so that other arguments get printed
+	if [[ $TEMPLATE != *"%s"* ]]; then
+		TEMPLATE="$TEMPLATE%s"
+	fi
 
-    printf "\\e[${COLOR}m%s\\e[${DEFAULT}m\\n" "$OUTPUT"
-}
-
-# Log a message and exit with an error code
-# $1: string to print
-fatal() {
-    OUTPUT=${1:-}
-    RED="31"
-    message "error: $OUTPUT" "$RED"
-    exit 1
+	printf "\\e[${COLOR}m$TEMPLATE\\e[${OFF}m\\n" "$@"
 }
 
 # Log a warning
-# $1: string to print
+# all arguments will be passed to message, each will be printed on a new line with "warning:" preceding it
 warn() {
-    OUTPUT=${1:-}
-    YELLOW="33"
-    message "warning: $OUTPUT" "$YELLOW"
+	message "yellow" "warning: " "$@"
+}
+
+# Log an error
+# all arguments will be passed to message, each will be printed on a new line with "error:" preceding it
+error() {
+	message "red" "error: " "$@"
+}
+
+# Log an error and exit with an error code
+# all arguments will be passed to message, each will be printed on a new line with "error:" preceding it
+fatal() {
+	error "$@"
+	exit 1
+}
+
+# Confirm if a user wants to do something
+# Bypasses the prompt and proceeds if the variable SHOULD_CONFIRM is set to 0
+# $1: message, defaults to 'Proceed?'
+# returns 0 or 1 depending on user input, 0 means no, 1 means yes
+confirm() {
+	# Whether or not to skip prompt
+	# Use value of SHOULD_CONFIRM; if not set, default to 1 (skip prompt)
+	SHOULD_PROMPT=${SHOULD_CONFIRM:-1}
+	if [[ "$SHOULD_PROMPT" = 1 ]]; then
+			return 0 # automatic yes
+	fi
+
+	MESSAGE=${1:-"Proceed?"}
+	read -p "$MESSAGE (y/n) " -n 1 -r
+	message
+	[[ $REPLY =~ ^[Yy]$ ]] # REPLY is automatically set to the result of `read`
+	return $? # result of previous line, either 0 (yes) or 1 (no)
 }
 
 # Get the GitHub release URL matching a given pattern

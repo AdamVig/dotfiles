@@ -5,13 +5,13 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 source "$DIR/helpers.sh"
 
-message "Configuring git..."
+message "Setting up Git..."
 # If gitconfig does not exist already, create one
 if [ ! -e ~/.gitconfig ]; then
-    message "  Copying gitconfig to home directory..."
+    message "  %s" "Copying gitconfig to home directory..."
     cp "$DIR/.gitconfig" ~
     
-    message "  Configuring Git..."
+    message "  %s" "Configuring Git..."
     read -r -p "  Full name: " NAME
     read -r -p "  Email address: " EMAIL
     read -r -p "  Github username: " GITHUB
@@ -21,3 +21,4 @@ if [ ! -e ~/.gitconfig ]; then
     [[ -n "$EMAIL" ]] && git config --global user.email "$EMAIL"
     [[ -n "$GITHUB" ]] && git config --global github.user "$GITHUB"
 fi
+message "Done setting up Git."

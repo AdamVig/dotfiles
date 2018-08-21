@@ -3,13 +3,11 @@
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
-CYAN="36"
-
 source "$DIR/helpers.sh"
 
-message "Setting up Visual Studio Code..." "$CYAN"
+message "cyan" "Setting up Visual Studio Code..."
 
-message "  Symlinking Visual Studio Code settings... " "$CYAN"
+message "cyan" "  %s" "Symlinking Visual Studio Code settings... "
 ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
 
@@ -39,14 +37,14 @@ declare -a extensions=(
     zhuangtongfa.material-theme  # Atom One theme
 )
 
-message "  Installing Visual Studio Code extensions... " "$CYAN"
+message "cyan" "  %s" "Installing Visual Studio Code extensions... "
 for extension in "${extensions[@]}"; do
     set +e
     # Attempt to install extension; log message on success, log warning on failure
     code --install-extension "$extension" &> /dev/null && \
-        message "    Installed $extension" "$CYAN" || \
+        message "cyan" "    %s" "Installed $extension" || \
         warn "extension $extension failed to install; it may no longer be available"
     set -e
 done
 
-message "Visual Studio Code done." "$CYAN"
+message "cyan" "Visual Studio Code done."

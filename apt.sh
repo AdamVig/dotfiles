@@ -11,7 +11,6 @@ message "Done adding apt repositories."
 sudo apt-get update
 sudo apt-get upgrade -y
 
-
 declare -a apt_packages=(
     # applications
     signal-desktop   # Encrypted messaging
@@ -32,15 +31,15 @@ declare -a apt_packages=(
     golang-go
 )
 
-message "  Installing packages..."
+message "  %s" "Installing packages..."
 for package in "${apt_packages[@]}"; do
     set +e
     # Attempt to install package; log message on success, log warning on failure
     sudo apt-get install -y "$package" &> /dev/null && \
-        message "    Installed $package" || \
-        warn "package $package failed to install"
+        message "    %s" "Installed $package" || \
+        warn "    %s" "package $package failed to install"
     set -e
 done
-message "  Done installing packages."
+message "  %s" "Done installing packages."
 
 message "Done setting up apt."

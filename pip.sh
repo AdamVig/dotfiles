@@ -15,6 +15,6 @@ pip_packages=(
 
 for package in "${pip_packages[@]}"; do
     pip3 install --upgrade --user "$package" &> /dev/null
-    message "  Installed $package"    
+    message "  %s" "Installed $package"
 done
 message "Pip done."

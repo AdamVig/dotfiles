@@ -7,9 +7,9 @@ TEMP_DIR="/tmp"
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
-message "Setting up Linux..."
+message "  %s" "Setting up Linux..."
 
-message "Installing Git Repository Viewer..."
+message "  %s" "Installing Git Repository Viewer..."
 
 if URL="$(get-release-url rgburke/grv linux64)"; then
     # Download the latest release to a file called "grv" in TEMP_DIR
@@ -22,7 +22,7 @@ if URL="$(get-release-url rgburke/grv linux64)"; then
         # Set permissions on executable
         chmod -f +x /usr/local/bin/grv
 
-        message "Done installing Git Repository Viewer."
+        message "  %s" "Done installing Git Repository Viewer."
     else
         warn "failed to download Git Repository Viewer (using URL $URL)"
     fi
@@ -30,7 +30,7 @@ else
     warn "could not install Git Repository Viewer ($URL)"
 fi
 
-message "Installing fswatch..."
+message "  %s" "Installing fswatch..."
 if URL=$(get-release-url emcrisostomo/fswatch tar.gz); then
     # Download the latest release to a file called "fswatch.tar.gz" in TEMP_DIR
     wget --quiet --output-document "$TEMP_DIR/fswatch.tar.gz" "$URL"
@@ -41,7 +41,7 @@ if URL=$(get-release-url emcrisostomo/fswatch tar.gz); then
         # Filename will change, use a wildcard to cover all possible names
         cd fswatch-*
         ./configure && make && make install
-        message "Done installing fswatch."
+        message "  %s" "Done installing fswatch."
     else
         warn "failed to download fswatch (using URL $URL)"
     fi
@@ -49,7 +49,7 @@ else
     warn "could not install fswatch ($URL)"
 fi
 
-message "Installing nodenv..."
+message "  %s" "Installing nodenv..."
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 cd ~/.nodenv && src/configure && make -C src
 
@@ -61,9 +61,9 @@ git clone https://github.com/nodenv/nodenv-default-packages.git "$(nodenv root)"
 
 # Plugin for auto-rehashing when a global package is installed or uninstalled
 git clone https://github.com/nodenv/nodenv-package-rehash.git "$(nodenv root)"/plugins/nodenv-package-rehash
-message "Done installing nodenv."
+message "  %s" "Done installing nodenv."
 
-message "Installing Keybase..."
+message "  %s" "Installing Keybase..."
 # See https://keybase.io/docs/the_app/install_linux
 cd /tmp || exit
 curl -O https://prerelease.keybase.io/keybase_amd64.deb
@@ -71,16 +71,16 @@ sudo dpkg -i keybase_amd64.deb
 sudo apt-get install -f
 run_keybase
 cd || exit
-message "Done installing Keybase."
+message "  %s" "Done installing Keybase."
 
-message "Installing Golang Delve debugger..."
+message "  %s" "Installing Golang Delve debugger..."
 go get -u github.com/derekparker/delve/cmd/dlv
-message "Done installing Golang Delve debugger."
+message "  %s" "Done installing Golang Delve debugger."
 
-message "Linking binaries to their common names..."
+message "  %s" "Linking binaries to their common names..."
 # See https://askubuntu.com/a/748059
 sudo apt remove -y gnupg
 sudo ln -s /usr/bin/gpg2 /usr/bin/gpg
-message "Done linking binaries."
+message "  %s" "Done linking binaries."
 
 message "Linux setup done."
