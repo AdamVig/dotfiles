@@ -32,5 +32,3 @@ message "magenta" "  %s" "Updating Brew packages and installing Brew formulas...
 brew bundle --all
 
 message "magenta" "Homebrew done."
-
-message "magenta" "Run '/usr/local/Caskroom/lastpass/latest/LastPass Installer/LastPass Installer.app' to install the LastPass browser extension."
