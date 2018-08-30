@@ -41,6 +41,7 @@ cask "firefox"
 cask "google-backup-and-sync"
 cask "google-chrome"
 cask "gpg-suite"
+cask "inkscape"
 cask "kap"
 cask "kdiff3" # Merge tool
 cask "keybase"
@@ -53,6 +54,7 @@ cask "spectacle"
 cask "spotify"
 cask "standard-notes"
 cask "visual-studio-code"
+cask "xquartz"
 
 # drivers
 cask "caskroom/drivers/logitech-options"
