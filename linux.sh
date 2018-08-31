@@ -30,6 +30,24 @@ else
     warn "could not install Git Repository Viewer ($URL)"
 fi
 
+message "  %s" "Installing Bat..."
+
+if URL="$(get-release-url sharkdp/bat amd64)"; then
+    # Download the latest release to TEMP_DIR
+    wget --quiet --output-document "$TEMP_DIR/bat.deb" "$URL"
+
+    if [[ -f "$TEMP_DIR/bat" ]]; then
+        # Install
+	sudo dpkg -i "$TEMP_DIR/bat.deb"
+
+        message "  %s" "Done installing Bat."
+    else
+        warn "failed to download Bat (using URL $URL)"
+    fi
+else
+    warn "could not install Bat ($URL)"
+fi
+
 message "  %s" "Installing fswatch..."
 if URL=$(get-release-url emcrisostomo/fswatch tar.gz); then
     # Download the latest release to a file called "fswatch.tar.gz" in TEMP_DIR

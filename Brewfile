@@ -3,6 +3,7 @@ tap "caskroom/fonts"
 
 # command line tools
 brew "bash"
+brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
 brew "git"
