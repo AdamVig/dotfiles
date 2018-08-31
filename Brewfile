@@ -34,6 +34,7 @@ brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a gl
 brew "postgresql", restart_service: :changed
 brew "shellcheck" # Shell script linter
 brew "ssh-copy-id"
+cask "xquartz" # Needed by Inkscape
 brew "z"
 
 # applications
@@ -55,7 +56,6 @@ cask "spotify"
 cask "standard-notes"
 cask "visual-studio-code"
 cask "whatsapp"
-cask "xquartz"
 
 # drivers
 cask "caskroom/drivers/logitech-options"
