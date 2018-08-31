@@ -48,12 +48,12 @@ cask "keybase"
 cask "mailspring"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "qlmarkdown"
-cask "signal"
 cask "sketch"
 cask "spectacle"
 cask "spotify"
 cask "standard-notes"
 cask "visual-studio-code"
+cask "whatsapp"
 cask "xquartz"
 
 # drivers
