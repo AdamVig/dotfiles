@@ -141,4 +141,7 @@
 
     // Update TypeScript imports when file is moved
     "typescript.updateImportsOnFileMove.enabled": "always",
+
+    // Disable jarring scroll behavior
+    "markdown.preview.scrollEditorWithPreview": false,
   }
