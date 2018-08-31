@@ -23,6 +23,7 @@ declare -a apt_packages=(
     # tools
     emacs
     gnupg2
+    htop    # System monitoring tool
     httpie
     kdiff3    # Merge tool
     meld    # Comparison tool for version control, files, and directories

@@ -1,13 +1,14 @@
 tap "caskroom/drivers"
 tap "caskroom/fonts"
 
-# default command line tools
+# command line tools
 brew "bash"
 brew "curl"
 brew "emacs"
 brew "git"
 brew "gnupg"
 brew "grep", args: ["with-default-names"]
+brew "htop" # System monitoring tool
 brew "wget"
 brew "zsh"
 
