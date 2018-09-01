@@ -7,7 +7,7 @@ brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
 brew "git"
-brew "gnupg"brew "grep", args: ["with-default-names"]
+brew "grep", args: ["with-default-names"]
 brew "htop" # System monitoring tool
 brew "wget"
 brew "zsh"
