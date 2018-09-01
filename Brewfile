@@ -6,6 +6,7 @@ brew "bash"
 brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
+brew "fzf" # Fuzzy finder
 brew "git"
 brew "grep", args: ["with-default-names"]
 brew "htop" # System monitoring tool

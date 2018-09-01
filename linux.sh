@@ -27,6 +27,11 @@ else
     warn "could not install Bat ($URL)"
 fi
 
+message "  %s" "Installing fzf..."
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --all
+message "  %s" "Done installing fzf."
+
 message "  %s" "Installing nodenv..."
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 cd ~/.nodenv && src/configure && make -C src
