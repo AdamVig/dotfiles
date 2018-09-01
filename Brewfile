@@ -7,8 +7,7 @@ brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
 brew "git"
-brew "gnupg"
-brew "grep", args: ["with-default-names"]
+brew "gnupg"brew "grep", args: ["with-default-names"]
 brew "htop" # System monitoring tool
 brew "wget"
 brew "zsh"
@@ -21,9 +20,7 @@ brew "ruby"
 # utilities
 brew "dep" # Golang package manager
 brew "docker"
-brew "fswatch" # Cross-platform file change monitor
 brew "gifsicle" # Gif tool
-brew "grv" # Git Repository Viewer
 brew "hub", args: ["devel"] # GitHub CLI
 brew "jq" # JSON processor
 cask "mactex" # LaTeX tools

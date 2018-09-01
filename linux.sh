@@ -9,27 +9,6 @@ source "$DIR/helpers.sh"
 
 message "  %s" "Setting up Linux..."
 
-message "  %s" "Installing Git Repository Viewer..."
-
-if URL="$(get-release-url rgburke/grv linux64)"; then
-    # Download the latest release to a file called "grv" in TEMP_DIR
-    wget --quiet --output-document "$TEMP_DIR/grv" "$URL"
-
-    if [[ -f "$TEMP_DIR/grv" ]]; then
-        # Move into place
-        mv "$TEMP_DIR/grv" /usr/local/bin/grv
-
-        # Set permissions on executable
-        chmod -f +x /usr/local/bin/grv
-
-        message "  %s" "Done installing Git Repository Viewer."
-    else
-        warn "failed to download Git Repository Viewer (using URL $URL)"
-    fi
-else
-    warn "could not install Git Repository Viewer ($URL)"
-fi
-
 message "  %s" "Installing Bat..."
 
 if URL="$(get-release-url sharkdp/bat amd64)"; then
@@ -46,25 +25,6 @@ if URL="$(get-release-url sharkdp/bat amd64)"; then
     fi
 else
     warn "could not install Bat ($URL)"
-fi
-
-message "  %s" "Installing fswatch..."
-if URL=$(get-release-url emcrisostomo/fswatch tar.gz); then
-    # Download the latest release to a file called "fswatch.tar.gz" in TEMP_DIR
-    wget --quiet --output-document "$TEMP_DIR/fswatch.tar.gz" "$URL"
-
-    if [[ -f "$TEMP_DIR/fswatch.tar.gz" ]]; then
-        cd "$TEMP_DIR" || exit
-        tar xf "$TEMP_DIR/fswatch.tar.gz"
-        # Filename will change, use a wildcard to cover all possible names
-        cd fswatch-*
-        ./configure && make && make install
-        message "  %s" "Done installing fswatch."
-    else
-        warn "failed to download fswatch (using URL $URL)"
-    fi
-else
-    warn "could not install fswatch ($URL)"
 fi
 
 message "  %s" "Installing nodenv..."
