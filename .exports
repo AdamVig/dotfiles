@@ -11,6 +11,9 @@ fi
 # Set golang workspace directory
 export GOPATH="$HOME/code/go"
 
+# Enable Golang modules
+export GO111MODULE=on
+
 # Add golang directory to PATH
 export PATH="$PATH:$GOPATH/bin"
 
