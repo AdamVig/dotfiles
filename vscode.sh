@@ -19,6 +19,7 @@ declare -a extensions=(
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
     fabiospampinato.vscode-terminals  # terminal manager
+    GitHub.vscode-pull-request-github # built-in GitHub pull request support
     James-Yu.latex-workshop  # all-in-one features and utilities for LaTeX typesetting
     KnisterPeter.vscode-github  # GitHub integration
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
