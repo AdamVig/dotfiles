@@ -144,4 +144,11 @@
 
     // Disable jarring scroll behavior
     "markdown.preview.scrollEditorWithPreview": false,
+    "github.hosts": [
+      {
+        "host": "https://github.com",
+        "username": "oauth",
+        "token": "system"
+      }
+    ],
   }
