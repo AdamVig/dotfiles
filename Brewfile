@@ -22,6 +22,7 @@ brew "ruby"
 brew "dep" # Golang package manager
 brew "docker"
 brew "gifsicle" # Gif tool
+brew "graphviz" # Graph visualization tool
 brew "hub", args: ["devel"] # GitHub CLI
 brew "jq" # JSON processor
 cask "mactex" # LaTeX tools
