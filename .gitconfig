@@ -4,6 +4,8 @@
 [push]
     # make `git push -u` default to `origin` and the current branch
 	default = current
+[alias]
+	contributors = shortlog --summary --numbered --email --all
 [pull]
     # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
     rebase = true
