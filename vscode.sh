@@ -20,8 +20,6 @@ declare -a extensions=(
     eg2.vscode-npm-script  # package.json linting and npm script detection
     fabiospampinato.vscode-terminals  # terminal manager
     GitHub.vscode-pull-request-github # built-in GitHub pull request support
-    James-Yu.latex-workshop  # all-in-one features and utilities for LaTeX typesetting
-    KnisterPeter.vscode-github  # GitHub integration
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     ms-python.python  # Python support
     ms-vscode.Go  # Golang support
@@ -33,7 +31,6 @@ declare -a extensions=(
     stkb.rewrap  # Reformats code comments and other text to a given line length
     streetsidesoftware.code-spell-checker  # Spell checker
     timonwong.shellcheck  # Shell script linting
-    tootone.org-mode  # Emacs Org-Mode support
     yzhang.markdown-all-in-one  # Markdown keyboard shortcuts and formatting helpers
     zhuangtongfa.material-theme  # Atom One theme
 )
