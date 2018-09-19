@@ -145,7 +145,7 @@ merge-latest() {
     BRANCH=${1:-"$DEFAULT_BRANCH"}
     REMOTE=${2:-origin}
     git fetch "$REMOTE" "$BRANCH"
-    git merge "$REMOTE"/"$BRANCH"
+    git merge --no-edit "$REMOTE"/"$BRANCH"
 }
 
 
