@@ -165,6 +165,23 @@ clean-up-branch() {
     git branch --delete "$CURRENT_BRANCH"
 }
 
+# Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
+merge-pr() {
+    CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    DEFAULT_BRANCH="$(get-default-branch origin)"
+
+    if [[ "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+        printf "%s\\n" "error: current branch is default branch, please run again from a different branch"
+        return 1
+    fi
+
+    git checkout "$DEFAULT_BRANCH"
+    git merge "$CURRENT_BRANCH"
+    git push
+    git branch --delete "$CURRENT_BRANCH"
+    git push origin --delete "$CURRENT_BRANCH"
+}
+
 # Get all Jira ticket IDs mentioned in commits in develop that are not in master
 get-tickets() {
     git fetch --all > /dev/null
