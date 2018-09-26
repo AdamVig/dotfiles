@@ -169,14 +169,26 @@ clean-up-branch() {
 merge-pr() {
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
+    BASE_BRANCH="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%B'))"
+    TITLE="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%t')"
 
     if [[ "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
         printf "%s\\n" "error: current branch is default branch, please run again from a different branch"
         return 1
     fi
 
-    git checkout "$DEFAULT_BRANCH"
-    git merge "$CURRENT_BRANCH"
+    if [[ -n "$BASE_BRANCH" ]]; then
+         git checkout "$BASE_BRANCH"
+    else
+         git checkout "$DEFAULT_BRANCH"
+    fi
+
+    if [[ -n "$TITLE" ]]; then
+	git merge "$CURRENT_BRANCH" -m "$TITLE"
+    else
+        git merge "$CURRENT_BRANCH"
+    fi
+
     git push
     git branch --delete "$CURRENT_BRANCH"
     git push origin --delete "$CURRENT_BRANCH"
