@@ -141,18 +141,19 @@ get-default-branch() {
 # $1: branch name to fetch (defaults to "develop")
 # $2: name of remote to fetch from (defaults to "origin")
 merge-latest() {
-    set -euo pipefail
+    set -e
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BRANCH=${1:-"$DEFAULT_BRANCH"}
     REMOTE=${2:-origin}
     git fetch "$REMOTE" "$BRANCH"
     git merge --no-edit "$REMOTE"/"$BRANCH"
+    set +e
 }
 
 
 # Move back to the default branch, pull, prune branches, and remove the previous branch
 clean-up-branch() {
-    set -euo pipefail
+    set -e
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
 
@@ -165,11 +166,12 @@ clean-up-branch() {
     git pull
     git fetch --prune
     git branch --delete "$CURRENT_BRANCH"
+    set +e
 }
 
 # Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
 merge-pr() {
-    set -euo pipefail
+    set -e
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BASE_BRANCH="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%B')"
@@ -195,6 +197,7 @@ merge-pr() {
     git push
     git branch --delete "$CURRENT_BRANCH"
     git push origin --delete "$CURRENT_BRANCH"
+    set +e
 }
 
 # Get all Jira ticket IDs mentioned in commits in develop that are not in master
