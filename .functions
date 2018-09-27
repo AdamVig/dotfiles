@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -euo pipefail
-IFS=$'\n\t'
-
 what() {
     printf "%s\\n" "CHEAT:"
     cheat "$1"
@@ -145,6 +141,7 @@ get-default-branch() {
 # $1: branch name to fetch (defaults to "develop")
 # $2: name of remote to fetch from (defaults to "origin")
 merge-latest() {
+    set -euo pipefail
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BRANCH=${1:-"$DEFAULT_BRANCH"}
     REMOTE=${2:-origin}
@@ -155,6 +152,7 @@ merge-latest() {
 
 # Move back to the default branch, pull, prune branches, and remove the previous branch
 clean-up-branch() {
+    set -euo pipefail
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
 
@@ -171,6 +169,7 @@ clean-up-branch() {
 
 # Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
 merge-pr() {
+    set -euo pipefail
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BASE_BRANCH="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%B')"
