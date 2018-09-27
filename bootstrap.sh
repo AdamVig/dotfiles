@@ -18,7 +18,6 @@ ln -sf "$DIR/.functions" ~
 ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.zprofile" ~
-ln -sf "$DIR/.zshrc" ~
 
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
@@ -35,6 +34,8 @@ fi
 # Install custom Zsh theme
 mkdir -p ~/.oh-my-zsh/custom/themes
 ln -sf "$DIR/adamvig.zsh-theme" ~/.oh-my-zsh/custom/themes
+
+ln -sf "$DIR/.zshrc" ~
 
 message "Zsh done."
 
