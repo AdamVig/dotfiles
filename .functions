@@ -141,19 +141,16 @@ get-default-branch() {
 # $1: branch name to fetch (defaults to "develop")
 # $2: name of remote to fetch from (defaults to "origin")
 merge-latest() {
-    set -e
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BRANCH=${1:-"$DEFAULT_BRANCH"}
     REMOTE=${2:-origin}
     git fetch "$REMOTE" "$BRANCH"
     git merge --no-edit "$REMOTE"/"$BRANCH"
-    set +e
 }
 
 
 # Move back to the default branch, pull, prune branches, and remove the previous branch
 clean-up-branch() {
-    set -e
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
 
@@ -166,12 +163,10 @@ clean-up-branch() {
     git pull
     git fetch --prune
     git branch --delete "$CURRENT_BRANCH"
-    set +e
 }
 
 # Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
 merge-pr() {
-    set -e
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     DEFAULT_BRANCH="$(get-default-branch origin)"
     BASE_BRANCH="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%B')"
@@ -182,22 +177,21 @@ merge-pr() {
         return 1
     fi
 
+    BRANCH="$DEFAULT_BRANCH"
     if [[ -n "$BASE_BRANCH" ]]; then
-         git checkout "$BASE_BRANCH"
-    else
-         git checkout "$DEFAULT_BRANCH"
+         BRANCH="$BASE_BRANCH"
     fi
 
+    MESSAGE=""
     if [[ -n "$TITLE" ]]; then
-	git merge "$CURRENT_BRANCH" -m "$TITLE"
-    else
-        git merge "$CURRENT_BRANCH"
+	MESSAGE="-m $TITLE"
     fi
 
-    git push
-    git branch --delete "$CURRENT_BRANCH"
-    git push origin --delete "$CURRENT_BRANCH"
-    set +e
+    # Only delete branches if all operations succeed
+    if git checkout "$BRANCH" && git merge "$CURRENT_BRANCH" $MESSAGE && git push; then
+        git branch --delete "$CURRENT_BRANCH"
+        git push origin --delete "$CURRENT_BRANCH"
+    fi
 }
 
 # Get all Jira ticket IDs mentioned in commits in develop that are not in master
