@@ -152,5 +152,5 @@
       }
     ],
     "breadcrumbs.enabled": true,
-    "terminal.integrated.rendererType": "dom",
+    "terminal.integrated.rendererType": "canvas",
   }
