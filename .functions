@@ -54,15 +54,13 @@ pr() {
 
     git push --set-upstream
 
-    CMD="hub pull-request --browse --copy"
-
     GITHUB_USER="$(git config github.user)"
     if [[ "$GITHUB_USER" ]]; then
-        CMD="$CMD --assign=$GITHUB_USER"
+        ASSIGN="--assign=$GITHUB_USER"
     fi
 
     # Run dynamically constructed command, using $@ to pass it all arguments
-    eval "$CMD" "$@"
+    hub pull-request --browse --copy $ASSIGN $@
 }
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
