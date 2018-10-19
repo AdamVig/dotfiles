@@ -18,7 +18,7 @@ request-sudo apt-get upgrade -y
 
 declare -a apt_packages=(
     # applications
-    signal-desktop   # Encrypted messaging
+    thunderbird
 
     # tools
     emacs

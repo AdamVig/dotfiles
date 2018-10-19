@@ -47,13 +47,13 @@ cask "inkscape"
 cask "kap"
 cask "kdiff3" # Merge tool
 cask "keybase"
-cask "mailspring"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "qlmarkdown"
 cask "sketch"
 cask "spectacle"
 cask "spotify"
 cask "standard-notes"
+cask "thunderbird"
 cask "visual-studio-code"
 cask "whatsapp"
 
