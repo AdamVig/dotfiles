@@ -12,14 +12,14 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
 message "Setting up Node..."
 
-message "  %s" "Symlinking default packages file..."
-ln -sf "$DIR/npm-default-packages" "$(nodenv root)/default-packages"
+message "  %s" "Copying default packages file..."
+cp "$DIR/npm-default-packages" "$(nodenv root)/default-packages" &> /dev/null || true
 
 # 1. Get list of Node versions
 # 2. Filter to only get normal Node versions, like "  9.5.0"
 # 3. Take last line of output which will be latest version
 # 4. Remove the leading spaces
-LATEST_NODE_VERSION=$(nodenv install --list | grep '^\s\s[0-9]' | tail -1 | xargs)
+LATEST_NODE_VERSION="$(nodenv install --list | grep '^\s\s[0-9]' | tail -1 | xargs)"
 if [[ -n "$LATEST_NODE_VERSION" ]]; then
     message "  %s" "Installing Node $LATEST_NODE_VERSION and default npm packages..."
     # Feed "yes" to the command in case it prompts to reinstall
