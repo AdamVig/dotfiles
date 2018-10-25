@@ -189,7 +189,7 @@ merge-pr() {
     if git pull && \
        git checkout "$BRANCH" && \
        merge-latest "$BRANCH" && \
-       git merge "$CURRENT_BRANCH" $MESSAGE && \
+       git merge --no-ff "$CURRENT_BRANCH" $MESSAGE && \
        git push; then
         # Only delete branches if all operations succeed
         git branch --delete "$CURRENT_BRANCH"
