@@ -182,14 +182,14 @@ merge-pr() {
 
     MESSAGE=""
     if [[ -n "$TITLE" ]]; then
-	MESSAGE="-m $TITLE"
+        MESSAGE="--message=$TITLE"
     fi
 
     # After checking out the base branch, ensure it is up to date with its remote counterpart
     if git pull && \
        git checkout "$BRANCH" && \
        merge-latest "$BRANCH" && \
-       git merge --no-ff "$CURRENT_BRANCH" $MESSAGE && \
+       git merge --no-ff "$CURRENT_BRANCH" "$MESSAGE" && \
        git push; then
         # Only delete branches if all operations succeed
         git branch --delete "$CURRENT_BRANCH"
