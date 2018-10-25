@@ -3,6 +3,7 @@
 # Get script directory (allows running from outside `dotfiles` dir)
 DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 
+# shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
 message "Installing golang tools..."
