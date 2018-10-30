@@ -56,9 +56,6 @@ pr() {
     git push --set-upstream
 
     GITHUB_USER="$(git config github.user)"
-    if [[ "$GITHUB_USER" ]]; then
-        ASSIGN="--assign=$GITHUB_USER"
-    fi
 
     # Get value of -b/--branch flag if passed; otherwise use default branch
     BASE_BRANCH="$(get-default-branch origin)"
@@ -75,7 +72,7 @@ pr() {
 $COMMITS"
 
     # Run dynamically constructed command, using $@ to pass it all arguments
-    hub pull-request --browse --copy --message="$MESSAGE" --edit "$ASSIGN" "$@"
+    hub pull-request --browse --copy --message="$MESSAGE" --edit ${GITHUB_USER:+'--assign'"$GITHUB_USER"} "$@"
 }
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
