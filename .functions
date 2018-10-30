@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
 
 what() {
-    printf "%s\\n" "CHEAT:"
+    echo "CHEAT:"
     cheat "$1"
-    printf "%s\\n" "TLDR:"
+    echo "TLDR:"
     tldr "$1"
 }
 
 update() {
-    printf "%s\\n" "Updating Homebrew..."
+    echo "Updating Homebrew..."
     brew update
 
-    printf "%s\\n" "Upgrading Homebrew formulas..."
+    echo "Upgrading Homebrew formulas..."
     brew upgrade
 
-    printf "%s\\n" "Upgrading Homebrew Cask formulas..."
+    echo "Upgrading Homebrew Cask formulas..."
     brew cask upgrade --greedy || true
 
-    printf "%s\\n" "Updating npm..."
+    echo "Updating npm..."
     npm i -g npm
 
-    printf "%s\\n" "Updating global npm..."
+    echo "Updating global npm..."
     npm update -g
 
-    printf "%s\\n" "Updating global pip packages..."
+    echo "Updating global pip packages..."
     pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
 }
 
@@ -34,9 +34,9 @@ alias upgrade=update
 # $2: URL for information on installing the command
 check-installed() {
     if [[ -z "$(command -v "$1")" ]]; then
-        printf "%s\\n" "error: could not find $1, please install it before trying again"
+        echo "error: could not find $1, please install it before trying again"
         if [[ -n "$2" ]]; then
-            printf "       %s\\n" "$2"
+            echo "       $2"
         fi
         return 1
     fi
@@ -86,7 +86,7 @@ watch-ci() {
 
     CI_STATUS="$(hub ci-status)"
     CI_STATUS_ALL="$(hub ci-status -v)"
-    printf "%s\\n" "$CI_STATUS_ALL"
+    echo "$CI_STATUS_ALL"
 
     # Check CI status every five seconds, terminate loop if it is no longer pending
     while [[ "$CI_STATUS" == "pending" ]]; do
@@ -96,8 +96,8 @@ watch-ci() {
         CI_STATUS_ALL_NEW="$(hub ci-status -v)"
         if [[ "$CI_STATUS_ALL" != "$CI_STATUS_ALL_NEW" ]]; then
             CI_STATUS_ALL="$CI_STATUS_ALL_NEW"
-            printf "\\n%s\\n" "Status updated:"
-            printf "%s\\n" "$CI_STATUS_ALL"
+            echo "\\nStatus updated:"
+            echo "$CI_STATUS_ALL"
         fi
 
         CI_STATUS="$(hub ci-status)"
@@ -118,28 +118,28 @@ get-release() {
         # Get current list of releases, which will be diffed against later to show the new version
         PREV_RELEASES="$(hub release)"
 
-        printf "%s\\n" "Waiting for CI..."
+        echo "Waiting for CI..."
         watch-ci
     fi
 
     # Print list of releases, diffing against previous list of releases if it is set
     if [[ -n "$PREV_RELEASES" ]]; then
-        printf "\\n%s\\n" "New release:"
+        echo "\\nNew release:"
         # Diff, only displaying changed groups, and hiding any control characters
         diff \
             --ignore-all-space \
             --changed-group-format='%<%>' \
             --unchanged-group-format='' \
-            <(printf "%s\\n" "$PREV_RELEASES") <(hub release)
+            <(echo "$PREV_RELEASES") <(hub release)
     else
-        printf "%s\\n" "All releases:"
+        echo "All releases:"
         RELEASES="$(hub release)"
 	if [[ "$1" = "prod" ]]; then
 	    RELEASES="$(echo "$RELEASES" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
 	elif [[ "$1" = "beta" ]]; then
 	    RELEASES="$(echo "$RELEASES" | grep 'v[0-9]*\.[0-9]*\.[0-9]*-beta.[0-9]*$')"
 	fi
-	printf "%s\\n" "$RELEASES"
+	echo "$RELEASES"
     fi
 }
 
@@ -168,7 +168,7 @@ clean-up-branch() {
     DEFAULT_BRANCH="$(get-default-branch origin)"
 
     if [[ "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
-        printf "%s\\n" "error: current branch is default branch, please run again from a different branch"
+        echo "error: current branch is default branch, please run again from a different branch"
         return 1
     fi
 
@@ -186,7 +186,7 @@ merge-pr() {
     TITLE="$(hub pr list --head="$CURRENT_BRANCH" --limit=1 --format='%t')"
 
     if [[ "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
-        printf "%s\\n" "error: current branch is default branch, please run again from a different branch"
+        echo "error: current branch is default branch, please run again from a different branch"
         return 1
     fi
 
