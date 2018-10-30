@@ -144,13 +144,13 @@
 
     // Disable jarring scroll behavior
     "markdown.preview.scrollEditorWithPreview": false,
-    "github.hosts": [
+    "breadcrumbs.enabled": true,
+    "terminal.integrated.rendererType": "canvas",
+    "githubPullRequests.hosts": [
       {
         "host": "https://github.com",
         "username": "oauth",
         "token": "system"
       }
     ],
-    "breadcrumbs.enabled": true,
-    "terminal.integrated.rendererType": "canvas",
   }
