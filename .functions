@@ -72,7 +72,7 @@ pr() {
 $COMMITS"
 
     # Run dynamically constructed command, using $@ to pass it all arguments
-    hub pull-request --browse --copy --message="$MESSAGE" --edit ${GITHUB_USER:+'--assign'"$GITHUB_USER"} "$@"
+    hub pull-request --browse --copy --message="$MESSAGE" --edit ${GITHUB_USER:+'--assign='"$GITHUB_USER"} "$@"
 }
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
