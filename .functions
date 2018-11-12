@@ -143,8 +143,8 @@ get-release() {
 # Get the default branch of the repository (for a specific remote)
 # $1: name of a remote (defaults to "origin")
 get-default-branch() {
-    REMOTE=${1:-origin}
-    git remote show "$REMOTE" | grep "HEAD branch" | sed 's/.*: *//'
+    remote=${1:-origin}
+    git symbolic-ref --short refs/remotes/"$remote"/HEAD | sed "s/$remote\///"
 }
 
 # Merge the latest upstream changes into the current branch
