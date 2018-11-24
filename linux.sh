@@ -17,7 +17,7 @@ if URL="$(get-release-url sharkdp/bat amd64)"; then
 
     if [[ -f "$TEMP_DIR/bat" ]]; then
         # Install
-	sudo dpkg -i "$TEMP_DIR/bat.deb"
+        sudo dpkg -i "$TEMP_DIR/bat.deb"
 
         message "  %s" "Done installing Bat."
     else
@@ -25,6 +25,24 @@ if URL="$(get-release-url sharkdp/bat amd64)"; then
     fi
 else
     warn "could not install Bat ($URL)"
+fi
+
+message "  %s" "Installing ripgrep..."
+
+if URL="$(get-release-url BurntSushi/ripgrep amd64)"; then
+    # Download the latest release to TEMP_DIR
+    wget --quiet --output-document "$TEMP_DIR/ripgrep.deb" "$URL"
+
+    if [[ -f "$TEMP_DIR/ripgrep" ]]; then
+        # Install
+        sudo dpkg -i "$TEMP_DIR/ripgrep.deb"
+
+        message "  %s" "Done installing ripgrep."
+    else
+        warn "failed to download ripgrep (using URL $URL)"
+    fi
+else
+    warn "could not install ripgrep ($URL)"
 fi
 
 message "  %s" "Installing fzf..."
