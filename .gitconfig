@@ -3,16 +3,19 @@
     editor = code --reuse-window --wait
 [push]
     # make `git push -u` default to `origin` and the current branch
-	default = current
+    default = current
+[pretty]
+    who-when-what = format:[%an, %cr] %s
 [alias]
-	contributors = shortlog --summary --numbered --email --all
+    contributors = shortlog --summary --numbered --email --all
+    last = log --max-count=1 --pretty=who-when-what
 [pull]
     # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
     rebase = true
 [diff]
     tool = meld
 [diftool]
-  prompt = false
+    prompt = false
 [difftool "meld"]
     cmd = meld "$LOCAL" "$REMOTE"
 [merge]
