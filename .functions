@@ -214,3 +214,10 @@ get-tickets() {
     git fetch --all > /dev/null
     git log origin/master..origin/develop --extended-regexp --grep 'TOOLS|APPS' --pretty=oneline | grep -Po '(APPS|TOOLS)-[0-9]+' | uniq -u
 }
+
+# Find the current randomized name of a pod for an application
+# $1: namespace
+# $2: application name
+kube-pod() {
+    kubectl get pods --output json --namespace "$1" | jq --arg app "$2" '.items[] | select(.metadata.labels.app == $app).metadata.name'
+}
