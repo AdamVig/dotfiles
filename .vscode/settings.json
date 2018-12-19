@@ -122,13 +122,6 @@
   "markdown.preview.scrollEditorWithPreview": false,
   "breadcrumbs.enabled": true,
   "terminal.integrated.rendererType": "canvas",
-  "githubPullRequests.hosts": [
-    {
-      "host": "https://github.com",
-      "username": "oauth",
-      "token": "system"
-    }
-  ],
   "gitlens.views.repositories.enabled": false,
   "gitlens.views.fileHistory.enabled": false,
   "gitlens.views.lineHistory.enabled": false,
