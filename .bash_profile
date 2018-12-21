@@ -3,6 +3,8 @@
 # Disable warning about using ~ for paths:
 # shellcheck disable=SC1090
 
+source ~/.bashrc
+
 # Load files
 source ~/.aliases
 source ~/.exports
