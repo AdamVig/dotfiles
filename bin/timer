@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+readonly usage="Usage: $(basename "$0") [-h|--help] <command> [arguments]
+Time an arbitrary shell command.
+
+Flags:
+    -h, --help  show this help text"
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "$usage"
+    exit 0
+fi
+
+if [ -z "$1" ]; then
+    echo "$usage"
+    echo
+    echo "Must provide a command to run."
+    exit 1
+fi
+
+START_TIME=$(gdate +%s%3N)
+eval "$@"
+ELAPSED_TIME=$(($(gdate +%s%3N) - START_TIME))
+echo "duration: ${ELAPSED_TIME}ms"

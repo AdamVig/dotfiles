@@ -10,6 +10,10 @@
 ### Files
 #### `./.vscode`
 Settings, keybindings, and snippets for Visual Studio Code.  
+#### `bin`
+Utility scripts.
+#### `manual`
+One-off scripts related to system setup.
 #### `.aliases`
 Abbreviations for common commands.  
 #### `.bash_profile`  
