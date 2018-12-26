@@ -12,3 +12,5 @@ alias python2='python2.7'
 # Use fzf to find files with bat for previews and Ctrl + O to open the file in VS Code
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
+
+alias glb="log-branch-commits"
