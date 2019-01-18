@@ -20,6 +20,12 @@ ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.zprofile" ~
 
+message "Symlinking executables..."
+mkdir -p ~/.local/bin
+for executable in "$DIR"/bin/*; do
+    ln -sf "$executable" ~/.local/bin
+done
+
 message "Installing Oh My Zsh and Zsh Syntax Highlighting..."
 OH_MY_ZSH_URL=https://raw.githubusercontent.com
 OH_MY_ZSH_URL+=/robbyrussell/oh-my-zsh/master/tools/install.sh
