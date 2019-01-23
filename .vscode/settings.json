@@ -125,4 +125,5 @@
   "gitlens.views.repositories.enabled": false,
   "gitlens.views.fileHistory.enabled": false,
   "gitlens.views.lineHistory.enabled": false,
+  "editor.find.seedSearchStringFromSelection": false,
 }
