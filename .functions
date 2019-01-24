@@ -107,6 +107,12 @@ watch-ci() {
 
         ci_status="$(hub ci-status)"
     done
+    
+    local project
+    project="$(basename "$(pwd)")"
+    if is-macos; then
+        osascript -e "display notification \"The build for $project is complete.\" with title \"watch-ci\""
+    fi
 }
 
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
