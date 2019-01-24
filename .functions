@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+is-macos() {
+    [[ "$OSTYPE" == darwin* ]]
+}
+
 what() {
     echo "CHEAT:"
     cheat "$1"
@@ -81,23 +85,27 @@ watch-ci() {
         return 1
     fi
 
-    CI_STATUS="$(hub ci-status)"
-    CI_STATUS_ALL="$(hub ci-status -v)"
-    echo "$CI_STATUS_ALL"
+    local ci_status
+    ci_status="$(hub ci-status)"
+    local ci_status_all
+    ci_status_all="$(hub ci-status -v)"
+    echo "$ci_status_all"
 
     # Check CI status every five seconds, terminate loop if it is no longer pending
-    while [[ "$CI_STATUS" == "pending" ]]; do
+    while [ "$ci_status" = "pending" ]; do
         sleep 5
 
         # Check if the status of individual checks has changed, only log them if it has
-        CI_STATUS_ALL_NEW="$(hub ci-status -v)"
-        if [[ "$CI_STATUS_ALL" != "$CI_STATUS_ALL_NEW" ]]; then
-            CI_STATUS_ALL="$CI_STATUS_ALL_NEW"
-            echo "\\nStatus updated:"
-            echo "$CI_STATUS_ALL"
+        local ci_status_all_new
+        ci_status_all_new="$(hub ci-status -v)"
+        if [ "$ci_status_all" != "$ci_status_all_new" ]; then
+            ci_status_all="$ci_status_all_new"
+            echo
+            echo "Status updated:"
+            echo "$ci_status_all"
         fi
 
-        CI_STATUS="$(hub ci-status)"
+        ci_status="$(hub ci-status)"
     done
 }
 
@@ -121,7 +129,8 @@ get-release() {
 
     # Print list of releases, diffing against previous list of releases if it is set
     if [[ -n "$PREV_RELEASES" ]]; then
-        echo "\\nNew release:"
+        echo
+        echo "New release:"
         # Diff, only displaying changed groups, and hiding any control characters
         diff \
             --ignore-all-space \
