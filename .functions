@@ -4,6 +4,15 @@ is-macos() {
     [[ "$OSTYPE" == darwin* ]]
 }
 
+is-linux() {
+    [[ "$OSTYPE" == *linux* ]]
+}
+
+is-wsl() {
+    # https://stackoverflow.com/a/43618657/1850656
+    [[ "$(< /proc/version)" == *@(Microsoft|WSL)* ]]
+}
+
 what() {
     echo "CHEAT:"
     cheat "$1"

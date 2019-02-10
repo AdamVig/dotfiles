@@ -1,17 +1,34 @@
 #!/bin/bash
 
-# Disable warning about using ~ for paths:
-# shellcheck disable=SC1090
-
+# shellcheck source=.bashrc
 source ~/.bashrc
 
-# Load files
+# shellcheck source=.aliases
 source ~/.aliases
+
+# shellcheck source=.exports
 source ~/.exports
+
+# shellcheck source=.functions
 source ~/.functions
 
 # Load file if exists, suppress error if missing
+# shellcheck source=/dev/null
 source ~/.locals &> /dev/null
+
+# Initialize Linuxbrew if it exists
+if [ -d /home/linuxbrew/.linuxbrew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if is-linux; then
+  eval "$(ssh-agent)" > /dev/null
+fi
+
+if is-wsl; then
+  # https://github.com/Microsoft/WSL/issues/352
+  umask 022
+fi
 
 # Initialize Nodenv
 eval "$(nodenv init -)"

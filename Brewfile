@@ -1,31 +1,32 @@
-tap "caskroom/drivers"
-tap "caskroom/fonts"
-
 # command line tools
 brew "bash"
 brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
-brew "fzf" # Fuzzy finder
 brew "git"
-brew "grep", args: ["with-default-names"]
 brew "htop" # System monitoring tool
+brew "httpie" # Better curl
+brew "lastpass-cli"
 brew "wget"
 brew "zsh"
 
 # languages
 brew "go"
+brew "php"
 brew "python"
 brew "ruby"
 
+# dependency managers
+brew "composer" # PHP
+brew "dep" # Golang
+
 # utilities
-brew "dep" # Golang package manager
 brew "docker"
 brew "gifsicle" # Gif tool
+brew "gpg"
 brew "graphviz" # Graph visualization tool
-brew "hub", args: ["devel"] # GitHub CLI
+brew "hub", args: ["HEAD"] # GitHub CLI
 brew "jq" # JSON processor
-cask "mactex" # LaTeX tools
 brew "mosh" # Mobile shell
 brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
@@ -36,44 +37,5 @@ brew "rename" # File renamer
 brew "ripgrep" # Fast grep
 brew "shellcheck" # Shell script linter
 brew "ssh-copy-id"
-cask "xquartz" # Needed by Inkscape
+brew "unzip"
 brew "z"
-
-# applications
-cask "docker"
-cask "firefox"
-cask "google-backup-and-sync"
-cask "google-chrome"
-cask "gpg-suite"
-cask "inkscape"
-cask "kap"
-cask "kdiff3" # Merge tool
-cask "keybase"
-cask "meld" # Comparison tool for version control, files, and directories
-cask "qlmarkdown"
-cask "sketch"
-cask "spectacle"
-cask "spotify"
-cask "standard-notes"
-cask "thunderbird"
-cask "visual-studio-code"
-cask "whatsapp"
-
-# drivers
-cask "caskroom/drivers/logitech-options"
-
-# fonts
-cask "caskroom/fonts/font-abril-fatface"
-cask "caskroom/fonts/font-arvo"
-cask "caskroom/fonts/font-bitter"
-cask "caskroom/fonts/font-blokk-neue"
-cask "caskroom/fonts/font-fira-code"
-cask "caskroom/fonts/font-hasklig"
-cask "caskroom/fonts/font-lato"
-cask "caskroom/fonts/font-lora"
-cask "caskroom/fonts/font-noto-sans"
-cask "caskroom/fonts/font-open-sans"
-cask "caskroom/fonts/font-playfair-display"
-cask "caskroom/fonts/font-source-code-pro"
-cask "caskroom/fonts/font-trocchi"
-cask "caskroom/fonts/font-yeseva-one"

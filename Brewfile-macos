@@ -1,0 +1,45 @@
+tap "caskroom/fonts"
+
+# command line tools
+brew "grep", args: ["with-default-names"]
+
+# utilities
+cask "mactex" # LaTeX tools
+cask "xquartz" # Needed by Inkscape
+
+# applications
+cask "docker"
+cask "firefox"
+cask "google-backup-and-sync"
+cask "google-chrome"
+cask "gpg-suite"
+cask "inkscape"
+cask "kap"
+cask "kdiff3" # Merge tool
+cask "keybase"
+cask "meld" # Comparison tool for version control, files, and directories
+cask "qlmarkdown"
+cask "signal"
+cask "sketch"
+cask "spectacle"
+cask "spotify"
+cask "standard-notes"
+cask "thunderbird"
+cask "visual-studio-code"
+cask "whatsapp"
+
+# fonts
+cask "caskroom/fonts/font-abril-fatface"
+cask "caskroom/fonts/font-arvo"
+cask "caskroom/fonts/font-bitter"
+cask "caskroom/fonts/font-blokk-neue"
+cask "caskroom/fonts/font-fira-code"
+cask "caskroom/fonts/font-hasklig"
+cask "caskroom/fonts/font-lato"
+cask "caskroom/fonts/font-lora"
+cask "caskroom/fonts/font-noto-sans"
+cask "caskroom/fonts/font-open-sans"
+cask "caskroom/fonts/font-playfair-display"
+cask "caskroom/fonts/font-source-code-pro"
+cask "caskroom/fonts/font-trocchi"
+cask "caskroom/fonts/font-yeseva-one"

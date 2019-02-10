@@ -19,23 +19,12 @@ request-sudo apt-get upgrade -y
 
 declare -a apt_packages=(
     # applications
+    signal
     thunderbird
 
     # tools
-    emacs
-    gnupg2
-    htop    # System monitoring tool
-    httpie
     kdiff3    # Merge tool
     meld    # Comparison tool for version control, files, and directories
-    nnn   # Command-line file browser
-    jq    # JSON processor
-    mosh
-    python-pip
-    zsh
-
-    # languages
-    golang-go
 )
 
 message "  %s" "Installing packages..."

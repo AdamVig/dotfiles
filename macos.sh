@@ -6,6 +6,22 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
+if ! command -v brew &> /dev/null; then
+     message "  %s" "Installing Homebrew..."
+     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     message "  %s" "Done installing Homebrew."
+fi
+
+# Check if directory is writable, if not, take ownership of it
+message "  %s" "Checking ownership of subdirectories of /usr/local..."
+for dir in $(brew --prefix)/*; do
+    if [ ! -w "$dir" ]; then
+        request-sudo chown -R "$(whoami)" "$dir"
+        message "    %s" "Took ownership of $dir"
+    fi
+done
+message "  %s" "Done checking ownership of subdirectories of /usr/local."
+
 # Copy terminal settings (symlinking does not work because Terminal.app overwrites the file on close)
 cp "$DIR/apple-terminal-settings.plist" ~/Library/Preferences/com.apple.Terminal.plist
 

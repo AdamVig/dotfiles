@@ -13,9 +13,6 @@ eslint
 # Baseline ESLint settings
 eslint-config-defaults
 
-# Manage custom macOS file icons
-fileicon
-
 # run git commands in several repositories at once
 git-run
 

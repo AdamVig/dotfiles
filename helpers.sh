@@ -2,7 +2,11 @@
 
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
-IFS=$'\n\t'
+
+DIR="$(dirname "$(realpath "$0")")"
+
+# shellcheck source=./.functions
+source "$DIR/.functions"
 
 # Colorized output
 # $1: color, template string, or string to print
@@ -103,4 +107,10 @@ request-sudo() {
     else
         sudo --prompt "$SUDO_PROMPT" "$@"
     fi
+}
+
+# On WSL, get the absolute WSL path to %APPDATA% for the current user on the host system
+get-appdata-path() {
+	# https://superuser.com/a/1391349/201849
+	wslpath "$(cmd.exe /C 'echo | set /p _=%APPDATA%')"
 }

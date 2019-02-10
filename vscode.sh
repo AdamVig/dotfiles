@@ -8,9 +8,11 @@ source "$DIR/helpers.sh"
 
 message "cyan" "Setting up Visual Studio Code..."
 
-message "cyan" "  %s" "Symlinking Visual Studio Code settings... "
-ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
-ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+message "cyan" "  %s" "Symlinking Visual Studio Code settings..."
+if is-macos; then
+    ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
+    ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+fi
 
 declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
