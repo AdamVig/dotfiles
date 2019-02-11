@@ -10,7 +10,7 @@ is-linux() {
 
 is-wsl() {
     # https://stackoverflow.com/a/43618657/1850656
-    [[ "$(< /proc/version)" == *@(Microsoft|WSL)* ]]
+    [ -e /proc/version ] && [[ "$(< /proc/version)" == *@(Microsoft|WSL)* ]]
 }
 
 what() {
