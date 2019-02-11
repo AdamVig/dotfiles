@@ -22,17 +22,13 @@ go_packages=(
     golang.org/x/tools/cmd/godoc  # Go documentation tool
     golang.org/x/tools/cmd/gorename  # Rename identifiers
     golang.org/x/tools/cmd/guru  # Answers questions about Go code
-    github.com/senorprogrammer/wtf # Terminal dashboard
 )
 
+GO111MODULE=off
 for package in "${go_packages[@]}"; do
     go get -u "$package" &> /dev/null && \
         message "    %s" "Installed $package" || \
-        warn "    %s" "package $package failed to install"
+        warn "package $package failed to install"
 done
-
-message "  %s" "Installing wtf..."
-(cd "$GOPATH/src/github.com/senorprogrammer/wtf" && go install -ldflags="-s -w")
-message "  %s" "Done installing wtf."
 
 message "Golang done."
