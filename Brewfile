@@ -32,6 +32,7 @@ brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
+brew "pandoc"
 brew "postgresql", restart_service: :changed
 brew "rename" # File renamer
 brew "ripgrep" # Fast grep
