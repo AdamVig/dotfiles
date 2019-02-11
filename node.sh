@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script must run after the OS-specific scripts because it depends on Nodenv.
 

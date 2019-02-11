@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Use this script when you change the settings for Terminal.app and want to update `apple-terminal-settings.plist` to
 # contain the latest settings. The settings file cannot be symlinked into place because Terminal.app overwrites its
