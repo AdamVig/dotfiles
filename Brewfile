@@ -27,7 +27,6 @@ brew "gpg"
 brew "graphviz" # Graph visualization tool
 brew "hub", args: ["HEAD"] # GitHub CLI
 brew "jq" # JSON processor
-brew "mosh" # Mobile shell
 brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages

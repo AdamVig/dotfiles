@@ -25,6 +25,9 @@ declare -a apt_packages=(
     # tools
     kdiff3    # Merge tool
     meld    # Comparison tool for version control, files, and directories
+
+    # command-line utilities
+    mosh # Mobile shell
 )
 
 message "  %s" "Installing packages..."
