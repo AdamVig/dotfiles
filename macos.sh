@@ -72,6 +72,9 @@ defaults -currentHost write -globalDomain com.apple.mouse.tapBehavior -int 0
 # Disable natural scrolling
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
+# Disable dock bouncing
+defaults write com.apple.dock no-bouncing -bool true
+
 # Restart Dock and Finder
 killall Dock
 killall Finder
