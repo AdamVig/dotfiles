@@ -7,6 +7,7 @@ brew "git"
 brew "htop" # System monitoring tool
 brew "httpie" # Better curl
 brew "lastpass-cli"
+brew "tree"
 brew "wget"
 brew "zsh"
 
