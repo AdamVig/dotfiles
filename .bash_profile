@@ -14,20 +14,19 @@ source ~/.functions
 
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
-source ~/.locals &> /dev/null
+source ~/.locals &> /dev/null || true
 
 # Initialize Linuxbrew if it exists
 if [ -d /home/linuxbrew/.linuxbrew ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-if is-linux; then
-  eval "$(ssh-agent)" > /dev/null
-fi
-
 if is-wsl; then
   # https://github.com/Microsoft/WSL/issues/352
   umask 022
+
+  eval "$(/mnt/c/ssh-agent-wsl/ssh-agent-wsl --reuse)" > /dev/null
+  alias ssh-agent='/mnt/c/ssh-agent-wsl/ssh-agent-wsl'
 fi
 
 # Initialize Nodenv

@@ -11,21 +11,43 @@ request-sudo
 
 message "  %s" "setting up Linux..."
 
-message "  %s" "installing essential tools..."
+message "    %s" "installing essential tools..."
 if command -v apt > /dev/null; then
     sudo apt-get update > /dev/null
-    sudo apt-get install --yes build-essential curl file git
+    sudo apt-get install --yes build-essential curl file git > /dev/null
 else
     error "could not find a supported package manager; skipping install"
 fi
-message "  %s" "done installing essential tools."
+message "    %s" "done installing essential tools."
 
 if ! command -v brew &> /dev/null; then
-    message "  %s" "installing Linuxbrew..."
+    message "    %s" "installing Linuxbrew..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-    message "  %s" "done installing Linuxbrew."
+    message "    %s" "done installing Linuxbrew."
 fi
 
 source "$DIR/.bash_profile"
 
-message "done setting up Linux."
+if is-wsl; then
+  message "    %s" "installing ssh-agent-wsl..."
+  if url="$(get-release-url rupor-github/ssh-agent-wsl 7z)"; then
+    extract_path="/tmp/ssh-agent-wsl"
+    download_path="$extract_path.7z"
+    wget --quiet --output-document "$download_path" "$url"
+    if [ -f "$download_path" ]; then
+      7z x "$download_path" -y -o"$extract_path" > /dev/null
+      if [ -d "$extract_path" ]; then
+        cp -r "$extract_path" /mnt/c
+        message "    %s" "done installing ssh-agent-wsl."
+      else
+        warn "failed to extract ssh-agent-wsl"
+      fi
+    else
+      warn "failed to download ssh-agent-wsl"
+    fi
+  else
+    warn "could not get release URL to install ssh-agent-wsl"
+  fi
+fi
+
+message "  %s" "done setting up Linux."
