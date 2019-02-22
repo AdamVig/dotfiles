@@ -18,6 +18,7 @@ ln -sf "$DIR/.exports" ~
 ln -sf "$DIR/.functions" ~
 ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
+ln -sf "$DIR/.tmux.conf" ~
 ln -sf "$DIR/.zprofile" ~
 
 if is-wsl; then
