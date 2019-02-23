@@ -37,8 +37,11 @@ if is-wsl; then
     if [ -f "$download_path" ]; then
       7z x "$download_path" -y -o"$extract_path" > /dev/null
       if [ -d "$extract_path" ]; then
-        cp -r "$extract_path" /mnt/c
-        message "    %s" "done installing ssh-agent-wsl."
+        if request-sudo cp -r "$extract_path" /mnt/c; then
+          message "    %s" "done installing ssh-agent-wsl."
+        else
+          error "failed to install ssh-agent-wsl"
+        fi
       else
         warn "failed to extract ssh-agent-wsl"
       fi
