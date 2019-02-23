@@ -9,7 +9,6 @@ source "$DIR/helpers.sh"
 message "Installing pip tools..."
 pip_packages=(
     pip
-    cheat    # Bash command cheatsheets
     grip    # GitHub README instant preview
 )
 

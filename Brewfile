@@ -22,6 +22,7 @@ brew "composer" # PHP
 brew "dep" # Golang
 
 # utilities
+brew "cheat"
 brew "docker"
 brew "gifsicle" # Gif tool
 brew "gpg"
@@ -39,5 +40,6 @@ brew "rename" # File renamer
 brew "ripgrep" # Fast grep
 brew "shellcheck" # Shell script linter
 brew "ssh-copy-id"
+brew "tldr"
 brew "unzip"
 brew "z"

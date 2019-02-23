@@ -28,8 +28,5 @@ npm-check
 # process manager
 pm2
 
-# Simple Bash command docs; used by 'what' alias
-tldr
-
 # Terminal assistant to find and install node packages
 emma-cli
