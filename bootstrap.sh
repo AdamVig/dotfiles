@@ -13,7 +13,6 @@ message "Symlinking dotfiles into your home directory..."
 ln -sf "$DIR/.aliases" ~
 ln -sf "$DIR/.bash_profile" ~
 ln -sf "$DIR/.bashrc" ~
-ln -sf "$DIR/.eslintrc.json" ~
 ln -sf "$DIR/.exports" ~
 ln -sf "$DIR/.functions" ~
 ln -sf "$DIR/.git-template" ~

@@ -10,9 +10,6 @@ emoj
 # JavaScript style linter
 eslint
 
-# Baseline ESLint settings
-eslint-config-defaults
-
 # run git commands in several repositories at once
 git-run
 
