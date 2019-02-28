@@ -31,3 +31,6 @@ export GPG_TTY=$(tty)
 
 # Fix ansi-term support in emacs
 export TERM=xterm-256color
+
+# Tell ripgrep where to load config from
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
