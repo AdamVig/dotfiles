@@ -21,5 +21,10 @@ if [ ! -e ~/.gitconfig ]; then
     [[ -n "$NAME" ]] && git config --global user.name "$NAME"
     [[ -n "$EMAIL" ]] && git config --global user.email "$EMAIL"
     [[ -n "$GITHUB" ]] && git config --global github.user "$GITHUB"
+
+    if is-wsl; then
+      git config --global credential.helper \
+        '/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
+    fi
 fi
 message "Done setting up Git."
