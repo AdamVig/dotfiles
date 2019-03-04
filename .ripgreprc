@@ -1,7 +1,3 @@
 # Always ignore package-lock.json
 --glob
 !package-lock.json
-
-# Include dotfiles
---glob
-.*
