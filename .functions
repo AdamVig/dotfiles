@@ -287,9 +287,25 @@ install-peer-dependencies() {
 # $1: index of match to get
 # $@: arguments to pass to ripgrep
 get-ripgrep-match() {
+    if (( $# < 2 )); then
+        echo "error: must provide at least two arguments"
+        return 1
+    fi
+  
     local index
     index="$1"
     shift
+
+    if ! [[ "$index" =~ ^[0-9]+$ ]]; then
+      echo "error: first argument must be a number"
+      return 1
+    fi
+
+    if ! [ "$index" -gt 0 ]; then
+      echo "error: index must be greater than zero"
+      return 1
+    fi
+
     rg --files-with-matches "$@" | sed "${index}q;d"
 }
 alias rgm=get-ripgrep-match
