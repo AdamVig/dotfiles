@@ -3,6 +3,7 @@ brew "bash"
 brew "bat" # Replacement for cat
 brew "curl"
 brew "emacs"
+brew "fd" # Replacement for find
 brew "git"
 brew "htop" # System monitoring tool
 brew "httpie" # Better curl
