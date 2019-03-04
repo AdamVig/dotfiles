@@ -293,3 +293,12 @@ get-ripgrep-match() {
     rg --files-with-matches "$@" | sed "${index}q;d"
 }
 alias rgm=get-ripgrep-match
+
+# Open a file or URL from WSL using the default handler
+# $1: file path or URL
+wsl-open() {
+    cmd.exe /C start "$1"
+}
+if is-wsl; then
+    alias open=wsl-open
+fi
