@@ -27,3 +27,6 @@ pm2
 
 # Terminal assistant to find and install node packages
 emma-cli
+
+# Package manager
+yarn
