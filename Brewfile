@@ -29,6 +29,7 @@ brew "gifsicle" # Gif tool
 brew "gpg"
 brew "graphviz" # Graph visualization tool
 brew "hub", args: ["HEAD"] # GitHub CLI
+brew "imagemagick"
 brew "jq" # JSON processor
 brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
