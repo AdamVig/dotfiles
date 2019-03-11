@@ -128,5 +128,6 @@
   "editor.find.seedSearchStringFromSelection": false,
   "editor.snippetSuggestions": "none",
   "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
-  "terminal.integrated.windowsEnableConpty": true
+  "terminal.integrated.windowsEnableConpty": true,
+  "editor.fontSize": 13
 }
