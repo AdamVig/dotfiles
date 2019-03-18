@@ -1,4 +1,7 @@
 {
+  // ------------------------------
+  // Editor
+  // ------------------------------
   "editor.fontFamily": "Hasklig",
   "editor.fontWeight": "600",
   "editor.fontLigatures": true,
@@ -10,32 +13,15 @@
   "editor.minimap.enabled": false,
   // Disable code folding
   "editor.folding": false,
-  // Keep the debug toolbar in its panel
-  "debug.toolBarLocation": "docked",
-  // Render diffs inline
-  "diffEditor.renderSideBySide": false,
-  "window.zoomLevel": 0,
-  // Git Lens
-  "gitlens.statusBar.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "git.enableSmartCommit": true,
+  "editor.find.seedSearchStringFromSelection": false,
+  "editor.snippetSuggestions": "none",
+  "editor.fontSize": 13,
+  // ------------------------------
+  // Workbench
+  // ------------------------------
   "workbench.startupEditor": "none",
-  // Hide panes in Explorer
-  "explorer.openEditors.visible": 0,
-  "docker.showExplorer": false,
-  "markdown.extension.showExplorer": false,
-  // Remove leading zero from time
-  "clock.dateFormat": "h:MM TT",
-  // Configure HTML formatter:
-  // Wrap lines so they're shorter than 120 chars
-  "html.format.wrapLineLength": 110,
-  // Maintain EOF newline
-  "html.format.endWithNewline": true,
-  // Do not add extra lines around `head`, `body`, `/html`
-  "html.format.extraLiners": "",
   // Change theme
-  "workbench.colorTheme": "One Dark Pro",
+  "workbench.colorTheme": "Atomize",
   "workbench.colorCustomizations": {
     // Change color of bottom bar
     "statusBar.background": "#1a1d23",
@@ -49,44 +35,46 @@
   },
   // Hide the feedback smiley in the bar at the bottom
   "workbench.statusBar.feedback.visible": false,
-  // Disable file delete confirmation
-  "explorer.confirmDelete": false,
-  // Increase terminal buffer
-  "terminal.integrated.scrollback": 5000,
-  // Enable commands like opt+b and opt+f for moving cursor
-  "terminal.integrated.macOptionIsMeta": true,
+  // ------------------------------
+  // Sidebar
+  // ------------------------------
+  // Keep the debug toolbar in its panel
+  "debug.toolBarLocation": "docked",
+  // Render diffs inline
+  "diffEditor.renderSideBySide": false,
+  // Commit all files when none are staged
+  "git.enableSmartCommit": true,
   // Enable Git commit message character counter
   "git.inputValidation": "always",
   // Disable automatic detection of Git submodules
   "git.detectSubmodules": false,
-  "shellcheck.customArgs": [
-    // Allow 'source' outside of input files
-    "-external-sources"
-  ],
-  // Disable confirmation window on drag and drop in file explorer
-  "explorer.confirmDragAndDrop": false,
-  // Set path to Python interpreter
-  "python.pythonPath": "/usr/local/bin/python3",
   // Periodically run Git Fetch
   "git.autofetch": true,
-  // Languages to validate with ESLint plugin
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "vue-html"
-  ],
-  // Do not lint Markdown files
-  "stylelint.configOverrides": {
-    "ignoreFiles": "*.md"
-  },
-  "gitlens.keymap": "chorded",
-  "gitlens.advanced.messages": {
-    "suppressShowKeyBindingsNotice": true
-  },
-  "gitlens.historyExplorer.enabled": false,
+  // Hide panes in Explorer
+  "explorer.openEditors.visible": 0,
+  // Disable file delete confirmation
+  "explorer.confirmDelete": false,
+  // Disable confirmation window on drag and drop in file explorer
+  "explorer.confirmDragAndDrop": false,  
+  // ------------------------------
+  // Terminal
+  // ------------------------------
+  // Increase terminal buffer
+  "terminal.integrated.scrollback": 5000,
+  // Enable commands like opt+b and opt+f for moving cursor
+  "terminal.integrated.macOptionIsMeta": true,
+  "terminal.integrated.rendererType": "canvas",
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
+  "terminal.integrated.windowsEnableConpty": true,
+  // ------------------------------
+  // Languages
+  // ------------------------------
+  // Wrap lines so they're shorter than 120 chars
+  "html.format.wrapLineLength": 110,
+  // Maintain EOF newline
+  "html.format.endWithNewline": true,
+  // Do not add extra lines around `head`, `body`, `/html`
+  "html.format.extraLiners": "",
   // Add a ruler at 50 characters (for commit subjects)
   "[git-commit]": {
     "editor.rulers": [
@@ -96,6 +84,43 @@
     // Wrap at 72 characters instead of 50
     "rewrap.wrappingColumn": 72
   },
+  // Update TypeScript imports when file is moved
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  // Disable jarring scroll behavior
+  "markdown.preview.scrollEditorWithPreview": false,
+  // ------------------------------
+  // Extensions
+  // ------------------------------
+  // Git Lens
+  "gitlens.statusBar.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.views.repositories.enabled": false,
+  "gitlens.views.fileHistory.enabled": false,
+  "gitlens.views.lineHistory.enabled": false,
+  "gitlens.keymap": "chorded",
+  "gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+  },
+  "docker.showExplorer": false,
+  "markdown.extension.showExplorer": false,
+  // Remove leading zero from time
+  "clock.dateFormat": "h:MM TT",
+  "shellcheck.customArgs": [
+    // Allow 'source' outside of input files
+    "-external-sources"
+  ],
+  // Set path to Python interpreter
+  "python.pythonPath": "/usr/local/bin/python3",
+  // Languages to validate with ESLint plugin
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "vue-html"
+  ],
   // Enable automatic line wrapping
   "rewrap.autoWrap.enabled": true,
   // Spell checker configuration
@@ -116,18 +141,4 @@
     "*.dll", // Ignore all .dll files.
     "**/*.dll" // Ignore all .dll files
   ],
-  // Update TypeScript imports when file is moved
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  // Disable jarring scroll behavior
-  "markdown.preview.scrollEditorWithPreview": false,
-  "breadcrumbs.enabled": true,
-  "terminal.integrated.rendererType": "canvas",
-  "gitlens.views.repositories.enabled": false,
-  "gitlens.views.fileHistory.enabled": false,
-  "gitlens.views.lineHistory.enabled": false,
-  "editor.find.seedSearchStringFromSelection": false,
-  "editor.snippetSuggestions": "none",
-  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
-  "terminal.integrated.windowsEnableConpty": true,
-  "editor.fontSize": 13
 }
