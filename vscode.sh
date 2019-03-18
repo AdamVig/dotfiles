@@ -21,6 +21,7 @@ declare -a extensions=(
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
     eg2.vscode-npm-script  # package.json linting and npm script detection
+    emroussel.atomize-atom-one-dark-theme  # Atom-inspired theme
     fabiospampinato.vscode-terminals  # terminal manager
     GitHub.vscode-pull-request-github # built-in GitHub pull request support
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
@@ -35,7 +36,6 @@ declare -a extensions=(
     streetsidesoftware.code-spell-checker  # Spell checker
     timonwong.shellcheck  # Shell script linting
     yzhang.markdown-all-in-one  # Markdown keyboard shortcuts and formatting helpers
-    zhuangtongfa.material-theme  # Atom One theme
 )
 
 message "cyan" "  %s" "Installing Visual Studio Code extensions... "
