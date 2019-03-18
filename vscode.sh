@@ -24,6 +24,7 @@ declare -a extensions=(
     emroussel.atomize-atom-one-dark-theme  # Atom-inspired theme
     fabiospampinato.vscode-terminals  # terminal manager
     GitHub.vscode-pull-request-github # built-in GitHub pull request support
+    hbenl.vscode-test-explorer  # sidebar for running tests
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     ms-python.python  # Python support
     ms-vscode.Go  # Golang support
