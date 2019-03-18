@@ -16,9 +16,14 @@
   "editor.find.seedSearchStringFromSelection": false,
   "editor.snippetSuggestions": "none",
   "editor.fontSize": 13,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.renderIndentGuides": false,
+  // Rely on Subtle Brackets instead
+  "editor.matchBrackets": false,
   // ------------------------------
   // Workbench
   // ------------------------------
+  "workbench.activityBar.visible": false,
   "workbench.startupEditor": "none",
   // Change theme
   "workbench.colorTheme": "Atomize",
@@ -141,4 +146,8 @@
     "*.dll", // Ignore all .dll files.
     "**/*.dll" // Ignore all .dll files
   ],
+  "subtleBrackets.style": {
+    "borderWidth": "1px",
+    "borderColor": "#528BFF"
+  }
 }

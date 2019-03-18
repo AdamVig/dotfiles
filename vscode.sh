@@ -33,6 +33,7 @@ declare -a extensions=(
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
     QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
+    rafamel.subtle-brackets  # Better bracket matching
     stkb.rewrap  # Reformats code comments and other text to a given line length
     streetsidesoftware.code-spell-checker  # Spell checker
     timonwong.shellcheck  # Shell script linting
