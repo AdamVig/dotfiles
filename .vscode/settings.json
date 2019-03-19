@@ -23,23 +23,18 @@
   // ------------------------------
   // Workbench
   // ------------------------------
+  // Hide activity bar (vertical left bar)
   "workbench.activityBar.visible": false,
   "workbench.startupEditor": "none",
   // Change theme
   "workbench.colorTheme": "Atomize",
   "workbench.colorCustomizations": {
-    // Change color of bottom bar
-    "statusBar.background": "#1a1d23",
-    "statusBar.noFolderBackground": "#222225",
     "statusBar.debuggingBackground": "#511f1f",
-    // Darken application frame
-    "activityBar.background": "#1a1d23",
     "editor.background": "#222429",
-    // Highlight active indent guide for the current code block
-    "editorIndentGuide.activeBackground": "#ffffff"
   },
   // Hide the feedback smiley in the bar at the bottom
   "workbench.statusBar.feedback.visible": false,
+  "workbench.statusBar.visible": false,
   // ------------------------------
   // Sidebar
   // ------------------------------
@@ -126,6 +121,8 @@
     "vue",
     "vue-html"
   ],
+  // Hide persistent Live Share buttons in status bar
+  "liveshare.showInStatusBar": "whileCollaborating",
   // Enable automatic line wrapping
   "rewrap.autoWrap.enabled": true,
   // Spell checker configuration
@@ -149,5 +146,7 @@
   "subtleBrackets.style": {
     "borderWidth": "1px",
     "borderColor": "#528BFF"
-  }
+  },
+  // Hide spell check indicator in status bar
+  "cSpell.showStatus": false
 }
