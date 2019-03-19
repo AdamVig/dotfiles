@@ -28,7 +28,7 @@ declare -a extensions=(
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
     ms-python.python  # Python support
     ms-vscode.Go  # Golang support
-    ms-vsliveshare.vsliveshare-pack  # Live code sharing
+    ms-vsliveshare.vsliveshare  # Live code sharing
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
     PeterJausovec.vscode-docker  # Docker support
