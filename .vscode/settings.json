@@ -15,7 +15,7 @@
   "editor.folding": false,
   "editor.find.seedSearchStringFromSelection": false,
   "editor.snippetSuggestions": "none",
-  "editor.fontSize": 13,
+  "editor.fontSize": 12,
   "editor.hideCursorInOverviewRuler": true,
   "editor.renderIndentGuides": false,
   // Rely on Subtle Brackets instead
