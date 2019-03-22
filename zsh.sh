@@ -44,5 +44,6 @@ ln -sf "$DIR/adamvig.zsh-theme" ~/.oh-my-zsh/custom/themes
 message "Done installing custom Zsh theme."
 
 message "Initializing Zsh configuration..."
+ln -sf "$DIR/.zprofile" ~
 ln -sf "$DIR/.zshrc" ~
 message "Done initializing Zsh configuration."

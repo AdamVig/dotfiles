@@ -19,8 +19,6 @@ ln -sf "$DIR/.functions" ~
 ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.ripgreprc" ~
-ln -sf "$DIR/.tmux.conf" ~
-ln -sf "$DIR/.zprofile" ~
 
 if is-wsl; then
     message "Copying Alacritty configuration..."
@@ -61,6 +59,7 @@ fi
 "$DIR/golang.sh"
 "$DIR/node.sh"
 "$DIR/pip.sh"
+"$DIR/tmux.sh"
 "$DIR/vscode.sh"
 "$DIR/zsh.sh"
 
