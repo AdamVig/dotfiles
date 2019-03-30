@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly usage="Usage: $(basename "$0") [-h|--help] [directories]
+Move the contents of the given directories into the current directory and
+delete the directories.
+
+Flags:
+    -h, --help  show this help text"
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "$usage"
+    exit 0
+fi
+
+function flatten-dirs() {
+  for dir in "$@"; do
+      if ! [ -d "$dir" ]; then
+      	 continue
+      fi
+
+      mv "$dir"/* .
+      rm -r "$dir"
+  done
+}
+
+flatten-dirs "$@"
