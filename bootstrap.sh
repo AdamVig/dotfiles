@@ -28,6 +28,12 @@ if is-wsl; then
     request-sudo cp "$DIR/wsl.conf" /etc/wsl.conf
 fi
 
+message "Symlinking executables..."
+mkdir -p ~/.local/bin
+for executable in "$DIR"/bin/*; do
+    ln -sf "$executable" ~/.local/bin
+done
+
 message "Installing lsix..."
 readonly lsix_path="$HOME/.local/bin/lsix"
 wget --quiet --output-document "$lsix_path" https://raw.githubusercontent.com/hackerb9/lsix/master/lsix
@@ -37,12 +43,6 @@ else
   warn "failed to download lsix"
 fi
 message "Done installing lsix."
-
-message "Symlinking executables..."
-mkdir -p ~/.local/bin
-for executable in "$DIR"/bin/*; do
-    ln -sf "$executable" ~/.local/bin
-done
 
 message "Running OS-specific scripts..."
 if is-macos; then
