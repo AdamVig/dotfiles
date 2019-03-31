@@ -200,7 +200,6 @@ merge-latest() {
     git merge --no-edit "$REMOTE"/"$BRANCH"
 }
 
-
 # Move back to the default branch, pull, prune branches, and remove the previous branch
 clean-up-branch() {
     CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -282,33 +281,6 @@ get-peer-dependencies() {
 install-peer-dependencies() {
     npm install $(get-peer-dependencies "$1")
 }
-
-# Get the path of the nth match from a ripgrep search
-# $1: index of match to get
-# $@: arguments to pass to ripgrep
-get-ripgrep-match() {
-    if (( $# < 2 )); then
-        echo "error: must provide at least two arguments"
-        return 1
-    fi
-  
-    local index
-    index="$1"
-    shift
-
-    if ! [[ "$index" =~ ^[0-9]+$ ]]; then
-      echo "error: first argument must be a number"
-      return 1
-    fi
-
-    if ! [ "$index" -gt 0 ]; then
-      echo "error: index must be greater than zero"
-      return 1
-    fi
-
-    rg --files-with-matches "$@" | sed "${index}q;d"
-}
-alias rgm=get-ripgrep-match
 
 # Open a file or URL from WSL using the default handler
 # $1: file path or URL
