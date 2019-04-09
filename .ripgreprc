@@ -1,3 +1,6 @@
+# Search case-insensitively if pattern is all lowercase
+--smart-case
+
 # Always ignore package-lock.json
 --glob
 !package-lock.json
