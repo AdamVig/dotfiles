@@ -20,7 +20,8 @@ declare -a extensions=(
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
-    eg2.vscode-npm-script  # package.json linting and npm script detection
+    eg2.vscode-npm-script  # package.json linting and npm script detection     	
+    emroussel.atom-icons  # Atom-inspired icons
     emroussel.atomize-atom-one-dark-theme  # Atom-inspired theme
     fabiospampinato.vscode-terminals  # terminal manager
     GitHub.vscode-pull-request-github # built-in GitHub pull request support

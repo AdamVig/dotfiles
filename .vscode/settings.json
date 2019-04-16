@@ -148,5 +148,7 @@
     "borderColor": "#528BFF"
   },
   // Hide spell check indicator in status bar
-  "cSpell.showStatus": false
+  "cSpell.showStatus": false,
+  "liveshare.featureSet": "insiders",
+  "workbench.iconTheme": "atom-icons"
 }
