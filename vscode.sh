@@ -16,6 +16,7 @@ fi
 
 declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
+    bierner.lit-html  # lit-html support
     Compulim.vscode-clock   # Statusbar clock
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
