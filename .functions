@@ -13,13 +13,6 @@ is-wsl() {
     [ -e /proc/version ] && [[ "$(< /proc/version)" == *@(Microsoft|WSL)* ]]
 }
 
-what() {
-    echo "CHEAT:"
-    cheat "$1"
-    echo "TLDR:"
-    tldr "$1"
-}
-
 update() {
     echo "Updating Homebrew..."
     brew update
