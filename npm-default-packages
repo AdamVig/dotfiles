@@ -7,26 +7,11 @@ diff-so-fancy
 # Emoji search engine
 emoj
 
-# JavaScript style linter
-eslint
-
-# run git commands in several repositories at once
-git-run
-
-# Task runner
-gulp
-
 # update npm
 npm
 
-# interactive package updater
-npm-check
-
 # process manager
 pm2
-
-# Terminal assistant to find and install node packages
-emma-cli
 
 # Package manager
 yarn
