@@ -2,6 +2,7 @@
 brew "bash"
 brew "bat" # Replacement for cat
 brew "curl"
+brew "dict" # Dictionary
 brew "emacs"
 brew "fd" # Replacement for find
 brew "git"
