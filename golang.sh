@@ -22,9 +22,9 @@ go_packages=(
     golang.org/x/tools/cmd/godoc  # Go documentation tool
     golang.org/x/tools/cmd/gorename  # Rename identifiers
     golang.org/x/tools/cmd/guru  # Answers questions about Go code
+    github.com/antonmedv/countdown  # Terminal countdown timer
 )
 
-GO111MODULE=off
 for package in "${go_packages[@]}"; do
     go get -u "$package" &> /dev/null && \
         message "    %s" "Installed $package" || \
