@@ -9,9 +9,11 @@ source "$DIR/helpers.sh"
 message "Installing golang tools..."
 go_packages=(
     github.com/acroca/go-symbols  # Extract Go symbols as JSON
+    github.com/antonmedv/countdown  # Terminal countdown timer
     github.com/cweill/gotests/...  # Generate tests
     github.com/derekparker/delve/cmd/dlv  # Debugger
     github.com/fatih/gomodifytags  # Modify/update field tags in structs
+    github.com/genuinetools/udict  # Urban Dictionary CLI
     github.com/golang/lint/golint  # Go linter
     github.com/josharian/impl  # Generate method stubs for an interface
     github.com/nsf/gocode  # Autocomplete
@@ -22,7 +24,6 @@ go_packages=(
     golang.org/x/tools/cmd/godoc  # Go documentation tool
     golang.org/x/tools/cmd/gorename  # Rename identifiers
     golang.org/x/tools/cmd/guru  # Answers questions about Go code
-    github.com/antonmedv/countdown  # Terminal countdown timer
 )
 
 for package in "${go_packages[@]}"; do
