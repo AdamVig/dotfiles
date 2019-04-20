@@ -23,6 +23,7 @@ brew "composer" # PHP
 brew "dep" # Golang
 
 # utilities
+brew "ddgr" # DuckDuckGo CLI
 brew "docker"
 brew "gifsicle" # Gif tool
 brew "gpg"
