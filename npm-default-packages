@@ -21,3 +21,6 @@ npm-merge-driver
 
 # Command-line help
 tldr
+
+# SVG optimizer
+svgo
