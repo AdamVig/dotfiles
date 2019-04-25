@@ -49,7 +49,7 @@
   // Disable automatic detection of Git submodules
   "git.detectSubmodules": false,
   // Periodically run Git Fetch
-  "git.autofetch": true,
+  "git.autofetch": false,
   // Hide panes in Explorer
   "explorer.openEditors.visible": 0,
   // Disable file delete confirmation
