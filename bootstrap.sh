@@ -20,7 +20,7 @@ ln -sf "$DIR/.git-template" ~
 ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.ripgreprc" ~
 
-if is-wsl; then
+if "$DIR"/bin/is-wsl; then
     message "Copying Alacritty configuration..."
     cp "$DIR/alacritty.yml" "$(get-appdata-path)/alacritty/alacritty.yml"
 
@@ -47,9 +47,9 @@ fi
 message "Done installing lsix."
 
 message "Running OS-specific scripts..."
-if is-macos; then
+if "$DIR"/bin/is-macos; then
     "$DIR/macos.sh"
-elif is-linux; then
+elif "$DIR"/bin/is-linux; then
   "$DIR/linux.sh"
   if command -v apt > /dev/null; then
     "$DIR/apt.sh"

@@ -31,10 +31,10 @@ if ! [ -d ~/.oh-my-zsh ]; then
 fi
 
 message "Installing Zsh syntax highlighting..."
-ZSH_SYNTAX_FOLDER=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-if [ ! -d "$ZSH_SYNTAX_FOLDER" ]; then
+zsh_syntax_folder="$HOME"/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+if [ ! -d "$zsh_syntax_folder" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        "$ZSH_SYNTAX_FOLDER"
+        "$zsh_syntax_folder"
 fi
 message "Done installing Zsh syntax highlighting."
 

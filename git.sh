@@ -8,7 +8,7 @@ source "$DIR/helpers.sh"
 
 message "Setting up Git..."
 # If gitconfig does not exist already, create one
-if [ ! -e ~/.gitconfig ]; then
+if [ ! -e "$HOME"/.gitconfig ]; then
     message "  %s" "Copying gitconfig to home directory..."
     cp "$DIR/.gitconfig" ~
     
@@ -22,7 +22,7 @@ if [ ! -e ~/.gitconfig ]; then
     [[ -n "$EMAIL" ]] && git config --global user.email "$EMAIL"
     [[ -n "$GITHUB" ]] && git config --global github.user "$GITHUB"
 
-    if is-wsl; then
+    if "$DIR"/bin/is-wsl; then
       git config --global credential.helper \
         '/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
     fi
