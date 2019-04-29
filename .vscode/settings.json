@@ -37,6 +37,8 @@
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
   "workbench.editor.enablePreview": false,
+  // Use JSON settings editor instead of UI
+  "workbench.settings.editor": "json",
   // ------------------------------
   // Sidebar
   // ------------------------------
