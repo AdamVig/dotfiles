@@ -31,7 +31,9 @@ fi
 message "Symlinking executables..."
 mkdir -p ~/.local/bin
 for executable in "$DIR"/bin/*; do
+  if [ -x "$executable" ]; then
     ln -sf "$executable" ~/.local/bin
+  fi
 done
 
 message "Installing lsix..."
