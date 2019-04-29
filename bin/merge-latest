@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Merge the latest upstream changes into the current branch
+# $1: branch name to fetch (defaults to "develop")
+# $2: name of remote to fetch from (defaults to "origin")
+main() {
+  local default_branch
+  default_branch="$(get-default-branch origin)"
+  local branch
+  branch=${1:-"$default_branch"}
+  local remote
+  remote=${2:-origin}
+  git fetch "$remote" "$branch"
+  git merge --no-edit "$remote"/"$branch"
+}
+main "$@"

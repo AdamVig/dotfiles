@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Get the name of the default branch for a given remote.
+# $1: Name of a remote (defaults to origin).
+main() {
+    local remote=${1:-origin}
+    # Attempt to update the local repository's default branch, but continue if it fails
+    git remote set-head "$remote" --auto &> /dev/null || true
+    git symbolic-ref "refs/remotes/$remote/HEAD" | sed "s@^refs/remotes/$remote/@@"
+}
+main "$@"

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Push the current branch and create a pull request:
+# - with the current GitHub user assigned
+# - with the commit messages in a Markdown-formatted list in the description
+# - copy the link to the clipboard
+# - open it in a browser
+# - pass all other arguments directly to `hub pull-request`
+main() {
+  if ! check-installed hub https://hub.github.com/; then
+    return 1
+  fi
+
+  git push --set-upstream
+
+  local github_user
+  github_user="$(git config github.user)"
+
+  # Get value of -b/--branch flag if passed; otherwise use default branch
+  local base_branch
+  base_branch="$(get-default-branch origin)"
+  readonly local branch_flag_pattern
+  branch_flag_pattern='(-b |--branch |-b=|--branch=)([a-zA-z0-9[:punct:]]+)'
+  if [[ "$@" =~ $branch_flag_pattern ]]; then
+      base_branch="${match[2]}"
+  fi
+
+  # Subject, followed by a newline, followed by the body with every line indented by two spaces
+  readonly local commit_format
+  commit_format='format:- %s%n%w(0,2,2)%b'
+  local commits
+  commits="$(git log "$base_branch"..HEAD --pretty="$commit_format")"
+  local message
+  message="
+
+$commits"
+
+  # Run dynamically constructed command, using $@ to pass it all arguments
+  hub pull-request --browse --copy --message="$message" --edit ${github_user:+'--assign='"$github_user"} "$@"
+}
+main "$@"
