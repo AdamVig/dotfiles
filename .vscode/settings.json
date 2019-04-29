@@ -35,6 +35,8 @@
   // Hide the feedback smiley in the bar at the bottom
   "workbench.statusBar.feedback.visible": false,
   "workbench.statusBar.visible": false,
+  // Disable tab preview mode (when opening a tab, keep it open until closed)
+  "workbench.editor.enablePreview": false,
   // ------------------------------
   // Sidebar
   // ------------------------------
