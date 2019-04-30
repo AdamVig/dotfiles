@@ -21,10 +21,19 @@ main() {
   # Get value of -b/--branch flag if passed; otherwise use default branch
   local base_branch
   base_branch="$(get-default-branch origin)"
-  readonly local branch_flag_pattern='(-b |--branch |-b=|--branch=)([a-zA-z0-9[:punct:]]+)'
-  if [[ "$@" =~ $branch_flag_pattern ]]; then
-      base_branch="${match[2]:-}"
-  fi
+
+  local i=1
+  for arg in "$@"; do
+    ((++i))
+    if [ "$arg" = "-b" ] || [ "$arg" = "--branch" ]; then
+      # Get next argument
+      base_branch="${!i}"
+      break
+    elif [[ "$arg" =~ --branch=.+ ]]; then
+      base_branch="${arg/--branch=/''}"
+      break
+    fi
+  done
 
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
   readonly local commit_format='format:- %s%n%w(0,2,2)%b'
