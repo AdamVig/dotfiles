@@ -3,18 +3,21 @@
 set -euo pipefail
 
 # Move back to the default branch, pull, prune branches, and remove the previous branch
+# $1: base branch, if different from default (optional)
 main() {
   local current_branch
   local default_branch
+  local base_branch
   current_branch="$(git rev-parse --abbrev-ref HEAD)"
   default_branch="$(get-default-branch origin)"
+  base_branch="${1:-$default_branch}"
 
-  if [ "$current_branch" = "$default_branch" ]; then
-    echo "error: current branch is default branch, please run again from a different branch"
+  if [ "$current_branch" = "$base_branch" ]; then
+    echo "error: current branch is same as base branch, please run again from a different branch"
     return 1
   fi
 
-  git checkout "$default_branch"
+  git checkout "$base_branch"
   git pull
   git fetch --prune
   git branch --delete "$current_branch"
