@@ -21,19 +21,16 @@ main() {
   # Get value of -b/--branch flag if passed; otherwise use default branch
   local base_branch
   base_branch="$(get-default-branch origin)"
-  readonly local branch_flag_pattern
-  branch_flag_pattern='(-b |--branch |-b=|--branch=)([a-zA-z0-9[:punct:]]+)'
+  readonly local branch_flag_pattern='(-b |--branch |-b=|--branch=)([a-zA-z0-9[:punct:]]+)'
   if [[ "$@" =~ $branch_flag_pattern ]]; then
-      base_branch="${match[2]}"
+      base_branch="${match[2]:-}"
   fi
 
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
-  readonly local commit_format
-  commit_format='format:- %s%n%w(0,2,2)%b'
+  readonly local commit_format='format:- %s%n%w(0,2,2)%b'
   local commits
   commits="$(git log "$base_branch"..HEAD --pretty="$commit_format")"
-  local message
-  message="
+  readonly local message="
 
 $commits"
 
