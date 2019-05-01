@@ -25,7 +25,7 @@ print-status-if-dirty() {
   if ! git -C "$d" diff-index --quiet --ignore-submodules=all HEAD --; then
     local status
     # Use `script` to capture colored output
-    if status="$(script --quiet /dev/null --command "git -C "$d" status --short")"; then
+    if status="$(git -C "$d" -c color.ui=always status --short)"; then
       # Print all at once to prevent interleaving when run in parallel
       echo -e "$bold$d$reset\\n$status"
     fi
