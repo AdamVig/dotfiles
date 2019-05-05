@@ -31,7 +31,7 @@ fi
 # this will have errors but should at least initialize Linuxbrew
 source "$DIR/.bash_profile" &> /dev/null
 
-if is-wsl; then
+if "$DIR"/bin/is-wsl; then
   message "    %s" "installing ssh-agent-wsl..."
   if url="$(get-release-url rupor-github/ssh-agent-wsl 7z)"; then
     extract_path="/tmp/ssh-agent-wsl"
