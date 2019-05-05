@@ -22,7 +22,9 @@ message "    %s" "done installing essential tools."
 
 if ! command -v brew &> /dev/null; then
     message "    %s" "installing Linuxbrew..."
+    set +euo
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    set -euo
     message "    %s" "done installing Linuxbrew."
 fi
 
