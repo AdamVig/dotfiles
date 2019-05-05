@@ -59,6 +59,6 @@ install-peer-dependencies() {
 wsl-open() {
     cmd.exe /C start "$1"
 }
-if is-wsl; then
+if command -v is-wsl > /dev/null && is-wsl; then
     alias open=wsl-open
 fi
