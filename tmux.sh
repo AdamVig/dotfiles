@@ -6,10 +6,15 @@ DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
-message "Initializing Tmux configuration..."
+message "initializing Tmux configuration..."
 ln -sf "$DIR/.tmux.conf" ~
-message "Done initializing Tmux configuration."
+message "done initializing Tmux configuration."
 
-message "Initializing Tmux Plugin Manager..."
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-message "Done initializing Tmux Plugin Manager."
+message "initializing Tmux Plugin Manager..."
+readonly tpm_path="$HOME/.tmux/plugins/tpm"
+if ! [ -d "$tpm_path" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  message "done initializing Tmux Plugin Manager."
+else
+  message "Tmux Plugin Manager already initialized."
+fi
