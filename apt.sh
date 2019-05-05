@@ -48,7 +48,7 @@ message "  %s" "Installing Keybase..."
 wget --quiet --output-document /tmp/keybase.deb https://prerelease.keybase.io/keybase_amd64.deb
 if [ -f /tmp/keybase.deb ]; then
     sudo dpkg -i /tmp/keybase.deb &> /dev/null || true
-    sudo apt-get --fix-broken install
+    sudo apt-get --fix-broken -y install
     run_keybase
     message "  %s" "Done installing Keybase."
 else
