@@ -3,7 +3,6 @@
 plugins=(
     git
     z
-    zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -33,3 +32,11 @@ setopt prompt_subst
 
 # <remote host info> <bold><dir, max two levels deep><end bold> <git info>
 PS1='$(remote-host-info)%B%2~%b$(git-info) '
+
+# Must stay at the end
+readonly zsh_syntax_path='share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+if is-macos; then
+  source /usr/local/"$zsh_syntax_path"
+elif is-linux; then
+  source /home/linuxbrew/.linuxbrew/"$zsh_syntax_path"
+fi

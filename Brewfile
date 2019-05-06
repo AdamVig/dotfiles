@@ -11,6 +11,7 @@ brew "lastpass-cli"
 brew "tree"
 brew "wget"
 brew "zsh"
+brew "zsh-syntax-highlighting"
 
 # languages
 brew "go"
