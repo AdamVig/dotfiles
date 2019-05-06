@@ -24,36 +24,6 @@ Loads `.bash_profile`, which loads all other files. Executed for interactive non
 Environment variables.  
 #### `.functions`
 Simple functions for use in the shell.
-- `what`  
-Uses the packages `cheat` and `tldr` to get usage examples for Bash commands.
-    ```shell
-    $ what pwd
-
-    CHEAT:
-    # Show the absolute path of your current working directory on the filesystem
-    pwd
-
-    TLDR:
-
-    pwd
-
-    Print name of current/working directory.
-
-    - Print the current directory:
-        pwd
-
-    - Print the current directory, and resolve all symlinks (i.e. show the "physical" path):
-        pwd -P
-    ```
-- `pr`  
-Make a GitHub pull request from the current branch to the default branch. The pull request will be assigned to the GitHub user configured in `~/.gitconfig` (if there is one). The pull request will be opened in the default browser and its URL will be copied to the clipboard. The command passes all arguments through to `hub pull-request`.
-    ```shell
-    $ git push -u
-    $ pr -b <BASE> -h <HEAD> -r <REVIEWERS> -M <MILESTONE> -l <LABELS> -m <MESSAGE> --push
-    ```
-- `update` (or `upgrade`)  
-Update all Homebrew packages, Homebrew Casks, `npm` itself, all global `npm` packages, and all global Pip packages.
-
 #### `.git-template`  
 Commit template with character length guides and style tips.  
 #### `.zshrc`  
