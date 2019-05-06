@@ -28,8 +28,6 @@ Simple functions for use in the shell.
 Commit template with character length guides and style tips.  
 #### `.zshrc`  
 Configure Zsh. Loads `.bash_profile` in case it has not already been loaded.  
-#### `adamvig.zsh-theme`
-Custom Zsh theme with simple git branch/status and remote host display.
 #### `apt.sh`  
 Install apt packages on Linux.  
 #### `bootstrap.sh`  
