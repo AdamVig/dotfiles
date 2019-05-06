@@ -16,7 +16,6 @@ fi
 
 declare -a extensions=(
     Angular.ng-template  # Angular template IntelliSense support
-    bierner.lit-html  # lit-html support
     Compulim.vscode-clock   # Statusbar clock
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
@@ -36,6 +35,7 @@ declare -a extensions=(
     PeterJausovec.vscode-docker  # Docker support
     QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
     rafamel.subtle-brackets  # Better bracket matching
+    runem.lit-plugin  # lit-html support
     stkb.rewrap  # Reformats code comments and other text to a given line length
     streetsidesoftware.code-spell-checker  # Spell checker
     timonwong.shellcheck  # Shell script linting
