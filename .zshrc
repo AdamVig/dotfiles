@@ -21,8 +21,8 @@ remote-host-info() {
 git-info() {
   local ref
   # Get ref name, else ref SHA, else return early
-  ref=$(command git symbolic-ref --short HEAD 2> /dev/null) || \
-    $(command git rev-parse --short HEAD 2> /dev/null) || \
+  ref="$(command git symbolic-ref --short HEAD 2> /dev/null)" || \
+    ref="$(command git rev-parse --short HEAD 2> /dev/null)" || \
     return 0
   # (<ref>)
   echo " ($ref%)"
