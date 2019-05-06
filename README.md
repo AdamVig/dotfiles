@@ -8,11 +8,11 @@
 *Note:* moving the `dotfiles` folder requires re-running `bootstrap.sh` to re-establish the symlinks to your home directory.
 
 ### Files
-#### `./.vscode`
+#### `.vscode/`
 Settings, keybindings, and snippets for Visual Studio Code.  
-#### `bin`
+#### `bin/`
 Utility scripts.
-#### `manual`
+#### `manual/`
 One-off scripts related to system setup.
 #### `.aliases`
 Abbreviations for common commands.  

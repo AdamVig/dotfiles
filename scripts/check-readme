@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() {
+  local files_in_readme
+  # Get all `h4` headers and strip formatting
+  files_in_readme="$(rg '####' README.md | sed 's/[# `]//g' | sort)"
+
+  local files_in_dir
+  # Include files/directories starting with ".", show a slash after directories
+  files_in_dir="$(ls -A -p | sort)"
+
+  echo '< files missing from README'
+  echo '> files mising from directory'
+  diff --side-by-side --suppress-common-lines <(echo "$files_in_dir") <(echo "$files_in_readme")
+}
+main "$@"
