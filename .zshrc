@@ -30,10 +30,12 @@ setopt prompt_subst
 # <remote host info> <bold><dir, max two levels deep><end bold> <git info>
 PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
-# Must stay at the end
-zsh_syntax_path='share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+brew_prefix=
 if is-macos; then
-  source /usr/local/"$zsh_syntax_path"
+  brew_prefix='/usr/local'
 elif is-linux; then
-  source /home/linuxbrew/.linuxbrew/"$zsh_syntax_path"
+  brew_prefix='/home/linuxbrew/.linuxbrew'
 fi
+
+source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$brew_prefix/etc/profile.d/z.sh"
