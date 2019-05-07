@@ -24,10 +24,6 @@ fi
 if is-wsl; then
   # https://github.com/Microsoft/WSL/issues/352
   umask 022
-
-  # relies on C: drive mounted at root instead of at /mnt
-  eval "$(/c/ssh-agent-wsl/ssh-agent-wsl --reuse)" > /dev/null
-  alias ssh-agent='/c/ssh-agent-wsl/ssh-agent-wsl'
 fi
 
 # Initialize Nodenv
