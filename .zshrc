@@ -1,11 +1,12 @@
 #!/bin/zsh
 
 plugins=(
-    git
     z
 )
 
 source $ZSH/oh-my-zsh.sh
+
+source "$HOME"/.git.zsh
 
 # Remove alias for "git remote" so it can be used for Git-run instead
 unalias gr
@@ -34,7 +35,7 @@ setopt prompt_subst
 PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
 # Must stay at the end
-readonly zsh_syntax_path='share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+zsh_syntax_path='share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 if is-macos; then
   source /usr/local/"$zsh_syntax_path"
 elif is-linux; then
