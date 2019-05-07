@@ -1,9 +1,5 @@
 #!/bin/zsh
 
-plugins=(
-    z
-)
-
 source $ZSH/oh-my-zsh.sh
 
 source "$HOME"/.git.zsh
