@@ -5,7 +5,7 @@
     # make `git push -u` default to `origin` and the current branch
     default = current
 [pretty]
-    who-when-what = format:[%an, %cr] %s
+    who-when-what = format:%h [%an, %cr] %s
 [alias]
     contributors = shortlog --summary --numbered --email --all
     last = log --max-count=1 --pretty=who-when-what
