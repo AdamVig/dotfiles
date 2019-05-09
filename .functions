@@ -22,11 +22,6 @@ update() {
 
 alias upgrade=update
 
-# Log all commits on the current branch that are not on the default branch.
-log-branch-commits() {
-    git log "$(get-default-branch)"..HEAD --oneline
-}
-
 # Get all Jira ticket IDs mentioned in commits in develop that are not in master
 get-tickets() {
     git fetch --all > /dev/null
