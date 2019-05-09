@@ -53,3 +53,5 @@ brew "postgresql", restart_service: :changed
 brew "ddgr" # DuckDuckGo
 brew "hub", args: ["HEAD"] # GitHub
 brew "lastpass-cli"
+tap "rockymadden/rockymadden"
+brew "rockymadden/rockymadden/slack-cli"
