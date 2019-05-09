@@ -6,8 +6,15 @@ set -euo pipefail
 # $1: Name of a remote (defaults to origin).
 main() {
     local remote=${1:-origin}
-    # Attempt to update the local repository's default branch, but continue if it fails
-    git remote set-head "$remote" --auto &> /dev/null || true
-    git symbolic-ref "refs/remotes/$remote/HEAD" | sed "s@^refs/remotes/$remote/@@"
+
+    # If default branch ref is not present, try to update it
+    if ! git symbolic-ref --quiet "refs/remotes/$remote/HEAD" &> /dev/null && \
+      ! git remote set-head "$remote" --auto &> /dev/null; then
+      echo 'failed to get default branch from remote'
+      return 1
+    fi
+
+    default_branch="$(git symbolic-ref "refs/remotes/$remote/HEAD")"
+    echo "${default_branch##"refs/remotes/$remote/"}"
 }
 main "$@"
