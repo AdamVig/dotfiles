@@ -1,47 +1,55 @@
-# command line tools
-brew "bash"
-brew "bat" # Replacement for cat
+# default utilities
 brew "curl"
-brew "emacs"
-brew "fd" # Replacement for find
 brew "git"
-brew "htop" # System monitoring tool
-brew "httpie" # Better curl
-brew "lastpass-cli"
-brew "tree"
+brew "gpg"
 brew "wget"
+
+# replacements of default utilities
+brew "bat" # Better cat
+brew "fd" # Better find
+brew "htop" # Better top
+brew "httpie" # Better curl
+brew "ripgrep" # Better grep
+
+# command line tools
+brew "emacs"
+brew "gifsicle" # Gif tool
+brew "graphviz" # Graph visualization tool
+brew "imagemagick"
+brew "jq" # JSON processor
+brew "nnn" # Command-line file browser
+brew "p7zip"
+brew "pandoc"
+brew "rename" # File renamer
+brew "ssh-copy-id"
+brew "tree"
+brew "unzip"
+
+# shell
+brew "bash"
+brew "z"
 brew "zsh"
 brew "zsh-syntax-highlighting"
 
-# languages
+# programming languages
 brew "go"
 brew "php"
 brew "python"
 brew "ruby"
 
-# dependency managers
+# programming language tools
 brew "composer" # PHP
 brew "dep" # Golang
-
-# utilities
-brew "ddgr" # DuckDuckGo CLI
-brew "docker"
-brew "gifsicle" # Gif tool
-brew "gpg"
-brew "graphviz" # Graph visualization tool
-brew "hub", args: ["HEAD"] # GitHub CLI
-brew "imagemagick"
-brew "jq" # JSON processor
-brew "nnn" # Command-line file browser
 brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
-brew "p7zip"
-brew "pandoc"
-brew "postgresql", restart_service: :changed
-brew "rename" # File renamer
-brew "ripgrep" # Fast grep
 brew "shellcheck" # Shell script linter
-brew "ssh-copy-id"
-brew "unzip"
-brew "z"
+
+# services
+brew "docker"
+brew "postgresql", restart_service: :changed
+
+# web service clients
+brew "ddgr" # DuckDuckGo
+brew "hub", args: ["HEAD"] # GitHub
+brew "lastpass-cli"
