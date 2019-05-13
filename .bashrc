@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if is-wsl; then
+if "$HOME"/.local/bin/is-wsl; then
   if ! pgrep ssh-agent > /dev/null; then
     rm -rf /tmp/ssh-*
     eval "$(ssh-agent -s)" > /dev/null
