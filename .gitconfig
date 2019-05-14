@@ -23,6 +23,9 @@
     tool = meld
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+[commit]
+  gpgsign = true
+
 # example conditional configuration:
 # [includeIf "gitdir:src/"]
 #  path = ~/src/.gitconfig
