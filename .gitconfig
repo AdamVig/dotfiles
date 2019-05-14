@@ -23,3 +23,6 @@
     tool = meld
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+# example conditional configuration:
+# [includeIf "gitdir:src/"]
+#  path = ~/src/.gitconfig
