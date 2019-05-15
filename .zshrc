@@ -1,6 +1,4 @@
-#!/bin/zsh
-
-source $ZSH/oh-my-zsh.sh
+#!/usr/bin/env zsh
 
 # completion
 autoload -U compinit

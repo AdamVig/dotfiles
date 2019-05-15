@@ -19,17 +19,6 @@ if is-wsl && [[ "$SHELL" != *zsh ]]; then
     message "Done changing default shell to Zsh."
 fi
 
-message "Installing Oh My Zsh..."
-if ! [ -d ~/.oh-my-zsh ]; then
-    url=https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh
-    if ! sh -c "$(curl -fsSL "$url")"; then
-        warn "Oh My ZSH installation failed"
-        exit
-    else
-        message "Done installing Oh My Zsh."
-    fi
-fi
-
 message "Initializing Zsh configuration..."
 ln -sf "$DIR/.directories.zsh" ~
 ln -sf "$DIR/.git.zsh" ~
