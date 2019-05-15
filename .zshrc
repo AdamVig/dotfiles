@@ -2,6 +2,7 @@
 
 source $ZSH/oh-my-zsh.sh
 
+source "$HOME"/.directories.zsh
 source "$HOME"/.git.zsh
 
 # Remove alias for "git remote" so it can be used for Git-run instead
