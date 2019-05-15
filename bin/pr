@@ -18,9 +18,11 @@ main() {
   local github_user
   github_user="$(git config github.user)"
 
+  local remote='origin'
+
   # Get value of -b/--branch flag if passed; otherwise use default branch
   local base_branch
-  base_branch="$(get-default-branch origin)"
+  base_branch="$(get-default-branch "$remote")"
 
   local i=1
   for arg in "$@"; do
@@ -38,7 +40,7 @@ main() {
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
   readonly local commit_format='format:- %s%n%w(0,2,2)%b'
   local commits
-  commits="$(git log "$base_branch"..HEAD --pretty="$commit_format")"
+  commits="$(git log "$remote"/"$base_branch"..HEAD --pretty="$commit_format")"
   readonly local message="
 
 $commits"
