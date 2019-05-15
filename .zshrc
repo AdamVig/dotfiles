@@ -2,6 +2,10 @@
 
 source $ZSH/oh-my-zsh.sh
 
+# completion
+autoload -U compinit
+compinit -u -C
+
 source "$HOME"/.directories.zsh
 source "$HOME"/.key-bindings.zsh
 source "$HOME"/.git.zsh
