@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Run a given command ten times, calculating the average time it takes to complete
+# $@: a command and its arguments
+main() {
+  local sum=0
+  for i in {1..10}; do
+    time="$(gtime --quiet --format '%e' 2>&1 "$@" > /dev/null)"
+    sum="$(bc <<< "scale=3; $sum+$time")"
+  done
+  bc <<< "scale=3; $sum/10"
+}
+main "$@"
