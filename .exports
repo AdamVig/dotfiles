@@ -1,6 +1,8 @@
-# ENVIRONMENT VARIABLES
+#!/usr/bin/env bash
 
-export PATH="$HOME/.local/bin:$PATH"
+DIR="$(dirname "$(realpath "$0")")"
+
+export PATH="$HOME/.local/bin:$DIR/bin:$PATH"
 
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"

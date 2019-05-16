@@ -21,20 +21,12 @@ ln -sf "$DIR/.profile" ~
 ln -sf "$DIR/.ripgreprc" ~
 
 if "$DIR"/bin/is-wsl; then
-    message "Copying Alacritty configuration..."
-    cp "$DIR/alacritty.yml" "$(get-appdata-path)/alacritty/alacritty.yml"
+  message "Copying Alacritty configuration..."
+  cp "$DIR/alacritty.yml" "$(get-appdata-path)/alacritty/alacritty.yml"
 
-    message "Copying WSL configuration..."
-    request-sudo cp "$DIR/wsl.conf" /etc/wsl.conf
+  message "Copying WSL configuration..."
+  request-sudo cp "$DIR/wsl.conf" /etc/wsl.conf
 fi
-
-message "Symlinking executables..."
-mkdir -p ~/.local/bin
-for executable in "$DIR"/bin/*; do
-  if [ -x "$executable" ]; then
-    ln -sf "$executable" ~/.local/bin
-  fi
-done
 
 if ! command -v lsix > /dev/null; then
   message "Installing lsix..."
