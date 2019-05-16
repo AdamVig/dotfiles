@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
+DIR="$(dirname "$(realpath "$0")")"
 TEMP_DIR="/tmp"
 
 # shellcheck source=./helpers.sh

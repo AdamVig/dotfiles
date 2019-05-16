@@ -4,8 +4,7 @@
 # contain the latest settings. The settings file cannot be symlinked into place because Terminal.app overwrites its
 # settings every time the app is closed.
 
-# Get script directory (allows running from outside `dotfiles` dir)
-DIR="$( cd "$(dirname "$0")" || return; pwd -P )"
+DIR="$(dirname "$(realpath "$0")")"
 
 # shellcheck source=./helpers.sh
 source "$DIR/../helpers.sh"
