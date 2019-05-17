@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Remove a Git submodule
+# $1: path to submodule
+main() {
+  local path
+  path="${1:-}"
+
+  if [ -z "path" ]; then
+     echo "error: must provide path to submodule"
+     return 1
+  fi
+
+  git submodule deinit -f "$path" || true
+  rm -rf "$path"
+  rm -rf .git/modules/"$path" || true
+  git rm -f "$path" || true
+}
+main "$@"
