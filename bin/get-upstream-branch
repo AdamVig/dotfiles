@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() {
+  if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null; then
+     return 1
+  fi
+}
+main "$@"
