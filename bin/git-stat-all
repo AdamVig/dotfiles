@@ -21,6 +21,21 @@ is-git-repository() {
   [ -d "$dir"/.git ]
 }
 
+# Print a message about unpushed commits if there are any
+# $1: directory
+print-unpushed() {
+  local d
+  d="${1:-}"
+
+  if num="$(git -C "$d" rev-list @{upstream}.. --count 2> /dev/null)" && [ "$num" != "0" ]; then
+    if [ "$num" = "1" ]; then
+      echo "1 unpushed commit"
+    else
+      echo "$num unpushed commits"
+    fi
+  fi
+}
+
 # Print git status for directory if it has changes
 # $1: directory
 print-status-if-dirty() {
@@ -47,12 +62,19 @@ stat-repo() {
     return 1
   fi
 
+  local message=''  
+
+  local unpushed
+  unpushed="$(print-unpushed "$d")"
+  [ -n "$unpushed" ] && message+="\\n$unpushed"
+
   local status
   status="$(print-status-if-dirty "$d")"
+  [ -n "$status" ] && message+="\\n$status"
 
-  if [ -n "$status" ]; then
+  if [ -n "$message" ]; then
     # Print all at once to prevent interleaving when run in parallel
-    echo -e "$bold$d$reset\\n$status"
+    echo -e "$bold$d$reset$message"
   fi
 }
 
