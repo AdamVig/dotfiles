@@ -17,6 +17,7 @@ go_packages=(
     github.com/josharian/impl  # Generate method stubs for an interface
     github.com/nsf/gocode  # Autocomplete
     github.com/ramya-rao-a/go-outline  # Extract Go declarations as JSON
+    github.com/Rican7/define  # Dictionary/thesaurus CLI
     github.com/rogpeppe/godef  # Print where symbols are defined
     github.com/sqs/goreturns  # Add zero values to return statements to save time
     github.com/tpng/gopkgs  # Faster `go list all`
