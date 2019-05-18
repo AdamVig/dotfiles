@@ -1,14 +1,16 @@
 #!/usr/bin/env zsh
 
-source ~/.bash_profile
+DIR="$(dirname "$(realpath "$0")")"
+
+source "$HOME"/.bash_profile
 
 # completion
 autoload -U compinit
 compinit -u -C
 
-source "$HOME"/.directories.zsh
-source "$HOME"/.key-bindings.zsh
-source "$HOME"/.git.zsh
+source "$DIR"/zsh/directories.zsh
+source "$DIR"/zsh/key-bindings.zsh
+source "$DIR"/zsh/git.zsh
 
 # Remove alias for "git remote" so it can be used for Git-run instead
 unalias gr

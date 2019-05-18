@@ -19,8 +19,5 @@ if is-wsl && [[ "$SHELL" != *zsh ]]; then
 fi
 
 message "Initializing Zsh configuration..."
-ln -sf "$DIR/.directories.zsh" ~
-ln -sf "$DIR/.git.zsh" ~
-ln -sf "$DIR/.key-bindings.zsh" ~
 ln -sf "$DIR/.zshrc" ~
 message "Done initializing Zsh configuration."
