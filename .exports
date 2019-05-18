@@ -2,14 +2,15 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
-export PATH="$HOME/.local/bin:$DIR/bin:$PATH"
+# Must be first so that local scripts are available in this file
+PATH="$HOME/.local/bin:$DIR/bin:$PATH"
 
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Use alternative npm global directory on Linux
 if is-linux; then
-   export PATH="$HOME/.npm-global/bin:$PATH"
+   PATH="$HOME/.npm-global/bin:$PATH"
 fi
 
 if is-macos; then
@@ -23,14 +24,14 @@ fi
 export GOPATH="$HOME/code/go"
 
 # Add golang directory to PATH
-export PATH="$PATH:$GOPATH/bin"
+PATH+=":$GOPATH/bin"
 
 # Add Python directory to PATH
-export PATH="$PATH:$(python3 -m site --user-base)/bin"
+PATH+=":$(python3 -m site --user-base)/bin"
 
 # Default editor
-export VISUAL=emacs;
-export EDITOR=emacs;
+export VISUAL=emacs
+export EDITOR=emacs
 
 # Allow GPG to make prompts
 export GPG_TTY=$(tty)
