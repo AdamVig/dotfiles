@@ -34,7 +34,7 @@ if [ ! -e "$config_path"/config ]; then
 
     if "$DIR"/bin/is-wsl; then
       git config --global credential.helper \
-        '/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
+        '/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
     fi
 fi
 message "Done setting up Git."
