@@ -8,8 +8,8 @@ export PATH="$HOME/.local/bin:$DIR/bin:$PATH"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Use alternative npm global directory on Linux
-if [[ $(uname) == 'Linux' ]]; then
-   export PATH=~/.npm-global/bin:$PATH
+if is-linux; then
+   export PATH="$HOME/.npm-global/bin:$PATH"
 fi
 
 # Set golang workspace directory
