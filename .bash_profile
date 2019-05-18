@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
+# shellcheck source=.exports
+source ~/.exports
+
 # shellcheck source=.bashrc
 source ~/.bashrc
 
 # shellcheck source=.aliases
 source ~/.aliases
-
-# shellcheck source=.exports
-source ~/.exports
 
 # shellcheck source=.functions
 source ~/.functions
