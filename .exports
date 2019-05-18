@@ -28,9 +28,6 @@ export PATH="$PATH:$GOPATH/bin"
 # Add Python directory to PATH
 export PATH="$PATH:$(python3 -m site --user-base)/bin"
 
-# Path to oh-my-zsh installation
-export ZSH=~/.oh-my-zsh
-
 # Default editor
 export VISUAL=emacs;
 export EDITOR=emacs;
