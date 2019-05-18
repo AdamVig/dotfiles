@@ -12,9 +12,6 @@ source "$DIR"/zsh/directories.zsh
 source "$DIR"/zsh/key-bindings.zsh
 source "$DIR"/zsh/git.zsh
 
-# Remove alias for "git remote" so it can be used for Git-run instead
-unalias gr
-
 # history options (from Oh My Zsh lib/history.zsh)
 setopt extended_history # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
