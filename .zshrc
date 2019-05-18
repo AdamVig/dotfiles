@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source ~/.bash_profile
+
 # completion
 autoload -U compinit
 compinit -u -C
