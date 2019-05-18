@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
-
-if "$DIR"/bin/is-wsl; then
+if is-wsl; then
   if ! pgrep ssh-agent > /dev/null; then
     rm -rf /tmp/ssh-*
     eval "$(ssh-agent -s)" > /dev/null
