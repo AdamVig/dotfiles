@@ -1,16 +1,14 @@
 #!/usr/bin/env zsh
 
-DIR="$(dirname "$(realpath "$0")")"
-
 source "$HOME"/.bash_profile
 
 # completion
 autoload -U compinit
 compinit -u -C
 
-source "$DIR"/zsh/directories.zsh
-source "$DIR"/zsh/key-bindings.zsh
-source "$DIR"/zsh/git.zsh
+source "$XDG_DATA_HOME"/zsh/directories.zsh
+source "$XDG_DATA_HOME"/zsh/key-bindings.zsh
+source "$XDG_DATA_HOME"/zsh/git.zsh
 
 # history options (from Oh My Zsh lib/history.zsh)
 setopt extended_history # record timestamp of command in HISTFILE

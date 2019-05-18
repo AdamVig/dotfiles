@@ -19,5 +19,6 @@ if is-wsl && [[ "$SHELL" != *zsh ]]; then
 fi
 
 message "Initializing Zsh configuration..."
+ln -sf "$DIR/zsh" "$XDG_DATA_HOME"
 ln -sf "$DIR/.zshrc" ~
 message "Done initializing Zsh configuration."
