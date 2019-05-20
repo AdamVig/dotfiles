@@ -3,10 +3,7 @@
 DIR="$(dirname "$(realpath "$0")")"
 
 # shellcheck source=./helpers.sh
-source "$DIR/helpers.sh"
-
-# shellcheck source=./.exports
-source "$DIR"/.exports
+source "$DIR"/helpers.sh
 
 message "setting up Git..."
 
