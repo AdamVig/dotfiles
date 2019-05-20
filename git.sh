@@ -7,7 +7,7 @@ source "$DIR"/helpers.sh
 
 message "setting up Git..."
 
-config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/git"
+config_path="$XDG_CONFIG_HOME/git"
 
 if [ -e "$HOME"/.gitconfig ]; then
   message "Migrating to new configuration file location..."
