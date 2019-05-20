@@ -10,10 +10,18 @@ message "setting up Git..."
 config_path="$XDG_CONFIG_HOME/git"
 
 if [ -e "$HOME"/.gitconfig ]; then
-  message "Migrating to new configuration file location..."
+  message "  %s" "migrating to new configuration file location..."
   mkdir -p "$config_path"
   mv "$HOME"/.gitconfig "$config_path"/config
 fi
+
+message "  %s" "symlinking commit template..."
+if [ -h "$HOME"/.git-template ]; then
+  message "    %s" "removing legacy .git-template..."
+  rm -f "$HOME"/.git-template
+fi
+mkdir -p "$XDG_CONFIG_HOME"/git
+ln -sf "$DIR"/git/template "$XDG_CONFIG_HOME"/git/template
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then

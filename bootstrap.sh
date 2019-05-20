@@ -15,7 +15,6 @@ ln -sf "$DIR"/.bashrc ~
 ln -sf "$DIR"/.emacs ~
 ln -sf "$DIR"/.exports ~
 ln -sf "$DIR"/.functions ~
-ln -sf "$DIR"/.git-template ~
 ln -sf "$DIR"/.profile ~
 
 message "Symlinking configurations to '$XDG_CONFIG_HOME'..."
