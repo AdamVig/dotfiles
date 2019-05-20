@@ -1,32 +1,32 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
 [core]
-    pager = diff-so-fancy | less --tabs=4 -RFX
-    editor = code --reuse-window --wait
+  pager = diff-so-fancy | less --tabs=4 -RFX
+  editor = code --reuse-window --wait
 [commit]
   template = $XDG_CONFIG_HOME/git/template
 [push]
-    # make `git push -u` default to `origin` and the current branch
-    default = current
+  # make `git push -u` default to `origin` and the current branch
+  default = current
 [pretty]
-    # <SHA> <author name> (<relative time in dim color>) <subject>
-    who-when-what = format:%C(auto)%h %an %C(dim)(%cr)%Creset %s
+  # <SHA> <author name> (<relative time in dim color>) <subject>
+  who-when-what = format:%C(auto)%h %an %C(dim)(%cr)%Creset %s
 [alias]
-    contributors = shortlog --summary --numbered --email --all
-    last = log --max-count=1 --pretty=who-when-what
+  contributors = shortlog --summary --numbered --email --all
+  last = log --max-count=1 --pretty=who-when-what
 [pull]
-    # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
-    rebase = true
+  # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
+  rebase = true
 [diff]
-    tool = meld
+  tool = meld
 [diftool]
-    prompt = false
+  prompt = false
 [difftool "meld"]
-    cmd = meld "$LOCAL" "$REMOTE"
+  cmd = meld "$LOCAL" "$REMOTE"
 [merge]
-    tool = meld
+  tool = meld
 [mergetool "meld"]
-    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+  cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [commit]
   gpgsign = true
 
