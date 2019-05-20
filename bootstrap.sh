@@ -8,16 +8,23 @@ source "$DIR/helpers.sh"
 # Ask for password at start
 request-sudo
 
-message "Symlinking dotfiles into your home directory..."
-ln -sf "$DIR/.aliases" ~
-ln -sf "$DIR/.bash_profile" ~
-ln -sf "$DIR/.bashrc" ~
-ln -sf "$DIR/.emacs" ~
-ln -sf "$DIR/.exports" ~
-ln -sf "$DIR/.functions" ~
-ln -sf "$DIR/.git-template" ~
-ln -sf "$DIR/.profile" ~
-ln -sf "$DIR/.ripgreprc" ~
+message "Symlinking dotfiles to your home directory..."
+ln -sf "$DIR"/.aliases ~
+ln -sf "$DIR"/.bash_profile ~
+ln -sf "$DIR"/.bashrc ~
+ln -sf "$DIR"/.emacs ~
+ln -sf "$DIR"/.exports ~
+ln -sf "$DIR"/.functions ~
+ln -sf "$DIR"/.git-template ~
+ln -sf "$DIR"/.profile ~
+
+message "Symlinking configurations to '$XDG_CONFIG_HOME'..."
+if [ -h "$HOME"/.ripgreprc ]; then
+  message "  %s" "Removing legacy .ripgreprc..."
+  rm -f "$HOME"/.ripgreprc
+fi
+mkdir -p "$XDG_CONFIG_HOME"/ripgrep
+ln -sf "$DIR"/.ripgreprc "$XDG_CONFIG_HOME"/ripgrep/config
 
 if "$DIR"/bin/is-wsl; then
   message "Copying Alacritty configuration..."
