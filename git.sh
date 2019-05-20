@@ -47,7 +47,8 @@ else
 
     # If this configuration key is not already set, set it
     if ! git config --global "$name" &> /dev/null; then
-      message "    %s" "setting '$name'..."
+      value="${value/'$XDG_CONFIG_HOME'/$XDG_CONFIG_HOME}"
+      message "    %s" "setting '$name' to '$value'..."
       git config --global "$name" "$value"
     fi
   done
