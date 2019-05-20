@@ -18,7 +18,7 @@ fi
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
     message "  %s" "copying gitconfig to '$config_path/config'..."
-    cp "$DIR"/.gitconfig "$config_path"/config
+    cp "$DIR"/git/config "$config_path"/config
     
     message "  %s" "configuring Git user..."
     read -r -p "  Full name: " name
@@ -39,7 +39,7 @@ if ! [ -e "$config_path"/config ]; then
 else
   message "  %s" "updating Git configuration..."
   # Read all values from current Git configuration
-  git config --list --file "$DIR"/.gitconfig | while read -r conf_line; do
+  git config --list --file "$DIR"/git/config | while read -r conf_line; do
     # Split line into name and value at equals sign
     IFS='=' read -r -a name_value <<< "$conf_line"
     name="${name_value[0]}"
