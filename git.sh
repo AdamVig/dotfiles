@@ -46,9 +46,9 @@ else
     value="${name_value[1]}"
 
     # If this configuration key is not already set, set it
-    if ! git config "$name" &> /dev/null; then
+    if ! git config --global "$name" &> /dev/null; then
       message "    %s" "setting '$name'..."
-      git config "$name" "$value"
+      git config --global "$name" "$value"
     fi
   done
   message "  %s" "done updating Git configuration"
