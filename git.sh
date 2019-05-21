@@ -7,7 +7,7 @@ source "$DIR"/helpers.sh
 
 message "setting up Git..."
 
-config_path="$XDG_CONFIG_HOME/git"
+config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/git"
 
 if [ -e "$HOME"/.gitconfig ]; then
   message "  %s" "migrating to new configuration file location..."
@@ -20,8 +20,8 @@ if [ -h "$HOME"/.git-template ]; then
   message "    %s" "removing legacy .git-template..."
   rm -f "$HOME"/.git-template
 fi
-mkdir -p "$XDG_CONFIG_HOME"/git
-ln -sf "$DIR"/git/template "$XDG_CONFIG_HOME"/git/template
+mkdir -p "$config_path"
+ln -sf "$DIR"/git/template "$config_path"/template
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
@@ -55,7 +55,7 @@ else
 
     # If this configuration key is not already set, set it
     if ! git config --global "$name" &> /dev/null; then
-      value="${value/'$XDG_CONFIG_HOME'/$XDG_CONFIG_HOME}"
+      value="${value/'$XDG_CONFIG_HOME'/${XDG_CONFIG_HOME:-"$HOME"/.config}}"
       message "    %s" "setting '$name' to '$value'..."
       git config --global "$name" "$value"
     fi

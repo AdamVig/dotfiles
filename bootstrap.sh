@@ -17,13 +17,14 @@ ln -sf "$DIR"/.exports ~
 ln -sf "$DIR"/.functions ~
 ln -sf "$DIR"/.profile ~
 
-message "Symlinking configurations to '$XDG_CONFIG_HOME'..."
+config_dir="${XDG_CONFIG_HOME:-"$HOME"/.config}"
+message "Symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
   message "  %s" "Removing legacy .ripgreprc..."
   rm -f "$HOME"/.ripgreprc
 fi
-mkdir -p "$XDG_CONFIG_HOME"/ripgrep
-ln -sf "$DIR"/.ripgreprc "$XDG_CONFIG_HOME"/ripgrep/config
+mkdir -p "$config_dir"/ripgrep
+ln -sf "$DIR"/.ripgreprc "$config_dir"/ripgrep/config
 
 if "$DIR"/bin/is-wsl; then
   message "Copying Alacritty configuration..."
