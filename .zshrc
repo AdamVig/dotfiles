@@ -6,9 +6,10 @@ source "$HOME"/.bash_profile
 autoload -U compinit
 compinit -u -C
 
-source "$XDG_DATA_HOME"/zsh/directories.zsh
-source "$XDG_DATA_HOME"/zsh/key-bindings.zsh
-source "$XDG_DATA_HOME"/zsh/git.zsh
+data_dir="${XDG_DATA_HOME:-"$HOME"/.local/share}/zsh"
+source "$data_dir"/directories.zsh
+source "$data_dir"/key-bindings.zsh
+source "$data_dir"/git.zsh
 
 # history options (from Oh My Zsh lib/history.zsh)
 setopt extended_history # record timestamp of command in HISTFILE
