@@ -17,7 +17,7 @@ if ! brew bundle install; then
 fi
 
 if "$DIR"/bin/is-macos; then
-    brew bundle install --file="$DIR/Brewfile-macos"
+    brew bundle install --file="$DIR/Brewfile-macos" || true
 fi
 
 message "magenta" "Brew done."
