@@ -3,10 +3,11 @@
 source "$HOME"/.bash_profile
 
 # completion
+zmodload -i zsh/complist
 autoload -U compinit
-compinit -u -C
+compinit -i -d "${XDG_CACHE_HOME:-"$HOME"/.cache}"/zcompdump
 
-data_dir="${XDG_DATA_HOME:-"$HOME"/.local/share}/zsh"
+data_dir="${XDG_DATA_HOME:-"$HOME"/.local/share}"/zsh
 source "$data_dir"/directories.zsh
 source "$data_dir"/key-bindings.zsh
 source "$data_dir"/git.zsh
