@@ -6,7 +6,14 @@ DIR="$(dirname "$(realpath "$0")")"
 source "$DIR/helpers.sh"
 
 message "initializing Tmux configuration..."
-ln -sf "$DIR/.tmux.conf" ~
+config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/tmux"
+mkdir -p "$config_path"
+
+if [ -h "$HOME"/.tmux.conf ]; then
+  message "  %s" "removing old configuration file..."
+  rm -f "$HOME"/.tmux.conf
+fi
+ln -sf "$DIR"/tmux.conf "$config_path"
 message "done initializing Tmux configuration."
 
 message "initializing Tmux Plugin Manager..."

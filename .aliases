@@ -10,3 +10,5 @@ alias pip='pip3'
 alias python2='python2.7'
 
 alias glb="log-branch-commits"
+
+alias tmux='tmux -f "${XDG_CONFIG_HOME:-"$HOME"/.config}"/tmux/tmux.conf'
