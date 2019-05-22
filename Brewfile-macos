@@ -4,7 +4,6 @@ brew "grep", args: ["with-default-names"]
 brew "mosh" # Mobile shell (Brew formula does not work on Linux)
 
 # utilities
-cask "mactex" # LaTeX tools
 cask "xquartz" # Needed by Inkscape
 
 # applications
