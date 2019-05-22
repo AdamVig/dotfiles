@@ -27,12 +27,4 @@ else
     warn "could not get latest Node version; installation failed"
 fi
 
-message "  %s" "initializing npm-merge-driver..."
-if command -v npx > /dev/null; then
-  npx npm-merge-driver install --global > /dev/null
-  message "  %s" "done initializing npm-merge-driver."
-else
-  warn "npx not found, could not initialize npm-merge-driver"
-fi
-
 message "done setting up Node."

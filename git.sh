@@ -8,10 +8,10 @@ source "$DIR"/helpers.sh
 message "setting up Git..."
 
 config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/git"
+mkdir -p "$config_path"
 
 if [ -e "$HOME"/.gitconfig ]; then
   message "  %s" "migrating to new configuration file location..."
-  mkdir -p "$config_path"
   mv "$HOME"/.gitconfig "$config_path"/config
 fi
 
@@ -20,8 +20,10 @@ if [ -h "$HOME"/.git-template ]; then
   message "    %s" "removing legacy .git-template..."
   rm -f "$HOME"/.git-template
 fi
-mkdir -p "$config_path"
 ln -sf "$DIR"/git/template "$config_path"/template
+
+message "  %s" "symlinking attributes..."
+ln -sf "$DIR"/git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
