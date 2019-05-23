@@ -9,6 +9,7 @@ message "Installing pip tools..."
 pip_packages=(
     pip
     grip    # GitHub README instant preview
+    visidata   # Data set visualizer
 )
 
 for package in "${pip_packages[@]}"; do
