@@ -17,7 +17,7 @@ ln -sf "$DIR"/.exports ~
 ln -sf "$DIR"/.functions ~
 ln -sf "$DIR"/.profile ~
 
-config_dir="${XDG_CONFIG_HOME:-"$HOME"/.config}"
+config_dir="$(xdg_config)"
 message "Symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
   message "  %s" "Removing legacy .ripgreprc..."

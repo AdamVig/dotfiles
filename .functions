@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+xdg_config() {
+  echo "${XDG_CONFIG_HOME:-$HOME/.config}"
+}
+
+xdg_data() {
+  echo "${XDG_DATA_HOME:-$HOME/.local/share}"
+}
+
+xdg_cache() {
+  echo "${XDG_CACHE_HOME:-$HOME/.cache}"
+}
+
 update() {
     echo "Updating Homebrew..."
     brew update

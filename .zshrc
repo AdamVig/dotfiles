@@ -5,9 +5,12 @@ source "$HOME"/.bash_profile
 # completion
 zmodload -i zsh/complist
 autoload -U compinit
-compinit -i -d "${XDG_CACHE_HOME:-"$HOME"/.cache}"/zcompdump
+compinit -i -d "$(xdg_cache)"/zcompdump
 
-data_dir="${XDG_DATA_HOME:-"$HOME"/.local/share}"/zsh
+data_dir="$(xdg_data)"/zsh
+if ! [ -d "$data_dir" ]; then
+  mkdir -p "$data_dir"
+fi
 source "$data_dir"/directories.zsh
 source "$data_dir"/key-bindings.zsh
 source "$data_dir"/git.zsh
@@ -53,7 +56,7 @@ fi
 
 source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-z_dir="${XDG_DATA_HOME:-"$HOME"/.local/share}"/z
+z_dir="$(xdg_data)"/z
 if ! [ -d "$z_dir" ]; then
     mkdir -p "$z_dir"
     touch "$z_dir"/z

@@ -6,7 +6,7 @@ DIR="$(dirname "$(realpath "$0")")"
 source "$DIR/helpers.sh"
 
 message "initializing Tmux configuration..."
-config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/tmux"
+config_path="$(xdg_config)"/tmux
 mkdir -p "$config_path"
 
 if [ -h "$HOME"/.tmux.conf ]; then

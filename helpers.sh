@@ -5,11 +5,11 @@ set -euo pipefail
 
 DIR="$(dirname "$(realpath "$0")")"
 
-# shellcheck source=./.functions
-source "$DIR"/.functions
-
 # shellcheck source=./.exports
 source "$DIR"/.exports
+
+# shellcheck source=./.functions
+source "$DIR"/.functions
 
 # Colorized output
 # $1: color, template string, or string to print

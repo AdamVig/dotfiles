@@ -7,7 +7,7 @@ source "$DIR"/helpers.sh
 
 message "setting up Git..."
 
-config_path="${XDG_CONFIG_HOME:-"$HOME"/.config}/git"
+config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
 
 if [ -e "$HOME"/.gitconfig ]; then
@@ -57,7 +57,7 @@ else
 
     # If this configuration key is not already set, set it
     if ! git config --global "$name" &> /dev/null; then
-      value="${value/'$XDG_CONFIG_HOME'/${XDG_CONFIG_HOME:-"$HOME"/.config}}"
+      value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
       message "    %s" "setting '$name' to '$value'..."
       git config --global "$name" "$value"
     fi
