@@ -19,6 +19,10 @@ if is-wsl && [[ "$SHELL" != *zsh ]]; then
 fi
 
 message "Initializing Zsh configuration..."
-ln -sf "$DIR/zsh" "$(xdg_data)"
-ln -sf "$DIR/.zshrc" "$HOME"
+data_dir="$(xdg_data)/zsh"
+if ! [ -d "$data_dir" ]; then
+  mkdir -p "$data_dir"
+fi
+ln -sf "$DIR"/zsh/* "$data_dir"
+ln -sf "$DIR"/.zshrc "$HOME"
 message "Done initializing Zsh configuration."
