@@ -16,6 +16,9 @@ source "$data_dir"/key-bindings.zsh
 source "$data_dir"/git.zsh
 
 # history options (from Oh My Zsh lib/history.zsh)
+[ -z "$HISTFILE" ] && HISTFILE="$data_dir"/history
+HISTSIZE=50000
+SAVEHIST=10000
 setopt extended_history # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups # ignore duplicated commands history list
