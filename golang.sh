@@ -22,6 +22,7 @@ go_packages=(
     github.com/tpng/gopkgs  # Faster `go list all`
     golang.org/x/lint/golint  # Go linter
     golang.org/x/tools/cmd/godoc  # Go documentation tool
+    golang.org/x/tools/cmd/goimports  # Auto import dependencies
     golang.org/x/tools/cmd/gorename  # Rename identifiers
     golang.org/x/tools/cmd/guru  # Answers questions about Go code
 )
