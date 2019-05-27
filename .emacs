@@ -10,7 +10,7 @@
       (package-install 'use-package)))
 (require 'use-package)
 (custom-set-variables
- '(package-selected-packages (quote (atom-one-dark-theme editorconfig use-package))))
+ '(package-selected-packages (quote (go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces)
 
 ;; Install and set up EditorConfig (https://github.com/editorconfig/editorconfig-emacs)
@@ -30,3 +30,10 @@
 
 ;; Disable audio bell
 (setq ring-bell-function 'ignore)
+
+;; Add go-mode and automatic format/import on save
+(use-package go-mode
+  :ensure t)
+(add-hook 'go-mode-hook (lambda () (
+  add-hook 'before-save-hook 'gofmt-before-save)
+ (setq gofmt-command "goimports")))
