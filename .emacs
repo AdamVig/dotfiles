@@ -27,3 +27,6 @@
   :ensure t
   :config
   (load-theme 'zenburn t))
+
+;; Disable audio bell
+(setq ring-bell-function 'ignore)
