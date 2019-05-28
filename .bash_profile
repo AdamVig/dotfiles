@@ -28,3 +28,6 @@ fi
 
 # Initialize Nodenv
 eval "$(nodenv init -)"
+
+# Temporary override to get rid of mysterious NODE_ENV=production
+unset NODE_ENV
