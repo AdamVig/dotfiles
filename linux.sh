@@ -22,7 +22,7 @@ message "    %s" "done installing essential tools."
 if ! command -v brew &> /dev/null; then
     message "    %s" "installing Linuxbrew..."
     set +eu
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" || true
     set -eu
     message "    %s" "done installing Linuxbrew."
 fi
