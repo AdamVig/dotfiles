@@ -21,13 +21,13 @@ message "    %s" "done installing essential tools."
 
 if ! command -v brew &> /dev/null; then
     message "    %s" "installing Linuxbrew..."
-    set +euo
+    set +eu
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-    set -euo
+    set -eu
     message "    %s" "done installing Linuxbrew."
 fi
 
 # this will have errors but should at least initialize Linuxbrew
-source "$DIR/.bash_profile" &> /dev/null
+source "$DIR/.bash_profile" &> /dev/null || true
 
 message "  %s" "done setting up Linux."
