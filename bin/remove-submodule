@@ -17,5 +17,9 @@ main() {
   rm -rf "$path"
   rm -rf .git/modules/"$path" || true
   git rm -rf "$path" || true
+
+  if ! [ -s .gitmodules ]; then
+    git rm -f .gitmodules
+  fi
 }
 main "$@"
