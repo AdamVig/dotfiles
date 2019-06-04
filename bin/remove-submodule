@@ -16,6 +16,6 @@ main() {
   git submodule deinit -f "$path" || true
   rm -rf "$path"
   rm -rf .git/modules/"$path" || true
-  git rm -f "$path" || true
+  git rm -rf "$path" || true
 }
 main "$@"
