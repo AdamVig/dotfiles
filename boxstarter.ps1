@@ -112,6 +112,7 @@ cinst signal
 cinst slack
 cinst spotify
 cinst steam
+cinst thunderbird
 cinst vlc
 cinst vscode
 cinst zoom
