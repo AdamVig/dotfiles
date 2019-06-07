@@ -96,7 +96,7 @@ cinst procexp
 
 # Apps
 cinst arq
-cinst battle.net
+cinst battle.net --allow-empty-checksums
 cinst bluescreenview
 cinst calibre
 cinst cyberduck
