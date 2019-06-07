@@ -97,6 +97,7 @@ cinst procexp
 
 # Apps
 cinst arq
+cinst battle.net
 cinst bluescreenview
 cinst calibre
 cinst cyberduck
