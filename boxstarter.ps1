@@ -21,7 +21,7 @@ Disable-GameBarTips
 Enable-RemoteDesktop
 
 Set-WindowsExplorerOptions -EnableShowProtectedOSFiles -EnableShowFileExtensions -DisableShowRecentFilesInQuickAccess -DisableShowFrequentFoldersInQuickAccess -DisableShowRibbon
-Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock -AlwaysShowIconsOn
+Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
 
 #--- Windows Subsystems/Features ---
 choco install Microsoft-Hyper-V-All -source windowsFeatures
