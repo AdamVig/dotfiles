@@ -98,6 +98,7 @@ cinst bluescreenview
 cinst calibre
 cinst cyberduck
 cinst deluge
+cinst docker-desktop
 cinst etcher
 cinst Firefox
 cinst foxitreader
