@@ -17,6 +17,14 @@ ln -sf "$DIR"/.exports ~
 ln -sf "$DIR"/.functions ~
 ln -sf "$DIR"/.profile ~
 
+message "Configuring SSH..."
+mkdir -p "$HOME"/.ssh
+ssh_config='AddKeysToAgent yes'
+ssh_config_path="$HOME"/.ssh/config
+if ! grep --quiet "$ssh_config" "$ssh_config_path"; then
+  echo "$ssh_config" >> "$ssh_config_path"
+fi
+
 config_dir="$(xdg_config)"
 message "Symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
