@@ -27,7 +27,4 @@ if ! command -v brew &> /dev/null; then
     message "    %s" "done installing Linuxbrew."
 fi
 
-# this will have errors but should at least initialize Linuxbrew
-source "$DIR/.bash_profile" &> /dev/null || true
-
 message "  %s" "done setting up Linux."
