@@ -28,6 +28,7 @@ ln -sf "$DIR"/.ripgreprc "$config_dir"/ripgrep/config
 
 if "$DIR"/bin/is-wsl; then
   message "Copying Alacritty configuration..."
+  mkdir -p "$(get-appdata-path)/alacritty"
   cp "$DIR/alacritty.yml" "$(get-appdata-path)/alacritty/alacritty.yml"
 
   message "Copying WSL configuration..."
@@ -37,6 +38,7 @@ fi
 if ! command -v lsix > /dev/null; then
   message "Installing lsix..."
   readonly lsix_path="$HOME/.local/bin/lsix"
+  mkdir -p "$HOME/.local/bin"
   wget --quiet --output-document "$lsix_path" https://raw.githubusercontent.com/hackerb9/lsix/master/lsix
   if [ -f "$lsix_path" ]; then
     chmod u+x "$lsix_path"
