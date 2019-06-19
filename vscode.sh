@@ -7,10 +7,17 @@ source "$DIR/helpers.sh"
 
 message "cyan" "Setting up Visual Studio Code..."
 
-message "cyan" "  %s" "Symlinking Visual Studio Code settings..."
 if "$DIR"/bin/is-macos; then
+    message "cyan" "  %s" "Symlinking Visual Studio Code settings..."
     ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
     ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+fi
+
+if "$DIR"/bin/is-wsl && ! [ -f "$(get-appdata-path)"/Code/User/settings.json  ]; then
+    message "cyan" "  %s" "Copying Visual Studio Code settings..."
+    windows_code_dir="$(get-appdata-path)"/Code/User
+    cp "$DIR"/.vscode/settings.json "$windows_code_dir"
+    cp "$DIR"/.vscode/keybindings.json "$windows_code_dir"
 fi
 
 declare -a extensions=(
