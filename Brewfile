@@ -22,6 +22,7 @@ brew "p7zip"
 brew "pandoc"
 brew "rename" # File renamer
 brew "ssh-copy-id"
+brew "tmux"
 brew "tree"
 brew "unzip"
 
