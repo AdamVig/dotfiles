@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly usage="Usage: $(basename "$0") [-h|--help] [-l|--latest] [-L|--lts] [-j|--json]
+Get Node versions.
+
+Flags:
+    -l, --latest  only show the latest version
+    -L, --lts     only show LTS versions
+    -j, --json    return output as JSON
+    -h, --help    show this help text"
+
+lts=1
+latest=1
+json=1
+
+set +e
+getopt --test
+if [ $? -ne 4 ]; then
+  echo 'error: enhanced getopt is not installed' >&2
+  exit 1
+fi
+set -e
+
+opts=$(getopt -o 'hlLj' --long 'help,latest,lts,json' --name "$(basename "$0")" -- "$@")
+eval set -- "$opts"
+unset opts
+
+while true; do
+  case "$1" in
+    '-h'|'--help')
+      echo "$usage"
+      exit
+    ;;
+    '-l'|'--latest')
+      latest=0
+      shift
+      continue
+    ;;
+    '-L'|'--lts')
+      lts=0
+      shift
+      continue
+    ;;
+    '-j'|'--json')
+      json=0
+      shift
+      continue
+    ;;
+    '--')
+      shift
+      break
+    ;;
+    *)
+      echo 'error: failed to parse arguments' >&2
+      exit 1
+    ;;
+  esac
+done
+
+if ! check-installed jq https://stedolan.github.io/jq/; then
+  exit 1
+fi
+
+node_versions_url='https://nodejs.org/dist/index.json'
+if ! versions="$(curl --silent --fail --show-error "$node_versions_url")"; then
+  echo 'error: failed to get Node versions'
+  exit 1
+fi
+
+filter='.'
+
+filter+=' | sort_by(.date)'
+
+if [ $lts -eq 0 ]; then
+  filter+=' | map(select(.lts))'
+fi
+
+if [ $latest -eq 0 ]; then
+  filter+=' | [last]'
+fi
+
+if [ $json -eq 0 ]; then
+  echo "$versions" | jq "$filter"
+else
+  filter+=' | map(.date + " | " + .version + (if .lts then " (lts)" else "" end)) | .[]'
+  echo "$versions" | jq --raw-output "$filter"
+fi
+
