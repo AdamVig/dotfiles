@@ -154,5 +154,6 @@
   // Hide spell check indicator in status bar
   "cSpell.showStatus": false,
   "liveshare.featureSet": "insiders",
-  "workbench.iconTheme": "atom-icons"
+  "workbench.iconTheme": "atom-icons",
+  "window.zoomLevel": 1
 }
