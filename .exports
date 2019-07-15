@@ -20,6 +20,11 @@ if is-macos; then
   export XDG_CACHE_HOME="$HOME"/Library/Caches
 fi
 
+if is-wsl; then
+  # For Karma tests
+  export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+fi
+
 # Set golang workspace directory
 export GOPATH="$HOME/code/go"
 
