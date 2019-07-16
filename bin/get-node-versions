@@ -16,7 +16,7 @@ latest=1
 json=1
 
 set +e
-getopt --test
+getopt --test > /dev/null
 if [ $? -ne 4 ]; then
   echo 'error: enhanced getopt is not installed' >&2
   exit 1
