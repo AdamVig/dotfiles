@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly usage="Usage: $(basename "$0") [-h|--help]
+Run personal automations.
+
+Flags:
+    -h, --help    show this help text
+
+Examples:
+    i focus
+    i afk 5"
+
+set +e
+getopt --test > /dev/null
+if [ $? -ne 4 ]; then
+  echo 'error: enhanced getopt is not installed' >&2
+  exit 1
+fi
+set -e
+
+opts=$(getopt -o 'h' --long 'help' --name "$(basename "$0")" -- "$@")
+eval set -- "$opts"
+unset opts
+
+while true; do
+  case "$1" in
+    '-h'|'--help')
+      echo "$usage"
+      exit
+    ;;
+    '--')
+      shift
+      break
+    ;;
+    *)
+      echo 'error: failed to parse arguments' >&2
+      exit 1
+    ;;
+  esac
+done
+
+if ! check-installed jq https://stedolan.github.io/jq/ || ! check-installed slack https://github.com/rockymadden/slack-cli; then
+  exit 1
+fi
