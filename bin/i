@@ -8,6 +8,10 @@ Run personal automations.
 Flags:
     -h, --help    show this help text
 
+Commands:
+    focus [duration in minutes] snooze Slack notifications for <duration> and set a Slack status
+    unfocus                     end Slack snooze and clear Slack status
+
 Examples:
     i focus
     i afk 5"
@@ -43,4 +47,39 @@ done
 
 if ! check-installed jq https://stedolan.github.io/jq/ || ! check-installed slack https://github.com/rockymadden/slack-cli; then
   exit 1
+fi
+
+# $1: duration in minutes
+focus() {
+  local duration="${1:-}"
+  if [ -z "$duration" ]; then
+    duration='30'
+  fi
+  echo "focusing for $duration minutes"
+  if ! slack snooze start "$duration" > /dev/null; then
+    echo 'failed to snooze Slack notifications'
+  fi
+
+  if ! slack status edit 'focusing' ':shushing_face:' > /dev/null; then
+    echo 'failed to set Slack status'
+  fi
+}
+
+unfocus() {
+  echo 'ending focus period'
+  if ! slack snooze end > /dev/null; then
+    echo 'failed to end Slack snooze'
+  fi
+
+  if ! slack status clear > /dev/null; then
+    echo 'failed to clear Slack status'
+  fi
+}
+
+if [ "$1" = 'focus' ]; then
+  shift
+  focus "$@"
+elif [ "$1" = 'unfocus' ]; then
+  shift
+  unfocus "$@"
 fi
