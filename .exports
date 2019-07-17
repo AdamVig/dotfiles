@@ -23,6 +23,9 @@ fi
 if is-wsl; then
   # For Karma tests
   export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+
+  # To connect to Docker for Windows
+  export DOCKER_HOST='tcp://localhost:2375'
 fi
 
 # Set golang workspace directory
