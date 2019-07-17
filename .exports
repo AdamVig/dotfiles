@@ -18,6 +18,11 @@ if is-macos; then
   export XDG_CONFIG_HOME="$HOME"/Library/Preferences
   export XDG_DATA_HOME="$HOME"/Library
   export XDG_CACHE_HOME="$HOME"/Library/Caches
+
+  # Prefer GNU utilities over built-in BSD variants
+  if [ -d /usr/local/opt/gnu-getopt ]; then
+    PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+  fi
 fi
 
 if is-wsl; then
