@@ -2,6 +2,9 @@
 
 source "$HOME"/.bash_profile
 
+# enable Ctrl+Q shortcut
+unsetopt flowcontrol
+
 # completion
 zmodload -i zsh/complist
 autoload -U compinit
