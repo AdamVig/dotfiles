@@ -60,7 +60,7 @@ focus() {
     echo 'failed to snooze Slack notifications'
   fi
 
-  if ! slack status edit 'focusing' ':shushing_face:' > /dev/null; then
+  if ! slack status edit 'focusing' ':thought_balloon:' > /dev/null; then
     echo 'failed to set Slack status'
   fi
 }
