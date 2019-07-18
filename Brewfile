@@ -13,6 +13,7 @@ brew "ripgrep" # Better grep
 
 # command line tools
 brew "emacs"
+brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
 brew "graphviz" # Graph visualization tool
 brew "imagemagick"
