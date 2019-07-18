@@ -57,3 +57,6 @@ export WORDCHARS=''
 
 # Tell ripgrep where to load config from
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-"$HOME"/.config}/ripgrep/config"
+
+# Use ripgrep for fzf search
+export FZF_DEFAULT_COMMAND='rg --files'
