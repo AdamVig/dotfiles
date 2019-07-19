@@ -23,6 +23,9 @@ if is-macos; then
   if [ -d /usr/local/opt/gnu-getopt ]; then
     PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
   fi
+  if [ -d /usr/local/opt/coreutils ]; then
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  fi
 fi
 
 if is-wsl; then
