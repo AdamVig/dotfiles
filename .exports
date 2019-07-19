@@ -2,18 +2,15 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
-# Must be first so that local scripts are available in this file
-PATH="$HOME/.local/bin:$DIR/bin:$PATH"
-
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Use alternative npm global directory on Linux
-if is-linux; then
+if "$DIR"/bin/is-linux; then
    PATH="$HOME/.npm-global/bin:$PATH"
 fi
 
-if is-macos; then
+if "$DIR"/bin/is-macos; then
   # https://stackoverflow.com/a/5084892/1850656
   export XDG_CONFIG_HOME="$HOME"/Library/Preferences
   export XDG_DATA_HOME="$HOME"/Library
@@ -44,6 +41,9 @@ PATH+=":$GOPATH/bin"
 
 # Add Python directory to PATH
 PATH+=":$(python3 -m site --user-base)/bin"
+
+# Add user bin directories to PATH
+PATH="$HOME/.local/bin:$DIR/bin:$PATH"
 
 # Default editor
 export VISUAL=emacs
