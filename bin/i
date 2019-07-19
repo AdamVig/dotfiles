@@ -63,6 +63,19 @@ focus() {
   if ! slack status edit 'focusing' ':thought_balloon:' > /dev/null; then
     echo 'failed to set Slack status'
   fi
+
+  if [ -n "${SLACK_CLI_TOKEN:-}" ]; then
+    local duration_ms
+    if ! duration_ms=$(date +%s --date "$duration min"); then
+      echo 'failed to calculate Slack status expiration duration'
+    elif ! curl -s -X POST https://slack.com/api/users.profile.set \
+      --data-urlencode "profile={\"status_expiration\": $duration_ms}" \
+      --data-urlencode "token=${SLACK_CLI_TOKEN}" > /dev/null; then
+      echo 'failed to set Slack status expiration'
+    fi
+  else
+    echo 'error: cannot set Slack status expiration because SLACK_CLI_TOKEN is not set'
+  fi
 }
 
 unfocus() {
