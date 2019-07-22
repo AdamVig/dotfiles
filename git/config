@@ -33,6 +33,7 @@
 [commit]
   gpgsign = true
 
-# example conditional configuration:
+# To include a separate configuration file conditionally, uncomment the following.
+# Ensure that this block comes at the end of the file, otherwise it will not override correctly.
 # [includeIf "gitdir:src/"]
 #  path = ~/src/.gitconfig
