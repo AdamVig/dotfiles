@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+# No strict mode in this file because .zshrc and z use unbound variables
+
+main() {
+  local dir="$(dirname "$(realpath "${(%):-%x}")")"
+
+  local readonly usage="Usage: $(basename "$0") [-h|--help]
+Pass all arguments to z and rename the Tmux pane to the name of the resulting directory.
+
+- This script is intended to be sourced.
+- Sources .zshrc to initialize z.
+- Will not attempt to set pane name if TMUX_PANE is unset or if directory does not change.
+
+Flags:
+    -h, --help  show this help text"
+
+  if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+    echo "$usage"
+    return
+  fi
+
+  source "$dir"/../zsh/init-utils.zsh
+
+  prev_dir="$PWD"
+  z "$@"
+
+  if [ -n "$TMUX_PANE" ] && [ "$prev_dir" != "$PWD" ]; then
+    tmux rename-window -t "$TMUX_PANE" "$(basename "$PWD")"
+  fi
+}
+
+# Use a function to avoid variable/function clashes on consecutive runs in the same session.
+main "$@"
+unset -f main
