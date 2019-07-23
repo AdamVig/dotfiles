@@ -66,7 +66,8 @@ focus() {
 
   if [ -n "${SLACK_CLI_TOKEN:-}" ]; then
     local duration_ms
-    if ! duration_ms=$(date +%s --date "$duration min"); then
+    # Subtract one minute to account for difference between snooze and status time handling
+    if ! duration_ms=$(date +%s --date "$duration min - 1 min"); then
       echo 'failed to calculate Slack status expiration duration'
     elif ! curl -s -X POST https://slack.com/api/users.profile.set \
       --data-urlencode "profile={\"status_expiration\": $duration_ms}" \
