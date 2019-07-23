@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$(dirname "$(realpath "$0")")"
+
 xdg_config() {
   echo "${XDG_CONFIG_HOME:-$HOME/.config}"
 }
@@ -66,6 +68,7 @@ install-peer-dependencies() {
 wsl-open() {
     cmd.exe /C start "$1"
 }
-if command -v is-wsl > /dev/null && is-wsl; then
+if "$DIR"/bin/is-wsl; then
     alias open=wsl-open
 fi
+
