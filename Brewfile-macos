@@ -1,7 +1,7 @@
 # command line tools
 brew "gnu-getopt" # Better than BSD getopt
 brew "gnu-time" # Better than BSD time
-brew "grep", args: ["with-default-names"]
+brew "grep"
 brew "mosh" # Mobile shell (Brew formula does not work on Linux)
 
 # utilities
