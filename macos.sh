@@ -5,12 +5,6 @@ DIR="$(dirname "$(realpath "$0")")"
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
-if ! command -v brew &> /dev/null; then
-     message "  %s" "Installing Homebrew..."
-     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-     message "  %s" "Done installing Homebrew."
-fi
-
 # Check if directory is writable, if not, take ownership of it
 message "  %s" "Checking ownership of subdirectories of /usr/local..."
 for dir in $(brew --prefix)/*; do
