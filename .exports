@@ -40,7 +40,9 @@ export GOPATH="$HOME/code/go"
 PATH+=":$GOPATH/bin"
 
 # Add Python directory to PATH
-PATH+=":$(python3 -m site --user-base)/bin"
+if command -v python3 > /dev/null; then
+  PATH+=":$(python3 -m site --user-base)/bin"
+fi
 
 # Add user bin directories to PATH
 PATH="$HOME/.local/bin:$DIR/bin:$PATH"
