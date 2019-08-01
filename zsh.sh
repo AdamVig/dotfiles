@@ -7,15 +7,21 @@ source "$DIR/helpers.sh"
 
 request-sudo
 
-if is-wsl && [[ "$SHELL" != *zsh ]]; then
-    message "Changing default shell to Zsh..."
-    if ! grep 'zsh' /etc/shells > /dev/null; then
-        message "Adding ZSH to /etc/shells..."
-        which zsh | sudo tee -a /etc/shells
-        message "Done adding ZSH to /etc/shells."
-    fi
+if [[ "$SHELL" != *zsh ]]; then
+  message "Changing default shell to Zsh..."
+  if is-wsl && ! grep 'zsh' /etc/shells > /dev/null; then
+    message "Adding ZSH to /etc/shells..."
+    which zsh | sudo tee -a /etc/shells
+    message "Done adding ZSH to /etc/shells."
+  fi
+
+  if is-macos; then
+    sudo chsh -s "$(which zsh)" "$USER"
+  else
     chsh --shell "$(which zsh)"
-    message "Done changing default shell to Zsh."
+  fi
+
+  message "Done changing default shell to Zsh."
 fi
 
 message "Initializing Zsh configuration..."
