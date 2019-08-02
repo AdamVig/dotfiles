@@ -50,7 +50,6 @@ brew "shellcheck" # Shell script linter
 # services
 brew "docker"
 brew "docker-compose"
-brew "postgresql", restart_service: :changed
 
 # web service clients
 brew "ddgr" # DuckDuckGo
