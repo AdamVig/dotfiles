@@ -12,8 +12,6 @@
 Settings, keybindings, and snippets for Visual Studio Code.  
 #### `bin/`
 Utility scripts.
-#### `manual/`
-One-off scripts related to system setup.
 #### `.aliases`
 Abbreviations for common commands.  
 #### `.bash_profile`  
@@ -44,6 +42,8 @@ Utility functions for bash scripts.
 Set up Linux-specific settings.
 #### `macos.sh`  
 Set up macOS-specific settings.
+#### `macos-terminal-profile.terminal`
+Settings profile for macOS Terminal.app. Must be manually imported via the Terminal settings window.
 #### `node.sh`
 Install Node using `nodenv` and install a default list of npm packages.
 #### `npm-default-packages`
