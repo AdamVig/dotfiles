@@ -61,10 +61,13 @@ export TERM=xterm-256color
 export WORDCHARS=''
 
 # Tell ripgrep where to load config from
-export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-"$HOME"/.config}/ripgrep/config"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"/ripgrep/config
 
 # Use ripgrep for fzf search
 export FZF_DEFAULT_COMMAND='rg --files'
 
 # Prevent Docker from storing configuration in  ~/.docker
-export DOCKER_CONFIG="${XDG_CONFIG_HOME:-"$HOME"/.config}/docker"
+export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
+
+# Prevent Postgres from storing history in ~/.psql_history
+export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/psql-history
