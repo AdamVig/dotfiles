@@ -55,6 +55,11 @@ fi
 mkdir -p "$config_dir"/ripgrep
 ln -sf "$DIR"/.ripgreprc "$config_dir"/ripgrep/config
 
+if ! [ -d "$config_dir"/docker ]; then
+  message "Creating Docker configuration directory..."
+  mkdir -p "$config_dir"/docker
+fi
+
 if "$DIR"/bin/is-wsl; then
   message "Copying Alacritty configuration..."
   mkdir -p "$(get-appdata-path)/alacritty"

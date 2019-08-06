@@ -65,3 +65,6 @@ export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-"$HOME"/.config}/ripgrep/config"
 
 # Use ripgrep for fzf search
 export FZF_DEFAULT_COMMAND='rg --files'
+
+# Prevent Docker from storing configuration in  ~/.docker
+export DOCKER_CONFIG="${XDG_CONFIG_HOME:-"$HOME"/.config}/docker"
