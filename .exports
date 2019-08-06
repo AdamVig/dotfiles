@@ -77,3 +77,6 @@ export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
 
 # Prevent npm from storing config in ~/.npmrc
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
+
+# Prevent less from storing history in ~/.lesshst
+export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
