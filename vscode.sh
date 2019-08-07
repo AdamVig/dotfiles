@@ -26,7 +26,8 @@ declare -a extensions=(
     dbaeumer.vscode-eslint  # JavaScript linter
     eamodio.gitlens  # Advanced Git integration
     EditorConfig.editorconfig  # Editor text style configuration
-    eg2.vscode-npm-script  # package.json linting and npm script detection     	
+    eg2.vscode-npm-script  # package.json linting and npm script detection
+    esbenp.prettier-vscode  # Code formatting with Prettier
     emroussel.atom-icons  # Atom-inspired icons
     emroussel.atomize-atom-one-dark-theme  # Atom-inspired theme
     fabiospampinato.vscode-terminals  # terminal manager
