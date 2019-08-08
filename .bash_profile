@@ -33,5 +33,5 @@ eval "$(nodenv init -)"
 unset NODE_ENV
 
 if command -v tmux > /dev/null && ! [ -v TMUX ]; then
-  tmux
+  tmux attach || tmux new
 fi

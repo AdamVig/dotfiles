@@ -11,8 +11,8 @@ alias python2='python2.7'
 
 alias glb="log-branch-commits"
 
-# Always attempt to attach (tmux.conf will create new session if none exist)
-alias tmux='tmux -f "${XDG_CONFIG_HOME:-$HOME/.config}"/tmux/tmux.conf attach'
+# Use custom config file location
+alias tmux='tmux -f "${XDG_CONFIG_HOME:-$HOME/.config}"/tmux/tmux.conf'
 
 # Must use . to allow the script to change the shell's directory
 alias zn='. z-name-tmux-pane'
