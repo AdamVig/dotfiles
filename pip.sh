@@ -7,6 +7,7 @@ source "$DIR/helpers.sh"
 
 message "Installing pip tools..."
 pip_packages=(
+    csvkit    # CSV processing tools
     pip
     grip    # GitHub README instant preview
     visidata   # Data set visualizer
