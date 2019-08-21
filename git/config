@@ -1,7 +1,6 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
 [core]
-  pager = diff-so-fancy | less --tabs=4 -RFX
   editor = code --reuse-window --wait
 [commit]
   template = $XDG_CONFIG_HOME/git/template
