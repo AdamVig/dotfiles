@@ -34,12 +34,12 @@ declare -a extensions=(
     GitHub.vscode-pull-request-github # built-in GitHub pull request support
     hbenl.vscode-test-explorer  # sidebar for running tests
     mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
+    ms-azuretools.vscode-docker # Docker support
     ms-python.python  # Python support
     ms-vscode.Go  # Golang support
     ms-vsliveshare.vsliveshare  # Live code sharing
     msjsdiag.debugger-for-chrome  # Chrome debugger integration
     octref.vetur  # Vue.js support
-    PeterJausovec.vscode-docker  # Docker support
     QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
     rafamel.subtle-brackets  # Better bracket matching
     runem.lit-plugin  # lit-html support
