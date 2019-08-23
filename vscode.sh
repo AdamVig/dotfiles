@@ -53,7 +53,7 @@ message "cyan" "  %s" "Installing Visual Studio Code extensions... "
 for extension in "${extensions[@]}"; do
     set +e
     # Attempt to install extension; log message on success, log warning on failure
-    code --install-extension "$extension" &> /dev/null && \
+    code --install-extension "$extension" > /dev/null && \
         message "cyan" "    %s" "Installed $extension" || \
         warn "extension $extension failed to install; it may no longer be available"
     set -e
