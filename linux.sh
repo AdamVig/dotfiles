@@ -11,7 +11,7 @@ request-sudo
 message "  %s" "setting up Linux..."
 
 message "    %s" "installing essential tools..."
-if command -v apt > /dev/null; then
+if command -v apt-get > /dev/null; then
     sudo apt-get update > /dev/null
     sudo apt-get install --yes build-essential curl file git > /dev/null
 else

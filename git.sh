@@ -29,7 +29,7 @@ ln -sf "$DIR"/git/attributes "$config_path"/attributes
 if ! [ -e "$config_path"/config ]; then
     message "  %s" "copying gitconfig to '$config_path/config'..."
     cp "$DIR"/git/config "$config_path"/config
-    
+
     message "  %s" "configuring Git user..."
     read -r -p "  Full name: " name
     read -r -p "  Email address: " email
