@@ -61,12 +61,8 @@ if ! [ -d "$config_dir"/docker ]; then
 fi
 
 if "$DIR"/bin/is-wsl; then
-  message "Copying Alacritty configuration..."
-  mkdir -p "$(get-appdata-path)/alacritty"
-  cp "$DIR/alacritty.yml" "$(get-appdata-path)/alacritty/alacritty.yml"
-
   message "Copying WSL configuration..."
-  request-sudo cp "$DIR/wsl.conf" /etc/wsl.conf
+  request-sudo cp "$DIR"/wsl.conf /etc/wsl.conf
 fi
 
 if ! command -v lsix > /dev/null; then
