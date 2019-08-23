@@ -15,9 +15,6 @@ for dir in $(brew --prefix)/*; do
 done
 message "  %s" "Done checking ownership of subdirectories of /usr/local."
 
-# Copy terminal settings (symlinking does not work because Terminal.app overwrites the file on close)
-cp "$DIR/apple-terminal-settings.plist" ~/Library/Preferences/com.apple.Terminal.plist
-
 # Disable startup tone
 request-sudo nvram SystemAudioVolume=" "
 
