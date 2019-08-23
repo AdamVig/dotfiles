@@ -22,7 +22,6 @@ brew "jq" # JSON processor
 brew "nnn" # Command-line file browser
 brew "p7zip"
 brew "pandoc"
-brew "rename" # File renamer
 brew "ssh-copy-id"
 brew "tmux"
 brew "tree"
