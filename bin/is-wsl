@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 # https://stackoverflow.com/a/43618657/1850656
-[ -e /proc/version ] && [[ "$(< /proc/version)" == *@(Microsoft|WSL)* ]]
+[ -e /proc/version ] && [[ "$(< /proc/version)" == *@(Microsoft|microsoft|WSL)* ]]
