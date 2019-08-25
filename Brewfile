@@ -17,6 +17,7 @@ brew "emacs"
 brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
 brew "graphviz" # Graph visualization tool
+brew "hugo" # Static site builder
 brew "imagemagick"
 brew "jq" # JSON processor
 brew "nnn" # Command-line file browser
