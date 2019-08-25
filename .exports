@@ -2,6 +2,18 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
+prepend_path() {
+  if [[ "$PATH" != *"$1"* ]]; then
+    PATH="$1:$PATH"
+  fi
+}
+
+append_path() {
+  if [[ "$PATH" != *"$1"* ]]; then
+    PATH="$PATH:$1"
+  fi
+}
+
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
@@ -18,10 +30,10 @@ if "$DIR"/bin/is-macos; then
 
   # Prefer GNU utilities over built-in BSD variants
   if [ -d /usr/local/opt/gnu-getopt ]; then
-    PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+    prepend_path '/usr/local/opt/gnu-getopt/bin'
   fi
   if [ -d /usr/local/opt/coreutils ]; then
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    prepend_path '/usr/local/opt/coreutils/libexec/gnubin'
   fi
 fi
 
@@ -37,15 +49,16 @@ fi
 export GOPATH="$HOME/code/go"
 
 # Add golang directory to PATH
-PATH+=":$GOPATH/bin"
+append_path "$GOPATH/bin"
 
 # Add Python directory to PATH
 if command -v python3 > /dev/null; then
-  PATH+=":$(python3 -m site --user-base)/bin"
+  append_path "$(python3 -m site --user-base)"/bin
 fi
 
 # Add user bin directories to PATH
-PATH="$HOME/.local/bin:$DIR/bin:$PATH"
+prepend_path "$HOME"/.local/bin
+prepend_path "$DIR"/bin
 
 # Default editor
 export VISUAL=emacs
