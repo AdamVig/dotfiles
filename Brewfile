@@ -20,6 +20,7 @@ brew "graphviz" # Graph visualization tool
 brew "hugo" # Static site builder
 brew "imagemagick"
 brew "jq" # JSON processor
+brew "magic-wormhole" # Point-to-point file sharing
 brew "nnn" # Command-line file browser
 brew "p7zip"
 brew "pandoc"
