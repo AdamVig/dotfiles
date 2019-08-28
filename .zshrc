@@ -38,6 +38,13 @@ remote-host-info() {
   fi
 }
 
+git-wip() {
+  if git log --max-count=1 2> /dev/null | grep --quiet "\-\-wip\-\-"; then
+    #  <red>[WIP]<end red>
+    echo ' %F{red}[WIP]%f'
+  fi
+}   
+
 git-info() {
   local ref
   # Get ref name, else ref SHA, else return early
@@ -45,11 +52,8 @@ git-info() {
     ref="$(command git rev-parse --short HEAD 2> /dev/null)" || \
     return 0
 
-  # This line must directly precede the echo line because its exit code is used
-  git log --max-count=1 2> /dev/null | grep --quiet "\-\-wip\-\-"
-
-  # (<ref><if last command exited 0> <red>[WIP]<end red><end if>)
-  echo " ($ref%(0?/ %F{red}[WIP]%f/)%)"
+  # (<ref><maybe wip>)
+  echo " ($ref$(git-wip))"
 }
 
 # Enable substitution in PS1 (must be single-quoted)
