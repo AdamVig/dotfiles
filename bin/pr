@@ -38,12 +38,9 @@ main() {
   done
 
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
-  readonly local commit_format='format:- %s%n%w(0,2,2)%b'
-  local commits
-  commits="$(git log "$remote"/"$base_branch"..HEAD --pretty="$commit_format")"
   readonly local message="
 
-$commits"
+$(log-branch-commits --pr "$remote")"
 
   # Run dynamically constructed command, using $@ to pass it all arguments
   hub pull-request --browse --copy --message="$message" --edit ${github_user:+'--assign='"$github_user"} "$@"

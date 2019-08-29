@@ -2,18 +2,71 @@
 
 set -euo pipefail
 
-# Log all commits on the current branch that are not on the default branch.
-# $1: Name of a remote (defaults to origin).
-main() {
-    local remote=${1:-origin}
-    local default_branch
+readonly usage="Usage: $(basename "$0") [-h|--help] [--pr] [remote]
+Log all commits on the current branch that are not on the default branch.
 
-    if ! default_branch="$(get-default-branch)"; then
-      echo 'error: could not get default branch'
-      return 1
-    fi
+Arguments:
+    remote        name of a remote (defaults to origin)
 
-    git log "$remote/$default_branch"... --oneline --pretty=who-when-what --
+Flags:
+    --pr          format commits for a pull request description
+    -h, --help    show this help text"
+
+pull_request=1
+
+set +e
+getopt --test > /dev/null
+if [ $? -ne 4 ]; then
+  echo 'error: enhanced getopt is not installed' >&2
+  exit 1
+fi
+set -e
+
+opts=$(getopt -o 'h' --long 'help,pr' --name "$(basename "$0")" -- "$@")
+eval set -- "$opts"
+unset opts
+
+while true; do
+  case "$1" in
+    '-h'|'--help')
+      echo "$usage"
+      exit
+    ;;
+    '--pr')
+      pull_request=0
+      shift
+      continue
+    ;;
+    '--')
+      shift
+      break
+    ;;
+    *)
+      echo 'error: failed to parse arguments' >&2
+      exit 1
+    ;;
+  esac
+done
+
+remote=${1:-origin}
+
+if ! default_branch="$(get-default-branch)"; then
+  echo 'error: could not get default branch'
+  return 1
+fi
+
+git_log() {
+  git log "$remote/$default_branch"... "$@" --
 }
-main "$@"
 
+if [ $pull_request -eq 0 ]; then
+  # 1. Format commits as a list:
+  # - <subject>
+  #   <body indented by two spaces>
+  #
+  # 2. Remove any lines containing # symbols to avoid unexpected Markdown formatting
+  git_log '--pretty=format:- %s%n%w(0,2,2)%b' | \
+    sed '/.*#.*$/d'
+else
+  git_log --oneline --pretty=who-when-what
+fi
