@@ -8,15 +8,19 @@ main() {
     return 1
   fi
 
+  local head
   local ci_status
   local ci_status_all
   local ci_status_all_new
   local ci_status_exit_code
 
+  # Cache head commit to avoid breaking when the user makes a new commit on the branch locally
+  head="$(git rev-parse HEAD)"
+
   # hub ci-status exits non-zero when CI fails
   set +e
-  ci_status="$(hub ci-status)"
-  ci_status_all="$(hub ci-status -v)"
+  ci_status="$(hub ci-status "$head")"
+  ci_status_all="$(hub ci-status -v "$head")"
   set -e
   ci_status_exit_code=$?
   if [ $ci_status_exit_code = 3 ]; then
@@ -31,7 +35,7 @@ main() {
 
     # Check if the status of individual checks has changed, only log them if it has
     set +e
-    ci_status_all_new="$(hub ci-status -v)"
+    ci_status_all_new="$(hub ci-status -v "$head")"
     set -e
     if [ "$ci_status_all" != "$ci_status_all_new" ]; then
       ci_status_all="$ci_status_all_new"
@@ -41,7 +45,7 @@ main() {
     fi
 
     set +e
-    ci_status="$(hub ci-status)"
+    ci_status="$(hub ci-status "$head")"
     set -e
     ci_status_exit_code=$?
   done
