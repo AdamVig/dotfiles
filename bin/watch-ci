@@ -27,6 +27,7 @@ main() {
     echo "could not find CI status"
     return 1
   fi
+  tput clear
   echo -e "$ci_status_all"
 
   # Check CI status every five seconds, terminate loop if it is no longer pending
@@ -39,8 +40,7 @@ main() {
     set -e
     if [ "$ci_status_all" != "$ci_status_all_new" ]; then
       ci_status_all="$ci_status_all_new"
-      echo
-      echo "Status updated:"
+      tput clear
       echo -e "$ci_status_all"
     fi
 
