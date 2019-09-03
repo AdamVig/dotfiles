@@ -46,8 +46,16 @@ message "cyan" "  %s" "Installing Visual Studio Code extensions... "
 for extension in "${extensions[@]}"; do
   set +e
 
+  code_cmd='code'
+  if "$DIR"/bin/is-wsl; then
+    # Change directory to suppress cmd.exe warning
+    cd /c
+    # With WSL, must use code executable on Windows side
+    code_cmd='cmd.exe /C code'
+  fi
+
   # Attempt to install extension; log message on success, log warning on failure
-  code --install-extension "$extension" > /dev/null && \
+  $code_cmd --install-extension "$extension" > /dev/null && \
     message "cyan" "    %s" "Installed $extension" || \
       warn "extension $extension failed to install; it may no longer be available"
   set -e
