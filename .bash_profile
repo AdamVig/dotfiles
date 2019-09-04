@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
+if [ -f /etc/profile ]; then
+  PATH=""
+  source /etc/profile
+fi
+
 # shellcheck source=.exports
 source ~/.exports
 
