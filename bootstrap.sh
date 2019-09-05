@@ -42,8 +42,17 @@ message "Configuring SSH..."
 mkdir -p "$HOME"/.ssh
 ssh_config='AddKeysToAgent yes'
 ssh_config_path="$HOME"/.ssh/config
-if ! grep --quiet "$ssh_config" "$ssh_config_path"; then
+if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path"; then
   echo "$ssh_config" >> "$ssh_config_path"
+fi
+
+message "Configure GPG..."
+mkdir -p "$HOME"/.gnupg
+gpg_agent_config='default-cache-ttl 34560000
+max-cache-ttl 34560000'
+gpg_agent_config_path="$HOME"/.gnupg/gpg-agent.conf
+if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg_agent_config_path"; then
+  echo "$gpg_agent_config" >> "$gpg_agent_config_path"
 fi
 
 config_dir="$(xdg_config)"
