@@ -18,14 +18,8 @@
   rebase = true
 [diff]
   tool = meld
-[diftool]
-  prompt = false
-[difftool "meld"]
-  cmd = meld "$LOCAL" "$REMOTE"
 [merge]
-  tool = meld
-[mergetool "meld"]
-  cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+  tool = kdiff3
 [merge "npm-merge-driver"]
     name = automatically merge npm lockfiles
     driver = npx npm-merge-driver merge %A %O %B %P
