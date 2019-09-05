@@ -55,7 +55,14 @@ focus() {
   if [ -z "$duration" ]; then
     duration='30'
   fi
-  echo "focusing for $duration minutes"
+
+  local end_time
+  if end_time="$(date '+%-I:%M %p' --date "$duration min")"; then
+    echo "focusing until $end_time ($duration minutes)"
+  else
+    echo 'failed to calculate Slack status expiration end time'
+  fi
+
   if ! slack snooze start "$duration" > /dev/null; then
     echo 'failed to snooze Slack notifications'
   fi
