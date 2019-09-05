@@ -13,6 +13,7 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
+brew "cloc" # Lines of code counter
 brew "emacs"
 brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
