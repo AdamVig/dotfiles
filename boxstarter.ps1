@@ -89,6 +89,8 @@ cinst OpenSans
 cinst 7zip
 cinst docker
 cinst git
+cinst kdiff3
+cinst meld
 cinst procexp
 
 # Apps
