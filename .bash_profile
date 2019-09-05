@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
-if [ -f /etc/profile ]; then
+if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
   PATH=""
   source /etc/profile
 fi
