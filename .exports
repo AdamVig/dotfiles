@@ -37,6 +37,9 @@ if "$DIR"/bin/is-macos; then
   if [ -d /usr/local/opt/coreutils ]; then
     prepend_path '/usr/local/opt/coreutils/libexec/gnubin'
   fi
+  if [ -d /usr/local/opt/gnu-sed ]; then
+    prepend_path '/usr/local/opt/gnu-sed/libexec/gnubin'
+  fi
 fi
 
 if "$DIR"/bin/is-wsl; then
