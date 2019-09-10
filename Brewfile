@@ -52,8 +52,8 @@ brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a gl
 brew "shellcheck" # Shell script linter
 
 # services
-brew "docker"
-brew "docker-compose"
+brew "docker" unless system "[ -x /usr/local/bin/docker ]"
+brew "docker-compose" unless system "[ -x /usr/local/bin/docker-compose ]"
 
 # web service clients
 brew "ddgr" # DuckDuckGo
