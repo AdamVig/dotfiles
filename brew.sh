@@ -16,8 +16,4 @@ if ! brew bundle install; then
     warn "installing Brew formulas may have failed"
 fi
 
-if "$DIR"/bin/is-macos; then
-    brew bundle install --file="$DIR/Brewfile-macos" || true
-fi
-
 message "magenta" "Brew done."
