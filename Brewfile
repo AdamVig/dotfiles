@@ -7,6 +7,7 @@ brew "wget"
 # replacements of default utilities
 brew "bat" # Better cat
 brew "diff-so-fancy" # Better Git diff viewer
+brew "exa" # Better ls
 brew "fd" # Better find
 brew "htop" # Better top
 brew "httpie" # Better curl

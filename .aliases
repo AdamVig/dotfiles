@@ -23,3 +23,7 @@ if "$DIR"/bin/is-wsl; then
   alias kdiff3='kdiff3.exe'
   alias meld='meld.exe'
 fi
+
+if command -v exa > /dev/null; then
+  alias ls='exa'
+fi
