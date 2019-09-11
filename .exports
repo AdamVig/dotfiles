@@ -48,6 +48,9 @@ if "$DIR"/bin/is-wsl; then
 
   # To connect to Docker for Windows
   export DOCKER_HOST='tcp://localhost:2375'
+
+  # To make xdg-open work for URLs
+  export BROWSER="$DIR"/bin/wsl-open
 fi
 
 # Set golang workspace directory
