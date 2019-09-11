@@ -38,6 +38,9 @@ eval "$(nodenv init -)"
 # Temporary override to get rid of mysterious NODE_ENV=production
 unset NODE_ENV
 
+# Temporary override to get rid of mysterious DOCKER_HOST on WSL
+unset DOCKER_HOST
+
 if command -v tmux > /dev/null && ! [ -v TMUX ]; then
   tmux attach || tmux new
 fi
