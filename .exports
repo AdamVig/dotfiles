@@ -51,6 +51,9 @@ if "$DIR"/bin/is-wsl; then
 
   # To make xdg-open work for URLs
   export BROWSER="$DIR"/bin/wsl-open
+
+  # Make lpass --clip flag work
+  export LPASS_CLIPBOARD_COMMAND='clip.exe'
 fi
 
 # Set golang workspace directory
