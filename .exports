@@ -46,9 +46,6 @@ if "$DIR"/bin/is-wsl; then
   # For Karma tests
   export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
 
-  # To connect to Docker for Windows
-  export DOCKER_HOST='tcp://localhost:2375'
-
   # To make xdg-open work for URLs
   export BROWSER="$DIR"/bin/wsl-open
 
