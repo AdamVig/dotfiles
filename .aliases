@@ -22,6 +22,7 @@ alias zn='. z-name-tmux-pane'
 if "$DIR"/bin/is-wsl; then
   alias kdiff3='kdiff3.exe'
   alias meld='meld.exe'
+  alias open="$DIR"/bin/wsl-open
 fi
 
 if command -v exa > /dev/null; then
