@@ -68,5 +68,5 @@ for user in "${gpg_keys[@]}"; do
     continue
   fi
 
-  echo | gpg --local-user "$user" --batch --pinentry-mode loopback --passphrase "$gpg_passphrase" --sign >/dev/null
+  echo | gpg --local-user "$user" --batch --pinentry-mode loopback --passphrase-fd <( echo "$gpg_passphrase" ) --sign >/dev/null
 done
