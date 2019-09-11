@@ -52,10 +52,6 @@ brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list o
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
 brew "shellcheck" # Shell script linter
 
-# services
-brew "docker" unless system "[ -x /usr/local/bin/docker ]"
-brew "docker-compose" unless system "[ -x /usr/local/bin/docker-compose ]"
-
 # web service clients
 brew "ddgr" # DuckDuckGo
 brew "hub", args: ["HEAD"] # GitHub
