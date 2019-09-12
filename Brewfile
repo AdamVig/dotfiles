@@ -1,7 +1,8 @@
 # default utilities
 brew "curl"
 brew "git"
-brew "gpg"
+# GPG is installed by GPG Suite on macOS
+brew "gpg" unless system '[ -x /usr/local/bin/gpg ]'
 brew "wget"
 
 # replacements of default utilities
