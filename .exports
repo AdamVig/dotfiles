@@ -22,6 +22,11 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 if "$DIR"/bin/is-linux; then
   # Prevent Docker from storing configuration in  ~/.docker
   export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
+
+  # Add libpq's psql CLI to PATH
+  if [ -d /home/linuxbrew/.linuxbrew/opt/libpq/bin ]; then
+    prepend_path '/home/linuxbrew/.linuxbrew/opt/libpq/bin'
+  fi
 fi
 
 if "$DIR"/bin/is-macos; then
@@ -39,6 +44,11 @@ if "$DIR"/bin/is-macos; then
   fi
   if [ -d /usr/local/opt/gnu-sed ]; then
     prepend_path '/usr/local/opt/gnu-sed/libexec/gnubin'
+  fi
+  
+  # Add libpq's psql CLI to PATH
+  if [ -d /usr/local/opt/libpq/bin ]; then
+    prepend_path '/usr/local/opt/libpq/bin'
   fi
 fi
 
