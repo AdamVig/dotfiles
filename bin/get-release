@@ -35,9 +35,9 @@ main() {
         --unchanged-group-format='' \
         <(echo "$prev_releases") <(hub release)
   else
-    echo "All releases:"
+    echo 'No CI status found, getting ten most recent releases...'
     local releases
-    releases="$(hub release)"
+    releases="$(hub release --limit 10)"
     if [ "$type" = "prod" ]; then
         releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
     elif [ "$type" = "beta" ]; then
