@@ -2,15 +2,19 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help] [--pr] [remote]
-Log all commits on the current branch that are not on the default branch.
+readonly usage="$(cat <<EOF
+Usage: $(basename "$0") [-h|--help] [--pr] [-r|--remote] [branch]
+Log all commits on the current branch that are not on another branch.
 
 Arguments:
-    remote        name of a remote (defaults to origin)
+    branch        branch to compare against (defaults to the default branch)
 
 Flags:
     --pr          format commits for a pull request description
-    -h, --help    show this help text"
+    -r, --remote  name of a remote (defaults to "origin")
+    -h, --help    show this help text
+EOF
+)"
 
 pull_request=1
 
@@ -26,6 +30,8 @@ opts=$(getopt -o 'h' --long 'help,pr' --name "$(basename "$0")" -- "$@")
 eval set -- "$opts"
 unset opts
 
+remote='origin'
+
 while true; do
   case "$1" in
     '-h'|'--help')
@@ -34,6 +40,12 @@ while true; do
     ;;
     '--pr')
       pull_request=0
+      shift
+      continue
+    ;;
+    '-r'|'--remote')
+      shift
+      remote="$1"
       shift
       continue
     ;;
@@ -48,15 +60,15 @@ while true; do
   esac
 done
 
-remote=${1:-origin}
-
 if ! default_branch="$(get-default-branch)"; then
   echo 'error: could not get default branch'
   return 1
 fi
 
+branch="${1:-$default_branch}"
+
 git_log() {
-  git log "$remote/$default_branch"... "$@" --
+  git log "$remote"/"$branch"... "$@" --
 }
 
 if [ $pull_request -eq 0 ]; then
