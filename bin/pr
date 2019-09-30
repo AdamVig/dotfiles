@@ -40,7 +40,7 @@ main() {
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
   readonly local message="
 
-$(log-branch-commits --pr "$remote")"
+$(log-branch-commits --pr --remote "$remote" "$base_branch")"
 
   # Run dynamically constructed command, using $@ to pass it all arguments
   hub pull-request --browse --copy --message="$message" --edit ${github_user:+'--assign='"$github_user"} "$@"
