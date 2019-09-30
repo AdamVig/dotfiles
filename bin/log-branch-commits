@@ -26,7 +26,7 @@ if [ $? -ne 4 ]; then
 fi
 set -e
 
-opts=$(getopt -o 'h' --long 'help,pr' --name "$(basename "$0")" -- "$@")
+opts=$(getopt -o 'h,r:' --long 'help,remote:,pr' --name "$(basename "$0")" -- "$@")
 eval set -- "$opts"
 unset opts
 
@@ -44,9 +44,8 @@ while true; do
       continue
     ;;
     '-r'|'--remote')
-      shift
-      remote="$1"
-      shift
+      remote="$2"
+      shift 2
       continue
     ;;
     '--')
