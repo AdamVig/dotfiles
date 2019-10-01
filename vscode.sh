@@ -30,6 +30,7 @@ declare -a extensions=(
   emroussel.atom-icons  # Atom-inspired icons
   emroussel.atomize-atom-one-dark-theme  # Atom-inspired theme
   GitHub.vscode-pull-request-github # built-in GitHub pull request support
+  jpoissonnier.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
   mrmlnc.vscode-scss  # SCSS IntelliSense and autocomplete
   ms-azuretools.vscode-docker # Docker support
   ms-vsliveshare.vsliveshare  # Live code sharing
