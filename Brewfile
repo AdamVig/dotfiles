@@ -3,6 +3,7 @@ brew "curl"
 brew "git"
 # GPG is installed by GPG Suite on macOS
 brew "gpg" unless system '[ -x /usr/local/bin/gpg ]'
+brew "rsync"
 brew "wget"
 
 # replacements of default utilities
