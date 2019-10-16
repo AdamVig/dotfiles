@@ -16,7 +16,6 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
-brew "cloc" # Lines of code counter
 brew "emacs"
 brew "expect" # Scripting tool for interactive programs
 brew "fzf" # Fuzzy finder
@@ -30,6 +29,7 @@ brew "magic-wormhole" # Point-to-point file sharing
 brew "nnn" # Command-line file browser
 brew "p7zip"
 brew "pandoc"
+brew "scc" # Lines of code counter
 brew "ssh-copy-id"
 brew "tmux"
 brew "tree"
