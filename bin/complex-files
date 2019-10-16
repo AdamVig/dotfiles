@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly usage="Usage: $(basename "$0") [-h|--help] <path> [scc args]
+Find the ten most complex code files in the given path.
+
+Arguments:
+    path        path to search
+    scc args    any other arguments will be passed to scc
+
+Flags:
+    -h, --help  show this help text"
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "$usage"
+  exit 0
+fi
+
+path="${1:-}"
+if [ -z "$path" ]; then
+  echo 'error: must pass a path'
+  exit 1
+fi
+shift
+
+scc --sort complexity --format json "$@" "$path" | \
+    jq --raw-output 'map(.Files) | flatten | sort_by(.Complexity) | map(.Location) | reverse | limit(10;.[])'
