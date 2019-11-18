@@ -111,11 +111,3 @@ request-sudo() {
         sudo --prompt "$SUDO_PROMPT" "$@"
     fi
 }
-
-# On WSL, get the absolute WSL path to %APPDATA% for the current user on the host system
-get-appdata-path() {
-  pushd /c > /dev/null
-	# https://superuser.com/a/1391349/201849
-	wslpath "$(cmd.exe /C 'echo | set /p _=%APPDATA%')"
-  popd > /dev/null
-}

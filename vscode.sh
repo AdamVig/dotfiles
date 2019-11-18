@@ -13,9 +13,10 @@ if "$DIR"/bin/is-macos; then
   ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
 fi
 
-if "$DIR"/bin/is-wsl && ! [ -f "$(get-appdata-path)"/Code/User/settings.json  ]; then
+readonly appdata_path="$(wslpath "$("$DIR"/bin/expand-windows-path %APPDATA%)")"
+if "$DIR"/bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json  ]; then
   message "cyan" "  %s" "Copying Visual Studio Code settings..."
-  windows_code_dir="$(get-appdata-path)"/Code/User
+  windows_code_dir="$appdata_path"/Code/User
   cp "$DIR"/.vscode/settings.json "$windows_code_dir"
   cp "$DIR"/.vscode/keybindings.json "$windows_code_dir"
 fi
