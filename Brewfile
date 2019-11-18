@@ -31,7 +31,7 @@ brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
 brew "ssh-copy-id"
-brew "tmux"
+brew "tmux", args: ["HEAD"]
 brew "tree"
 brew "unzip"
 
