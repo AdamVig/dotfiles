@@ -11,6 +11,8 @@ Flags:
 Commands:
     focus [duration in minutes] snooze Slack notifications for <duration> and set a Slack status
     unfocus                     end Slack snooze and clear Slack status
+    afk                         set a Slack status and set presence to 'away'
+    unafk                       clear Slack status and set presence to 'active'
 
 Examples:
     i focus
@@ -97,10 +99,38 @@ unfocus() {
   fi
 }
 
+afk() {
+  echo 'going away from keyboard'
+  if ! slack status edit 'away from keyboard' ':timer_clock:' > /dev/null; then
+    echo 'failed to set Slack status'
+  fi
+
+  if ! slack presence away > /dev/null; then
+    echo 'failed to set Slack presence'
+  fi
+}
+
+unafk() {
+  echo 'coming back to keyboard'
+  if ! slack status clear > /dev/null; then
+    echo 'failed to clear Slack status'
+  fi
+
+  if ! slack presence active > /dev/null; then
+    echo 'failed to set Slack presence'
+  fi
+}
+
 if [ "$1" = 'focus' ]; then
   shift
   focus "$@"
 elif [ "$1" = 'unfocus' ]; then
   shift
   unfocus "$@"
+elif [ "$1" = 'afk' ]; then
+  shift
+  afk "$@"
+elif [ "$1" = 'unafk' ]; then
+  shift
+  unafk "$@"
 fi
