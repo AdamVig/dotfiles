@@ -22,7 +22,7 @@ update() {
     brew upgrade
 
     echo "Upgrading Homebrew Cask formulas..."
-    brew cask upgrade --greedy || true
+    brew cask upgrade || true
 
     echo "Updating npm..."
     npm i -g npm
