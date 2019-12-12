@@ -23,6 +23,7 @@ brew "gifsicle" # Gif tool
 brew "graphviz" # Graph visualization tool
 brew "hugo" # Static site builder
 brew "imagemagick"
+brew "ipcalc" # IP address calculator
 brew "jq" # JSON processor
 brew "libpq" # PostgreSQL CLI
 brew "magic-wormhole" # Point-to-point file sharing
