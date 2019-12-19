@@ -41,6 +41,7 @@ unset NODE_ENV
 # Temporary override to get rid of mysterious DOCKER_HOST on WSL
 unset DOCKER_HOST
 
-if command -v tmux > /dev/null && ! [ -v TMUX ]; then
+# If in an interactive session, Tmux is installed, and not in a Tmux pane
+if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
   tmux attach || tmux new
 fi
