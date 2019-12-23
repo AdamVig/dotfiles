@@ -12,7 +12,7 @@ message "magenta" "  %s" "Updating Brew package lists..."
 brew update > /dev/null
 
 message "magenta" "  %s" "Installing Brew formulas..."
-if ! brew bundle install; then
+if ! brew bundle install --no-lock; then
     warn "installing Brew formulas may have failed"
 fi
 
