@@ -74,6 +74,7 @@ brew "mosh" if OS.mac? # Mobile shell (Brew formula does not work on Linux)
 cask "xquartz" # Needed by Inkscape
 
 # applications
+cask "authy"
 cask "docker"
 cask "firefox"
 cask "google-backup-and-sync"
