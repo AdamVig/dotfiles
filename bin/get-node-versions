@@ -78,7 +78,7 @@ if [ $lts -eq 0 ]; then
 fi
 
 if [ $latest -eq 0 ]; then
-  filter+=' | [last]'
+  filter+=' | sort_by(.modules, .version) | [last]'
 fi
 
 if [ $json -eq 0 ]; then
