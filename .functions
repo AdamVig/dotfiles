@@ -36,12 +36,6 @@ update() {
 
 alias upgrade=update
 
-# Get all Jira ticket IDs mentioned in commits in develop that are not in master
-get-tickets() {
-    git fetch --all > /dev/null
-    git log origin/master..origin/develop --extended-regexp --grep 'TOOLS|APPS' --pretty=oneline | grep -Po '(APPS|TOOLS)-[0-9]+' | uniq -u
-}
-
 # Find the current randomized name of a pod for an application
 # $1: namespace
 # $2: application name
