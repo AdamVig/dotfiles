@@ -15,8 +15,9 @@ Commands:
     unafk                       clear Slack status and set presence to 'active'
 
 Examples:
-    i focus
-    i afk 5"
+    i focus 5
+    i afk
+    i afk lunch"
 
 set +e
 getopt --test > /dev/null
@@ -100,8 +101,17 @@ unfocus() {
 }
 
 afk() {
+  local readonly type="${1:-}"
+  if [ "$type" = 'lunch' ]; then
+    status='lunch'
+    emoji='knife_fork_plate'
+  else
+    status='away from keyboard'
+    emoji='timer_clock'
+  fi
+
   echo 'going away from keyboard'
-  if ! slack status edit 'away from keyboard' ':timer_clock:' > /dev/null; then
+  if ! slack status edit "$status" ":${emoji}:" > /dev/null; then
     echo 'failed to set Slack status'
   fi
 
