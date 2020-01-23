@@ -40,7 +40,7 @@ alias upgrade=update
 # $1: namespace
 # $2: application name
 kube-pod() {
-    kubectl get pods --output json --namespace "$1" | jq --arg app "$2" '.items[] | select(.metadata.labels.app == $app).metadata.name'
+    kubectl get pods --output json --namespace "$1" | jq --raw-output --arg app "$2" '.items[] | select(.metadata.labels.app == $app) | .metadata.name'
 }
 
 # Get all peer dependencies for a given package as a string suitable for input to `npm install`
