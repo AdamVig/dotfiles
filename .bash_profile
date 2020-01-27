@@ -42,7 +42,12 @@ unset NODE_ENV
 unset DOCKER_HOST
 
 # Initialize broot
-source "${XDG_CONFIG_HOME:-$HOME/.config}"/org.dystroy.broot/launcher/bash/br
+if is-macos; then
+  broot_root='org.dystroy.broot'
+else
+  broot_root='broot'
+fi
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
 if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
