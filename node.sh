@@ -27,4 +27,8 @@ else
     warn "could not get latest Node version; installation failed"
 fi
 
+message "  %s" "setting Python path..."
+npm config set --global python "$(which python3)"
+message "  %s" "done setting Python path."
+
 message "done setting up Node."
