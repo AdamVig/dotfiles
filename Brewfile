@@ -48,6 +48,7 @@ brew "go"
 brew "php"
 brew "python"
 brew "ruby"
+brew "rust"
 
 # programming language tools
 brew "composer" # PHP
