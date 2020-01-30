@@ -60,6 +60,7 @@ brew "shellcheck" # Shell script linter
 
 # web service clients
 brew "ddgr" # DuckDuckGo
+brew "ffsend" # Firefox Send
 brew "hub", args: ["HEAD"] # GitHub
 brew "lastpass-cli"
 tap "rockymadden/rockymadden"
