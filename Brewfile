@@ -36,6 +36,7 @@ brew "ssh-copy-id"
 brew "tmux", args: ["HEAD"]
 brew "tree"
 brew "unzip"
+brew "yq" # jq for YAML/XML
 
 # shell
 brew "bash"
