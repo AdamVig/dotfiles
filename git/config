@@ -24,7 +24,9 @@
     name = automatically merge npm lockfiles
     driver = npx npm-merge-driver merge %A %O %B %P
 [commit]
-  gpgsign = true
+  gpgSign = true
+[tag]
+	gpgSign = true
 
 # To include a separate configuration file conditionally, uncomment the following.
 # Ensure that this block comes at the end of the file, otherwise it will not override correctly.
