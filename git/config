@@ -7,6 +7,8 @@
 [push]
   # make `git push -u` default to `origin` and the current branch
   default = current
+  # push annotated tags along with commits
+  followTags = true
 [pretty]
   # <SHA> <author name> (<relative time in dim color>) <subject>
   who-when-what = format:%C(auto)%h %an %C(dim)(%cr)%Creset %s
