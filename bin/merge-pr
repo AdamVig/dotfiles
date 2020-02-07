@@ -2,12 +2,70 @@
 
 set -euo pipefail
 
-# Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
+readonly usage="Usage: $(basename "$0") [-h|--help] [-f|--force]
+Use metadata from an open GitHub pull request to merge the current branch into the pull request's base branch.
 
-readonly current_branch
-readonly default_branch
-readonly base_branch
-readonly title
+Flags:
+    -f, --force   temporarily disable branch protections on the base branch in order to merge with failing status checks
+    -h, --help    show this help text"
+
+force=1
+
+set +e
+getopt --test > /dev/null
+if [ $? -ne 4 ]; then
+  echo 'error: enhanced getopt is not installed' >&2
+  exit 1
+fi
+set -e
+
+opts=$(getopt -o 'hf' --long 'help,force' --name "$(basename "$0")" -- "$@")
+eval set -- "$opts"
+unset opts
+
+while true; do
+  case "$1" in
+    '-h'|'--help')
+      echo "$usage"
+      exit
+    ;;
+    '-f'|'--force')
+      force=0
+      shift
+      continue
+    ;;
+    '--')
+      shift
+      break
+    ;;
+    *)
+      echo 'error: failed to parse arguments' >&2
+      exit 1
+    ;;
+  esac
+done
+
+if ! check-installed hub https://hub.github.com/; then
+  return 1
+fi
+
+parse_remote() {
+  remote='origin'
+  if ! remote_url="$(git remote get-url "$remote")"; then
+    echo "error: failed to get remote URL from remote '$remote'"
+    return 1
+  fi
+
+  regex=".+[:\/](.+\/.+)\.git"
+  if [[ "$remote_url" =~ $regex ]]; then
+    echo "${BASH_REMATCH[1]}"
+    return
+  fi
+
+  echo "error: failed to parse remote URL '$remote_url'"
+  return 1
+}
+
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 default_branch="$(get-default-branch origin)"
 base_branch="$(hub pr list --head="$current_branch" --limit=1 --format='%B')"
@@ -15,7 +73,7 @@ title="$(hub pr list --head="$current_branch" --limit=1 --format='%t')"
 
 if [ "$current_branch" = "$default_branch" ]; then
   echo "error: current branch is default branch, please run again from a different branch"
-  return 1
+  exit 1
 fi
 
 branch="$default_branch"
@@ -26,6 +84,18 @@ fi
 message=""
 if [[ -n "$title" ]]; then
   message="--message=$title"
+fi
+
+if [ $force -eq 0 ]; then
+  if ! owner_slash_repository="$(parse_remote)"; then
+    echo 'error: failed to extract owner/repository from Git remotes'
+  fi
+fi
+
+if [ $force -eq 0 ]; then
+  if ! hub api -X DELETE /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
+    echo "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
+  fi
 fi
 
 # After checking out the base branch, ensure it is up to date with its remote counterpart
@@ -41,5 +111,11 @@ if git pull && \
   if ! git push origin --delete "$current_branch" &> /dev/null && \
       git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
     echo 'warning: failed to delete remote branch'
+  fi
+fi
+
+if [ $force -eq 0 ]; then
+  if ! hub api -X POST /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
+    echo "warning: failed to enable branch protection on '$owner_slash_repository' branch '$base_branch'"
   fi
 fi
