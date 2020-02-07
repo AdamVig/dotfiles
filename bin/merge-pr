@@ -3,47 +3,43 @@
 set -euo pipefail
 
 # Move back to the default branch, merge the previous branch, push, remove the previous branch, then remove the previous branch from the remote
-main() {
-  local current_branch
-  local default_branch
-  local base_branch
-  local title
-  current_branch="$(git rev-parse --abbrev-ref HEAD)"
-  default_branch="$(get-default-branch origin)"
-  base_branch="$(hub pr list --head="$current_branch" --limit=1 --format='%B')"
-  title="$(hub pr list --head="$current_branch" --limit=1 --format='%t')"
 
-  if [ "$current_branch" = "$default_branch" ]; then
-    echo "error: current branch is default branch, please run again from a different branch"
-    return 1
+readonly current_branch
+readonly default_branch
+readonly base_branch
+readonly title
+current_branch="$(git rev-parse --abbrev-ref HEAD)"
+default_branch="$(get-default-branch origin)"
+base_branch="$(hub pr list --head="$current_branch" --limit=1 --format='%B')"
+title="$(hub pr list --head="$current_branch" --limit=1 --format='%t')"
+
+if [ "$current_branch" = "$default_branch" ]; then
+  echo "error: current branch is default branch, please run again from a different branch"
+  return 1
+fi
+
+branch="$default_branch"
+if [[ -n "$base_branch" ]]; then
+  branch="$base_branch"
+fi
+
+message=""
+if [[ -n "$title" ]]; then
+  message="--message=$title"
+fi
+
+# After checking out the base branch, ensure it is up to date with its remote counterpart
+if git pull && \
+  git checkout "$branch" && \
+  merge-latest "$branch" && \
+  git merge --no-ff "$current_branch" "$message" && \
+  git push; then
+  # Only delete branches if all operations succeed
+  git branch --delete "$current_branch"
+
+  # If branch deletion fails and branch still exists, log a warning
+  if ! git push origin --delete "$current_branch" &> /dev/null && \
+      git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
+    echo 'warning: failed to delete remote branch'
   fi
-
-  local branch
-  branch="$default_branch"
-  if [[ -n "$base_branch" ]]; then
-    branch="$base_branch"
-  fi
-
-  local message
-  message=""
-  if [[ -n "$title" ]]; then
-    message="--message=$title"
-  fi
-
-  # After checking out the base branch, ensure it is up to date with its remote counterpart
-  if git pull && \
-      git checkout "$branch" && \
-      merge-latest "$branch" && \
-      git merge --no-ff "$current_branch" "$message" && \
-      git push; then
-      # Only delete branches if all operations succeed
-      git branch --delete "$current_branch"
-
-      # If branch deletion fails and branch still exists, log a warning
-      if ! git push origin --delete "$current_branch" &> /dev/null && \
-          git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
-        echo 'warning: failed to delete remote branch'
-      fi
-  fi
-}
-main "$@"
+fi
