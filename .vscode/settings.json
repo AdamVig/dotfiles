@@ -32,8 +32,6 @@
     "statusBar.debuggingBackground": "#511f1f",
     "editor.background": "#222429",
   },
-  // Hide the feedback smiley in the bar at the bottom
-  "workbench.statusBar.feedback.visible": false,
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
   "workbench.editor.enablePreview": false,
@@ -112,16 +110,12 @@
         "compare": false
     }
   },
-  "docker.showExplorer": false,
-  "markdown.extension.showExplorer": false,
   // Remove leading zero from time
   "clock.dateFormat": "h:MM TT",
   "shellcheck.customArgs": [
     // Allow 'source' outside of input files
     "-external-sources"
   ],
-  // Set path to Python interpreter
-  "python.pythonPath": "/usr/local/bin/python3",
   // Languages to validate with ESLint plugin
   "eslint.validate": [
     "javascript",
