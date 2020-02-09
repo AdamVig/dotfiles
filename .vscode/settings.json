@@ -155,5 +155,8 @@
   "cSpell.showStatus": false,
   "liveshare.featureSet": "insiders",
   "workbench.iconTheme": "atom-icons",
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }
