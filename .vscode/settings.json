@@ -106,6 +106,12 @@
   "gitlens.advanced.messages": {
     "suppressShowKeyBindingsNotice": true
   },
+  "gitlens.menus": {
+    "editorGroup": {
+        "blame": false,
+        "compare": false
+    }
+  },
   "docker.showExplorer": false,
   "markdown.extension.showExplorer": false,
   // Remove leading zero from time
