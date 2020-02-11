@@ -2,6 +2,7 @@
   // ------------------------------
   // Editor
   // ------------------------------
+  "window.zoomLevel": 1,
   "editor.fontFamily": "Hasklig",
   "editor.fontWeight": "600",
   "editor.fontLigatures": true,
@@ -32,6 +33,7 @@
     "statusBar.debuggingBackground": "#511f1f",
     "editor.background": "#222429",
   },
+  "workbench.iconTheme": "atom-icons",
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
   "workbench.editor.enablePreview": false,
@@ -90,6 +92,13 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   // Disable jarring scroll behavior
   "markdown.preview.scrollEditorWithPreview": false,
+  // Select a default formatter for JSON and JSONC
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   // ------------------------------
   // Extensions
   // ------------------------------
@@ -152,14 +161,5 @@
     "borderColor": "#528BFF"
   },
   // Hide spell check indicator in status bar
-  "cSpell.showStatus": false,
-  "liveshare.featureSet": "insiders",
-  "workbench.iconTheme": "atom-icons",
-  "window.zoomLevel": 1,
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  "cSpell.showStatus": false
 }
