@@ -35,6 +35,7 @@ brew "scc" # Lines of code counter
 brew "ssh-copy-id"
 brew "tmux", args: ["HEAD"]
 brew "tree"
+brew "uni" # Unicode CLI
 brew "unzip"
 brew "yq" # jq for YAML/XML
 
