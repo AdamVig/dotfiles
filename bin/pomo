@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Time commands adapted from https://github.com/gabrielmdeal/pomodoro-bash/
+
+set -euo pipefail
+DIR="$(dirname "$(realpath "$0")")"
+
+readonly usage="Usage: $(basename "$0") [-h|--help]
+Run Pomodoro sessions.
+
+Flags:
+    -h, --help    show this help text"
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "$usage"
+  exit 0
+fi
+
+duration_work_minutes=25
+duration_work_seconds=$(( duration_work_minutes * 60 ))
+
+readonly i_path="$DIR"/i
+if [ -x "$i_path" ]; then
+  "$i_path" focus $duration_work_minutes
+fi
+
+time_done_seconds=$(( $(date +%s) + duration_work_seconds ))
+
+while [ $(date +%s) -lt $time_done_seconds ]; do
+  tput clear
+  duration_remaining_seconds=$(( time_done_seconds - $(date +%s) ))
+
+  minutes=$(( duration_remaining_seconds % 3600 / 60 ))
+  seconds=$(( duration_remaining_seconds % 60 ))
+  printf "%02d:%02d" $minutes $seconds
+
+  sleep 1
+done
+
+for i in {1..5}; do
+  tput bel
+  sleep 0.1
+done
