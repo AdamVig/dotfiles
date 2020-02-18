@@ -94,10 +94,10 @@
   "markdown.preview.scrollEditorWithPreview": false,
   // Select a default formatter for JSON and JSONC
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   // ------------------------------
   // Extensions
