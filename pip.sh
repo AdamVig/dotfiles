@@ -8,7 +8,6 @@ source "$DIR/helpers.sh"
 message "installing pip tools..."
 pip_packages=(
   csvkit # CSV processing tools
-  gcalcli # Google Calendar CLI
   pip # Package manager
   visidata # Data set visualizer
 )
