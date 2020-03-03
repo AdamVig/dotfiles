@@ -10,7 +10,6 @@ pip_packages=(
   csvkit # CSV processing tools
   gcalcli # Google Calendar CLI
   pip # Package manager
-  grip # GitHub README instant preview
   visidata # Data set visualizer
 )
 
