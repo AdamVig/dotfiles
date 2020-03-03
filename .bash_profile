@@ -22,8 +22,8 @@ source ~/.functions
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true
 
-# Initialize Linuxbrew if it exists
-if [ -d /home/linuxbrew/.linuxbrew ]; then
+# Initialize Linuxbrew if it exists and is not already initialized
+if [ -d /home/linuxbrew/.linuxbrew ] && [[ "$PATH" != *"/home/linuxbrew/.linuxbrew/bin"* ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
@@ -32,8 +32,10 @@ if is-wsl; then
   umask 022
 fi
 
-# Initialize Nodenv
-eval "$(nodenv init -)"
+# Initialize Nodenv if not already initialized
+if [[ "$PATH" != *"nodenv/shims"* ]]; then
+  eval "$(nodenv init -)"
+fi
 
 # Temporary override to get rid of mysterious NODE_ENV=production
 unset NODE_ENV
