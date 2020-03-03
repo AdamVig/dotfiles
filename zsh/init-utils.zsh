@@ -2,12 +2,7 @@
 
 # Initialize Zsh utilities.
 
-brew_prefix=
-if is-macos; then
-  brew_prefix='/usr/local'
-elif is-linux; then
-  brew_prefix='/home/linuxbrew/.linuxbrew'
-fi
+brew_prefix="$(get_brew_prefix)"
 
 source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 

@@ -14,6 +14,15 @@ xdg_cache() {
   echo "${XDG_CACHE_HOME:-$HOME/.cache}"
 }
 
+get_brew_prefix() {
+  brew_prefix=
+  if "$DIR"/bin/is-macos; then
+    echo '/usr/local'
+  elif "$DIR"/bin/is-linux; then
+    echo '/home/linuxbrew/.linuxbrew'
+  fi
+}
+
 update() {
     echo "Updating Homebrew..."
     brew update
