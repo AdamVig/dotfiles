@@ -5,12 +5,6 @@ DIR="$(dirname "$(realpath "$0")")"
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
 
-# Alias Python 3 version of pip to the normal name
-alias pip='pip3'
-
-# Alias latest Python 2 version to a common binary name
-alias python2='python2.7'
-
 alias glb="log-branch-commits"
 
 # Use custom config file location
