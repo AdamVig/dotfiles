@@ -35,14 +35,6 @@ unset NODE_ENV
 # Temporary override to get rid of mysterious DOCKER_HOST on WSL
 unset DOCKER_HOST
 
-# Initialize broot
-if is-macos; then
-  broot_root='org.dystroy.broot'
-else
-  broot_root='broot'
-fi
-source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
-
 # Source exports late so that PATH overrides take effect
 # shellcheck source=.exports
 source ~/.exports
@@ -54,6 +46,14 @@ if is-wsl; then
   # https://github.com/Microsoft/WSL/issues/352
   umask 022
 fi
+
+# Initialize broot
+if is-macos; then
+  broot_root='org.dystroy.broot'
+else
+  broot_root='broot'
+fi
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
 if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
