@@ -6,9 +6,6 @@ if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
   source /etc/profile
 fi
 
-# shellcheck source=.bashrc
-source ~/.bashrc
-
 # shellcheck source=.aliases
 source ~/.aliases
 
@@ -22,11 +19,6 @@ source ~/.locals &> /dev/null || true
 # Initialize Linuxbrew if it exists and is not already initialized
 if [ -d /home/linuxbrew/.linuxbrew ] && [[ "$PATH" != *"/home/linuxbrew/.linuxbrew/bin"* ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-if is-wsl; then
-  # https://github.com/Microsoft/WSL/issues/352
-  umask 022
 fi
 
 # Initialize Nodenv if not already initialized
@@ -48,9 +40,17 @@ else
 fi
 source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
-# Source exports after everything else so PATH overrides take effect
+# Source exports late so that PATH overrides take effect
 # shellcheck source=.exports
 source ~/.exports
+
+# shellcheck source=.bashrc
+source ~/.bashrc
+
+if is-wsl; then
+  # https://github.com/Microsoft/WSL/issues/352
+  umask 022
+fi
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
 if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
