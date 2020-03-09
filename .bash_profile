@@ -6,9 +6,6 @@ if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
   source /etc/profile
 fi
 
-# shellcheck source=.exports
-source ~/.exports
-
 # shellcheck source=.bashrc
 source ~/.bashrc
 
@@ -50,6 +47,10 @@ else
   broot_root='broot'
 fi
 source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
+
+# Source exports after everything else so PATH overrides take effect
+# shellcheck source=.exports
+source ~/.exports
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
 if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
