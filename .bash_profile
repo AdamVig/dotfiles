@@ -23,6 +23,9 @@ fi
 
 # Initialize Nodenv if not already initialized
 if [[ "$PATH" != *"nodenv/shims"* ]]; then
+  # Prevent Nodenv from storing data in ~/.nodenv
+  export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
+
   eval "$(nodenv init -)"
 fi
 
