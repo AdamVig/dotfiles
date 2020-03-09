@@ -112,3 +112,5 @@ export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 
 # Prevent less from storing history in ~/.lesshst
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
+
+export PAGER='bat'
