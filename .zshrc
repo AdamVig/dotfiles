@@ -5,17 +5,14 @@ source "$HOME"/.bash_profile
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
 
-# completion
-zmodload -i zsh/complist
-autoload -U compinit
-compinit -i -d "$(xdg_cache)"/zcompdump
-
 data_dir="$(xdg_data)"/zsh
 if ! [ -d "$data_dir" ]; then
   mkdir -p "$data_dir"
 fi
 source "$data_dir"/directories.zsh
 source "$data_dir"/key-bindings.zsh
+source "$data_dir"/init-completion.zsh
+# Depends on completion
 source "$data_dir"/git.zsh
 source "$data_dir"/init-utils.zsh
 
