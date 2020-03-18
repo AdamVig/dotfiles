@@ -1,0 +1,278 @@
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "globals" : 
+    {
+        "alwaysShowTabs" : false,
+        "defaultProfile" : "{2c4de342-38b7-51cf-b940-2309a097f518}",
+        "initialCols" : 120,
+        "initialRows" : 30,
+        "keybindings" : 
+        [
+            {
+                "command" :  null ,
+                "keys" : 
+                [
+                    "ctrl+w"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+t"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+1"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+2"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+3"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+4"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+5"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+6"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+7"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+8"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+9"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+tab"
+                ]
+            },
+            {
+                "command" : "openSettings",
+                "keys" : 
+                [
+                    "ctrl+,"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "ctrl+shift+tab"
+                ]
+            },
+            {
+                "command" : "scrollDown",
+                "keys" : 
+                [
+                    "ctrl+shift+down"
+                ]
+            },
+            {
+                "command" : "scrollDownPage",
+                "keys" : 
+                [
+                    "ctrl+shift+pgdn"
+                ]
+            },
+            {
+                "command" : "scrollUp",
+                "keys" : 
+                [
+                    "ctrl+shift+up"
+                ]
+            },
+            {
+                "command" : "scrollUpPage",
+                "keys" : 
+                [
+                    "ctrl+shift+pgup"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+1"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+2"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+3"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+4"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+5"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+6"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+7"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+8"
+                ]
+            },
+            {
+                "command" : null,
+                "keys" : 
+                [
+                    "alt+9"
+                ]
+            }
+        ],
+        "requestedTheme" : "dark",
+        "showTabsInTitlebar" : true,
+        "showTerminalTitleInTitlebar" : false,
+        "wordDelimiters" : " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502"
+    },
+    "profiles" : 
+    [
+        {
+            "acrylicOpacity" : 1.0,
+            "closeOnExit" : true,
+            "colorScheme" : "Campbell",
+            "commandline" : "wsl.exe -d Ubuntu",
+            "cursorColor" : "#FFFFFF",
+            "cursorShape" : "bar",
+            "fontFace" : "Consolas",
+            "fontSize" : 10,
+            "guid" : "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "historySize" : 9001,
+            "icon" : "ms-appx:///ProfileIcons/{9acb9455-ca41-5af7-950f-6bca1bc9722f}.png",
+            "name" : "Ubuntu",
+            "padding" : "0, 0, 0, 0",
+            "snapOnInput" : true,
+            "startingDirectory" : "//wsl$/Ubuntu/home/",
+            "useAcrylic" : false
+        },
+        {
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "hidden": false,
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure"
+        }
+    ],
+    "schemes" : 
+    [
+        {
+            "background" : "#0C0C0C",
+            "black" : "#0C0C0C",
+            "blue" : "#0037DA",
+            "brightBlack" : "#767676",
+            "brightBlue" : "#3B78FF",
+            "brightCyan" : "#61D6D6",
+            "brightGreen" : "#16C60C",
+            "brightPurple" : "#B4009E",
+            "brightRed" : "#E74856",
+            "brightWhite" : "#F2F2F2",
+            "brightYellow" : "#F9F1A5",
+            "cyan" : "#3A96DD",
+            "foreground" : "#F2F2F2",
+            "green" : "#13A10E",
+            "name" : "Campbell",
+            "purple" : "#881798",
+            "red" : "#C50F1F",
+            "white" : "#CCCCCC",
+            "yellow" : "#C19C00"
+        },
+        {
+            "background" : "#282C34",
+            "black" : "#282C34",
+            "blue" : "#61AFEF",
+            "brightBlack" : "#5A6374",
+            "brightBlue" : "#61AFEF",
+            "brightCyan" : "#56B6C2",
+            "brightGreen" : "#98C379",
+            "brightPurple" : "#C678DD",
+            "brightRed" : "#E06C75",
+            "brightWhite" : "#DCDFE4",
+            "brightYellow" : "#E5C07B",
+            "cyan" : "#56B6C2",
+            "foreground" : "#DCDFE4",
+            "green" : "#98C379",
+            "name" : "One Half Dark",
+            "purple" : "#C678DD",
+            "red" : "#E06C75",
+            "white" : "#DCDFE4",
+            "yellow" : "#E5C07B"
+        }
+    ]
+}
