@@ -2,8 +2,6 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
-source "$DIR"/.functions
-
 prepend_path() {
   if [[ "$PATH" != *"$1"* ]]; then
     # https://unix.stackexchange.com/a/415028/288259
@@ -72,11 +70,7 @@ export GOPATH="$HOME/code/go"
 # Add golang directory to PATH
 append_path "$GOPATH/bin"
 
-# Add Python 3 directory to PATH (https://docs.brew.sh/Homebrew-and-Python)
 if command -v python3 > /dev/null; then
-  # Add unversioned symlinks for Python 3 to PATH
-  prepend_path "$(get_brew_prefix)"/opt/python/libexec/bin
-
   # Add Python package executable directory to PATH
   append_path "$(python3 -m site --user-base)"/bin
 fi
