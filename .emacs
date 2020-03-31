@@ -16,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+    (add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -57,3 +57,13 @@
 ;; Add git-commit mode
 (use-package git-commit
   :ensure t)
+
+;; Allow usage of project-local npm packages
+(use-package add-node-modules-path
+  :ensure t
+  :config (add-hook 'js-mode-hook 'add-node-modules-path))
+
+;; Add Prettier
+(use-package prettier-js
+  :ensure t
+  :config (add-hook 'js-mode-hook 'prettier-js-mode))
