@@ -101,6 +101,7 @@ cinst calibre
 cinst cyberduck
 cinst deluge
 cinst docker-desktop
+cinst Emacs
 cinst etcher
 cinst Firefox
 cinst foxitreader
