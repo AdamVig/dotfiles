@@ -84,6 +84,7 @@ cask "xquartz" # Needed by Inkscape
 # applications
 cask "authy"
 cask "docker"
+cask "emacs"
 cask "firefox"
 cask "google-backup-and-sync"
 cask "google-chrome"
