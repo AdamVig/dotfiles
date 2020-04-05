@@ -40,6 +40,8 @@ main() {
   # Subject, followed by a newline, followed by the body with every line indented by two spaces
   readonly local message="
 
+### Commits
+
 $(log-branch-commits --pr --remote "$remote" "$base_branch")"
 
   # Run dynamically constructed command, using $@ to pass it all arguments
