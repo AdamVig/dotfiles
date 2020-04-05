@@ -92,6 +92,7 @@ cask "kap"
 cask "kdiff3" # Merge tool
 cask "keybase"
 cask "meld" # Comparison tool for version control, files, and directories
+cask "nextcloud"
 cask "qlmarkdown"
 cask "signal"
 cask "sketch"
