@@ -29,9 +29,6 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
   eval "$(nodenv init -)"
 fi
 
-# Temporary override to get rid of mysterious NODE_ENV=production
-unset NODE_ENV
-
 # Temporary override to get rid of mysterious DOCKER_HOST on WSL
 unset DOCKER_HOST
 
