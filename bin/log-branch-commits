@@ -71,13 +71,14 @@ git_log() {
 }
 
 if [ $pull_request -eq 0 ]; then
-  # 1. Format commits as a list:
+  # 1. Format commits as Markdown list items:
   # - <subject>
   #   <body indented by two spaces>
   #
-  # 2. Remove any lines containing # symbols to avoid unexpected Markdown formatting
-  git_log '--pretty=format:- %s%n%w(0,2,2)%b' | \
-    sed '/.*#.*$/d'
+  # 2. Replace `#` with `-`, preserving any indentation, to change comments into list items
+  # 3. Replace tabs with four spaces so that indentation works correctly in Markdown
+  git_log '--pretty=format:- %s%w(0,2,2)%+b' | \
+    sed -E -e 's/#(\s*)/\1- /g' -e 's/\t/    /g'
 else
   git_log --oneline --pretty=who-when-what
 fi
