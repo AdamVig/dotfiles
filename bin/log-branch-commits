@@ -67,7 +67,7 @@ fi
 branch="${1:-$default_branch}"
 
 git_log() {
-  git log "$remote"/"$branch"... "$@" --
+  git log "$remote"/"$branch".. "$@" --
 }
 
 if [ $pull_request -eq 0 ]; then
