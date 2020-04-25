@@ -66,3 +66,6 @@
 (use-package prettier-js
   :ensure t
   :config (add-hook 'js-mode-hook 'prettier-js-mode))
+
+;; Enable visual line wrapping in Org mode
+(add-hook 'org-mode-hook 'visual-line-mode)
