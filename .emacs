@@ -33,15 +33,13 @@
 (setq backup-inhibited t) ; Disable backup
 (setq auto-save-default nil) ; Disable auto save
 (setq inhibit-startup-screen t) ; Disable startup screen
+(setq ring-bell-function 'ignore) ; Disable audio bell
 
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
   :ensure t
   :config
   (load-theme 'zenburn t))
-
-;; Disable audio bell
-(setq ring-bell-function 'ignore)
 
 ;; Add go-mode and automatic format/import on save
 (use-package go-mode
