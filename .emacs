@@ -32,6 +32,7 @@
 
 (setq backup-inhibited t) ; Disable backup
 (setq auto-save-default nil) ; Disable auto save
+(setq inhibit-startup-screen t) ; Disable startup screen
 
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
