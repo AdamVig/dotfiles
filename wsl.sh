@@ -18,4 +18,8 @@ windows_terminal_path="$appdata_local_path"/Packages/Microsoft.WindowsTerminal_8
 mkdir -p "$windows_terminal_path"
 cp "$DIR"/windows-terminal-profiles.json "$windows_terminal_path"/profiles.json
 
+message "  %s" "copying Emacs configuration..."
+readonly appdata_roaming_path="$(wslpath "$("$DIR"/bin/expand-windows-path %APPDATA%)")"
+cp "$DIR"/.emacs "$appdata_roaming_path"/.emacs
+
 message "done setting up WSL."
