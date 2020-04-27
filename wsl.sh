@@ -22,4 +22,8 @@ message "  %s" "copying Emacs configuration..."
 readonly appdata_roaming_path="$(wslpath "$("$DIR"/bin/expand-windows-path %APPDATA%)")"
 cp "$DIR"/.emacs "$appdata_roaming_path"/.emacs
 
+message "  %s" "installing WSL utilities..."
+sudo apt-get install --yes ubuntu-wsl
+message "  %s" "done installing WSL utilities."
+
 message "done setting up WSL."
