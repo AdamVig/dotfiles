@@ -119,6 +119,7 @@ cinst steam
 cinst thunderbird
 cinst vlc
 cinst vscode
+cinst vcxsrv # X server
 cinst zoom
 
 # Privacy: Let apps use my advertising ID: Disable
