@@ -16,7 +16,7 @@ message "  %s" "copying Windows Terminal configuration..."
 readonly appdata_local_path="$(wslpath "$("$DIR"/bin/expand-windows-path %LOCALAPPDATA%)")"
 windows_terminal_path="$appdata_local_path"/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/
 mkdir -p "$windows_terminal_path"
-cp "$DIR"/windows-terminal-profiles.json "$windows_terminal_path"/profiles.json
+cp "$DIR"/windows-terminal-settings.json "$windows_terminal_path"/settings.json
 
 message "  %s" "copying Emacs configuration..."
 readonly appdata_roaming_path="$(wslpath "$("$DIR"/bin/expand-windows-path %APPDATA%)")"
