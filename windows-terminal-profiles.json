@@ -77,8 +77,6 @@
       }
     ],
     "keybindings": [
-      { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-      { "command": "paste", "keys": "ctrl+v" },
       { "command": "find", "keys": "ctrl+shift+f" },
       { "command": "openSettings", "keys": ["ctrl+,"] },
       { "command": "scrollDown", "keys": ["ctrl+shift+down"] },
