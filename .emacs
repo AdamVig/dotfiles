@@ -69,3 +69,12 @@
 
 ;; Enable visual line wrapping in Org mode
 (add-hook 'org-mode-hook 'visual-line-mode)
+
+;; Define function to archive all DONE tasks in Org mode (https://stackoverflow.com/a/27043756/1850656)
+(defun org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+      "/DONE" 'tree))
