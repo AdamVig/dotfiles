@@ -62,6 +62,9 @@ if "$DIR"/bin/is-wsl; then
 
   # Make lpass --clip flag work
   export LPASS_CLIPBOARD_COMMAND='clip.exe'
+
+  # Set up X server connection
+  export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 fi
 
 # Set golang workspace directory
