@@ -75,10 +75,10 @@ if [ $pull_request -eq 0 ]; then
   # - <subject>
   #   <body indented by two spaces>
   #
-  # 2. Replace `#` with `-`, preserving any indentation, to change comments into list items
+  # 2. Replace `# ` with `- `, preserving any indentation, to change comments into list items
   # 3. Replace tabs with four spaces so that indentation works correctly in Markdown
   git_log '--pretty=format:- %s%w(0,2,2)%+b' | \
-    sed -E -e 's/#(\s*)/\1- /g' -e 's/\t/    /g'
+    sed -E -e 's/#(\s+)/\1- /g' -e 's/\t/    /g'
 else
   git_log --oneline --pretty=who-when-what
 fi
