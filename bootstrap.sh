@@ -69,19 +69,6 @@ if ! [ -d "$config_dir"/docker ]; then
   mkdir -p "$config_dir"/docker
 fi
 
-if ! command -v lsix > /dev/null; then
-  message "Installing lsix..."
-  readonly lsix_path="$HOME/.local/bin/lsix"
-  mkdir -p "$HOME/.local/bin"
-  curl --silent --output "$lsix_path" https://raw.githubusercontent.com/hackerb9/lsix/master/lsix
-  if [ -f "$lsix_path" ]; then
-    chmod u+x "$lsix_path"
-  else
-    warn "failed to download lsix"
-  fi
-  message "Done installing lsix."
-fi
-
 message "Running OS-specific scripts..."
 if "$DIR"/bin/is-macos; then
     "$DIR/macos.sh"
