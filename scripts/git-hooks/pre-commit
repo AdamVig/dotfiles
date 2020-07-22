@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+files="$(git diff --cached --name-only HEAD)"
+shell_files="$(echo "$files" | file --files-from - | grep 'shell' | cut --delimiter : --fields 1)"
+
+if [ -z "$shell_files" ]; then
+	echo 'nothing to format'
+	exit 0
+fi
+
+if ! command -v shfmt >/dev/null; then
+	echo 'error: shfmt is not installed'
+	exit 1
+fi
+
+pushd "$(git rev-parse --show-toplevel)" >/dev/null
+
+
+for file in $shell_files; do
+	echo "formatting $file"
+	# -w: write in place
+	# -s: simplify code
+	# -i 0: indent with one tab
+	shfmt -w -s -i 0 "$file"
+	git add "$file"
+done

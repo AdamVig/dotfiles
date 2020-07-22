@@ -7,6 +7,11 @@
 
 *Note:* moving the `dotfiles` folder requires re-running `bootstrap.sh` to re-establish the symlinks to your home directory.
 
+After cloning, run the following command to configure the repository's Git hooks:
+```shell
+git config --local core.hooksPath scripts/git-hooks
+```
+
 ### Files
 #### `.vscode/`
 Settings, keybindings, and snippets for Visual Studio Code.  
