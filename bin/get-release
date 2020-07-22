@@ -10,7 +10,6 @@ fi
 
 type="${1:-""}"
 
-local prev_releases
 prev_releases=""
 
 # If CI status is pending, get current list of releases then wait for CI to finish
@@ -34,7 +33,6 @@ if [ -n "$prev_releases" ]; then
       <(echo "$prev_releases") <(hub release)
 else
   echo 'No CI status found, getting ten most recent releases...'
-  local releases
   releases="$(hub release --limit 10)"
   if [ "$type" = "prod" ]; then
       releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
