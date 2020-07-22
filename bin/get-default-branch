@@ -4,17 +4,14 @@ set -euo pipefail
 
 # Get the name of the default branch for a given remote.
 # $1: Name of a remote (defaults to origin).
-main() {
-    local remote=${1:-origin}
+remote=${1:-origin}
 
-    # If default branch ref is not present, try to update it
-    if ! git symbolic-ref --quiet "refs/remotes/$remote/HEAD" &> /dev/null && \
-      ! git remote set-head "$remote" --auto &> /dev/null; then
-      echo 'failed to get default branch from remote'
-      return 1
-    fi
+# If default branch ref is not present, try to update it
+if ! git symbolic-ref --quiet "refs/remotes/$remote/HEAD" &> /dev/null && \
+  ! git remote set-head "$remote" --auto &> /dev/null; then
+  echo 'failed to get default branch from remote'
+  return 1
+fi
 
-    default_branch="$(git symbolic-ref "refs/remotes/$remote/HEAD")"
-    echo "${default_branch##"refs/remotes/$remote/"}"
-}
-main "$@"
+default_branch="$(git symbolic-ref "refs/remotes/$remote/HEAD")"
+echo "${default_branch##"refs/remotes/$remote/"}"

@@ -78,10 +78,7 @@ stat-repo() {
   fi
 }
 
-main() {
-  for d in */; do
-    stat-repo "$d" &
-  done
-  wait
-}
-main "$@"
+for d in */; do
+  stat-repo "$d" &
+done
+wait

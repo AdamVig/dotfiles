@@ -5,7 +5,5 @@ set -euo pipefail
 DIR="$(dirname "$(realpath "$0")")"
 
 # Benchmark zsh startup time
-main() {
-  "$DIR"/../bin/avgtime zsh -i -c exit;
-}
-main "$@"
+
+"$DIR"/../bin/avgtime zsh -i -c exit;

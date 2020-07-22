@@ -6,18 +6,14 @@ DIR="$(dirname "$(realpath "$0")")"
 
 # Initialize a repository that uses npm and git
 # $1: directory to create repository in (optional, defaults to current directory)
-main() {
-  local dir
-  dir="${1:-}"
-  if [ -n "$dir" ]; then
-    pushd "$dir" > /dev/null
-  fi
+dir="${1:-}"
+if [ -n "$dir" ]; then
+  pushd "$dir" > /dev/null
+fi
 
-  git init
-  npm init
-  "$DIR"/gen-npm-readme
-  "$DIR"/create-npm-repo
-  git add .
-  git commit --allow-empty --message 'Initial commit'
-}
-main "$@"
+git init
+npm init
+"$DIR"/gen-npm-readme
+"$DIR"/create-npm-repo
+git add .
+git commit --allow-empty --message 'Initial commit'

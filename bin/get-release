@@ -4,46 +4,42 @@ set -euo pipefail
 
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
 # $1: 'prod' to only get production releases or 'beta' to only get beta releases
-main() {
-  if ! check-installed hub https://hub.github.com/; then
-      return 1
+if ! check-installed hub https://hub.github.com/; then
+    return 1
+fi
+
+type="${1:-""}"
+
+local prev_releases
+prev_releases=""
+
+# If CI status is pending, get current list of releases then wait for CI to finish
+if [ "$(hub ci-status)" = "pending" ]; then
+  # Get current list of releases, which will be diffed against later to show the new version
+  prev_releases="$(hub release)"
+
+  echo "Waiting for CI..."
+  watch-ci
+fi
+
+# Print list of releases, diffing against previous list of releases if it is set
+if [ -n "$prev_releases" ]; then
+  echo
+  echo "New release:"
+  # Diff, only displaying changed groups, and hiding any control characters
+  diff \
+      --ignore-all-space \
+      --changed-group-format='%<%>' \
+      --unchanged-group-format='' \
+      <(echo "$prev_releases") <(hub release)
+else
+  echo 'No CI status found, getting ten most recent releases...'
+  local releases
+  releases="$(hub release --limit 10)"
+  if [ "$type" = "prod" ]; then
+      releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
+  elif [ "$type" = "beta" ]; then
+      releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*-beta.[0-9]*$')"
   fi
-
-  local type
-  type="${1:-""}"
-
-  local prev_releases
-  prev_releases=""
-
-  # If CI status is pending, get current list of releases then wait for CI to finish
-  if [ "$(hub ci-status)" = "pending" ]; then
-    # Get current list of releases, which will be diffed against later to show the new version
-    prev_releases="$(hub release)"
-
-    echo "Waiting for CI..."
-    watch-ci
-  fi
-
-  # Print list of releases, diffing against previous list of releases if it is set
-  if [ -n "$prev_releases" ]; then
-    echo
-    echo "New release:"
-    # Diff, only displaying changed groups, and hiding any control characters
-    diff \
-        --ignore-all-space \
-        --changed-group-format='%<%>' \
-        --unchanged-group-format='' \
-        <(echo "$prev_releases") <(hub release)
-  else
-    echo 'No CI status found, getting ten most recent releases...'
-    local releases
-    releases="$(hub release --limit 10)"
-    if [ "$type" = "prod" ]; then
-        releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*$')"
-    elif [ "$type" = "beta" ]; then
-        releases="$(echo "$releases" | grep 'v[0-9]*\.[0-9]*\.[0-9]*-beta.[0-9]*$')"
-    fi
-    echo "$releases"
-  fi
-}
-main "$@"
+  echo "$releases"
+fi

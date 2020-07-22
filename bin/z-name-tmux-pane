@@ -2,6 +2,7 @@
 
 # No strict mode in this file because .zshrc and z use unbound variables
 
+# Use a function to avoid variable/function clashes on consecutive runs in the same session.
 main() {
   local dir="$(dirname "$(realpath "${(%):-%x}")")"
 
@@ -30,6 +31,5 @@ Flags:
   fi
 }
 
-# Use a function to avoid variable/function clashes on consecutive runs in the same session.
 main "$@"
 unset -f main

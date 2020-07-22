@@ -2,17 +2,12 @@
 
 set -euo pipefail
 
-main() {
-  if ! [ -f package.json ]; then
-     echo 'error: cannot find package.json'
-     exit 1
-  fi
+if ! [ -f package.json ]; then
+    echo 'error: cannot find package.json'
+    exit 1
+fi
 
-  local name
-  name="$(jq --raw-output '.name' package.json)"
-  local description
-  description="$(jq --raw-output '.description' package.json)"
+name="$(jq --raw-output '.name' package.json)"
+description="$(jq --raw-output '.description' package.json)"
 
-  hub create --browse --description "$description" "$name"
-}
-main "$@"
+hub create --browse --description "$description" "$name"
