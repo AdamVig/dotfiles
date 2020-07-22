@@ -60,6 +60,7 @@ brew "nodenv" # Node environment manager
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
 brew "shellcheck" # Shell script linter
+brew "shfmt" # Shell script formatter
 
 # web service clients
 brew "ddgr" # DuckDuckGo
