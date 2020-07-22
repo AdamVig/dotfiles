@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
 # If running on a fresh boot of macOS
-if [[ "$OSTYPE" == darwin* ]] && ! command -v realpath > /dev/null; then
-  echo 'detected fresh macOS system, running pre-bootstrap steps...'
-  if ! command -v brew > /dev/null; then
-     echo "installing Homebrew..."
-     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-     echo "done installing Homebrew."
-  fi
+if [[ $OSTYPE == darwin* ]] && ! command -v realpath >/dev/null; then
+	echo 'detected fresh macOS system, running pre-bootstrap steps...'
+	if ! command -v brew >/dev/null; then
+		echo "installing Homebrew..."
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		echo "done installing Homebrew."
+	fi
 
-  echo 'installing GNU Coreutils...'
-  brew install coreutils
-  echo 'done installing GNU Coreutils.'
+	echo 'installing GNU Coreutils...'
+	brew install coreutils
+	echo 'done installing GNU Coreutils.'
 
-  echo 'installing Bash...'
-  brew install bash
-  echo 'done installing Bash.'
+	echo 'installing Bash...'
+	brew install bash
+	echo 'done installing Bash.'
 
-  echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
-  exit
+	echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
+	exit
 fi
 
 DIR="$(dirname "$(realpath "$0")")"
@@ -29,7 +29,7 @@ source "$DIR/helpers.sh"
 # Ask for password at start
 request-sudo
 
-message "Symlinking dotfiles to your home directory..."
+message "symlinking dotfiles to your home directory..."
 ln -sf "$DIR"/.aliases ~
 ln -sf "$DIR"/.bash_profile ~
 ln -sf "$DIR"/.bashrc ~
@@ -38,49 +38,49 @@ ln -sf "$DIR"/.exports ~
 ln -sf "$DIR"/.functions ~
 ln -sf "$DIR"/.profile ~
 
-message "Configuring SSH..."
+message "configuring SSH..."
 mkdir -p "$HOME"/.ssh
 ssh_config='AddKeysToAgent yes'
 ssh_config_path="$HOME"/.ssh/config
 if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path"; then
-  echo "$ssh_config" >> "$ssh_config_path"
+	echo "$ssh_config" >>"$ssh_config_path"
 fi
 
-message "Configure GPG..."
+message "configure GPG..."
 mkdir -p "$HOME"/.gnupg
 gpg_agent_config='default-cache-ttl 34560000
 max-cache-ttl 34560000'
 gpg_agent_config_path="$HOME"/.gnupg/gpg-agent.conf
 if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg_agent_config_path"; then
-  echo "$gpg_agent_config" >> "$gpg_agent_config_path"
+	echo "$gpg_agent_config" >>"$gpg_agent_config_path"
 fi
 
 config_dir="$(xdg_config)"
-message "Symlinking configurations to '$config_dir'..."
+message "symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
-  message "  %s" "Removing legacy .ripgreprc..."
-  rm -f "$HOME"/.ripgreprc
+	message "  %s" "removing legacy .ripgreprc..."
+	rm -f "$HOME"/.ripgreprc
 fi
 mkdir -p "$config_dir"/ripgrep
 ln -sf "$DIR"/.ripgreprc "$config_dir"/ripgrep/config
 
 if ! [ -d "$config_dir"/docker ]; then
-  message "Creating Docker configuration directory..."
-  mkdir -p "$config_dir"/docker
+	message "creating Docker configuration directory..."
+	mkdir -p "$config_dir"/docker
 fi
 
-message "Running OS-specific scripts..."
+message "running OS-specific scripts..."
 if "$DIR"/bin/is-macos; then
-    "$DIR/macos.sh"
+	"$DIR/macos.sh"
 elif "$DIR"/bin/is-linux; then
-  "$DIR/linux.sh"
-  if command -v apt > /dev/null; then
-    "$DIR/apt.sh"
-  fi
+	"$DIR/linux.sh"
+	if command -v apt >/dev/null; then
+		"$DIR/apt.sh"
+	fi
 fi
 
 if "$DIR"/bin/is-wsl; then
-    "$DIR"/wsl.sh
+	"$DIR"/wsl.sh
 fi
 
 "$DIR/brew.sh"
@@ -92,4 +92,4 @@ fi
 "$DIR/vscode.sh"
 "$DIR/zsh.sh"
 
-message "Done. Start a new login shell or run 'source .zshrc'."
+message "done. start a new login shell or run 'source .zshrc'."

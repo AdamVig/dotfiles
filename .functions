@@ -3,44 +3,44 @@
 DIR="$(dirname "$(realpath "$0")")"
 
 xdg_config() {
-  echo "${XDG_CONFIG_HOME:-$HOME/.config}"
+	echo "${XDG_CONFIG_HOME:-$HOME/.config}"
 }
 
 xdg_data() {
-  echo "${XDG_DATA_HOME:-$HOME/.local/share}"
+	echo "${XDG_DATA_HOME:-$HOME/.local/share}"
 }
 
 xdg_cache() {
-  echo "${XDG_CACHE_HOME:-$HOME/.cache}"
+	echo "${XDG_CACHE_HOME:-$HOME/.cache}"
 }
 
 get_brew_prefix() {
-  brew_prefix=
-  if "$DIR"/bin/is-macos; then
-    echo '/usr/local'
-  elif "$DIR"/bin/is-linux; then
-    echo '/home/linuxbrew/.linuxbrew'
-  fi
+	brew_prefix=
+	if "$DIR"/bin/is-macos; then
+		echo '/usr/local'
+	elif "$DIR"/bin/is-linux; then
+		echo '/home/linuxbrew/.linuxbrew'
+	fi
 }
 
 update() {
-    echo "Updating Homebrew..."
-    brew update
+	echo "updating Homebrew..."
+	brew update
 
-    echo "Upgrading Homebrew formulas..."
-    brew upgrade
+	echo "upgrading Homebrew formulas..."
+	brew upgrade
 
-    echo "Upgrading Homebrew Cask formulas..."
-    brew cask upgrade || true
+	echo "upgrading Homebrew Cask formulas..."
+	brew cask upgrade || true
 
-    echo "Updating npm..."
-    npm i -g npm
+	echo "updating npm..."
+	npm i -g npm
 
-    echo "Updating global npm..."
-    npm update -g
+	echo "updating global npm..."
+	npm update -g
 
-    echo "Updating global pip packages..."
-    pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
+	echo "updating global pip packages..."
+	pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
 }
 
 alias upgrade=update
@@ -49,19 +49,19 @@ alias upgrade=update
 # $1: namespace
 # $2: application name
 kube-pod() {
-    kubectl get pods --output json --namespace "$1" | jq --raw-output --arg app "$2" '.items[] | select(.metadata.labels.app == $app) | .metadata.name'
+	kubectl get pods --output json --namespace "$1" | jq --raw-output --arg app "$2" '.items[] | select(.metadata.labels.app == $app) | .metadata.name'
 }
 
 # Get all peer dependencies for a given package as a string suitable for input to `npm install`
 # $1: name of package installed in current project's node_modules
 get-peer-dependencies() {
-    jq --raw-output \
-    '.peerDependencies | to_entries | map("\(.key)@\(.value)") | join(" ")' \
-    "./node_modules/$1/package.json"
+	jq --raw-output \
+		'.peerDependencies | to_entries | map("\(.key)@\(.value)") | join(" ")' \
+		"./node_modules/$1/package.json"
 }
 
 # Install all peer dependencies for a given package
 # $1: name of package installed in current project's node_modules
 install-peer-dependencies() {
-    npm install $(get-peer-dependencies "$1")
+	npm install $(get-peer-dependencies "$1")
 }
