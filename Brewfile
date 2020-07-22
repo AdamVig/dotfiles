@@ -107,7 +107,7 @@ cask "thunderbird"
 cask "visual-studio-code"
 
 # fonts
-tap "caskroom/fonts"
+tap "homebrew/cask-fonts"
 cask "font-abril-fatface"
 cask "font-arvo"
 cask "font-bitter"
