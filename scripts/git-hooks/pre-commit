@@ -17,10 +17,16 @@ pushd "$(git rev-parse --show-toplevel)" >/dev/null
 
 
 for file in $shell_files; do
-	echo "formatting $file"
-	# -w: write in place
 	# -s: simplify code
 	# -i 0: indent with one tab
-	shfmt -w -s -i 0 "$file"
-	git add "$file"
+	shfmt_args=(-s -i 0 "$file")
+
+	if shfmt "${shfmt_args[@]}" > /dev/null; then
+		continue
+	fi
+
+	echo "formatting $file"
+	# -w: write in place
+	shfmt -w "${shfmt_args[@]}"
+	exit 1
 done
