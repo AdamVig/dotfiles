@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-files="$(git diff --cached --name-only HEAD)"
+# Get paths of staged files, excluding deleted files
+files="$(git diff --cached --name-only --diff-filter=d HEAD)"
 shell_files="$(echo "$files" | file --files-from - | grep 'shell' | cut --delimiter : --fields 1)"
 
 if [ -z "$shell_files" ]; then
