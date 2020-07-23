@@ -14,7 +14,12 @@ if ! command -v shfmt >/dev/null; then
 	exit 1
 fi
 
-pushd "$(git rev-parse --show-toplevel)" >/dev/null
+if ! command -v shellcheck >/dev/null; then
+	echo 'error: shellcheck is not installed'
+	exit 1
+fi
+
+pushd "$(git rev-parse --show-toplevel)" > /dev/null || exit
 
 bootstrap_path='bin/,bootstrap'
 if [[ $shell_files == *"$bootstrap_path"* ]] && ! shfmt --ln posix "$bootstrap_path" >/dev/null; then
@@ -27,12 +32,12 @@ for file in $shell_files; do
 	# -i 0: indent with one tab
 	shfmt_args=(-s -i 0 "$file")
 
-	if shfmt "${shfmt_args[@]}" > /dev/null; then
-		continue
+	if ! shfmt "${shfmt_args[@]}" > /dev/null; then
+		echo "formatting $file"
+		# -w: write in place
+		shfmt -w "${shfmt_args[@]}"
+		exit 1
 	fi
 
-	echo "formatting $file"
-	# -w: write in place
-	shfmt -w "${shfmt_args[@]}"
-	exit 1
+	shellcheck "$file"
 done
