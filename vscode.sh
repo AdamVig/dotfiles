@@ -57,9 +57,11 @@ for extension in "${extensions[@]}"; do
 	fi
 
 	# Attempt to install extension; log message on success, log warning on failure
-	$code_cmd --install-extension "$extension" >/dev/null &&
-		message "cyan" "    %s" "installed $extension" ||
+	if $code_cmd --install-extension "$extension" >/dev/null; then
+		message "cyan" "    %s" "installed $extension"
+	else
 		warn "extension $extension failed to install; it may no longer be available"
+	fi
 	set -e
 done
 

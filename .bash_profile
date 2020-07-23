@@ -2,6 +2,7 @@
 
 # Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
 if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
+	# shellcheck disable=SC2123
   PATH=""
   source /etc/profile
 fi
@@ -50,6 +51,7 @@ if is-macos; then
 else
   broot_root='broot'
 fi
+# shellcheck disable=SC1090
 source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane

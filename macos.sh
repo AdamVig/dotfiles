@@ -7,7 +7,7 @@ source "$DIR/helpers.sh"
 
 # Check if directory is writable, if not, take ownership of it
 message "  %s" "checking ownership of subdirectories of /usr/local..."
-for dir in $(brew --prefix)/*; do
+for dir in "$(brew --prefix)/"*; do
 	if [ ! -w "$dir" ]; then
 		request-sudo chown -R "$(whoami)" "$dir"
 		message "    %s" "took ownership of $dir"

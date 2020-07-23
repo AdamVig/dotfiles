@@ -15,7 +15,6 @@ xdg_cache() {
 }
 
 get_brew_prefix() {
-	brew_prefix=
 	if "$DIR"/bin/is-macos; then
 		echo '/usr/local'
 	elif "$DIR"/bin/is-linux; then
@@ -63,5 +62,6 @@ get-peer-dependencies() {
 # Install all peer dependencies for a given package
 # $1: name of package installed in current project's node_modules
 install-peer-dependencies() {
+	# shellcheck disable=SC2046
 	npm install $(get-peer-dependencies "$1")
 }

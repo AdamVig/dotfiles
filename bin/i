@@ -101,7 +101,7 @@ unfocus() {
 }
 
 afk() {
-  local readonly type="${1:-}"
+  local type="${1:-}"
   if [ "$type" = 'lunch' ]; then
     status='lunch'
     emoji='knife_fork_plate'

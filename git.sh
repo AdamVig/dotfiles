@@ -57,6 +57,7 @@ else
 
     # If this configuration key is not already set, set it
     if ! git config --global "$name" &> /dev/null; then
+			# shellcheck disable=SC2016
       value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
       message "    %s" "setting '$name' to '$value'..."
       git config --global "$name" "$value"

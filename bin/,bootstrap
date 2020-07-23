@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 
+if ! command -v uname > /dev/null; then
+	echo 'error: uname is not available, cannot proceed'
+fi
+
 # If running on a fresh boot of macOS
-if [[ $OSTYPE == darwin* ]] && ! command -v realpath >/dev/null; then
+if [ "$(uname)" = 'Darwin' ] && ! command -v realpath > /dev/null; then
 	echo 'detected fresh macOS system, running pre-bootstrap steps...'
 	if ! command -v brew >/dev/null; then
 		echo "installing Homebrew..."

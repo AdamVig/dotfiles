@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-DIR="$(dirname "$(realpath "$0")")"
-
 readonly usage="Usage: $(basename "$0") [-h|--help]
 Check the Git status of all subdirectories of the current directory.
 
@@ -27,7 +25,7 @@ print-unpushed() {
   local d
   d="${1:-}"
 
-  if num="$(git -C "$d" rev-list @{upstream}.. --count 2> /dev/null)" && [ "$num" != "0" ]; then
+  if num="$(git -C "$d" rev-list '@{upstream}..' --count 2> /dev/null)" && [ "$num" != "0" ]; then
     if [ "$num" = "1" ]; then
       echo "1 unpushed commit"
     else
@@ -43,7 +41,7 @@ print-status-if-dirty() {
   d="${1:-}"
 
   if ! git -C "$d" diff-index --quiet --ignore-submodules=all HEAD -- || \
-     ! [ -z "$(git -C "$d" ls-files --exclude-standard --others)" ]; then
+     [ -n "$(git -C "$d" ls-files --exclude-standard --others)" ]; then
     # Redirect stderr so that nothing is printed if the command fails
     git -C "$d" -c color.ui=always status --short 2> /dev/null
   fi
@@ -52,8 +50,8 @@ print-status-if-dirty() {
 # Show current state of a Git repository
 # $1: directory
 stat-repo() {
-  local readonly bold="\\e[1m"
-  local readonly reset="\\e[0m"
+  local bold="\\e[1m"
+  local reset="\\e[0m"
 
   local d
   d="${1:-}"

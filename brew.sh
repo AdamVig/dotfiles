@@ -6,6 +6,7 @@ DIR="$(dirname "$(realpath "$0")")"
 source "$DIR/helpers.sh"
 
 # Refresh existing sudo session or start a new one
+# shellcheck disable=SC2119
 request-sudo
 
 message "magenta" "  %s" "updating Brew package lists..."

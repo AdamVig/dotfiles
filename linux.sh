@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 DIR="$(dirname "$(realpath "$0")")"
-TEMP_DIR="/tmp"
 
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
+# shellcheck disable=SC2119
 request-sudo
 
 message "  %s" "setting up Linux..."

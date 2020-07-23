@@ -26,7 +26,7 @@ fi
 
 time_done_seconds=$(( $(date +%s) + duration_work_seconds ))
 
-while [ $(date +%s) -lt $time_done_seconds ]; do
+while [ "$(date +%s)" -lt $time_done_seconds ]; do
   tput clear
   duration_remaining_seconds=$(( time_done_seconds - $(date +%s) ))
 
@@ -37,7 +37,7 @@ while [ $(date +%s) -lt $time_done_seconds ]; do
   sleep 1
 done
 
-for i in {1..5}; do
+for _ in {1..5}; do
   tput bel
   sleep 0.1
 done

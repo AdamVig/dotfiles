@@ -5,6 +5,7 @@ DIR="$(dirname "$(realpath "$0")")"
 # shellcheck source=./helpers.sh
 source "$DIR/helpers.sh"
 
+# shellcheck disable=SC2119
 request-sudo
 
 if [[ $SHELL != *zsh ]]; then

@@ -6,7 +6,7 @@ set -euo pipefail
 # $1: path to submodule
 path="${1:-}"
 
-if [ -z "path" ]; then
+if [ -z "$path" ]; then
     echo "error: must provide path to submodule"
     return 1
 fi

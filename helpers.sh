@@ -42,6 +42,7 @@ message() {
 		TEMPLATE="$TEMPLATE%s"
 	fi
 
+	# shellcheck disable=SC2059
 	printf "\\e[${COLOR}m$TEMPLATE\\e[${OFF}m\\n" "$@"
 }
 
@@ -94,10 +95,8 @@ get-release-url() {
     fi
 
     # Get list of releases
-    echo "$(
-        curl -s "https://api.github.com/repos/$1/releases/latest" | \
+    curl -s "https://api.github.com/repos/$1/releases/latest" | \
         jq --raw-output ".assets[] | .browser_download_url | select(endswith(\"$2\"))"
-    )"
 }
 
 # Prompt the user for their password with a custom message
