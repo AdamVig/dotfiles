@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# If running on a fresh boot of macOS
+if [[ $OSTYPE == darwin* ]] && ! command -v realpath >/dev/null; then
+	echo 'detected fresh macOS system, running pre-bootstrap steps...'
+	if ! command -v brew >/dev/null; then
+		echo "installing Homebrew..."
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		echo "done installing Homebrew."
+	fi
+
+	echo 'installing GNU Coreutils...'
+	brew install coreutils
+	echo 'done installing GNU Coreutils.'
+
+	echo 'installing Bash...'
+	brew install bash
+	echo 'done installing Bash.'
+
+	echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
+	exit
+fi
+
+DIR="$(dirname "$(realpath "$0")")"
+
+exec "$DIR"/../lib/main

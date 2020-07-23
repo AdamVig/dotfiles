@@ -16,6 +16,11 @@ fi
 
 pushd "$(git rev-parse --show-toplevel)" >/dev/null
 
+bootstrap_path='bin/,bootstrap'
+if [[ $shell_files == *"$bootstrap_path"* ]] && ! shfmt --ln posix "$bootstrap_path" >/dev/null; then
+	echo "error: $bootstrap_path must be POSIX-compatible"
+	exit 1
+fi
 
 for file in $shell_files; do
 	# -s: simplify code

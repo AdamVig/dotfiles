@@ -3,7 +3,7 @@
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 
-DIR="$(dirname "$(realpath "$0")")"
+DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./.exports
 source "$DIR"/.exports
