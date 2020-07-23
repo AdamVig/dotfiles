@@ -12,7 +12,7 @@ print_ci_status() {
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
 if ! check-installed hub https://hub.github.com/; then
-  return 1
+  exit 1
 fi
 
 # Cache head commit to avoid breaking when the user makes a new commit on the branch locally
@@ -26,7 +26,7 @@ set -e
 
 if [ $ci_status_exit_code = 3 ]; then
   echo "could not find CI status"
-  return 1
+  exit 1
 fi
 
 ci_status_all="$(print_ci_status "$head")"
