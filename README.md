@@ -31,29 +31,9 @@ Simple functions for use in the shell.
 Commit template with character length guides and style tips.  
 #### `.zshrc`  
 Configure Zsh. Loads `.bash_profile` in case it has not already been loaded.  
-#### `apt.sh`  
-Install apt packages on Linux.  
-#### `brew.sh`  
-Install Homebrew packages on OS X.  
-#### `git.sh`
-Interactively configure Git.
-#### `golang.sh`
-Install useful Golang tools.
-#### `helpers.sh`
-Utility functions for bash scripts.
-#### `linux.sh`
-Set up Linux-specific settings.
-#### `macos.sh`  
-Set up macOS-specific settings.
 #### `macos-terminal-profile.terminal`
 Settings profile for macOS Terminal.app. Must be manually imported via the Terminal settings window.
-#### `node.sh`
-Install Node using `nodenv` and install a default list of npm packages.
 #### `npm-default-packages`
 List of default packages for `nodenv` to install when any new version of Node is installed.
-#### `pip.sh`
-Install global Python packages.
-#### `vscode.sh`
-Symlink configuration files and install extensions for VS Code.
 
 For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.bash_profile`.

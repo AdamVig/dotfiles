@@ -2,8 +2,8 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
-# shellcheck source=./helpers.sh
-source "$DIR/helpers.sh"
+# shellcheck source=./lib/helpers
+source "$DIR/helpers"
 
 message "installing pip tools..."
 pip_packages=(

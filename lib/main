@@ -2,8 +2,8 @@
 
 DIR="$(dirname "$(realpath "$0")")"
 
-# shellcheck source=./helpers.sh
-source "$DIR"/../helpers.sh
+# shellcheck source=./lib/helpers
+source "$DIR"/../helpers
 
 # Ask for password at start
 request-sudo
@@ -49,26 +49,26 @@ if ! [ -d "$config_dir"/docker ]; then
 fi
 
 message "running OS-specific scripts..."
-if "$DIR"/../bin/is-macos; then
-	"$DIR"/../macos.sh
+if "$DIR"/bin/is-macos; then
+	"$DIR"/macos
 elif "$DIR"/bin/is-linux; then
-	"$DIR"/../linux.sh
+	"$DIR"/linux
 	if command -v apt >/dev/null; then
-		"$DIR"/../apt.sh
+		"$DIR"/apt
 	fi
 fi
 
-if "$DIR"/../bin/is-wsl; then
-	"$DIR"/../wsl.sh
+if "$DIR"/bin/is-wsl; then
+	"$DIR"/wsl
 fi
 
-"$DIR"/../brew.sh
-"$DIR"/../git.sh
-"$DIR"/../golang.sh
-"$DIR"/../node.sh
-"$DIR"/../pip.sh
-"$DIR"/../tmux.sh
-"$DIR"/../vscode.sh
-"$DIR"/../zsh.sh
+"$DIR"/brew
+"$DIR"/git
+"$DIR"/golang
+"$DIR"/node
+"$DIR"/pip
+"$DIR"/tmux
+"$DIR"/vscode
+"$DIR"/zsh
 
 message "done. start a new login shell or run 'source .zshrc'."
