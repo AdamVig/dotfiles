@@ -10,9 +10,6 @@ fi
 # shellcheck source=.aliases
 source ~/.aliases
 
-# shellcheck source=.functions
-source ~/.functions
-
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true

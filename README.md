@@ -25,8 +25,6 @@ Loads all other files. Executed for login shells.
 Loads `.bash_profile`, which loads all other files. Executed for interactive non-login shells.  
 #### `.exports`  
 Environment variables.  
-#### `.functions`
-Simple functions for use in the shell.
 #### `.zshrc`  
 Configure Zsh. Loads `.bash_profile` in case it has not already been loaded.  
 

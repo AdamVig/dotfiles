@@ -17,7 +17,6 @@ ln -sf "$_dir"/../.bash_profile "$HOME"
 ln -sf "$_dir"/../.bashrc "$HOME"
 ln -sf "$_dir"/../config/emacs "$HOME"/.emacs
 ln -sf "$_dir"/../.exports "$HOME"
-ln -sf "$_dir"/../.functions "$HOME"
 ln -sf "$_dir"/../.profile "$HOME"
 
 message "configuring SSH..."

@@ -11,4 +11,4 @@ fi
 
 zmodload -i zsh/complist
 autoload -U compinit
-compinit -i -d "$(xdg_cache)"/zcompdump
+compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump

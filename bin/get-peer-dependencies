@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Get all peer dependencies for a given package as a string suitable for input to `npm install`
+# $1: name of package installed in current project's node_modules
+jq --raw-output \
+	'.peerDependencies | to_entries | map("\(.key)@\(.value)") | join(" ")' \
+	"./node_modules/$1/package.json"

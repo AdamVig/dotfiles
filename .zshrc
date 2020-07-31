@@ -1,12 +1,22 @@
 #!/usr/bin/env zsh
 
+readonly _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
+
 # Bash scripts must be sourced in compatibility mode due to differences in Zsh
 BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.bash_profile'
 
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
 
-data_dir="$(xdg_data)"/zsh
+get_brew_prefix() {
+	if "$_dir_zshrc"/bin/is-macos; then
+		echo '/usr/local'
+	elif "$_dir_zshrc"/bin/is-linux; then
+		echo '/home/linuxbrew/.linuxbrew'
+	fi
+}
+
+data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh
 if ! [ -d "$data_dir" ]; then
   mkdir -p "$data_dir"
 fi
