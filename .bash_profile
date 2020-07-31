@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+readonly _dir_bash_profile="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
 # Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
 if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
 	# shellcheck disable=SC2123
@@ -7,8 +9,27 @@ if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
   source /etc/profile
 fi
 
-# shellcheck source=.aliases
-source ~/.aliases
+# Run an npm script without excessive npm output
+alias npr='npm run --silent'
+
+alias glb="log-branch-commits"
+
+# Use custom config file location
+alias tmux='tmux -f "${XDG_CONFIG_HOME:-$HOME/.config}"/tmux/tmux.conf'
+
+# Must use . to allow the script to change the shell's directory
+alias zn='. z-name-tmux-pane'
+
+if "$_dir_bash_profile"/bin/is-wsl; then
+  alias kdiff3='kdiff3.exe'
+  alias meld='meld.exe'
+	# shellcheck disable=SC2139
+  alias open="$_dir_bash_profile"/bin/wsl-open
+fi
+
+if command -v exa > /dev/null; then
+  alias ls='exa'
+fi
 
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null

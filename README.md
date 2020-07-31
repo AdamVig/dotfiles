@@ -17,8 +17,6 @@ git config --local core.hooksPath scripts/git-hooks
 Settings, keybindings, and snippets for Visual Studio Code.  
 #### `bin/`
 Various scripts, including `bootstrap`.
-#### `.aliases`
-Abbreviations for common commands.  
 #### `.bash_profile`  
 Loads all other files. Executed for login shells.  
 #### `.bashrc`  
