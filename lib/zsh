@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR/helpers"
+source "$_dir"/helpers
 
 # shellcheck disable=SC2119
 request-sudo
@@ -30,6 +30,6 @@ data_dir="$(xdg_data)/zsh"
 if ! [ -d "$data_dir" ]; then
 	mkdir -p "$data_dir"
 fi
-ln -sf "$DIR"/zsh/* "$data_dir"
-ln -sf "$DIR"/.zshrc "$HOME"
+ln -sf "$_dir"/../zsh/* "$data_dir"
+ln -sf "$_dir"/../.zshrc "$HOME"
 message "done initializing Zsh configuration."

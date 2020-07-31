@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+readonly _dir_exports="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 prepend_path() {
   if [[ "$PATH" != *"$1"* ]]; then
@@ -19,7 +19,7 @@ append_path() {
 # Force brew cask to symlink applications to global dir
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-if "$DIR"/bin/is-linux; then
+if "$_dir_exports"/bin/is-linux; then
   # Prevent Docker from storing configuration in  ~/.docker
   export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
 
@@ -29,7 +29,7 @@ if "$DIR"/bin/is-linux; then
   fi
 fi
 
-if "$DIR"/bin/is-macos; then
+if "$_dir_exports"/bin/is-macos; then
   # https://stackoverflow.com/a/5084892/1850656
   export XDG_CONFIG_HOME="$HOME"/Library/Preferences
   export XDG_DATA_HOME="$HOME"/Library
@@ -52,14 +52,14 @@ if "$DIR"/bin/is-macos; then
   fi
 fi
 
-if "$DIR"/bin/is-wsl; then
+if "$_dir_exports"/bin/is-wsl; then
   # For Karma tests
   export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
   export KARMA_CHROME_USER_DATA_DIR
-  KARMA_CHROME_USER_DATA_DIR="$("$DIR"/bin/expand-windows-path %LOCALAPPDATA%)\Google\Chrome\User Data"
+  KARMA_CHROME_USER_DATA_DIR="$("$_dir_exports"/bin/expand-windows-path %LOCALAPPDATA%)\Google\Chrome\User Data"
 
   # To make xdg-open work for URLs
-  export BROWSER="$DIR"/bin/wsl-open
+  export BROWSER="$_dir_exports"/bin/wsl-open
 
   # Make lpass --clip flag work
   export LPASS_CLIPBOARD_COMMAND='clip.exe'
@@ -82,7 +82,7 @@ fi
 
 # Add user bin directories to PATH
 prepend_path "$HOME"/.local/bin
-prepend_path "$DIR"/bin
+prepend_path "$_dir_exports"/bin
 
 # Default editor
 export VISUAL=emacs

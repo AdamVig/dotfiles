@@ -3,7 +3,7 @@
 # Time commands adapted from https://github.com/gabrielmdeal/pomodoro-bash/
 
 set -euo pipefail
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 readonly usage="Usage: $(basename "$0") [-h|--help]
 Run Pomodoro sessions.
@@ -19,7 +19,7 @@ fi
 duration_work_minutes=25
 duration_work_seconds=$(( duration_work_minutes * 60 ))
 
-readonly i_path="$DIR"/i
+readonly i_path="$_dir"/i
 if [ -x "$i_path" ]; then
   "$i_path" focus $duration_work_minutes
 fi

@@ -1,22 +1,24 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR"/../helpers
+source "$_dir"/helpers
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Ask for password at start
 # shellcheck disable=SC2119
 request-sudo
 
 message "symlinking dotfiles to your home directory..."
-ln -sf "$DIR"/../.aliases "$HOME"
-ln -sf "$DIR"/../.bash_profile "$HOME"
-ln -sf "$DIR"/../.bashrc "$HOME"
-ln -sf "$DIR"/../config/emacs "$HOME"/.emacs
-ln -sf "$DIR"/../.exports "$HOME"
-ln -sf "$DIR"/../.functions "$HOME"
-ln -sf "$DIR"/../.profile "$HOME"
+ln -sf "$_dir"/../.aliases "$HOME"
+ln -sf "$_dir"/../.bash_profile "$HOME"
+ln -sf "$_dir"/../.bashrc "$HOME"
+ln -sf "$_dir"/../config/emacs "$HOME"/.emacs
+ln -sf "$_dir"/../.exports "$HOME"
+ln -sf "$_dir"/../.functions "$HOME"
+ln -sf "$_dir"/../.profile "$HOME"
 
 message "configuring SSH..."
 mkdir -p "$HOME"/.ssh
@@ -42,7 +44,7 @@ if [ -h "$HOME"/.ripgreprc ]; then
 	rm -f "$HOME"/.ripgreprc
 fi
 mkdir -p "$config_dir"/ripgrep
-ln -sf "$DIR"/../config/ripgrep "$config_dir"/ripgrep/config
+ln -sf "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
 
 if ! [ -d "$config_dir"/docker ]; then
 	message "creating Docker configuration directory..."
@@ -50,26 +52,27 @@ if ! [ -d "$config_dir"/docker ]; then
 fi
 
 message "running OS-specific scripts..."
-if "$DIR"/bin/is-macos; then
-	"$DIR"/macos
-elif "$DIR"/bin/is-linux; then
-	"$DIR"/linux
+
+if "$_dir"/../bin/is-macos; then
+	"$_dir"/macos
+elif "$_dir"/../bin/is-linux; then
+	"$_dir"/linux
 	if command -v apt >/dev/null; then
-		"$DIR"/apt
+		"$_dir"/apt
 	fi
 fi
 
-if "$DIR"/bin/is-wsl; then
-	"$DIR"/wsl
+if "$_dir"/../bin/is-wsl; then
+	"$_dir"/wsl
 fi
 
-"$DIR"/brew
-"$DIR"/git
-"$DIR"/golang
-"$DIR"/node
-"$DIR"/pip
-"$DIR"/tmux
-"$DIR"/vscode
-"$DIR"/zsh
+"$_dir"/brew
+"$_dir"/git
+"$_dir"/golang
+"$_dir"/node
+"$_dir"/pip
+"$_dir"/tmux
+"$_dir"/vscode
+"$_dir"/zsh
 
 message "done. start a new login shell or run 'source .zshrc'."

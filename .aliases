@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+readonly _dir_aliases="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
@@ -13,11 +13,11 @@ alias tmux='tmux -f "${XDG_CONFIG_HOME:-$HOME/.config}"/tmux/tmux.conf'
 # Must use . to allow the script to change the shell's directory
 alias zn='. z-name-tmux-pane'
 
-if "$DIR"/bin/is-wsl; then
+if "$_dir_aliases"/bin/is-wsl; then
   alias kdiff3='kdiff3.exe'
   alias meld='meld.exe'
 	# shellcheck disable=SC2139
-  alias open="$DIR"/bin/wsl-open
+  alias open="$_dir_aliases"/bin/wsl-open
 fi
 
 if command -v exa > /dev/null; then

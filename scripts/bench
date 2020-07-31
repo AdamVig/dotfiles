@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Benchmark zsh startup time
 
-"$DIR"/../bin/avgtime zsh -i -c exit;
+"$_dir"/../bin/avgtime zsh -i -c exit;

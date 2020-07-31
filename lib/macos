@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR/helpers"
+source "$_dir"/helpers
 
 # Check if directory is writable, if not, take ownership of it
 message "  %s" "checking ownership of subdirectories of /usr/local..."

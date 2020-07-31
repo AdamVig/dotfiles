@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+readonly _dir_functions="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 xdg_config() {
 	echo "${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -15,9 +15,9 @@ xdg_cache() {
 }
 
 get_brew_prefix() {
-	if "$DIR"/bin/is-macos; then
+	if "$_dir_functions"/bin/is-macos; then
 		echo '/usr/local'
-	elif "$DIR"/bin/is-linux; then
+	elif "$_dir_functions"/bin/is-linux; then
 		echo '/home/linuxbrew/.linuxbrew'
 	fi
 }

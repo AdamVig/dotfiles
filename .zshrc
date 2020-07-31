@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-source "$HOME"/.bash_profile
+# Bash scripts must be sourced in compatibility mode due to differences in Zsh
+BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.bash_profile'
 
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol

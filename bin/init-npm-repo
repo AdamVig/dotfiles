@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Initialize a repository that uses npm and git
 # $1: directory to create repository in (optional, defaults to current directory)
@@ -13,7 +13,7 @@ fi
 
 git init
 npm init
-"$DIR"/gen-npm-readme
-"$DIR"/create-npm-repo
+"$_dir"/gen-npm-readme
+"$_dir"/create-npm-repo
 git add .
 git commit --allow-empty --message 'Initial commit'

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR/helpers"
+source "$_dir"/helpers
 
 message "installing golang tools..."
 go_packages=(

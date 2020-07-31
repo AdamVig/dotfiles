@@ -2,15 +2,15 @@
 
 # This script must run after the OS-specific scripts because it depends on Nodenv.
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR/helpers"
+source "$_dir"/helpers
 
 message "setting up Node..."
 
 message "  %s" "copying default packages file..."
-cp "$DIR"/../config/npm-default-packages "$(nodenv root)/default-packages" &>/dev/null || true
+cp "$_dir"/../config/npm-default-packages "$(nodenv root)/default-packages" &>/dev/null || true
 message "  %s" "done copying default packages file."
 
 message "  %s" "getting latest Node version..."

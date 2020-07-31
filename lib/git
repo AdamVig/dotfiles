@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR"/helpers
+source "$_dir"/helpers
 
 message "setting up Git..."
 
@@ -20,15 +20,15 @@ if [ -h "$HOME"/.git-template ]; then
   message "    %s" "removing legacy .git-template..."
   rm -f "$HOME"/.git-template
 fi
-ln -sf "$DIR"/git/template "$config_path"/template
+ln -sf "$_dir"/../git/template "$config_path"/template
 
 message "  %s" "symlinking attributes..."
-ln -sf "$DIR"/git/attributes "$config_path"/attributes
+ln -sf "$_dir"/../git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
     message "  %s" "copying gitconfig to '$config_path/config'..."
-    cp "$DIR"/git/config "$config_path"/config
+    cp "$_dir"/../git/config "$config_path"/config
 
     message "  %s" "configuring Git user..."
     read -r -p "  Full name: " name
@@ -41,7 +41,7 @@ if ! [ -e "$config_path"/config ]; then
     [ -n "$github" ] && git config --global github.user "$github"
     message "  %s" "done configuring Git user"
 
-    if "$DIR"/bin/is-wsl; then
+    if "$_dir"/../bin/is-wsl; then
       message "  %s" "setting credential helper for WSL..."
       git config --global credential.helper \
         '/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
@@ -49,7 +49,7 @@ if ! [ -e "$config_path"/config ]; then
 else
   message "  %s" "updating Git configuration..."
   # Read all values from current Git configuration
-  git config --list --file "$DIR"/git/config | while read -r conf_line; do
+  git config --list --file "$_dir"/../git/config | while read -r conf_line; do
     # Split line into name and value at equals sign
     IFS='=' read -r -a name_value <<< "$conf_line"
     name="${name_value[0]}"

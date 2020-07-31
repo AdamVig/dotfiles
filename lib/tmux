@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname "$(realpath "$0")")"
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # shellcheck source=./lib/helpers
-source "$DIR/helpers"
+source "$_dir"/helpers
 
 message "initializing Tmux configuration..."
 config_path="$(xdg_config)"/tmux
@@ -13,7 +13,7 @@ if [ -h "$HOME"/.tmux.conf ]; then
 	message "  %s" "removing old configuration file..."
 	rm -f "$HOME"/.tmux.conf
 fi
-ln -sf "$DIR"/tmux.conf "$config_path"
+ln -sf "$_dir"/../config/tmux.conf "$config_path"
 message "done initializing Tmux configuration."
 
 message "initializing Tmux Plugin Manager..."
