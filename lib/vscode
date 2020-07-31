@@ -7,18 +7,18 @@ source "$DIR/helpers"
 
 message "cyan" "setting up Visual Studio Code..."
 
-if "$DIR"/bin/is-macos; then
+if "$DIR"/../bin/is-macos; then
 	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
-	ln -sf "$DIR/.vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
-	ln -sf "$DIR/.vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+	ln -sf "$DIR"/../.vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+	ln -sf "$DIR"/../.vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 fi
 
-readonly appdata_path="$(wslpath "$("$DIR"/bin/expand-windows-path %APPDATA%)")"
-if "$DIR"/bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
+readonly appdata_path="$(wslpath "$("$DIR"/../bin/expand-windows-path %APPDATA%)")"
+if "$DIR"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
 	message "cyan" "  %s" "copying Visual Studio Code settings..."
 	windows_code_dir="$appdata_path"/Code/User
-	cp "$DIR"/.vscode/settings.json "$windows_code_dir"
-	cp "$DIR"/.vscode/keybindings.json "$windows_code_dir"
+	cp "$DIR"/../.vscode/settings.json "$windows_code_dir"
+	cp "$DIR"/../.vscode/keybindings.json "$windows_code_dir"
 fi
 
 declare -a extensions=(
@@ -49,7 +49,7 @@ for extension in "${extensions[@]}"; do
 	set +e
 
 	code_cmd='code'
-	if "$DIR"/bin/is-wsl; then
+	if "$DIR"/../bin/is-wsl; then
 		# Change directory to suppress cmd.exe warning
 		cd /c
 		# With WSL, must use code executable on Windows side

@@ -10,13 +10,13 @@ source "$DIR"/../helpers
 request-sudo
 
 message "symlinking dotfiles to your home directory..."
-ln -sf "$DIR"/../.aliases ~
-ln -sf "$DIR"/../.bash_profile ~
-ln -sf "$DIR"/../.bashrc ~
-ln -sf "$DIR"/../.emacs ~
-ln -sf "$DIR"/../.exports ~
-ln -sf "$DIR"/../.functions ~
-ln -sf "$DIR"/../.profile ~
+ln -sf "$DIR"/../.aliases "$HOME"
+ln -sf "$DIR"/../.bash_profile "$HOME"
+ln -sf "$DIR"/../.bashrc "$HOME"
+ln -sf "$DIR"/../config/emacs "$HOME"/.emacs
+ln -sf "$DIR"/../.exports "$HOME"
+ln -sf "$DIR"/../.functions "$HOME"
+ln -sf "$DIR"/../.profile "$HOME"
 
 message "configuring SSH..."
 mkdir -p "$HOME"/.ssh
@@ -42,7 +42,7 @@ if [ -h "$HOME"/.ripgreprc ]; then
 	rm -f "$HOME"/.ripgreprc
 fi
 mkdir -p "$config_dir"/ripgrep
-ln -sf "$DIR"/../.ripgreprc "$config_dir"/ripgrep/config
+ln -sf "$DIR"/../config/ripgrep "$config_dir"/ripgrep/config
 
 if ! [ -d "$config_dir"/docker ]; then
 	message "creating Docker configuration directory..."

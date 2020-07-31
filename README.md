@@ -27,13 +27,7 @@ Loads `.bash_profile`, which loads all other files. Executed for interactive non
 Environment variables.  
 #### `.functions`
 Simple functions for use in the shell.
-#### `.git-template`  
-Commit template with character length guides and style tips.  
 #### `.zshrc`  
 Configure Zsh. Loads `.bash_profile` in case it has not already been loaded.  
-#### `macos-terminal-profile.terminal`
-Settings profile for macOS Terminal.app. Must be manually imported via the Terminal settings window.
-#### `npm-default-packages`
-List of default packages for `nodenv` to install when any new version of Node is installed.
 
 For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.bash_profile`.

@@ -10,7 +10,7 @@ source "$DIR/helpers"
 message "setting up Node..."
 
 message "  %s" "copying default packages file..."
-cp "$DIR/npm-default-packages" "$(nodenv root)/default-packages" &>/dev/null || true
+cp "$DIR"/../config/npm-default-packages "$(nodenv root)/default-packages" &>/dev/null || true
 message "  %s" "done copying default packages file."
 
 message "  %s" "getting latest Node version..."
