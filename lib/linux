@@ -24,6 +24,7 @@ if ! command -v brew &> /dev/null; then
     set +eu
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     set -eu
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     message "    %s" "done installing Linuxbrew."
 fi
 
