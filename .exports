@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-readonly _dir_exports="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+_dir_exports="$(dirname "$(realpath "${(%):-%x}")")"
 
 prepend_path() {
   if [[ "$PATH" != *"$1"* ]]; then

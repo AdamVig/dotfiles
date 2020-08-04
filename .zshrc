@@ -2,9 +2,6 @@
 
 _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
 
-# Bash scripts must be sourced in compatibility mode due to differences in Zsh
-BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.bash_profile'
-
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
 
@@ -69,3 +66,83 @@ setopt prompt_subst
 
 # <remote host info> <bold><dir, max two levels deep><end bold> <git info>
 PS1='$(remote-host-info)%B%2~%b$(git-info) '
+
+# Run an npm script without excessive npm output
+alias npr='npm run --silent'
+
+alias glb="log-branch-commits"
+
+# Use custom config file location
+alias tmux='tmux -f "${XDG_CONFIG_HOME:-$HOME/.config}"/tmux/tmux.conf'
+
+# Must use . to allow the script to change the shell's directory
+alias zn='. z-name-tmux-pane'
+
+if command -v exa > /dev/null; then
+  alias ls='exa'
+fi
+
+# Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
+if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
+	# shellcheck disable=SC2123
+  PATH=""
+  source /etc/profile
+fi
+
+if "$_dir_zshrc"/bin/is-wsl; then
+  # https://github.com/Microsoft/WSL/issues/352
+  umask 022
+
+  alias kdiff3='kdiff3.exe'
+  alias meld='meld.exe'
+	# shellcheck disable=SC2139
+  alias open="$_dir_zshrc"/bin/wsl-open
+
+	# Temporary override to get rid of mysterious DOCKER_HOST on WSL
+	unset DOCKER_HOST
+
+	if ! pgrep ssh-agent > /dev/null; then
+    rm -rf /tmp/ssh-*
+    eval "$(ssh-agent -s)" > /dev/null
+  else
+    export SSH_AGENT_PID
+    SSH_AGENT_PID=$(pgrep ssh-agent)
+    export SSH_AUTH_SOCK
+    SSH_AUTH_SOCK=$(find /tmp/ssh-* -name 'agent.*')
+  fi
+fi
+
+# Load file if exists, suppress error if missing
+# shellcheck source=/dev/null
+source ~/.locals &> /dev/null || true
+
+# Initialize Linuxbrew if it exists and is not already initialized
+if [ -d /home/linuxbrew/.linuxbrew ] && [[ "$PATH" != *"/home/linuxbrew/.linuxbrew/bin"* ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Initialize Nodenv if not already initialized
+if [[ "$PATH" != *"nodenv/shims"* ]]; then
+  # Prevent Nodenv from storing data in ~/.nodenv
+  export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
+
+  eval "$(nodenv init -)"
+fi
+
+# Source exports late so that PATH overrides take effect
+# shellcheck source=.exports
+source ~/.exports
+
+# Initialize broot
+if is-macos; then
+  broot_root='org.dystroy.broot'
+else
+  broot_root='broot'
+fi
+# shellcheck disable=SC1090
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
+
+# If in an interactive session, Tmux is installed, and not in a Tmux pane
+if [ -t 1 ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
+  tmux attach || tmux new
+fi

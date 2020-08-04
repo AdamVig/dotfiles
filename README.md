@@ -17,11 +17,9 @@ git config --local core.hooksPath scripts/git-hooks
 Settings, keybindings, and snippets for Visual Studio Code.  
 #### `bin/`
 Various scripts, including `bootstrap`.
-#### `.bash_profile`  
-Loads all other files. Executed for login shells.  
 #### `.exports`  
 Environment variables.  
 #### `.zshrc`  
-Configure Zsh. Loads `.bash_profile` in case it has not already been loaded.  
+Configure Zsh.
 
-For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.bash_profile`.
+For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.zshrc`.
