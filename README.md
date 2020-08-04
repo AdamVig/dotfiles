@@ -19,8 +19,6 @@ Settings, keybindings, and snippets for Visual Studio Code.
 Various scripts, including `bootstrap`.
 #### `.bash_profile`  
 Loads all other files. Executed for login shells.  
-#### `.bashrc`  
-Loads `.bash_profile`, which loads all other files. Executed for interactive non-login shells.  
 #### `.exports`  
 Environment variables.  
 #### `.zshrc`  

@@ -25,6 +25,16 @@ if "$_dir_bash_profile"/bin/is-wsl; then
   alias meld='meld.exe'
 	# shellcheck disable=SC2139
   alias open="$_dir_bash_profile"/bin/wsl-open
+
+	if ! pgrep ssh-agent > /dev/null; then
+    rm -rf /tmp/ssh-*
+    eval "$(ssh-agent -s)" > /dev/null
+  else
+    export SSH_AGENT_PID
+    SSH_AGENT_PID=$(pgrep ssh-agent)
+    export SSH_AUTH_SOCK
+    SSH_AUTH_SOCK=$(find /tmp/ssh-* -name 'agent.*')
+  fi
 fi
 
 if command -v exa > /dev/null; then
@@ -54,9 +64,6 @@ unset DOCKER_HOST
 # Source exports late so that PATH overrides take effect
 # shellcheck source=.exports
 source ~/.exports
-
-# shellcheck source=.bashrc
-source ~/.bashrc
 
 if is-wsl; then
   # https://github.com/Microsoft/WSL/issues/352
