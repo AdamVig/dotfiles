@@ -28,4 +28,17 @@ if ! command -v brew &> /dev/null; then
     message "    %s" "done installing Linuxbrew."
 fi
 
+readonly fonts_dir="$(xdg_data)"/fonts
+if ! [ -d "$fonts_dir"/source-code-pro ]; then
+	mkdir -p "$fonts_dir"
+	message '    %s' 'installing Source Code Pro...'
+	if ! git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git "$fonts_dir"/source-code-pro; then
+		fatal 'failed to clone Git repository'
+	fi
+	if ! fc-cache "$fonts_dir"/source-code-pro; then
+		fatal 'failed to generate font caches'
+	fi
+	message '    %s' 'done installing Source Code Pro.'
+fi
+
 message "  %s" "done setting up Linux."
