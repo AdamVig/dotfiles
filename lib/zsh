@@ -8,17 +8,17 @@ source "$_dir"/helpers
 # shellcheck disable=SC2119
 request-sudo
 
-if [[ $SHELL != *zsh ]]; then
+if [[ "$SHELL" != *zsh ]]; then
 	message "changing default shell to Zsh..."
-	if is-wsl && ! grep 'zsh' /etc/shells >/dev/null; then
-		message "adding ZSH to /etc/shells..."
-		which zsh | sudo tee -a /etc/shells
-		message "done adding ZSH to /etc/shells."
-	fi
 
 	if is-macos; then
 		sudo chsh -s "$(which zsh)" "$USER"
 	else
+		if ! grep 'zsh' /etc/shells >/dev/null; then
+			message "adding Zsh to /etc/shells..."
+			command -v zsh | sudo tee -a /etc/shells
+			message "done adding Zsh to /etc/shells."
+		fi
 		chsh --shell "$(which zsh)"
 	fi
 
