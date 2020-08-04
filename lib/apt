@@ -5,13 +5,100 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+# shellcheck disable=SC2119
+request-sudo
+
+# $1: string that uniquely identifies repository
+is_repository_configured() {
+	grep --quiet --recursive "$1" /etc/apt/sources.list /etc/apt/sources.list.d/
+}
+
+# $1: human-readable name, will be used to build filename (<name>.list)
+# $2: repository configuration string
+add_repository() {
+	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list > /dev/null
+}
+
 message "setting up apt..."
 
-request-sudo apt-get update >/dev/null
-request-sudo apt-get upgrade -y >/dev/null
+if ! is_repository_configured 'vscode'; then
+	message '  %s' 'adding Visual Studio Code repository...'
+	if ! curl --silent --fail --show-error https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+	add_repository 'vscode' 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
+	message '  %s' 'done adding Visual Studio Code repository.'
+fi
 
-message '  %s' 'installing xdg-utils and wpasupplicant...'
-sudo apt install -y xdg-utils wpasupplicant
-message '  %s' 'done installing xdg-utils and wpasupplicant.'
+if ! is_repository_configured 'spotify'; then
+	message '  %s' 'adding Spotify repository...'
+	if ! curl --silent --fail --show-error https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
+	message '  %s' 'done adding Spotify repository.'
+fi
+
+if ! is_repository_configured 'slack'; then
+	message '  %s' 'adding Slack repository...'
+	if ! curl --silent --fail --show-error --location https://packagecloud.io/slacktechnologies/slack/gpgkey | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+	add_repository 'slack' 'deb https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
+	message '  %s' 'done adding Slack repository.'
+fi
+
+if ! is_repository_configured 'signal'; then
+	message '  %s' 'adding Signal repository...'
+	if ! curl --silent --fail --show-error --location https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+	add_repository 'signal' 'deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main'
+	message '  %s' 'done adding Signal repository.'
+fi
+
+if ! is_repository_configured 'nextcloud'; then
+	message '  %s' 'adding Nextcloud repository...'
+	sudo add-apt-repository --yes ppa:nextcloud-devs/client
+	message '  %s' 'done adding Nextcloud repository.'
+fi
+
+message '  %s' 'updating lists...'
+request-sudo apt-get update > /dev/null
+message '  %s' 'done updating lists.'
+
+message '  %s' 'upgrading packages...'
+request-sudo apt-get upgrade --yes --autoremove > /dev/null
+message '  %s' 'done upgrading packages.'
+
+declare -a packages=(
+	software-properties-common
+	apt-transport-https
+	xdg-utils
+	wpasupplicant
+	code
+	spotify-client
+	slack-desktop
+	signal-desktop
+	emacs
+	nautilus-nextcloud
+	chromium-browser
+	fonts-firacode
+)
+
+message '  %s' 'installing packages...'
+sudo apt-get install --yes "${packages[@]}"
+message '  %s' 'done installing packages.'
+
+message '  %s' 'installing Keybase...'
+readonly keybase_deb_tmp="$(mktemp --suffix=.deb)"
+if ! curl --silent --fail --show-error https://prerelease.keybase.io/keybase_amd64.deb --output "$keybase_deb_tmp"; then
+	fatal 'failed to download Keybase'
+fi
+if ! sudo apt-get install --yes "$keybase_deb_tmp" > /dev/null; then
+	fatal 'failed to install Keybase'
+fi
+rm -f "$keybase_deb_tmp"
+message '  %s' 'done installing Keybase.'
 
 message "done setting up apt."
