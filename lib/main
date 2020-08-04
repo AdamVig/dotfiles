@@ -73,5 +73,6 @@ fi
 "$_dir"/tmux
 "$_dir"/vscode
 "$_dir"/zsh
+"$_dir"/profile-picture
 
 message "done. start a new login shell or run 'source .zshrc'."
