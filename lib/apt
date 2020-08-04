@@ -84,6 +84,7 @@ declare -a packages=(
 	nautilus-nextcloud
 	chromium-browser
 	fonts-firacode
+	gnome-shell-extension-impatience
 )
 
 message '  %s' 'installing packages...'
