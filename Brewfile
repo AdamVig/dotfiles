@@ -17,7 +17,7 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
-brew "emacs"
+brew "emacs" if OS.mac?
 brew "expect" # Scripting tool for interactive programs
 brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
