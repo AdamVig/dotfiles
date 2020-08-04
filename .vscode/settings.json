@@ -3,7 +3,7 @@
   // Editor
   // ------------------------------
   "window.zoomLevel": 1,
-  "editor.fontFamily": "Hasklig",
+  "editor.fontFamily": "Fira Code",
   "editor.fontWeight": "600",
   "editor.fontLigatures": true,
   "editor.rulers": [
