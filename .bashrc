@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly _dir_bashrc="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+_dir_bashrc="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 if "$_dir_bashrc"/bin/is-wsl; then
   if ! pgrep ssh-agent > /dev/null; then

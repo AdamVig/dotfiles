@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-readonly _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
+_dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
 
 # Bash scripts must be sourced in compatibility mode due to differences in Zsh
 BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.bash_profile'

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly _dir_bash_profile="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+_dir_bash_profile="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
 if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
