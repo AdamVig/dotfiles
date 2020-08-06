@@ -13,6 +13,13 @@ if "$_dir"/../bin/is-macos; then
 	ln -sf "$_dir"/../.vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 fi
 
+if "$_dir"/../bin/is-linux; then
+	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
+	ln -sf "$_dir"/../.vscode/settings.json "$HOME"/.config/Code/User/settings.json
+	ln -sf "$_dir"/../.vscode/keybindings.json "$HOME"/.config/Code/User/keybindings.json
+	message "cyan" "  %s" "done symlinking Visual Studio Code settings."
+fi
+
 if "$_dir"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
 	readonly appdata_path="$(wslpath "$("$_dir"/../bin/expand-windows-path %APPDATA%)")"
 	message "cyan" "  %s" "copying Visual Studio Code settings..."
