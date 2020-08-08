@@ -7,18 +7,6 @@ source "$_dir"/helpers
 
 message "cyan" "setting up Visual Studio Code..."
 
-if "$_dir"/../bin/is-macos; then
-	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
-	ln -sf "$_dir"/../.vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
-	ln -sf "$_dir"/../.vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
-fi
-
-if "$_dir"/../bin/is-linux; then
-	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
-	ln -sf "$_dir"/../.vscode/settings.json "$HOME"/.config/Code/User/settings.json
-	ln -sf "$_dir"/../.vscode/keybindings.json "$HOME"/.config/Code/User/keybindings.json
-	message "cyan" "  %s" "done symlinking Visual Studio Code settings."
-fi
 
 if "$_dir"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
 	readonly appdata_path="$(wslpath "$("$_dir"/../bin/expand-windows-path %APPDATA%)")"
@@ -26,6 +14,20 @@ if "$_dir"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; th
 	windows_code_dir="$appdata_path"/Code/User
 	cp "$_dir"/../.vscode/settings.json "$windows_code_dir"
 	cp "$_dir"/../.vscode/keybindings.json "$windows_code_dir"
+else
+	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
+
+	if "$_dir"/../bin/is-macos; then
+		vscode_settings_dir="$HOME"/Library/Application\ Support/Code/User
+	elif "$_dir"/../bin/is-linux; then
+		vscode_settings_dir="$HOME"/.config/Code/User
+	fi
+
+	mkdir -p "$vscode_settings_dir"
+	ln -sf "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
+	ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
+
+	message "cyan" "  %s" "done symlinking Visual Studio Code settings."
 fi
 
 declare -a extensions=(
