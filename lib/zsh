@@ -13,11 +13,11 @@ if [[ "$SHELL" != *zsh ]]; then
 	zsh_path="$(command -v zsh)"
 
 	if is-macos; then
-		sudo chsh -s "$zsh_path" "$USER"
+		request-sudo chsh -s "$zsh_path" "$USER"
 	else
 		if ! grep 'zsh' /etc/shells >/dev/null; then
 			message "adding Zsh to /etc/shells..."
-			echo "$zsh_path" | sudo tee -a /etc/shells
+			echo "$zsh_path" | request-sudo tee -a /etc/shells
 			message "done adding Zsh to /etc/shells."
 		fi
 		chsh --shell "$zsh_path"
@@ -27,7 +27,7 @@ if [[ "$SHELL" != *zsh ]]; then
 fi
 
 message "initializing Zsh configuration..."
-data_dir="$(xdg_data)/zsh"
+data_dir="$(xdg_data)"/zsh
 if ! [ -d "$data_dir" ]; then
 	mkdir -p "$data_dir"
 fi
