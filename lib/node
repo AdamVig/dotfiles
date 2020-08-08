@@ -14,7 +14,7 @@ if "$_dir"/../bin/is-linux; then
 	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
 	mkdir -p "$nodenv_root"
 	if ! [ -d "$nodenv_root" ]; then
-		if ! git clone https://github.com/nodenv/nodenv.git "$nodenv_root" > /dev/null; then
+		if ! git clone --depth 1 https://github.com/nodenv/nodenv.git "$nodenv_root" > /dev/null; then
 			fatal 'failed to clone Nodenv'
 		fi
 	fi
@@ -34,7 +34,7 @@ if "$_dir"/../bin/is-linux; then
 
 	for nodenv_plugin in "${nodenv_plugins[@]}"; do
 		if ! [ -d "$nodenv_root"/plugins/"$nodenv_plugin" ]; then
-			if ! git clone https://github.com/nodenv/"$nodenv_plugin".git "$nodenv_root"/plugins/"$nodenv_plugin" > /dev/null; then
+			if ! git clone --depth 1 https://github.com/nodenv/"$nodenv_plugin".git "$nodenv_root"/plugins/"$nodenv_plugin" > /dev/null; then
 				fatal "failed to install Nodenv plugin '$nodenv_plugin'"
 			fi
 		fi

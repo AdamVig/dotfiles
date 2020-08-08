@@ -19,7 +19,7 @@ message "done initializing Tmux configuration."
 message "initializing Tmux Plugin Manager..."
 readonly tpm_path="$(xdg_data)"/tmux/plugins/tpm
 if ! [ -d "$tpm_path" ]; then
-	git clone https://github.com/tmux-plugins/tpm "$tpm_path"
+	git clone --depth 1 https://github.com/tmux-plugins/tpm "$tpm_path"
 	message "done initializing Tmux Plugin Manager."
 else
 	message "tmux Plugin Manager already initialized."
