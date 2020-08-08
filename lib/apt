@@ -140,6 +140,7 @@ declare -a packages=(
 	# programming language tools
 	composer # PHP
 	go-dep # Golang
+	python3-pip
 	shellcheck # Shell script linter
 
 	# web service clients
