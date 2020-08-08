@@ -1,17 +1,10 @@
 #!/usr/bin/env zsh
+zmodload zsh/zprof
 
 _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
 
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
-
-get_brew_prefix() {
-	if "$_dir_zshrc"/bin/is-macos; then
-		echo '/usr/local'
-	elif "$_dir_zshrc"/bin/is-linux; then
-		echo '/home/linuxbrew/.linuxbrew'
-	fi
-}
 
 data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh
 if ! [ -d "$data_dir" ]; then
@@ -116,22 +109,16 @@ fi
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true
 
-# Initialize Linuxbrew if it exists and is not already initialized
-if [ -d /home/linuxbrew/.linuxbrew ] && [[ "$PATH" != *"/home/linuxbrew/.linuxbrew/bin"* ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-# Initialize Nodenv if not already initialized
-if [[ "$PATH" != *"nodenv/shims"* ]]; then
-  # Prevent Nodenv from storing data in ~/.nodenv
-  export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
-
-  eval "$(nodenv init -)"
-fi
-
 # Source exports late so that PATH overrides take effect
 # shellcheck source=.exports
 source ~/.exports
+
+# Initialize Nodenv if not already initialized
+if [[ "$PATH" != *"nodenv/shims"* ]]; then
+  eval "$(nodenv init - --no-rehash)"
+
+	source "$NODENV_ROOT"/completions/nodenv.zsh
+fi
 
 # Initialize broot
 if is-macos; then

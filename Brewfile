@@ -42,7 +42,6 @@ brew "yq" # jq for YAML/XML
 
 # shell
 brew "bash"
-brew "z"
 brew "zsh"
 brew "zsh-syntax-highlighting"
 

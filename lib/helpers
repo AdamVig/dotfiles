@@ -83,19 +83,39 @@ confirm() {
 	return $? # result of previous line, either 0 (yes) or 1 (no)
 }
 
+# cURL wrapper with common default options
+_curl() {
+	curl --silent --fail --show-error --location "$@"
+}
+
 # Get the GitHub release URL matching a given pattern
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
-get-release-url() {
+get_release_url() {
     # Check if jq is available for JSON parsing
-    if [[ -z "$(command -v jq)" ]]; then
+    if ! command -v jq > /dev/null; then
         warn "could not get release url for $1 because jq is not installed"
         return 100
     fi
 
     # Get list of releases
     curl -s "https://api.github.com/repos/$1/releases/latest" | \
-        jq --raw-output ".assets[] | .browser_download_url | select(endswith(\"$2\"))"
+        jq --raw-output ".assets[] | .browser_download_url | select(contains(\"$2\"))"
+}
+
+# Install a binary to ~/.local/bin from a URL
+# $1: binary name
+# $2: URL
+install_binary_from_url() {
+	local name="${1:-}"
+	local url="${2:-}"
+	local path="$HOME"/.local/bin/"$name"
+
+	if ! _curl "$url" --output "$path"; then
+		fatal "failed to download '$name' from '$url'"
+	fi
+
+	chmod +x "$path"
 }
 
 # Prompt the user for their password with a custom message

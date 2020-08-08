@@ -2,9 +2,13 @@
 
 # Initialize Zsh utilities.
 
-brew_prefix="$(get_brew_prefix)"
+_dir_init_utils="$(dirname "$(realpath "${(%):-%x}")")"
 
-source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if "$_dir_init_utils"/../bin/is-macos; then
+	source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif "$_dir_init_utils"/../bin/is-linux; then
+	source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 z_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/z
 if ! [ -d "$z_dir" ]; then
@@ -12,4 +16,4 @@ if ! [ -d "$z_dir" ]; then
     touch "$z_dir"/z
 fi
 export _Z_DATA="$z_dir"/z
-source "$brew_prefix"/etc/profile.d/z.sh
+source "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-z/zsh-z.plugin.zsh

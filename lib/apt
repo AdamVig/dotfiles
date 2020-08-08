@@ -19,40 +19,40 @@ add_repository() {
 	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list > /dev/null
 }
 
+# $1: URL
+add_key() {
+	local url="${1:-}"
+	if ! _curl "$url" | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+}
+
 message "setting up apt..."
 
 if ! is_repository_configured 'vscode'; then
 	message '  %s' 'adding Visual Studio Code repository...'
-	if ! curl --silent --fail --show-error https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -; then
-		fatal 'failed to add key'
-	fi
+	add_key https://packages.microsoft.com/keys/microsoft.asc
 	add_repository 'vscode' 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
 	message '  %s' 'done adding Visual Studio Code repository.'
 fi
 
 if ! is_repository_configured 'spotify'; then
 	message '  %s' 'adding Spotify repository...'
-	if ! curl --silent --fail --show-error https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -; then
-		fatal 'failed to add key'
-	fi
+	add_key https://download.spotify.com/debian/pubkey.gpg
 	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
 	message '  %s' 'done adding Spotify repository.'
 fi
 
 if ! is_repository_configured 'slack'; then
 	message '  %s' 'adding Slack repository...'
-	if ! curl --silent --fail --show-error --location https://packagecloud.io/slacktechnologies/slack/gpgkey | sudo apt-key add -; then
-		fatal 'failed to add key'
-	fi
+	add_key https://packagecloud.io/slacktechnologies/slack/gpgkey
 	add_repository 'slack' 'deb https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
 	message '  %s' 'done adding Slack repository.'
 fi
 
 if ! is_repository_configured 'signal'; then
 	message '  %s' 'adding Signal repository...'
-	if ! curl --silent --fail --show-error --location https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -; then
-		fatal 'failed to add key'
-	fi
+	add_key https://updates.signal.org/desktop/apt/keys.asc
 	add_repository 'signal' 'deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main'
 	message '  %s' 'done adding Signal repository.'
 fi
@@ -63,37 +63,151 @@ if ! is_repository_configured 'nextcloud'; then
 	message '  %s' 'done adding Nextcloud repository.'
 fi
 
+if ! is_repository_configured 'diff-so-fancy'; then
+	message '  %s' 'adding diff-so-fancy repository...'
+	sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
+	message '  %s' 'done adding diff-so-fancy repository.'
+fi
+
+if ! is_repository_configured 'azlux'; then
+	message '  %s' 'adding broot repository...'
+	add_key https://azlux.fr/repo.gpg.key
+	add_repository 'broot' 'deb http://packages.azlux.fr/debian/ buster main'
+	message '  %s' 'done adding broot repository.'
+fi
+
 message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
 
-message '  %s' 'upgrading packages...'
+message '  %s' 'upgrading package...'
 request-sudo apt-get upgrade --yes --autoremove > /dev/null
 message '  %s' 'done upgrading packages.'
 
 declare -a packages=(
-	software-properties-common
+	# system dependencies
 	apt-transport-https
+	software-properties-common
+
+	# default utilities
+	gnupg
+	rsync
+	wget
+
+	# replacements of default utilities
+	bat # Better cat
+	broot # Better tree
+	diff-so-fancy # Better Git diff viewer
+	fd-find # Better find
+	htop # Better top
+	httpie # Better curl
+	ripgrep # Better grep
+
+	# command line tools
+	expect # Scripting tool for interactive programs
+	fzf # Fuzzy finder
+	gifsicle # Gif tool
+	graphviz # Graph visualization tool
+	hugo # Static site builder
+	imagemagick
+	ipcalc # IP address calculator
+	jq # JSON processor
+	magic-wormhole # Point-to-point file sharing
+	nnn # Command-line file browser
+	p7zip
+	pandoc
+	postgresql-client # PostgreSQL CLI
+	tig # Visual Git client
+	tmux
+	tree
+	unzip
+	xclip # Clipboard CLI
 	xdg-utils
 	wpasupplicant
-	code
-	spotify-client
-	slack-desktop
-	signal-desktop
-	emacs
-	nautilus-nextcloud
+
+	# shell
+	bash
+	zsh
+	zsh-syntax-highlighting
+
+	# programming languages
+	golang
+	php
+	python3
+	ruby
+	rustc
+
+	# programming language tools
+	composer # PHP
+	go-dep # Golang
+	shellcheck # Shell script linter
+
+	# web service clients
+	hub # GitHub
+	lastpass-cli
+
+	# applications
 	chromium-browser
-	fonts-firacode
+	code
+	docker.io
+	emacs
+	firefox
 	gnome-shell-extension-impatience
+	inkscape
+	kdiff3 # Merge tool
+	keybase
+	libreoffice
+	meld # Comparison tool for version control, files, and directories
+	nautilus-nextcloud
+	signal-desktop
+	slack-desktop
+	spotify-client
+	steam
+	thunderbird
+	vino # GNOME VNC server
+
+	# fonts
+	fonts-firacode
 )
 
 message '  %s' 'installing packages...'
 sudo apt-get install --yes "${packages[@]}"
 message '  %s' 'done installing packages.'
 
+# TODO delineate Snap from Apt
+message '  %s' 'installing Authy...'
+sudo snap install authy --beta
+message '  %s' 'done installing Authy.'
+
+message '  %s' 'installing yq...'
+sudo snap install yq
+message '  %s' 'done installing yq.'
+
+message '  %s' 'installing ffsend...'
+sudo snap install ffsend
+message '  %s' 'done installing ffsend.'
+
+message '  %s' 'installing GitHub CLI...'
+if ! github_cli_url="$(get_release_url 'cli/cli' 'linux_amd64.deb')"; then
+	fatal 'failed to get GitHub CLI release URL'
+fi
+github_cli_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$github_cli_url" --output "$github_cli_tmp"; then
+	fatal 'failed to download GitHub CLI'
+fi
+if ! request-sudo apt-get install "$github_cli_tmp"; then
+	fatal 'failed to install GitHub CLI'
+fi
+rm -f "$github_cli_tmp"
+message '  %s' 'done installing GitHub CLI.'
+
+message '  %s' 'linking batcat to bat...'
+ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
+message '  %s' 'done linking batcat to bat.'
+
 message '  %s' 'installing Keybase...'
 readonly keybase_deb_tmp="$(mktemp --suffix=.deb)"
-if ! curl --silent --fail --show-error https://prerelease.keybase.io/keybase_amd64.deb --output "$keybase_deb_tmp"; then
+if ! _curl https://prerelease.keybase.io/keybase_amd64.deb --output "$keybase_deb_tmp"; then
 	fatal 'failed to download Keybase'
 fi
 if ! sudo apt-get install --yes "$keybase_deb_tmp" > /dev/null; then

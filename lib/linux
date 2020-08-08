@@ -13,20 +13,11 @@ message "  %s" "setting up Linux..."
 message "    %s" "installing essential tools..."
 if command -v apt-get > /dev/null; then
     sudo apt-get update > /dev/null
-    sudo apt-get install --yes build-essential curl file git > /dev/null
+    sudo apt-get install --yes build-essential curl file git jq > /dev/null
 else
     error "could not find a supported package manager; skipping install"
 fi
 message "    %s" "done installing essential tools."
-
-if ! command -v brew &> /dev/null; then
-    message "    %s" "installing Linuxbrew..."
-    set +eu
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    set -eu
-    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    message "    %s" "done installing Linuxbrew."
-fi
 
 readonly fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
@@ -40,5 +31,68 @@ if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	fi
 	message '    %s' 'done installing Source Code Pro.'
 fi
+
+message "    %s" "installing shfmt..."
+if ! shfmt_url="$(get_release_url 'mvdan/sh' 'linux_amd64')"; then
+	fatal 'failed to get shfmt release URL'
+fi
+
+install_binary_from_url 'shfmt' "$shfmt_url"
+message "    %s" "done installing shfmt."
+
+message "    %s" "installing exa..."
+if ! exa_url="$(get_release_url 'ogham/exa' 'linux-x86_64')"; then
+	fatal 'failed to get exa release URL'
+fi
+
+exa_zip_tmp="$(mktemp)"
+if ! _curl "$exa_url" --output "$exa_zip_tmp"; then
+	fatal 'failed to download exa'
+fi
+
+exa_tmp="$(mktemp -d)"
+if ! unzip "$exa_zip_tmp" 'exa-linux-x86_64' -d "$exa_tmp" > /dev/null; then
+	fatal 'failed to unzip exa'
+fi
+rm -f "$exa_zip_tmp"
+
+exa_path="$HOME"/.local/bin/exa
+mv "$exa_tmp"/exa-linux-x86_64 "$exa_path"
+rm -rf "$exa_tmp"
+
+chmod +x "$exa_path"
+message "    %s" "done installing exa."
+
+message "    %s" "installing scc..."
+if ! scc_url="$(get_release_url 'boyter/scc' 'x86_64-unknown-linux')"; then
+	fatal 'failed to get scc release URL'
+fi
+
+scc_zip_tmp="$(mktemp)"
+if ! _curl "$scc_url" --output "$scc_zip_tmp"; then
+	fatal 'failed to download scc'
+fi
+
+scc_tmp="$(mktemp -d)"
+if ! unzip "$scc_zip_tmp" 'scc' -d "$scc_tmp" > /dev/null; then
+	fatal 'failed to unzip scc'
+fi
+rm -f "$scc_zip_tmp"
+
+scc_path="$HOME"/.local/bin/scc
+mv "$scc_tmp"/scc "$scc_path"
+rm -rf "$scc_tmp"
+
+chmod +x "$scc_path"
+message "    %s" "done installing scc."
+
+message "    %s" "installing Slack CLI..."
+slack_cli_path="$HOME"/.local/bin/slack
+if ! _curl https://raw.githubusercontent.com/rockymadden/slack-cli/master/src/slack --output "$slack_cli_path"; then
+	fatal 'failed to download Slack CLI'
+fi
+
+chmod +x "$slack_cli_path"
+message "    %s" "done installing Slack CLI."
 
 message "  %s" "done setting up Linux."

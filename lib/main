@@ -52,6 +52,7 @@ message "running OS-specific scripts..."
 
 if "$_dir"/../bin/is-macos; then
 	"$_dir"/macos
+	"$_dir"/brew
 elif "$_dir"/../bin/is-linux; then
 	"$_dir"/linux
 	if command -v apt >/dev/null; then
@@ -63,7 +64,6 @@ if "$_dir"/../bin/is-wsl; then
 	"$_dir"/wsl
 fi
 
-"$_dir"/brew
 "$_dir"/git
 "$_dir"/golang
 "$_dir"/node

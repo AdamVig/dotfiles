@@ -10,16 +10,18 @@ request-sudo
 
 if [[ "$SHELL" != *zsh ]]; then
 	message "changing default shell to Zsh..."
+	zsh_path="$(command -v zsh)"
+
 
 	if is-macos; then
-		sudo chsh -s "$(which zsh)" "$USER"
+		sudo chsh -s "$zsh_path" "$USER"
 	else
 		if ! grep 'zsh' /etc/shells >/dev/null; then
 			message "adding Zsh to /etc/shells..."
-			command -v zsh | sudo tee -a /etc/shells
+			echo "$zsh_path" | sudo tee -a /etc/shells
 			message "done adding Zsh to /etc/shells."
 		fi
-		chsh --shell "$(which zsh)"
+		chsh --shell "$zsh_path"
 	fi
 
 	message "done changing default shell to Zsh."
@@ -33,3 +35,12 @@ fi
 ln -sf "$_dir"/../zsh/* "$data_dir"
 ln -sf "$_dir"/../.zshrc "$HOME"
 message "done initializing Zsh configuration."
+
+z_path="$(xdg_data)"/zsh-z
+if ! [ -d "$z_path" ]; then
+	message "installing z..."
+	if ! git clone https://github.com/agkozak/zsh-z.git ; then
+		fatal 'failed to clone zsh-z'
+	fi
+	message "done installing z."
+fi

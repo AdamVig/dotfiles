@@ -9,8 +9,39 @@ source "$_dir"/helpers
 
 message "setting up Node..."
 
+message "  %s" "installing Nodenv..."
+nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
+mkdir -p "$nodenv_root"
+if ! [ -d "$nodenv_root" ]; then
+	if ! git clone https://github.com/nodenv/nodenv.git "$nodenv_root" > /dev/null; then
+		fatal 'failed to clone Nodenv'
+	fi
+fi
+
+eval "$("$nodenv_root"/bin/nodenv init -)"
+message "  %s" "done installing Nodenv."
+
+message "  %s" "installing Nodenv plugins..."
+mkdir -p "$nodenv_root"/plugins
+
+declare -a nodenv_plugins=(
+	node-build
+	nodenv-update
+	nodenv-default-packages
+	nodenv-package-rehash
+)
+
+for nodenv_plugin in "${nodenv_plugins[@]}"; do
+	if ! [ -d "$nodenv_root"/plugins/"$nodenv_plugin" ]; then
+		if ! git clone https://github.com/nodenv/"$nodenv_plugin".git "$nodenv_root"/plugins/"$nodenv_plugin" > /dev/null; then
+			fatal "failed to install Nodenv plugin '$nodenv_plugin'"
+		fi
+	fi
+done
+message "  %s" "done installing Nodenv plugins."
+
 message "  %s" "copying default packages file..."
-cp "$_dir"/../config/npm-default-packages "$(nodenv root)/default-packages" &>/dev/null || true
+cp "$_dir"/../config/npm-default-packages "$nodenv_root"/default-packages &> /dev/null || true
 message "  %s" "done copying default packages file."
 
 message "  %s" "getting latest Node version..."
@@ -23,16 +54,21 @@ message "  %s" "done getting latest Node version."
 
 if [ -n "$latest_node_version" ]; then
 	message "  %s" "installing Node $latest_node_version and default npm packages..."
-	nodenv install --force "$latest_node_version" &>/dev/null || true
-	nodenv global "$latest_node_version" || true
-	eval "$(nodenv init -)"
+	if ! nodenv install --skip-existing "$latest_node_version" &> /dev/null; then
+		fatal 'failed to install Node'
+	fi
+
+	if ! nodenv global "$latest_node_version"; then
+		fatal 'failed to set gloabl Node version'
+	fi
+
 	message "  %s" "done installing Node and default npm packages."
 else
 	warn "could not get latest Node version; installation failed"
 fi
 
 message "  %s" "setting Python path..."
-npm config set --global python "$(which python3)"
+npm config set --global python "$(command -v python3)"
 message "  %s" "done setting Python path."
 
 message "done setting up Node."

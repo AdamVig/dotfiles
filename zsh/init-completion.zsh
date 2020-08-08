@@ -2,8 +2,7 @@
 
 # Initialize command completion.
 
-brew_prefix="$(get_brew_prefix)"
-completion_path="$brew_prefix"/share/zsh/site-functions
+completion_path=/usr/local/share/zsh/site-functions
 
 if [[ "$FPATH" != *"$completion_path"* ]]; then
   FPATH="$completion_path${FPATH:+:${FPATH}}"

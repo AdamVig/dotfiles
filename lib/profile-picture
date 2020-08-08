@@ -27,7 +27,7 @@ if ! [ -f "$profile_picture_path" ]; then
 			fi
 
 			email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
-			if curl --silent --fail --show-error "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
+			if _curl"https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
 				message 'done downloading profile picture.'
 			else
 				fatal 'failed to download profile picture'
