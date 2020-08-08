@@ -117,3 +117,4 @@ export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
 
 export PAGER='bat'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
