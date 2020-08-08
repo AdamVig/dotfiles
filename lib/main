@@ -35,6 +35,11 @@ if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg
 	echo "$gpg_agent_config" >>"$gpg_agent_config_path"
 fi
 
+bin_dir="$HOME"/.local/bin
+message "creating '$bin_dir'..."
+mkdir -p "$bin_dir"
+message "done creating '$bin_dir'."
+
 config_dir="$(xdg_config)"
 message "symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
