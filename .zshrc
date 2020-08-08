@@ -117,7 +117,11 @@ source ~/.exports
 if [[ "$PATH" != *"nodenv/shims"* ]]; then
   eval "$(nodenv init - --no-rehash)"
 
-	source "$NODENV_ROOT"/completions/nodenv.zsh
+	# For Linux
+	nodenv_completions_path="$NODENV_ROOT"/completions/nodenv.zsh
+	if [ -f "$nodenv_completions_path" ]; then
+		source "$nodenv_completions_path"
+	fi
 fi
 
 # Initialize broot
