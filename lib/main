@@ -14,6 +14,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 request-sudo
 
 message "symlinking dotfiles to your home directory..."
+ln -sf "$_dir"/../.bashrc "$HOME"
 ln -sf "$_dir"/../config/emacs "$HOME"/.emacs
 ln -sf "$_dir"/../.exports "$HOME"
 
