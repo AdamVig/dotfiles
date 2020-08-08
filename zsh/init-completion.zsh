@@ -12,3 +12,5 @@ fi
 zmodload -i zsh/complist
 autoload -U compinit
 compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump
+
+zstyle ':completion:*' menu select
