@@ -1,8 +1,8 @@
 
-if [[ "$SHELL" == *'zsh' ]]; then
-	_dir_exports="$(dirname "$(realpath "${(%):-%x}")")"
-else
+if [ -v BASH_SOURCE ]; then
 	_dir_exports="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+else
+	_dir_exports="$(dirname "$(realpath "${(%):-%x}")")"
 fi
 
 prepend_path() {
