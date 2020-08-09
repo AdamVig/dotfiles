@@ -125,7 +125,7 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
 fi
 
 # Initialize broot
-if is-macos; then
+if "$_dir_zshrc"/bin/is-macos; then
   broot_root='org.dystroy.broot'
 else
   broot_root='broot'
