@@ -69,6 +69,12 @@ if ! is_repository_configured 'diff-so-fancy'; then
 	message '  %s' 'done adding diff-so-fancy repository.'
 fi
 
+if ! is_repository_configured 'git-core'; then
+	message '  %s' 'adding git repository...'
+	sudo add-apt-repository --yes ppa:git-core/ppa
+	message '  %s' 'done adding git repository.'
+fi
+
 if ! is_repository_configured 'azlux'; then
 	message '  %s' 'adding broot repository...'
 	add_key https://azlux.fr/repo.gpg.key
