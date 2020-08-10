@@ -23,6 +23,7 @@ brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
 brew "graphviz" # Graph visualization tool
 brew "hugo" # Static site builder
+brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
 brew "ipcalc" # IP address calculator
 brew "jq" # JSON processor

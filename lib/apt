@@ -208,6 +208,20 @@ fi
 rm -f "$github_cli_tmp"
 message '  %s' 'done installing GitHub CLI.'
 
+message '  %s' 'installing hyperfine...'
+if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
+	fatal 'failed to get hyperfine release URL'
+fi
+hyperfine_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
+	fatal 'failed to download hyperfine'
+fi
+if ! request-sudo apt-get install "$hyperfine_tmp"; then
+	fatal 'failed to install hyperfine'
+fi
+rm -f "$hyperfine_tmp"
+message '  %s' 'done installing hyperfine.'
+
 message '  %s' 'linking batcat to bat...'
 ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
 message '  %s' 'done linking batcat to bat.'
