@@ -45,6 +45,7 @@ declare -a extensions=(
 	ms-azuretools.vscode-docker           # Docker support
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	msjsdiag.debugger-for-chrome          # Chrome debugger integration
+	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	QassimFarid.ejs-language-support      # EJS (Embedded JS) template language support
 	rafamel.subtle-brackets               # Better bracket matching
 	runem.lit-plugin                      # lit-html support
