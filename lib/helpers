@@ -92,6 +92,8 @@ _curl() {
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
 get_release_url() {
+		repository="${1:-}"
+		pattern="${2:-}"
     # Check if jq is available for JSON parsing
     if ! command -v jq > /dev/null; then
         warn "could not get release url for $1 because jq is not installed"
@@ -99,8 +101,9 @@ get_release_url() {
     fi
 
     # Get list of releases
-    curl -s "https://api.github.com/repos/$1/releases/latest" | \
-        jq --raw-output ".assets[] | .browser_download_url | select(contains(\"$2\"))"
+    curl -s "https://api.github.com/repos/${repository}/releases/latest" | \
+        jq --arg pattern "$pattern" --raw-output \
+					'.assets | map(.browser_download_url | select(contains($pattern))) | first'
 }
 
 # Install a binary to ~/.local/bin from a URL
