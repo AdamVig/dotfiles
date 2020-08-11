@@ -82,6 +82,12 @@ if ! is_repository_configured 'azlux'; then
 	message '  %s' 'done adding broot repository.'
 fi
 
+if ! is_repository_configured 'lutris'; then
+	message '  %s' 'adding lutris repository...'
+	sudo add-apt-repository --yes ppa:lutris-team/lutris
+	message '  %s' 'done adding lutris repository.'
+fi
+
 message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
@@ -164,6 +170,7 @@ declare -a packages=(
 	kdiff3 # Merge tool
 	keybase
 	libreoffice
+	lutris
 	meld # Comparison tool for version control, files, and directories
 	nautilus-nextcloud
 	signal-desktop
