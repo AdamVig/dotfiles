@@ -88,6 +88,13 @@ if ! is_repository_configured 'lutris'; then
 	message '  %s' 'done adding lutris repository.'
 fi
 
+if ! is_repository_configured 'etcher'; then
+	message '  %s' 'adding etcher repository...'
+	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
+	sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
+	message '  %s' 'done adding etcher repository.'
+fi
+
 message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
@@ -160,6 +167,7 @@ declare -a packages=(
 	lastpass-cli
 
 	# applications
+	balena-etcher-electron
 	chromium-browser
 	code
 	docker.io
