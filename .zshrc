@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-zmodload zsh/zprof
 
 _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
 
