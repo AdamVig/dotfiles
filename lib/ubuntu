@@ -92,7 +92,7 @@ message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
 
-message '  %s' 'upgrading package...'
+message '  %s' 'upgrading packages...'
 request-sudo apt-get upgrade --yes --autoremove > /dev/null
 message '  %s' 'done upgrading packages.'
 
@@ -232,6 +232,10 @@ message '  %s' 'done installing hyperfine.'
 message '  %s' 'linking batcat to bat...'
 ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
 message '  %s' 'done linking batcat to bat.'
+
+message '  %s' 'linking fdfind to fd...'
+ln -sf /usr/bin/fdfind "$HOME"/.local/bin/fd
+message '  %s' 'done linking fdfind to fd.'
 
 message '  %s' 'installing Keybase...'
 readonly keybase_deb_tmp="$(mktemp --suffix=.deb)"
