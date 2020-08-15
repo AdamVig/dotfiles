@@ -20,12 +20,14 @@ Disable-BingSearch
 Disable-GameBarTips
 Enable-RemoteDesktop
 
-Set-WindowsExplorerOptions -DisableShowProtectedOSFiles -EnableShowFileExtensions -DisableShowRecentFilesInQuickAccess -DisableShowFrequentFoldersInQuickAccess -DisableShowRibbon -DisableOpenFileExplorerToQuickAccess -EnableExpandToOpenFolder
+# TODO this resulted in a weird Explorer experience, needs revisiting
+# Set-WindowsExplorerOptions -DisableShowProtectedOSFiles -EnableShowFileExtensions -DisableShowRecentFilesInQuickAccess -DisableShowFrequentFoldersInQuickAccess -DisableShowRibbon -DisableOpenFileExplorerToQuickAccess -EnableExpandToOpenFolder
 Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
 
 #--- Windows Subsystems/Features ---
-choco install Microsoft-Hyper-V-All -source windowsFeatures
-choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+# Uncomment to re-enable WSL
+# choco install Microsoft-Hyper-V-All -source windowsFeatures
+# choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 
 # Remove preinstalled applications
 Get-AppxPackage *Autodesk* | Remove-AppxPackage
@@ -68,8 +70,9 @@ Get-AppxPackage microsoft.windowscommunicationsapps | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsSoundRecorder | Remove-AppxPackage
 # note: Microsoft.XboxGameCallableUI cannot be removed
-Get-AppxPackage Microsoft.XboxApp | Remove-AppxPackage
-Get-AppxPackage Microsoft.XboxIdentityProvider | Remove-AppxPackage
+# TODO experimenting with which of these are necessary in order to use Xbox Live
+# Get-AppxPackage Microsoft.XboxApp | Remove-AppxPackage
+# Get-AppxPackage Microsoft.XboxIdentityProvider | Remove-AppxPackage
 Get-AppxPackage Microsoft.YourPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.Zune* | Remove-AppxPackage
 
@@ -87,40 +90,41 @@ cinst OpenSans
 
 # Tools
 cinst 7zip
-cinst docker
-cinst git
-cinst kdiff3
-cinst meld
+# cinst docker
+# cinst git
+# cinst kdiff3
+# cinst meld
 cinst procexp
 
 # Apps
-cinst arq
+# cinst arq
 cinst battle.net --allow-empty-checksums
 cinst bluescreenview
-cinst calibre
-cinst cyberduck
-cinst deluge
-cinst docker-desktop
-cinst Emacs
+# cinst calibre
+# cinst cyberduck
+# cinst deluge
+# cinst docker-desktop
+# cinst Emacs
+cinst epicgameslauncher
 cinst etcher
 cinst Firefox
 cinst foxitreader
-cinst google-backup-and-sync
+# cinst google-backup-and-sync
 cinst GoogleChrome
 cinst hwmonitor
-cinst InkScape
+# cinst InkScape
 cinst IrfanView
-cinst keybase
-cinst reaper
+# cinst keybase
+# cinst reaper
 cinst signal
-cinst slack
+# cinst slack
 cinst spotify
 cinst steam
 cinst thunderbird
 cinst vlc
 cinst vscode
-cinst vcxsrv # X server
-cinst zoom
+# cinst vcxsrv # X server
+# cinst zoom
 
 # Privacy: Let apps use my advertising ID: Disable
 If (-Not (Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo")) {
