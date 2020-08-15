@@ -21,6 +21,9 @@
 [pull]
   # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
   rebase = true
+[rebase]
+	autoSquash = true
+	autoStash = true
 [diff]
   tool = meld
 [merge]
