@@ -1,0 +1,37 @@
+_dir_wsl="$(dirname "$(realpath "${(%):-%x}")")"
+
+# https://github.com/Microsoft/WSL/issues/352
+umask 022
+
+alias kdiff3='kdiff3.exe'
+alias meld='meld.exe'
+# shellcheck disable=SC2139
+alias open="$_dir_wsl"/bin/wsl-open
+
+# Temporary override to get rid of mysterious DOCKER_HOST on WSL
+unset DOCKER_HOST
+
+if ! pgrep ssh-agent > /dev/null; then
+	rm -rf /tmp/ssh-*
+	eval "$(ssh-agent -s)" > /dev/null
+else
+	export SSH_AGENT_PID
+	SSH_AGENT_PID=$(pgrep ssh-agent)
+	export SSH_AUTH_SOCK
+	SSH_AUTH_SOCK=$(find /tmp/ssh-* -name 'agent.*')
+fi
+
+# For Karma tests
+export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+export KARMA_CHROME_USER_DATA_DIR
+KARMA_CHROME_USER_DATA_DIR="$("$_dir_wsl"/bin/expand-windows-path %LOCALAPPDATA%)\Google\Chrome\User Data"
+
+# To make xdg-open work for URLs
+export BROWSER="$_dir_wsl"/bin/wsl-open
+
+# Make lpass --clip flag work
+export LPASS_CLIPBOARD_COMMAND='clip.exe'
+
+# Set up X server connection
+export DISPLAY
+DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2; exit;}'):0.0

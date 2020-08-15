@@ -82,27 +82,8 @@ if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
   source /etc/profile
 fi
 
-if "$_dir_zshrc"/bin/is-wsl; then
-  # https://github.com/Microsoft/WSL/issues/352
-  umask 022
-
-  alias kdiff3='kdiff3.exe'
-  alias meld='meld.exe'
-	# shellcheck disable=SC2139
-  alias open="$_dir_zshrc"/bin/wsl-open
-
-	# Temporary override to get rid of mysterious DOCKER_HOST on WSL
-	unset DOCKER_HOST
-
-	if ! pgrep ssh-agent > /dev/null; then
-    rm -rf /tmp/ssh-*
-    eval "$(ssh-agent -s)" > /dev/null
-  else
-    export SSH_AGENT_PID
-    SSH_AGENT_PID=$(pgrep ssh-agent)
-    export SSH_AUTH_SOCK
-    SSH_AUTH_SOCK=$(find /tmp/ssh-* -name 'agent.*')
-  fi
+if [ -f "$HOME"/.wsl ]; then
+	source "$HOME"/.wsl
 fi
 
 # Load file if exists, suppress error if missing

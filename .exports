@@ -56,23 +56,6 @@ if "$_dir_exports"/bin/is-macos; then
   fi
 fi
 
-if "$_dir_exports"/bin/is-wsl; then
-  # For Karma tests
-  export CHROME_BIN='/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
-  export KARMA_CHROME_USER_DATA_DIR
-  KARMA_CHROME_USER_DATA_DIR="$("$_dir_exports"/bin/expand-windows-path %LOCALAPPDATA%)\Google\Chrome\User Data"
-
-  # To make xdg-open work for URLs
-  export BROWSER="$_dir_exports"/bin/wsl-open
-
-  # Make lpass --clip flag work
-  export LPASS_CLIPBOARD_COMMAND='clip.exe'
-
-  # Set up X server connection
-  export DISPLAY
-	DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2; exit;}'):0.0
-fi
-
 # Set golang workspace directory
 export GOPATH="$HOME/code/go"
 
