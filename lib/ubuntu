@@ -190,6 +190,7 @@ declare -a packages=(
 
 	# fonts
 	fonts-firacode
+	fonts-open-sans
 )
 
 message '  %s' 'installing packages...'
