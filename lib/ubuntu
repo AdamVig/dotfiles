@@ -176,7 +176,6 @@ declare -a packages=(
 	gnome-shell-extension-impatience
 	inkscape
 	kdiff3 # Merge tool
-	keybase
 	libreoffice
 	lutris
 	meld # Comparison tool for version control, files, and directories
@@ -245,16 +244,5 @@ message '  %s' 'done linking batcat to bat.'
 message '  %s' 'linking fdfind to fd...'
 ln -sf /usr/bin/fdfind "$HOME"/.local/bin/fd
 message '  %s' 'done linking fdfind to fd.'
-
-message '  %s' 'installing Keybase...'
-readonly keybase_deb_tmp="$(mktemp --suffix=.deb)"
-if ! _curl https://prerelease.keybase.io/keybase_amd64.deb --output "$keybase_deb_tmp"; then
-	fatal 'failed to download Keybase'
-fi
-if ! sudo apt-get install --yes "$keybase_deb_tmp" > /dev/null; then
-	fatal 'failed to install Keybase'
-fi
-rm -f "$keybase_deb_tmp"
-message '  %s' 'done installing Keybase.'
 
 message "done setting up apt."

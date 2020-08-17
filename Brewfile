@@ -93,7 +93,6 @@ cask "gpg-suite"
 cask "inkscape"
 cask "kap"
 cask "kdiff3" # Merge tool
-cask "keybase"
 cask "libreoffice"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "nextcloud"
