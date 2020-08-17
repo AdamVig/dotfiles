@@ -245,4 +245,41 @@ message '  %s' 'linking fdfind to fd...'
 ln -sf /usr/bin/fdfind "$HOME"/.local/bin/fd
 message '  %s' 'done linking fdfind to fd.'
 
+message '  %s' 'configuring Grub...'
+message '    %s' 'disabling generation of recovery options...'
+request-sudo sed -i 's|#GRUB_DISABLE_RECOVERY="true"|GRUB_DISABLE_RECOVERY="true"|' /etc/default/grub
+message '    %s' 'done disabling generation of recovery options.'
+
+grub_theme_dir=/boot/grub/themes/adamvig
+if ! [ -f "$grub_theme_dir"/theme.txt ]; then
+	message '    %s' 'linking theme...'
+	request-sudo mkdir -p "$grub_theme_dir"
+	request-sudo ln -sf "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
+	message '    %s' 'done linking theme.'
+fi
+
+grub_font_output_path="$grub_theme_dir"/opensans-regular.pf2
+if ! [ -f "$grub_font_output_path" ]; then
+	message '    %s' 'converting font...'
+	opensans_path='/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf'
+	if ! request-sudo grub-mkfont --output "$grub_font_output_path" --size 36 "$opensans_path"; then
+		fatal 'failed to convert font'
+	fi
+	message '    %s' 'done converting font.'
+fi
+
+grub_theme_variable="GRUB_THEME=$grub_theme_dir/theme.txt"
+if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
+	message '    %s' 'enabling theme...'
+	if ! echo "$grub_theme_variable" | request-sudo tee --append /etc/default/grub > /dev/null; then
+		fatal 'failed to enable theme'
+	fi
+	message '    %s' 'done enabling theme.'
+fi
+
+message '    %s' 're-generating Grub configuration...'
+request-sudo update-grub
+message '    %s' 'done re-generating Grub configuration.'
+message '  %s' 'done configuring Grub.'
+
 message "done setting up apt."
