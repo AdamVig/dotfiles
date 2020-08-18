@@ -204,8 +204,9 @@ message '  %s' 'done updating snaps.'
 
 declare -a snaps=(
 	'authy --beta'
-	yq
 	ffsend
+	standard-notes
+	yq
 )
 
 for snap_raw in "${snaps[@]}"; do
