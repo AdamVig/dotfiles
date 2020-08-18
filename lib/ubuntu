@@ -196,18 +196,26 @@ message '  %s' 'installing packages...'
 sudo apt-get install --yes "${packages[@]}"
 message '  %s' 'done installing packages.'
 
-# TODO delineate Snap from Apt
-message '  %s' 'installing Authy...'
-sudo snap install authy --beta
-message '  %s' 'done installing Authy.'
+message '  %s' 'updating snaps...'
+if ! request-sudo snap refresh > /dev/null; then
+	fatal 'failed to update snaps'
+fi
+message '  %s' 'done updating snaps.'
 
-message '  %s' 'installing yq...'
-sudo snap install yq
-message '  %s' 'done installing yq.'
+declare -a snaps=(
+	'authy --beta'
+	yq
+	ffsend
+)
 
-message '  %s' 'installing ffsend...'
-sudo snap install ffsend
-message '  %s' 'done installing ffsend.'
+for snap_raw in "${snaps[@]}"; do
+	read -ra snap <<< "$snap_raw"
+	message '  %s' "installing snap '${snap[0]}'..."
+	if ! request-sudo snap install "${snap[@]}"; then
+		fatal 'failed to install'
+	fi
+	message '  %s' "done installing snap '${snap[0]}'."
+done
 
 message '  %s' 'installing GitHub CLI...'
 if ! github_cli_url="$(get_release_url 'cli/cli' 'linux_amd64.deb')"; then
