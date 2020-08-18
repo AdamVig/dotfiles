@@ -13,3 +13,8 @@ autoload -U compinit
 compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump
 
 zstyle ':completion:*' menu select
+
+hub_completions_path="${XDG_DATA_HOME:-$HOME/.local/share}"/hub/hub.zsh_completion
+if [ -f "$hub_completions_path" ]; then
+	source "$hub_completions_path"
+fi

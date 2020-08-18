@@ -163,7 +163,6 @@ declare -a packages=(
 	shellcheck # Shell script linter
 
 	# web service clients
-	hub # GitHub
 	lastpass-cli
 
 	# applications
