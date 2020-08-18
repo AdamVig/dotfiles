@@ -285,6 +285,12 @@ if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
 	message '    %s' 'done enabling theme.'
 fi
 
+if ! systemctl --user is-enabled --quiet emacs; then
+	message '  %s' 'setting up Emacs daemon...'
+	systemctl --user enable --now emacs.service
+	message '  %s' 'done setting up Emacs daemon.'
+fi
+
 message '    %s' 're-generating Grub configuration...'
 request-sudo update-grub
 message '    %s' 'done re-generating Grub configuration.'

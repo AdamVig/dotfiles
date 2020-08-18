@@ -72,8 +72,8 @@ prepend_path "$HOME"/.local/bin
 prepend_path "$_dir_exports"/bin
 
 # Default editor
-export VISUAL=emacs
-export EDITOR=emacs
+export VISUAL='emacsclient --create-frame'
+export EDITOR='emacsclient --tty'
 
 # Allow GPG to make prompts
 export GPG_TTY
