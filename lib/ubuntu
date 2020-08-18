@@ -27,7 +27,7 @@ add_key() {
 	fi
 }
 
-message "setting up apt..."
+message "setting up Ubuntu..."
 
 if ! is_repository_configured 'vscode'; then
 	message '  %s' 'adding Visual Studio Code repository...'
@@ -290,4 +290,4 @@ request-sudo update-grub
 message '    %s' 'done re-generating Grub configuration.'
 message '  %s' 'done configuring Grub.'
 
-message "done setting up apt."
+message "done setting up Ubuntu."
