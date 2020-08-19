@@ -15,8 +15,18 @@ request-sudo
 
 message "symlinking dotfiles to your home directory..."
 ln -sf "$_dir"/../.bashrc "$HOME"
-ln -sf "$_dir"/../config/emacs "$HOME"/.emacs
 ln -sf "$_dir"/../.exports "$HOME"
+
+message 'setting up Emacs configuration...'
+# Remove legacy configuration location
+rm -f "$HOME"/.emacs
+
+emacs_config_path="$HOME"/.emacs.d/init.el
+if ! [ -f "$emacs_config_path" ]; then
+	mkdir -p "$(dirname "$emacs_config_path")"
+	ln -sf "$_dir"/../config/emacs.el "$emacs_config_path"
+fi
+message 'done setting up Emacs configuration.'
 
 message "configuring SSH..."
 mkdir -p "$HOME"/.ssh

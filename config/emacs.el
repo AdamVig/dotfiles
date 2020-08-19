@@ -78,3 +78,11 @@
      (org-archive-subtree)
      (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
       "/DONE" 'tree))
+
+;; Load all Lisp files in the `lisp/` subdirectory of the user's Emacs directory
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+;; Load user-specific settings if present
+;; To add user-specific settings, create a file in `<your Emacs directory>/lisp` containing `(provide 'init-local)`
+(require 'init-local nil t)
