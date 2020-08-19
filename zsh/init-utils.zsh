@@ -16,4 +16,7 @@ if ! [ -d "$z_dir" ]; then
     touch "$z_dir"/z
 fi
 export _Z_DATA="$z_dir"/z
-source "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-z/zsh-z.plugin.zsh
+# Avoid sourcing multiple times by checking fpath
+if [[ "$FPATH" != *"zsh-z"* ]]; then
+	source "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-z/zsh-z.plugin.zsh
+fi
