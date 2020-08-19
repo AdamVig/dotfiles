@@ -59,19 +59,19 @@ fi
 
 if ! is_repository_configured 'nextcloud'; then
 	message '  %s' 'adding Nextcloud repository...'
-	sudo add-apt-repository --yes ppa:nextcloud-devs/client
+	request-sudo add-apt-repository --yes ppa:nextcloud-devs/client
 	message '  %s' 'done adding Nextcloud repository.'
 fi
 
 if ! is_repository_configured 'diff-so-fancy'; then
 	message '  %s' 'adding diff-so-fancy repository...'
-	sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
+	request-sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
 	message '  %s' 'done adding diff-so-fancy repository.'
 fi
 
 if ! is_repository_configured 'git-core'; then
 	message '  %s' 'adding git repository...'
-	sudo add-apt-repository --yes ppa:git-core/ppa
+	request-sudo add-apt-repository --yes ppa:git-core/ppa
 	message '  %s' 'done adding git repository.'
 fi
 
@@ -84,14 +84,14 @@ fi
 
 if ! is_repository_configured 'lutris'; then
 	message '  %s' 'adding lutris repository...'
-	sudo add-apt-repository --yes ppa:lutris-team/lutris
+	request-sudo add-apt-repository --yes ppa:lutris-team/lutris
 	message '  %s' 'done adding lutris repository.'
 fi
 
 if ! is_repository_configured 'etcher'; then
 	message '  %s' 'adding etcher repository...'
 	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
-	sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
+	request-sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
 	message '  %s' 'done adding etcher repository.'
 fi
 
