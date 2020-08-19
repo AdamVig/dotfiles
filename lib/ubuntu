@@ -285,15 +285,37 @@ if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
 	message '    %s' 'done enabling theme.'
 fi
 
+message '    %s' 're-generating Grub configuration...'
+request-sudo update-grub
+message '    %s' 'done re-generating Grub configuration.'
+message '  %s' 'done configuring Grub.'
+
 if ! systemctl --user is-enabled --quiet emacs; then
 	message '  %s' 'setting up Emacs daemon...'
 	systemctl --user enable --now emacs.service
 	message '  %s' 'done setting up Emacs daemon.'
 fi
 
-message '    %s' 're-generating Grub configuration...'
-request-sudo update-grub
-message '    %s' 'done re-generating Grub configuration.'
-message '  %s' 'done configuring Grub.'
+emacs_client_desktop_path="$HOME"/.local/share/applications/emacs-client.desktop
+if ! [ -f "$emacs_client_desktop_path" ]; then
+	message '  %s' 'installing Emacs client desktop file...'
+	mkdir -p "$(dirname "$emacs_client_desktop_path")"
+	echo '[Desktop Entry]
+Version=1.0
+Name=Emacs (Client)
+GenericName=Text Editor
+Comment=GNU Emacs is an extensible, customizable text editor - and more
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+TryExec=/usr/bin/emacsclient
+Exec=/usr/bin/emacsclient --create-frame --alternate-editor emacs %F
+Icon=emacs
+Type=Application
+Terminal=false
+Categories=Utility;Development;TextEditor;
+StartupWMClass=Emacs
+Keywords=Text;Editor;
+' > "$emacs_client_desktop_path"
+	message '  %s' 'done installing Emacs client desktop file.'
+fi
 
 message "done setting up Ubuntu."
