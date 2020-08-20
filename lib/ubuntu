@@ -95,6 +95,12 @@ if ! is_repository_configured 'etcher'; then
 	message '  %s' 'done adding etcher repository.'
 fi
 
+if ! is_repository_configured 'figma'; then
+	message '  %s' 'adding figma repository...'
+	request-sudo add-apt-repository --yes ppa:chrdevs/figma
+	message '  %s' 'done adding figma repository.'
+fi
+
 message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
@@ -171,6 +177,7 @@ declare -a packages=(
 	code
 	docker.io
 	emacs
+	figma-linux
 	firefox
 	gnome-shell-extension-impatience
 	inkscape
