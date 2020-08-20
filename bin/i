@@ -108,6 +108,9 @@ afk() {
   elif [ "$type" = 'out' ]; then
     status='out of office'
     emoji='spiral_calendar_pad'
+  elif [ "$type" = 'tea' ]; then
+    status='away from keyboard (making tea)'
+    emoji='tea'
   else
     status='away from keyboard'
     emoji='timer_clock'
