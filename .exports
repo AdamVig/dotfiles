@@ -64,7 +64,7 @@ append_path "$GOPATH/bin"
 
 if command -v python3 > /dev/null; then
   # Add Python package executable directory to PATH
-  append_path "$(python3 -m site --user-base)"/bin
+  prepend_path "$(python3 -m site --user-base)"/bin
 fi
 
 # Add user bin directories to PATH
