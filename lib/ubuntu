@@ -325,4 +325,35 @@ Keywords=Text;Editor;
 	message '  %s' 'done installing Emacs client desktop file.'
 fi
 
+message '  %s' 'updating user directories...'
+declare -A user_directories=(
+	[DESKTOP]="$HOME"/desktop
+	[DOWNLOAD]="$HOME"/downloads
+	[TEMPLATES]="$HOME"/templates
+	[PUBLICSHARE]="$HOME"/public
+	[DOCUMENTS]="$HOME"/documents
+	[MUSIC]="$HOME"/music
+	[PICTURES]="$HOME"/pictures
+	[VIDEOS]="$HOME"/videos
+)
+for user_directory_name in "${!user_directories[@]}"; do
+	user_directory_path="${user_directories[$user_directory_name]}"
+
+	if ! [ -d "$user_directory_path" ]; then
+		user_directory_basename="$(basename "$user_directory_path")"
+		user_directory_path_capitalized="$HOME"/"${user_directory_basename^}"
+		if [ -d "$user_directory_path_capitalized" ]; then
+			message '    %s' "moving '$user_directory_path_capitalized' to '$user_directory_path'"
+			mv "$user_directory_path_capitalized" "$user_directory_path"
+		else
+			message '    %s' "creating '$user_directory_path'"
+			mkdir -p "$user_directory_path"
+		fi
+	fi
+
+	message '    %s' "setting '$user_directory_name' to '$user_directory_path'"
+	xdg-user-dirs-update --set "$user_directory_name" "$user_directory_path"
+done
+message '  %s' 'done updating user directories.'
+
 message "done setting up Ubuntu."
