@@ -101,6 +101,12 @@ if ! is_repository_configured 'figma'; then
 	message '  %s' 'done adding figma repository.'
 fi
 
+if ! is_repository_configured 'mpv-tests'; then
+	message '  %s' 'adding mpv repository...'
+	request-sudo add-apt-repository --yes ppa:mc3man/mpv-tests
+	message '  %s' 'done adding mpv repository.'
+fi
+
 message '  %s' 'updating lists...'
 request-sudo apt-get update > /dev/null
 message '  %s' 'done updating lists.'
@@ -185,6 +191,7 @@ declare -a packages=(
 	libreoffice
 	lutris
 	meld # Comparison tool for version control, files, and directories
+	mpv # Media player
 	nautilus-nextcloud
 	signal-desktop
 	slack-desktop
