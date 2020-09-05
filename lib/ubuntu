@@ -159,7 +159,6 @@ declare -a packages=(
 	# shell
 	bash
 	zsh
-	zsh-syntax-highlighting
 
 	# programming languages
 	golang

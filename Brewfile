@@ -44,7 +44,6 @@ brew "yq" # jq for YAML/XML
 # shell
 brew "bash"
 brew "zsh"
-brew "zsh-syntax-highlighting"
 
 # programming languages
 brew "go"
