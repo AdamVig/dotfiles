@@ -2,20 +2,32 @@
 
 set -euo pipefail
 
-echo "updating Homebrew..."
-brew update
+if command -v brew > /dev/null; then
+	echo 'updating Homebrew...'
+	brew update
 
-echo "upgrading Homebrew formulas..."
-brew upgrade
+	echo 'upgrading Homebrew formulas...'
+	brew upgrade
 
-echo "upgrading Homebrew Cask formulas..."
-brew cask upgrade || true
+	echo 'upgrading Homebrew Cask formulas...'
+	brew cask upgrade || true
+fi
 
-echo "updating npm..."
+echo 'updating npm...'
 npm i -g npm
 
-echo "updating global npm..."
+echo 'updating global npm packages...'
 npm update -g
 
-echo "updating global pip packages..."
+echo 'updating pip...'
+pip install --upgrade --user pip
+
+echo 'updating global pip packages...'
 pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
+
+if command -v apt > /dev/null; then
+	echo 'updating apt packages...'
+	sudo apt-get update
+	sudo apt-get upgrade --yes
+	sudo apt-get autoremove --yes
+fi
