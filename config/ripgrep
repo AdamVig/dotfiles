@@ -15,3 +15,8 @@
 # Always ignore package-lock.json
 --glob
 !package-lock.json
+
+# Only show a preview instead of outputting long lines in full
+--max-columns-preview
+--max-columns
+150
