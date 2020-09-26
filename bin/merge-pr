@@ -68,8 +68,11 @@ parse_remote() {
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 default_branch="$(get-default-branch origin)"
-base_branch="$(hub pr list --head="$current_branch" --limit=1 --format='%B')"
-title="$(hub pr list --head="$current_branch" --limit=1 --format='%t')"
+# Extract pull request information into three separate variables
+# - Set IFS to newline so that `read` parses multiple lines of input
+# - Set delimiter (`-d`) to `%` instead of the default, which is newline
+# - Format is title, newline, body, newline, URL, percent sign
+IFS=$'\n' read -d '%' title base_branch pull_request_url < <( hub pr show --head "$current_branch" --format '%t%n%B%n%U%%')
 
 if [ "$current_branch" = "$default_branch" ]; then
   echo "error: current branch is default branch, please run again from a different branch"
@@ -81,9 +84,13 @@ if [[ -n "$base_branch" ]]; then
   branch="$base_branch"
 fi
 
-message=""
-if [[ -n "$title" ]]; then
-  message="--message=$title"
+message_args=()
+# Use custom merge commit message when pull request title is available
+if [ -n "$title" ]; then
+	message="$title
+
+$pull_request_url"
+  message_args=('--message' "$message")
 fi
 
 if [ $force -eq 0 ]; then
@@ -102,7 +109,7 @@ fi
 if git pull && \
   git checkout "$branch" && \
   merge-latest "$branch" && \
-  git merge --no-ff "$current_branch" "$message" && \
+  git merge --no-ff "$current_branch" "${message_args[@]}" && \
   git push; then
   # Only delete branches if all operations succeed
   git branch --delete "$current_branch"
