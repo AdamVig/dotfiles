@@ -18,6 +18,8 @@
 [alias]
   contributors = shortlog --summary --numbered --email --all
   last = log --max-count=1 --pretty=who-when-what
+[fetch]
+	prune = true
 [pull]
   # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
   rebase = true
