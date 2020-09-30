@@ -18,6 +18,7 @@
 [alias]
   contributors = shortlog --summary --numbered --email --all
   last = log --max-count=1 --pretty=who-when-what
+  tags-by-date = tag --list --sort=committerdate
 [fetch]
 	prune = true
 [pull]
