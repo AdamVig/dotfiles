@@ -42,6 +42,12 @@
 (require 'ibuf-ext)
 (add-to-list 'ibuffer-never-show-predicates "^\\*")
 
+;; Install and enable undo-tree (https://elpa.gnu.org/packages/undo-tree.html)
+(use-package undo-tree
+	:ensure t
+	:config
+	(global-undo-tree-mode))
+
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
   :ensure t
