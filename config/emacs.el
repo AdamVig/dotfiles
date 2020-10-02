@@ -35,6 +35,13 @@
 (setq inhibit-startup-screen t) ; Disable startup screen
 (setq ring-bell-function 'ignore) ; Disable audio bell
 
+;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; Hide buffers that start with an asterisk in Ibuffer mode
+(require 'ibuf-ext)
+(add-to-list 'ibuffer-never-show-predicates "^\\*")
+
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
   :ensure t
