@@ -48,6 +48,14 @@
 	:config
 	(global-undo-tree-mode))
 
+;; Install and enable Counsel, Ivy, and Swiper (https://github.com/abo-abo/swiper)
+(use-package counsel
+	:ensure t
+	:config
+	(ivy-mode 1)
+	;; Show both the current number of matches and the total number of candidates
+	(setq ivy-count-format "(%d/%d) "))
+
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
   :ensure t
