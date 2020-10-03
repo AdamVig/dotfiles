@@ -16,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+    (magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -118,6 +118,10 @@
 
 (global-set-key [(meta u)]  'move-line-up)
 (global-set-key [(meta p)]  'move-line-down)
+
+;; Add Magit (https://magit.vc/)
+(use-package magit
+	:ensure t)
 
 ;; Load all Lisp files in the `lisp/` subdirectory of the user's Emacs directory
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
