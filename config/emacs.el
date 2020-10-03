@@ -16,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+    (markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -68,6 +68,13 @@
 (add-hook 'go-mode-hook (lambda () (
   add-hook 'before-save-hook 'gofmt-before-save)
  (setq gofmt-command "goimports")))
+
+;; Add and configure Markdown mode (https://github.com/jrblevin/markdown-mode)
+(use-package markdown-mode
+	:ensure t
+	:mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 ;; Add yaml-mode and add handling for .yml files
 (use-package yaml-mode
