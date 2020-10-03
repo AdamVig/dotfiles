@@ -100,6 +100,25 @@
      (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
       "/DONE" 'tree))
 
+;; https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(meta u)]  'move-line-up)
+(global-set-key [(meta p)]  'move-line-down)
+
 ;; Load all Lisp files in the `lisp/` subdirectory of the user's Emacs directory
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
