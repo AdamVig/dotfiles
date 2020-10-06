@@ -64,8 +64,7 @@ brew "shfmt" # Shell script formatter
 # web service clients
 brew "ddgr" # DuckDuckGo
 brew "ffsend" # Firefox Send
-tap "github/gh"
-brew "github/gh/gh" # GitHub
+brew "gh" # GitHub
 brew "hub", args: ["HEAD"] # GitHub
 brew "lastpass-cli"
 tap "rockymadden/rockymadden"
