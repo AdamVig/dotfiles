@@ -38,6 +38,9 @@
 (setq inhibit-startup-screen t) ; Disable startup screen
 (setq ring-bell-function 'ignore) ; Disable audio bell
 (setq initial-scratch-message "") ; Disable scratch buffer comment
+(tool-bar-mode -1) ; Disable toolbar
+(menu-bar-mode -1) ; Disable menu bar
+(scroll-bar-mode -1) ; Disable scrollbar
 
 ;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
