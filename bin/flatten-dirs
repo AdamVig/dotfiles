@@ -10,19 +10,19 @@ Flags:
     -h, --help  show this help text"
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-    echo "$usage"
-    exit 0
+	echo "$usage"
+	exit 0
 fi
 
 function flatten-dirs() {
-  for dir in "$@"; do
-      if ! [ -d "$dir" ]; then
-      	 continue
-      fi
+	for dir in "$@"; do
+		if ! [ -d "$dir" ]; then
+			continue
+		fi
 
-      mv "$dir"/* .
-      rm -r "$dir"
-  done
+		mv "$dir"/* .
+		rm -r "$dir"
+	done
 }
 
 flatten-dirs "$@"

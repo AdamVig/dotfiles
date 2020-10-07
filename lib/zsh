@@ -8,7 +8,7 @@ source "$_dir"/helpers
 # shellcheck disable=SC2119
 request-sudo
 
-if [[ "$SHELL" != *zsh ]]; then
+if [[ $SHELL != *zsh ]]; then
 	message "changing default shell to Zsh..."
 	zsh_path="$(command -v zsh)"
 
@@ -38,7 +38,7 @@ message "done initializing Zsh configuration."
 z_path="$(xdg_data)"/zsh-z
 if ! [ -d "$z_path" ]; then
 	message "installing z..."
-	if ! git clone --depth 1 https://github.com/agkozak/zsh-z.git "$z_path" > /dev/null; then
+	if ! git clone --depth 1 https://github.com/agkozak/zsh-z.git "$z_path" >/dev/null; then
 		fatal 'failed to clone zsh-z'
 	fi
 	message "done installing z."
@@ -47,7 +47,7 @@ fi
 fast_syntax_highlighting_path="$(xdg_data)"/zsh-fast-syntax-highlighting
 if ! [ -d "$fast_syntax_highlighting_path" ]; then
 	message "installing Fast Syntax Highlighting..."
-	if ! git clone --depth 1 https://github.com/zdharma/fast-syntax-highlighting.git "$fast_syntax_highlighting_path" > /dev/null; then
+	if ! git clone --depth 1 https://github.com/zdharma/fast-syntax-highlighting.git "$fast_syntax_highlighting_path" >/dev/null; then
 		fatal 'failed to clone Fast Syntax Highlighting'
 	fi
 	message "done installing Fast Syntax Highlighting."

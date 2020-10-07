@@ -8,7 +8,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # $1: directory to create repository in (optional, defaults to current directory)
 dir="${1:-}"
 if [ -n "$dir" ]; then
-  pushd "$dir" > /dev/null
+	pushd "$dir" >/dev/null
 fi
 
 git init

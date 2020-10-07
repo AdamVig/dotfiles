@@ -7,7 +7,6 @@ source "$_dir"/helpers
 
 message "cyan" "setting up Visual Studio Code..."
 
-
 if "$_dir"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
 	readonly appdata_path="$(wslpath "$("$_dir"/../bin/expand-windows-path %APPDATA%)")"
 	message "cyan" "  %s" "copying Visual Studio Code settings..."

@@ -9,7 +9,7 @@ set -euo pipefail
 # - open it in a browser
 # - pass all other arguments directly to `hub pull-request`
 if ! check-installed hub https://hub.github.com/; then
-  return 1
+	return 1
 fi
 
 git push --set-upstream
@@ -23,15 +23,15 @@ base_branch="$(get-default-branch "$remote")"
 
 i=1
 for arg in "$@"; do
-  ((++i))
-  if [ "$arg" = "-b" ] || [ "$arg" = "--branch" ]; then
-    # Get next argument
-    base_branch="${!i}"
-    break
-  elif [[ "$arg" =~ --branch=.+ ]]; then
-    base_branch="${arg/--branch=/''}"
-    break
-  fi
+	((++i))
+	if [ "$arg" = "-b" ] || [ "$arg" = "--branch" ]; then
+		# Get next argument
+		base_branch="${!i}"
+		break
+	elif [[ $arg =~ --branch=.+ ]]; then
+		base_branch="${arg/--branch=/''}"
+		break
+	fi
 done
 
 # Subject, followed by a newline, followed by the body with every line indented by two spaces

@@ -11,11 +11,11 @@ request-sudo
 message "  %s" "setting up Linux..."
 
 message "    %s" "installing essential tools..."
-if command -v apt-get > /dev/null; then
-    sudo apt-get update > /dev/null
-    sudo apt-get install --yes build-essential curl file git jq > /dev/null
+if command -v apt-get >/dev/null; then
+	sudo apt-get update >/dev/null
+	sudo apt-get install --yes build-essential curl file git jq >/dev/null
 else
-    error "could not find a supported package manager; skipping install"
+	error "could not find a supported package manager; skipping install"
 fi
 message "    %s" "done installing essential tools."
 
@@ -51,7 +51,7 @@ if ! _curl "$exa_url" --output "$exa_zip_tmp"; then
 fi
 
 exa_tmp="$(mktemp -d)"
-if ! unzip "$exa_zip_tmp" 'exa-linux-x86_64' -d "$exa_tmp" > /dev/null; then
+if ! unzip "$exa_zip_tmp" 'exa-linux-x86_64' -d "$exa_tmp" >/dev/null; then
 	fatal 'failed to unzip exa'
 fi
 rm -f "$exa_zip_tmp"
@@ -74,7 +74,7 @@ if ! _curl "$scc_url" --output "$scc_zip_tmp"; then
 fi
 
 scc_tmp="$(mktemp -d)"
-if ! unzip "$scc_zip_tmp" 'scc' -d "$scc_tmp" > /dev/null; then
+if ! unzip "$scc_zip_tmp" 'scc' -d "$scc_tmp" >/dev/null; then
 	fatal 'failed to unzip scc'
 fi
 rm -f "$scc_zip_tmp"
@@ -104,7 +104,7 @@ if ! _curl "$hub_url" --output "$hub_tmp"; then
 	fatal 'failed to download Hub'
 fi
 hub_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$hub_tmp" -C "$hub_extracted_tmp" --strip-components=1 > /dev/null; then
+if ! tar zxvf "$hub_tmp" -C "$hub_extracted_tmp" --strip-components=1 >/dev/null; then
 	fatal 'failed to extract Hub'
 fi
 rm -f "$hub_tmp"

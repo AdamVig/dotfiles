@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-readonly usage="$(cat <<EOF
+readonly usage="$(
+	cat <<EOF
 Usage: $(basename "$0") [-h|--help]
 Unlock SSH and GPG keys for the duration of the session.
 
@@ -18,34 +19,34 @@ EOF
 )"
 
 if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
-  echo "$usage"
-  exit 0
+	echo "$usage"
+	exit 0
 fi
 
-if ! command -v lpass > /dev/null; then
-  echo 'error: lpass must be installed'
-  exit 1
+if ! command -v lpass >/dev/null; then
+	echo 'error: lpass must be installed'
+	exit 1
 fi
 
 if ! lpass status --quiet; then
-  echo "log in to LastPass with 'lpass login' then run this script again"
-  exit 1
+	echo "log in to LastPass with 'lpass login' then run this script again"
+	exit 1
 fi
 
-if ! command -v expect > /dev/null; then
-  echo 'error: expect must be installed'
-  exit 1
+if ! command -v expect >/dev/null; then
+	echo 'error: expect must be installed'
+	exit 1
 fi
 
 echo 'unlocking SSH key...'
 
 # Retrieve field "Passphrase" from a note in the group "ssh" named exactly the hostname of this computer
 if ! ssh_passphrase="$(lpass show --basic-regexp "ssh/$(hostname)" --field 'Passphrase')"; then
-  echo 'error: failed to get SSH key passphrase from LastPass'
-  exit 1
+	echo 'error: failed to get SSH key passphrase from LastPass'
+	exit 1
 fi
 
-expect > /dev/null << EOF
+expect >/dev/null <<EOF
   spawn ssh-add
   expect "Enter passphrase"
   send "$ssh_passphrase\r"
@@ -53,20 +54,20 @@ expect > /dev/null << EOF
 EOF
 
 if ! gpg_usernames="$(gpg --list-keys --with-colons | awk --field-separator : '/uid/ {print $10}')"; then
-  echo 'error: failed to get usernames of local GPG keys'
-  exit 1
+	echo 'error: failed to get usernames of local GPG keys'
+	exit 1
 fi
 
-mapfile -t gpg_keys < <( echo "$gpg_usernames" )
+mapfile -t gpg_keys < <(echo "$gpg_usernames")
 
 for user in "${gpg_keys[@]}"; do
-  echo "unlocking GPG key for user '$user'..."
+	echo "unlocking GPG key for user '$user'..."
 
-  # Retrieve field "Passphrase" from a note in the group "gpg" named exactly the username of this key
-  if ! gpg_passphrase="$(lpass show --basic-regexp "gpg/$user" --field 'Passphrase')"; then
-    echo "error: failed to get GPG key passphrase for user '$user'"
-    continue
-  fi
+	# Retrieve field "Passphrase" from a note in the group "gpg" named exactly the username of this key
+	if ! gpg_passphrase="$(lpass show --basic-regexp "gpg/$user" --field 'Passphrase')"; then
+		echo "error: failed to get GPG key passphrase for user '$user'"
+		continue
+	fi
 
-  echo | gpg --local-user "$user" --batch --pinentry-mode loopback --passphrase-file <( echo "$gpg_passphrase" ) --sign >/dev/null
+	echo | gpg --local-user "$user" --batch --pinentry-mode loopback --passphrase-file <(echo "$gpg_passphrase") --sign >/dev/null
 done

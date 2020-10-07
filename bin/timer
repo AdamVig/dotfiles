@@ -7,15 +7,15 @@ Flags:
     -h, --help  show this help text"
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-    echo "$usage"
-    exit 0
+	echo "$usage"
+	exit 0
 fi
 
 if [ -z "$1" ]; then
-    echo "$usage"
-    echo
-    echo "Must provide a command to run."
-    exit 1
+	echo "$usage"
+	echo
+	echo "Must provide a command to run."
+	exit 1
 fi
 
 START_TIME=$(gdate +%s%3N)

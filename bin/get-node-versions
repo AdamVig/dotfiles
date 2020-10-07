@@ -16,10 +16,10 @@ latest=1
 json=1
 
 set +e
-getopt --test > /dev/null
+getopt --test >/dev/null
 if [ $? -ne 4 ]; then
-  echo 'error: enhanced getopt is not installed' >&2
-  exit 1
+	echo 'error: enhanced getopt is not installed' >&2
+	exit 1
 fi
 set -e
 
@@ -28,45 +28,45 @@ eval set -- "$opts"
 unset opts
 
 while true; do
-  case "$1" in
-    '-h'|'--help')
-      echo "$usage"
-      exit
-    ;;
-    '-l'|'--latest')
-      latest=0
-      shift
-      continue
-    ;;
-    '-L'|'--lts')
-      lts=0
-      shift
-      continue
-    ;;
-    '-j'|'--json')
-      json=0
-      shift
-      continue
-    ;;
-    '--')
-      shift
-      break
-    ;;
-    *)
-      echo 'error: failed to parse arguments' >&2
-      exit 1
-    ;;
-  esac
+	case "$1" in
+	'-h' | '--help')
+		echo "$usage"
+		exit
+		;;
+	'-l' | '--latest')
+		latest=0
+		shift
+		continue
+		;;
+	'-L' | '--lts')
+		lts=0
+		shift
+		continue
+		;;
+	'-j' | '--json')
+		json=0
+		shift
+		continue
+		;;
+	'--')
+		shift
+		break
+		;;
+	*)
+		echo 'error: failed to parse arguments' >&2
+		exit 1
+		;;
+	esac
 done
 
 if ! check-installed jq https://stedolan.github.io/jq/; then
-  exit 1
+	exit 1
 fi
 
 node_versions_url='https://nodejs.org/dist/index.json'
 if ! versions="$(curl --silent --fail --show-error "$node_versions_url")"; then
-  echo 'error: failed to get Node versions'
-  exit 1
+	echo 'error: failed to get Node versions'
+	exit 1
 fi
 
 filter='.'
@@ -74,17 +74,16 @@ filter='.'
 filter+=' | sort_by(.date)'
 
 if [ $lts -eq 0 ]; then
-  filter+=' | map(select(.lts))'
+	filter+=' | map(select(.lts))'
 fi
 
 if [ $latest -eq 0 ]; then
-  filter+=' | sort_by(.modules, .version) | [last]'
+	filter+=' | sort_by(.modules, .version) | [last]'
 fi
 
 if [ $json -eq 0 ]; then
-  echo "$versions" | jq "$filter"
+	echo "$versions" | jq "$filter"
 else
-  filter+=' | map(.date + " | " + .version + (if .lts then " (lts)" else "" end)) | .[]'
-  echo "$versions" | jq --raw-output "$filter"
+	filter+=' | map(.date + " | " + .version + (if .lts then " (lts)" else "" end)) | .[]'
+	echo "$versions" | jq --raw-output "$filter"
 fi
-

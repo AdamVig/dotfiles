@@ -7,8 +7,8 @@ set -euo pipefail
 path="${1:-}"
 
 if [ -z "$path" ]; then
-    echo "error: must provide path to submodule"
-    return 1
+	echo "error: must provide path to submodule"
+	return 1
 fi
 
 git submodule deinit -f "$path" || true
@@ -17,5 +17,5 @@ rm -rf .git/modules/"$path" || true
 git rm -rf "$path" || true
 
 if ! [ -s .gitmodules ]; then
-  git rm -f .gitmodules
+	git rm -f .gitmodules
 fi

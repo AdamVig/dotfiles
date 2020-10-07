@@ -6,4 +6,4 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # Benchmark zsh startup time
 
-"$_dir"/../bin/avgtime zsh -i -c exit;
+"$_dir"/../bin/avgtime zsh -i -c exit

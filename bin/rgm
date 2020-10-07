@@ -9,31 +9,31 @@ Flags:
     -h, --help  show this help text"
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-    echo "$usage"
-    exit 0
+	echo "$usage"
+	exit 0
 fi
 
 get-ripgrep-match() {
-    if (( $# < 2 )); then
-        echo "error: must provide at least two arguments"
-        return 1
-    fi
+	if (($# < 2)); then
+		echo "error: must provide at least two arguments"
+		return 1
+	fi
 
-    local index
-    index="$1"
-    shift
+	local index
+	index="$1"
+	shift
 
-    if ! [[ "$index" =~ ^[0-9]+$ ]]; then
-      echo "error: first argument must be a number"
-      return 1
-    fi
+	if ! [[ $index =~ ^[0-9]+$ ]]; then
+		echo "error: first argument must be a number"
+		return 1
+	fi
 
-    if ! [ "$index" -gt 0 ]; then
-      echo "error: index must be greater than zero"
-      return 1
-    fi
+	if ! [ "$index" -gt 0 ]; then
+		echo "error: index must be greater than zero"
+		return 1
+	fi
 
-    rg --files-with-matches "$@" | sed "${index}q;d"
+	rg --files-with-matches "$@" | sed "${index}q;d"
 }
 
 get-ripgrep-match "$@"

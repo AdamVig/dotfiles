@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-readonly usage="$(cat <<EOF
+readonly usage="$(
+	cat <<EOF
 Usage: $(basename "$0") [-h|--help] [--pr] [-r|--remote] [branch]
 Log all commits on the current branch that are not on another branch.
 
@@ -19,10 +20,10 @@ EOF
 pull_request=1
 
 set +e
-getopt --test > /dev/null
+getopt --test >/dev/null
 if [ $? -ne 4 ]; then
-  echo 'error: enhanced getopt is not installed' >&2
-  exit 1
+	echo 'error: enhanced getopt is not installed' >&2
+	exit 1
 fi
 set -e
 
@@ -33,52 +34,52 @@ unset opts
 remote='origin'
 
 while true; do
-  case "$1" in
-    '-h'|'--help')
-      echo "$usage"
-      exit
-    ;;
-    '--pr')
-      pull_request=0
-      shift
-      continue
-    ;;
-    '-r'|'--remote')
-      remote="$2"
-      shift 2
-      continue
-    ;;
-    '--')
-      shift
-      break
-    ;;
-    *)
-      echo 'error: failed to parse arguments' >&2
-      exit 1
-    ;;
-  esac
+	case "$1" in
+	'-h' | '--help')
+		echo "$usage"
+		exit
+		;;
+	'--pr')
+		pull_request=0
+		shift
+		continue
+		;;
+	'-r' | '--remote')
+		remote="$2"
+		shift 2
+		continue
+		;;
+	'--')
+		shift
+		break
+		;;
+	*)
+		echo 'error: failed to parse arguments' >&2
+		exit 1
+		;;
+	esac
 done
 
 if ! default_branch="$(get-default-branch)"; then
-  echo 'error: could not get default branch'
-  return 1
+	echo 'error: could not get default branch'
+	return 1
 fi
 
 branch="${1:-$default_branch}"
 
 git_log() {
-  git log "$remote"/"$branch".. "$@" --
+	git log "$remote"/"$branch".. "$@" --
 }
 
 if [ $pull_request -eq 0 ]; then
-  # 1. Format commits as Markdown list items:
-  # - <subject>
-  #   <body indented by two spaces>
-  #
-  # 2. Replace `# ` with `- `, preserving any indentation, to change comments into list items
-  # 3. Replace tabs with four spaces so that indentation works correctly in Markdown
-  git_log '--pretty=format:- %s%w(0,2,2)%+b' | \
-    sed -E -e 's/#(\s+)/\1- /g' -e 's/\t/    /g'
+	# 1. Format commits as Markdown list items:
+	# - <subject>
+	#   <body indented by two spaces>
+	#
+	# 2. Replace `# ` with `- `, preserving any indentation, to change comments into list items
+	# 3. Replace tabs with four spaces so that indentation works correctly in Markdown
+	git_log '--pretty=format:- %s%w(0,2,2)%+b' |
+		sed -E -e 's/#(\s+)/\1- /g' -e 's/\t/    /g'
 else
-  git_log --oneline --pretty=who-when-what
+	git_log --oneline --pretty=who-when-what
 fi

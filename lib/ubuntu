@@ -16,7 +16,7 @@ is_repository_configured() {
 # $1: human-readable name, will be used to build filename (<name>.list)
 # $2: repository configuration string
 add_repository() {
-	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list > /dev/null
+	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list >/dev/null
 }
 
 # $1: URL
@@ -108,11 +108,11 @@ if ! is_repository_configured 'mpv-tests'; then
 fi
 
 message '  %s' 'updating lists...'
-request-sudo apt-get update > /dev/null
+request-sudo apt-get update >/dev/null
 message '  %s' 'done updating lists.'
 
 message '  %s' 'upgrading packages...'
-request-sudo apt-get upgrade --yes --autoremove > /dev/null
+request-sudo apt-get upgrade --yes --autoremove >/dev/null
 message '  %s' 'done upgrading packages.'
 
 declare -a packages=(
@@ -126,28 +126,28 @@ declare -a packages=(
 	wget
 
 	# replacements of default utilities
-	bat # Better cat
-	broot # Better tree
+	bat     # Better cat
+	broot   # Better tree
 	fd-find # Better find
-	htop # Better top
-	httpie # Better curl
+	htop    # Better top
+	httpie  # Better curl
 	ripgrep # Better grep
 
 	# command line tools
-	expect # Scripting tool for interactive programs
-	fzf # Fuzzy finder
+	expect   # Scripting tool for interactive programs
+	fzf      # Fuzzy finder
 	gifsicle # Gif tool
 	graphviz # Graph visualization tool
-	hugo # Static site builder
+	hugo     # Static site builder
 	imagemagick
-	ipcalc # IP address calculator
-	jq # JSON processor
+	ipcalc         # IP address calculator
+	jq             # JSON processor
 	magic-wormhole # Point-to-point file sharing
-	nnn # Command-line file browser
+	nnn            # Command-line file browser
 	p7zip
 	pandoc
 	postgresql-client # PostgreSQL CLI
-	tig # Visual Git client
+	tig               # Visual Git client
 	tmux
 	tree
 	unzip
@@ -168,7 +168,7 @@ declare -a packages=(
 
 	# programming language tools
 	composer # PHP
-	go-dep # Golang
+	go-dep   # Golang
 	python3-pip
 	shellcheck # Shell script linter
 
@@ -189,7 +189,7 @@ declare -a packages=(
 	libreoffice
 	lutris
 	meld # Comparison tool for version control, files, and directories
-	mpv # Media player
+	mpv  # Media player
 	nautilus-nextcloud
 	signal-desktop
 	slack-desktop
@@ -208,7 +208,7 @@ sudo apt-get install --yes "${packages[@]}"
 message '  %s' 'done installing packages.'
 
 message '  %s' 'updating snaps...'
-if ! request-sudo snap refresh > /dev/null; then
+if ! request-sudo snap refresh >/dev/null; then
 	fatal 'failed to update snaps'
 fi
 message '  %s' 'done updating snaps.'
@@ -221,7 +221,7 @@ declare -a snaps=(
 )
 
 for snap_raw in "${snaps[@]}"; do
-	read -ra snap <<< "$snap_raw"
+	read -ra snap <<<"$snap_raw"
 	message '  %s' "installing snap '${snap[0]}'..."
 	if ! request-sudo snap install "${snap[@]}"; then
 		fatal 'failed to install'
@@ -305,7 +305,7 @@ fi
 grub_theme_variable="GRUB_THEME=$grub_theme_dir/theme.txt"
 if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
 	message '    %s' 'enabling theme...'
-	if ! echo "$grub_theme_variable" | request-sudo tee --append /etc/default/grub > /dev/null; then
+	if ! echo "$grub_theme_variable" | request-sudo tee --append /etc/default/grub >/dev/null; then
 		fatal 'failed to enable theme'
 	fi
 	message '    %s' 'done enabling theme.'
@@ -340,7 +340,7 @@ Terminal=false
 Categories=Utility;Development;TextEditor;
 StartupWMClass=Emacs
 Keywords=Text;Editor;
-' > "$emacs_client_desktop_path"
+' >"$emacs_client_desktop_path"
 	message '  %s' 'done installing Emacs client desktop file.'
 fi
 

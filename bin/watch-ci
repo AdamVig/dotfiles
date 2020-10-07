@@ -5,14 +5,14 @@ set -euo pipefail
 # Print CI status, filtering user tracking URL query parameters.
 # $1: commit SHA to print status for
 print_ci_status() {
-  set +e
-  hub ci-status --verbose --color "$1" | sed -E 's/\?utm.+$//'
-  set -e
+	set +e
+	hub ci-status --verbose --color "$1" | sed -E 's/\?utm.+$//'
+	set -e
 }
 
 # Watch continuous integration for the current HEAD commit, printing out status as it changes
 if ! check-installed hub https://hub.github.com/; then
-  exit 1
+	exit 1
 fi
 
 # Cache head commit to avoid breaking when the user makes a new commit on the branch locally
@@ -20,13 +20,13 @@ head="$(git rev-parse HEAD)"
 
 # hub ci-status exits non-zero when CI fails
 set +e
-hub ci-status "$head" > /dev/null
+hub ci-status "$head" >/dev/null
 ci_status_exit_code=$?
 set -e
 
 if [ $ci_status_exit_code = 3 ]; then
-  echo "could not find CI status"
-  exit 1
+	echo "could not find CI status"
+	exit 1
 fi
 
 ci_status_all="$(print_ci_status "$head")"
@@ -34,32 +34,32 @@ echo -e "$ci_status_all"
 
 # Check CI status every five seconds, terminate loop if it is no longer pending
 while [ $ci_status_exit_code = 2 ]; do
-  sleep 5
+	sleep 5
 
-  # Check if the status of individual checks has changed, only log them if it has
-  ci_status_all_new="$(print_ci_status "$head")"
-  if [ "$ci_status_all" != "$ci_status_all_new" ]; then
-    ci_status_all="$ci_status_all_new"
-    tput clear
-    echo -e "$ci_status_all"
-  fi
+	# Check if the status of individual checks has changed, only log them if it has
+	ci_status_all_new="$(print_ci_status "$head")"
+	if [ "$ci_status_all" != "$ci_status_all_new" ]; then
+		ci_status_all="$ci_status_all_new"
+		tput clear
+		echo -e "$ci_status_all"
+	fi
 
-  set +e
-  hub ci-status "$head" > /dev/null
-  ci_status_exit_code=$?
-  set -e
+	set +e
+	hub ci-status "$head" >/dev/null
+	ci_status_exit_code=$?
+	set -e
 done
 
 project="$(basename "$(pwd)")"
 
 if [ $ci_status_exit_code = 0 ]; then
-  message="CI for $project succeeded."
+	message="CI for $project succeeded."
 elif [ $ci_status_exit_code = 1 ]; then
-  message="CI for $project failed."
+	message="CI for $project failed."
 else
-  message="Something unexpected happened in CI for $project."
+	message="Something unexpected happened in CI for $project."
 fi
 
 if is-macos; then
-  osascript -e "display notification \"$message\" with title \"watch-ci\""
+	osascript -e "display notification \"$message\" with title \"watch-ci\""
 fi

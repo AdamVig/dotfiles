@@ -12,10 +12,10 @@ Flags:
 force=1
 
 set +e
-getopt --test > /dev/null
+getopt --test >/dev/null
 if [ $? -ne 4 ]; then
-  echo 'error: enhanced getopt is not installed' >&2
-  exit 1
+	echo 'error: enhanced getopt is not installed' >&2
+	exit 1
 fi
 set -e
 
@@ -24,50 +24,50 @@ eval set -- "$opts"
 unset opts
 
 while true; do
-  case "$1" in
-    '-h'|'--help')
-      echo "$usage"
-      exit
-    ;;
-    '-f'|'--force')
-      force=0
-      shift
-      continue
-    ;;
-    '--')
-      shift
-      break
-    ;;
-    *)
-      echo 'error: failed to parse arguments' >&2
-      exit 1
-    ;;
-  esac
+	case "$1" in
+	'-h' | '--help')
+		echo "$usage"
+		exit
+		;;
+	'-f' | '--force')
+		force=0
+		shift
+		continue
+		;;
+	'--')
+		shift
+		break
+		;;
+	*)
+		echo 'error: failed to parse arguments' >&2
+		exit 1
+		;;
+	esac
 done
 
 if ! check-installed hub https://hub.github.com/; then
-  return 1
+	return 1
 fi
 
 errlog() {
-	>&2 echo "$@"
+	echo >&2 "$@"
 }
 
 parse_remote() {
-  remote='origin'
-  if ! remote_url="$(git remote get-url "$remote")"; then
-    errlog "error: failed to get remote URL from remote '$remote'"
-    return 1
-  fi
+	remote='origin'
+	if ! remote_url="$(git remote get-url "$remote")"; then
+		errlog "error: failed to get remote URL from remote '$remote'"
+		return 1
+	fi
 
-  regex=".+[:\/](.+\/.+)\.git"
-  if [[ "$remote_url" =~ $regex ]]; then
-    echo "${BASH_REMATCH[1]}"
-    return
-  fi
+	regex=".+[:\/](.+\/.+)\.git"
+	if [[ $remote_url =~ $regex ]]; then
+		echo "${BASH_REMATCH[1]}"
+		return
+	fi
 
-  errlog "error: failed to parse remote URL '$remote_url'"
-  return 1
+	errlog "error: failed to parse remote URL '$remote_url'"
+	return 1
 }
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
@@ -77,16 +77,16 @@ default_branch="$(get-default-branch origin)"
 # - Set delimiter (`-d`) to `%` instead of the default, which is newline
 # - Format is title, newline, body, newline, URL, percent sign
 # shellcheck disable=SC2162
-IFS=$'\n' read -d '%' title base_branch pull_request_url < <( hub pr show --head "$current_branch" --format '%t%n%B%n%U%%')
+IFS=$'\n' read -d '%' title base_branch pull_request_url < <(hub pr show --head "$current_branch" --format '%t%n%B%n%U%%')
 
 if [ "$current_branch" = "$default_branch" ]; then
-  errlog "error: current branch is default branch, please run again from a different branch"
-  exit 1
+	errlog "error: current branch is default branch, please run again from a different branch"
+	exit 1
 fi
 
 branch="$default_branch"
 if [ -n "$base_branch" ]; then
-  branch="$base_branch"
+	branch="$base_branch"
 fi
 
 message_args=()
@@ -95,24 +95,24 @@ if [ -n "$title" ]; then
 	message="$title
 
 $pull_request_url"
-  message_args=('--message' "$message")
+	message_args=('--message' "$message")
 fi
 
 if [ $force -eq 0 ]; then
-  if ! owner_slash_repository="$(parse_remote)"; then
-    errlog 'error: failed to extract owner/repository from Git remotes'
-  fi
+	if ! owner_slash_repository="$(parse_remote)"; then
+		errlog 'error: failed to extract owner/repository from Git remotes'
+	fi
 fi
 
 if [ $force -eq 0 ]; then
 	echo 'disabling branch protection...'
-  if ! hub api -X DELETE /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
-    errlog "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
-  fi
+	if ! hub api -X DELETE /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins >/dev/null; then
+		errlog "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
+	fi
 
 	enable_branch_protection() {
 		echo 're-enabling branch protection...'
-		if ! hub api -X POST /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
+		if ! hub api -X POST /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins >/dev/null; then
 			errlog "warning: failed to enable branch protection on '$owner_slash_repository' branch '$base_branch'"
 		fi
 	}
@@ -159,11 +159,11 @@ fi
 
 # Only delete local branch if all operations succeed
 if ! git branch --delete "$current_branch"; then
-  errlog "warning: failed to delete '$current_branch' locally"
+	errlog "warning: failed to delete '$current_branch' locally"
 fi
 
 # If remote branch deletion fails and branch still exists on remote, log a warning
-if ! git push origin --delete "$current_branch" &> /dev/null && \
-    git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
-  echo "warning: failed to delete '$current_branch' on the remote"
+if ! git push origin --delete "$current_branch" &>/dev/null &&
+	git ls-remote --exit-code --quiet --heads origin "$current_branch" >/dev/null; then
+	echo "warning: failed to delete '$current_branch' on the remote"
 fi

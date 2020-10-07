@@ -7,8 +7,8 @@ set -euo pipefail
 sum=0
 for _ in {1..100}; do
 	set +e
-  time="$(/usr/bin/time --quiet --format '%e' 2>&1 "$@" > /dev/null)"
+	time="$(/usr/bin/time --quiet --format '%e' "$@" 2>&1 >/dev/null)"
 	set -e
-  sum="$(bc <<< "scale=3; $sum+$time")"
+	sum="$(bc <<<"scale=3; $sum+$time")"
 done
-bc <<< "scale=3; $sum/100"
+bc <<<"scale=3; $sum/100"

@@ -9,8 +9,8 @@ Flags:
     -h, --help  show this help text"
 
 if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
-  echo "$usage"
-  exit 0
+	echo "$usage"
+	exit 0
 fi
 
 # Change directory to suppress path warning

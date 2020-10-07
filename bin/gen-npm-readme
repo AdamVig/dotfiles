@@ -3,8 +3,8 @@
 set -euo pipefail
 
 if ! [ -f package.json ]; then
-    echo 'error: cannot find package.json'
-    exit 1
+	echo 'error: cannot find package.json'
+	exit 1
 fi
 
 name
@@ -14,4 +14,4 @@ description="$(jq --raw-output '.description' package.json)"
 
 echo "# $name
 
-$description" > README.md
+$description" >README.md

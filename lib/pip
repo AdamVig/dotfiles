@@ -7,13 +7,13 @@ source "$_dir"/helpers
 
 message "installing pip tools..."
 pip_packages=(
-  csvkit # CSV processing tools
-  pip # Package manager
-  visidata # Data set visualizer
+	csvkit   # CSV processing tools
+	pip      # Package manager
+	visidata # Data set visualizer
 )
 
 for package in "${pip_packages[@]}"; do
-  pip3 install --upgrade --user "$package" > /dev/null
-  message "  %s" "installed $package"
+	pip3 install --upgrade --user "$package" >/dev/null
+	message "  %s" "installed $package"
 done
 message "pip done."

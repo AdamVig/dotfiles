@@ -20,18 +20,39 @@ message() {
 	OFF=0
 	# More color codes: https://misc.flogisoft.com/bash/tip_colors_and_formatting
 	case $1 in
-		off)     COLOR=0; shift ;;
-		red)     COLOR=31; shift ;;
-		green)   COLOR=32; shift ;;
-		yellow)  COLOR=33; shift ;;
-		blue)    COLOR=34; shift ;;
-		magenta) COLOR=35; shift ;;
-		cyan)    COLOR=36; shift ;;
+	off)
+		COLOR=0
+		shift
+		;;
+	red)
+		COLOR=31
+		shift
+		;;
+	green)
+		COLOR=32
+		shift
+		;;
+	yellow)
+		COLOR=33
+		shift
+		;;
+	blue)
+		COLOR=34
+		shift
+		;;
+	magenta)
+		COLOR=35
+		shift
+		;;
+	cyan)
+		COLOR=36
+		shift
+		;;
 	esac
 
 	# Get template from $1 if it is set, default to empty otherwise
 	TEMPLATE=
-	if [[ -n "$1" ]]; then
+	if [[ -n $1 ]]; then
 		TEMPLATE=${1:-}
 		shift
 	fi
@@ -72,15 +93,15 @@ confirm() {
 	# Whether or not to skip prompt
 	# Use value of SHOULD_CONFIRM; if not set, default to 1 (skip prompt)
 	SHOULD_PROMPT=${SHOULD_CONFIRM:-1}
-	if [[ "$SHOULD_PROMPT" = 1 ]]; then
-			return 0 # automatic yes
+	if [[ $SHOULD_PROMPT == 1 ]]; then
+		return 0 # automatic yes
 	fi
 
 	MESSAGE=${1:-"Proceed?"}
 	read -p "$MESSAGE (y/n) " -n 1 -r
 	message
 	[[ $REPLY =~ ^[Yy]$ ]] # REPLY is automatically set to the result of `read`
-	return $? # result of previous line, either 0 (yes) or 1 (no)
+	return $?              # result of previous line, either 0 (yes) or 1 (no)
 }
 
 # cURL wrapper with common default options
@@ -92,18 +113,18 @@ _curl() {
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
 get_release_url() {
-		repository="${1:-}"
-		pattern="${2:-}"
-    # Check if jq is available for JSON parsing
-    if ! command -v jq > /dev/null; then
-        warn "could not get release url for $1 because jq is not installed"
-        return 100
-    fi
+	repository="${1:-}"
+	pattern="${2:-}"
+	# Check if jq is available for JSON parsing
+	if ! command -v jq >/dev/null; then
+		warn "could not get release url for $1 because jq is not installed"
+		return 100
+	fi
 
-    # Get list of releases
-    curl -s "https://api.github.com/repos/${repository}/releases/latest" | \
-        jq --arg pattern "$pattern" --raw-output \
-					'.assets | map(.browser_download_url | select(contains($pattern))) | first'
+	# Get list of releases
+	curl -s "https://api.github.com/repos/${repository}/releases/latest" |
+		jq --arg pattern "$pattern" --raw-output \
+			'.assets | map(.browser_download_url | select(contains($pattern))) | first'
 }
 
 # Install a binary to ~/.local/bin from a URL
@@ -125,12 +146,12 @@ install_binary_from_url() {
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
 request-sudo() {
-    SUDO_PROMPT="Enter the system password for user %p: "
-    if [[ $# -eq 0 ]]; then
-        sudo --validate --prompt "$SUDO_PROMPT"
-    else
-        sudo --prompt "$SUDO_PROMPT" "$@"
-    fi
+	SUDO_PROMPT="Enter the system password for user %p: "
+	if [[ $# -eq 0 ]]; then
+		sudo --validate --prompt "$SUDO_PROMPT"
+	else
+		sudo --prompt "$SUDO_PROMPT" "$@"
+	fi
 }
 
 xdg_config() {

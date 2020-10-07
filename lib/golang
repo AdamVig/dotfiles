@@ -28,7 +28,7 @@ go_packages=(
 )
 
 for package in "${go_packages[@]}"; do
-	if go get -u "$package" &> /dev/null; then
+	if go get -u "$package" &>/dev/null; then
 		message "    %s" "installed $package"
 	else
 		warn "package $package failed to install"

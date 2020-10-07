@@ -2,18 +2,18 @@
 
 set -euo pipefail
 
-if (( $# < 2 )); then
-  echo "error: must provide name and URL"
-  exit 1
+if (($# < 2)); then
+	echo "error: must provide name and URL"
+	exit 1
 fi
 
 # Check if a program is installed
 # $1: name of command to check for
 # $2: URL for information on installing the command
 if [ -z "$(command -v "$1")" ]; then
-  echo "error: could not find $1, please install it before trying again"
-  if [ -n "$2" ]; then
-    echo "       $2"
-  fi
-  exit 1
+	echo "error: could not find $1, please install it before trying again"
+	if [ -n "$2" ]; then
+		echo "       $2"
+	fi
+	exit 1
 fi

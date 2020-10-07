@@ -9,8 +9,8 @@ default_branch="$(get-default-branch origin)"
 base_branch="${1:-$default_branch}"
 
 if [ "$current_branch" = "$base_branch" ]; then
-  echo "error: current branch is same as base branch, please run again from a different branch"
-  return 1
+	echo "error: current branch is same as base branch, please run again from a different branch"
+	return 1
 fi
 
 git checkout "$base_branch"
