@@ -34,6 +34,7 @@
 (setq auto-save-default nil) ; Disable auto save
 (setq inhibit-startup-screen t) ; Disable startup screen
 (setq ring-bell-function 'ignore) ; Disable audio bell
+(setq initial-scratch-message "") ; Disable scratch buffer comment
 
 ;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
