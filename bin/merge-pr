@@ -49,10 +49,14 @@ if ! check-installed hub https://hub.github.com/; then
   return 1
 fi
 
+errlog() {
+	>&2 echo "$@"
+}
+
 parse_remote() {
   remote='origin'
   if ! remote_url="$(git remote get-url "$remote")"; then
-    echo "error: failed to get remote URL from remote '$remote'"
+    errlog "error: failed to get remote URL from remote '$remote'"
     return 1
   fi
 
@@ -62,7 +66,7 @@ parse_remote() {
     return
   fi
 
-  echo "error: failed to parse remote URL '$remote_url'"
+  errlog "error: failed to parse remote URL '$remote_url'"
   return 1
 }
 
@@ -72,15 +76,16 @@ default_branch="$(get-default-branch origin)"
 # - Set IFS to newline so that `read` parses multiple lines of input
 # - Set delimiter (`-d`) to `%` instead of the default, which is newline
 # - Format is title, newline, body, newline, URL, percent sign
+# shellcheck disable=SC2162
 IFS=$'\n' read -d '%' title base_branch pull_request_url < <( hub pr show --head "$current_branch" --format '%t%n%B%n%U%%')
 
 if [ "$current_branch" = "$default_branch" ]; then
-  echo "error: current branch is default branch, please run again from a different branch"
+  errlog "error: current branch is default branch, please run again from a different branch"
   exit 1
 fi
 
 branch="$default_branch"
-if [[ -n "$base_branch" ]]; then
+if [ -n "$base_branch" ]; then
   branch="$base_branch"
 fi
 
@@ -95,18 +100,20 @@ fi
 
 if [ $force -eq 0 ]; then
   if ! owner_slash_repository="$(parse_remote)"; then
-    echo 'error: failed to extract owner/repository from Git remotes'
+    errlog 'error: failed to extract owner/repository from Git remotes'
   fi
 fi
 
 if [ $force -eq 0 ]; then
+	echo 'disabling branch protection...'
   if ! hub api -X DELETE /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
-    echo "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
+    errlog "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
   fi
 
 	enable_branch_protection() {
+		echo 're-enabling branch protection...'
 		if ! hub api -X POST /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins > /dev/null; then
-			echo "warning: failed to enable branch protection on '$owner_slash_repository' branch '$base_branch'"
+			errlog "warning: failed to enable branch protection on '$owner_slash_repository' branch '$base_branch'"
 		fi
 	}
 
@@ -114,18 +121,49 @@ if [ $force -eq 0 ]; then
 	trap enable_branch_protection EXIT
 fi
 
-# After checking out the base branch, ensure it is up to date with its remote counterpart
-if git pull && \
-  git checkout "$branch" && \
-  merge-latest "$branch" && \
-  git merge --no-ff "$current_branch" "${message_args[@]}" && \
-  git push; then
-  # Only delete branches if all operations succeed
-  git branch --delete "$current_branch"
+if ! git pull; then
+	errlog 'error: failed to pull into current branch'
+	exit 1
+fi
 
-  # If branch deletion fails and branch still exists, log a warning
-  if ! git push origin --delete "$current_branch" &> /dev/null && \
-      git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
-    echo 'warning: failed to delete remote branch'
-  fi
+if ! git checkout "$branch"; then
+	errlog "error: failed to check out branch '$branch'"
+	exit
+fi
+
+# Ensure base branch is up to date with its remote counterpart
+if ! merge-latest "$branch"; then
+	errlog 'error: failed to update base branch from the remote'
+	git switch "$current_branch"
+	exit 1
+fi
+
+if ! git merge --no-ff "$current_branch" "${message_args[@]}"; then
+	errlog "error: failed to merge '$current_branch' into '$branch'"
+	git switch "$current_branch"
+	exit 1
+fi
+
+if ! git push; then
+	errlog "error: failed to push '$branch' to remote"
+
+	if ! git reset --hard origin/"$current_branch"; then
+		errlog 'warning: failed to undo merge, you will need to undo it manually' "(git reset --hard origin/$current_branch)"
+	else
+		# Only switch back to original branch when merge was successfully undone
+		git switch "$current_branch"
+	fi
+
+	exit 1
+fi
+
+# Only delete local branch if all operations succeed
+if ! git branch --delete "$current_branch"; then
+  errlog "warning: failed to delete '$current_branch' locally"
+fi
+
+# If remote branch deletion fails and branch still exists on remote, log a warning
+if ! git push origin --delete "$current_branch" &> /dev/null && \
+    git ls-remote --exit-code --quiet --heads origin "$current_branch" > /dev/null; then
+  echo "warning: failed to delete '$current_branch' on the remote"
 fi
