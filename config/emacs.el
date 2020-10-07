@@ -27,6 +27,19 @@
 ;; Set the font and font size (in 1/10pt)
 (set-face-attribute 'default nil :font "Fira Code" :height 150)
 
+;; Customize the mode line
+(setq-default mode-line-format
+	(list
+		mode-line-front-space
+		mode-line-buffer-identification
+		"  "
+		"Line %l, Column %c"
+		"  "
+		mode-line-modes
+		mode-line-end-spaces
+	  )
+	)
+
 ;; Install and set up EditorConfig (https://github.com/editorconfig/editorconfig-emacs)
 (use-package editorconfig
   :ensure t
@@ -38,6 +51,7 @@
 (setq inhibit-startup-screen t) ; Disable startup screen
 (setq ring-bell-function 'ignore) ; Disable audio bell
 (setq initial-scratch-message "") ; Disable scratch buffer comment
+(setq column-number-mode t) ; Enable column number
 (tool-bar-mode -1) ; Disable toolbar
 (menu-bar-mode -1) ; Disable menu bar
 (scroll-bar-mode -1) ; Disable scrollbar
