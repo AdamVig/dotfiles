@@ -19,7 +19,7 @@ if ! command -v shellcheck >/dev/null; then
 	exit 1
 fi
 
-pushd "$(git rev-parse --show-toplevel)" > /dev/null || exit
+pushd "$(git rev-parse --show-toplevel)" >/dev/null || exit
 
 bootstrap_path='bin/,bootstrap'
 if [[ $shell_files == *"$bootstrap_path"* ]] && ! shfmt --ln posix "$bootstrap_path" >/dev/null; then
@@ -32,7 +32,7 @@ for file in $shell_files; do
 	# -i 0: indent with one tab
 	shfmt_args=(-s -i 0 "$file")
 
-	if ! shfmt "${shfmt_args[@]}" > /dev/null; then
+	if ! shfmt -d "${shfmt_args[@]}" >/dev/null; then
 		echo "formatting $file"
 		# -w: write in place
 		shfmt -w "${shfmt_args[@]}"
