@@ -59,6 +59,9 @@ fi
 mkdir -p "$config_dir"/ripgrep
 ln -sf "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
 
+mkdir -p "$config_dir"/bat
+ln -sf "$_dir"/../config/bat "$config_dir"/bat/config
+
 if ! [ -d "$config_dir"/docker ]; then
 	message "creating Docker configuration directory..."
 	mkdir -p "$config_dir"/docker
