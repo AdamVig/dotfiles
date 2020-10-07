@@ -1,8 +1,10 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
 [core]
-  pager = diff-so-fancy | less --tabs 4 -RFX
-  diff = diff-so-fancy | less --tabs 4 -RFXS --pattern '^(Date|added|deleted|modified): '
+  pager = delta
+  diff = delta
+[interactive]
+  diffFilter = delta --color-only
 [init]
 	defaultBranch = main
 [commit]
@@ -28,6 +30,10 @@
 	abbreviateCommands = true
 [diff]
   tool = meld
+  colorMoved = default
+[delta]
+  side-by-side = true
+	syntax-theme = OneHalfDark
 [merge]
   tool = kdiff3
 [merge "npm-merge-driver"]
@@ -37,22 +43,6 @@
   gpgSign = true
 [tag]
 	gpgSign = true
-
-# From https://github.com/so-fancy/diff-so-fancy#improved-colors-for-the-highlighted-bits
-[color]
-	ui = true
-[color "diff-highlight"]
-	oldNormal = "red bold"
-	oldHighlight= "red bold 52"
-	newNormal = "green bold"
-	newHighlight= "green bold 22"
-[color "diff"]
-	meta = "11"
-	frag = "magenta bold"
-	commit = "yellow bold"
-	old = "red bold"
-	new = "green bold"
-	whitespace= "red reverse"
 
 # To include a separate configuration file conditionally, uncomment the following.
 # Ensure that this block comes at the end of the file, otherwise it will not override correctly.

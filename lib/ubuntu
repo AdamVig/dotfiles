@@ -128,7 +128,6 @@ declare -a packages=(
 	# replacements of default utilities
 	bat # Better cat
 	broot # Better tree
-	diff-so-fancy # Better Git diff viewer
 	fd-find # Better find
 	htop # Better top
 	httpie # Better curl
@@ -257,6 +256,20 @@ if ! request-sudo apt-get install "$hyperfine_tmp"; then
 fi
 rm -f "$hyperfine_tmp"
 message '  %s' 'done installing hyperfine.'
+
+message '  %s' 'installing git-delta...'
+if ! git_delta_url="$(get_release_url 'dandavison/delta' '_amd64.deb')"; then
+	fatal 'failed to get git-delta release URL'
+fi
+git_delta_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
+	fatal 'failed to download git-delta'
+fi
+if ! request-sudo apt-get install "$git_delta_tmp"; then
+	fatal 'failed to install git-delta'
+fi
+rm -f "$git_delta_tmp"
+message '  %s' 'done installing git-delta.'
 
 message '  %s' 'linking batcat to bat...'
 ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat

@@ -9,9 +9,9 @@ brew "wget"
 # replacements of default utilities
 brew "bat" # Better cat
 brew "broot" # Better tree
-brew "diff-so-fancy" # Better Git diff viewer
 brew "exa" # Better ls
 brew "fd" # Better find
+brew "git-delta" # Better Git diff viewer
 brew "htop" # Better top
 brew "httpie" # Better curl
 brew "ripgrep" # Better grep
