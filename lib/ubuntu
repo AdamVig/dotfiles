@@ -184,6 +184,7 @@ declare -a packages=(
 	figma-linux
 	firefox
 	gnome-shell-extension-impatience
+	i3 # Window manager
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
@@ -374,5 +375,9 @@ for user_directory_name in "${!user_directories[@]}"; do
 	xdg-user-dirs-update --set "$user_directory_name" "$user_directory_path"
 done
 message '  %s' 'done updating user directories.'
+
+config_dir="$(xdg_config)"
+mkdir -p "$config_dir"/i3
+ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
 
 message "done setting up Ubuntu."
