@@ -380,4 +380,7 @@ config_dir="$(xdg_config)"
 mkdir -p "$config_dir"/i3
 ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
 
+mkdir -p "$config_dir"/i3status
+ln -sf "$_dir"/../config/i3status "$config_dir"/i3status/config
+
 message "done setting up Ubuntu."
