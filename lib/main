@@ -93,6 +93,35 @@ fi
 "$_dir"/zsh
 "$_dir"/profile-picture
 
+if "$_dir"/../bin/is-linux; then
+	# Must run after ./pip because it installs mozdownload
+	if command -v mozdownload >/dev/null && command -v bunzip2 >/dev/null; then
+		message '  %s' 'installing Thunderbird...'
+		thunderbird_tmp_bz2="$(mktemp --dry-run --suffix .tar.bz2)"
+		thunderbird_tmp_tar="${thunderbird_tmp_bz2%.bz2}"
+		if ! mozdownload --application thunderbird --version latest --destination "$thunderbird_tmp_bz2"; then
+			fatal 'failed to download Thunderbird'
+		fi
+
+		if ! bunzip2 "$thunderbird_tmp_bz2"; then
+			fatal 'failed to decompress Thunderbird'
+		fi
+
+		thunderbird_path="$(xdg_data)"/thunderbird
+		rm -rf "$thunderbird_path"
+		if ! tar --extract --file "$thunderbird_tmp_tar" --directory "$(xdg_data)"; then
+			fatal 'failed to extract Thunderbird'
+		fi
+		rm -rf "$thunderbird_tmp_tar"
+
+		ln -sf "$thunderbird_path"/thunderbird "$HOME"/.local/bin
+
+		message '  %s' 'done installing Thunderbird.'
+	else
+		warn 'could not install Thunderbird, ensure mozdownload and bunzip2 are installed'
+	fi
+fi
+
 if "$_dir"/../bin/is-macos; then
 	broot_root='org.dystroy.broot'
 else
