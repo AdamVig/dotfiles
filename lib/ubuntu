@@ -196,7 +196,6 @@ declare -a packages=(
 	slack-desktop
 	spotify-client
 	steam
-	thunderbird
 	vino # GNOME VNC server
 
 	# fonts
