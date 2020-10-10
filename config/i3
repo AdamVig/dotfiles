@@ -43,6 +43,19 @@ bindsym $mod+Shift+q kill
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# Press $mod+o followed by a shortcut to launch programs
+# Press Escape or Return to exit
+set $mode_launcher Launch: [b]rowser [e]mail
+bindsym $mod+o mode "$mode_launcher"
+
+mode "$mode_launcher" {
+    bindsym b exec firefox
+    bindsym e exec ~/.local/bin/thunderbird
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
