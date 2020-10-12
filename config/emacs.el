@@ -118,6 +118,8 @@
 
 ;; Enable visual line wrapping in Org mode
 (add-hook 'org-mode-hook 'visual-line-mode)
+;; Disable "Validate" link in Org HTML exports
+(setq org-html-validation-link nil)
 
 (use-package writegood-mode
 	:ensure t
