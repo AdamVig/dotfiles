@@ -14,15 +14,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+	'(package-selected-packages
+		 (quote
+			 (writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-	)
+ )
 
 ;; Set the font and font size (in 1/10pt)
 (set-face-attribute 'default nil :font "Fira Code" :height 150)
@@ -118,6 +118,10 @@
 
 ;; Enable visual line wrapping in Org mode
 (add-hook 'org-mode-hook 'visual-line-mode)
+
+(use-package writegood-mode
+	:ensure t
+	:config (global-set-key "\C-cg" 'writegood-mode))
 
 ;; Define function to archive all DONE tasks in Org mode (https://stackoverflow.com/a/27043756/1850656)
 (defun org-archive-done-tasks ()
