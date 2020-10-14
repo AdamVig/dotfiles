@@ -3,8 +3,15 @@ general {
 	interval = 5
 }
 
-order += "tztime local"
+volume master {
+	separator = false
+	format = "🔈%volume"
+	format_muted = "🔈muted (%volume)"
+	device = "pulse:0"
+}
+order += "volume master"
 
 tztime local {
 	format = "%Y-%m-%d %l:%M %p"
 }
+order += "tztime local"
