@@ -1,3 +1,5 @@
+# -*- mode: i3wm-config -*-
+
 # Use "super" key as modifier
 set $mod Mod4
 

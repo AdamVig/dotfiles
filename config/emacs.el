@@ -14,9 +14,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-	'(package-selected-packages
-		 (quote
-			 (writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+ '(package-selected-packages
+   (quote
+    (i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -89,6 +89,10 @@
 (add-hook 'go-mode-hook (lambda () (
   add-hook 'before-save-hook 'gofmt-before-save)
  (setq gofmt-command "goimports")))
+
+;; Add mode for i3 config files (https://github.com/Alexander-Miller/i3wm-Config-Mode)
+(use-package i3wm-config-mode
+	:ensure t)
 
 ;; Add and configure Markdown mode (https://github.com/jrblevin/markdown-mode)
 (use-package markdown-mode
