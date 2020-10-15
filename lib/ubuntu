@@ -146,6 +146,7 @@ declare -a packages=(
 	nnn            # Command-line file browser
 	p7zip
 	pandoc
+	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
 	tig               # Visual Git client
 	tmux
