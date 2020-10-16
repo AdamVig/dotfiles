@@ -25,7 +25,7 @@
  )
 
 ;; Set the font and font size (in 1/10pt)
-(set-face-attribute 'default nil :font "Fira Code" :height 150)
+(set-face-attribute 'default nil :font "Fira Code" :height 120)
 
 ;; Customize the mode line
 (setq-default mode-line-format
