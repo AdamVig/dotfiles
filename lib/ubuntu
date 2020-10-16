@@ -386,4 +386,12 @@ ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
 mkdir -p "$config_dir"/i3status
 ln -sf "$_dir"/../config/i3status "$config_dir"/i3status/config
 
+xresources_path="$HOME"/.Xresources
+if ! [ -f "$xresources_path" ]; then
+	message '  %s' 'writing .Xresources file...'
+	# Set display DPI
+	echo 'Xft.dpi: 96' >"$xresources_path"
+	message '  %s' 'done writing .Xresources file.'
+fi
+
 message "done setting up Ubuntu."
