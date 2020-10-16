@@ -108,8 +108,11 @@ if ! is_repository_configured 'mpv-tests'; then
 fi
 
 message '  %s' 'updating lists...'
-request-sudo apt-get update >/dev/null
-message '  %s' 'done updating lists.'
+if request-sudo apt-get update >/dev/null; then
+	message '  %s' 'done updating lists.'
+else
+	warn 'failed to update lists'
+fi
 
 message '  %s' 'upgrading packages...'
 request-sudo apt-get upgrade --yes --autoremove >/dev/null
