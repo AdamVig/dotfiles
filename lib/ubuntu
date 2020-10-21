@@ -196,6 +196,7 @@ declare -a packages=(
 	meld # Comparison tool for version control, files, and directories
 	mpv  # Media player
 	nautilus-nextcloud
+	rofi # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
