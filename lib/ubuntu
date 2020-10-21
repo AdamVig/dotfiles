@@ -205,6 +205,8 @@ declare -a packages=(
 
 	# fonts
 	fonts-firacode
+	fonts-noto
+	fonts-noto-color-emoji
 	fonts-open-sans
 )
 
