@@ -14,9 +14,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+	'(package-selected-packages
+		 (quote
+			 (unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -26,6 +26,16 @@
 
 ;; Set the font and font size (in 1/10pt)
 (set-face-attribute 'default nil :font "Fira Code" :height 120)
+
+;; Add cache for unicode-fonts package
+(use-package persistent-soft
+	:ensure t)
+
+;; Configure Unicode fonts (https://github.com/rolandwalker/unicode-fonts)
+(use-package unicode-fonts
+	:ensure t
+	:config
+	(unicode-fonts-setup))
 
 ;; Customize the mode line
 (setq-default mode-line-format
