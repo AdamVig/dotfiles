@@ -7,7 +7,7 @@ volume master {
 	separator = false
 	format = "🔈%volume"
 	format_muted = "🔈muted (%volume)"
-	device = "pulse:0"
+	device = "pulse"
 }
 order += "volume master"
 
