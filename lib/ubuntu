@@ -155,7 +155,8 @@ declare -a packages=(
 	tmux
 	tree
 	unzip
-	xclip # Clipboard CLI
+	xclip   # Clipboard CLI
+	xdotool # X input event generator
 	xdg-utils
 	wpasupplicant
 

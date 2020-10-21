@@ -17,4 +17,21 @@ for package in "${pip_packages[@]}"; do
 	python3 -m pip install --upgrade --user "$package" >/dev/null
 	message "  %s" "installed $package"
 done
+
+if is-linux; then
+	message '  %s' 'installing rofimoji...'
+	if ! rofimoji_url="$(get_release_url 'fdw/rofimoji' '.whl')"; then
+		fatal 'failed to get rofimoji release URL'
+	fi
+	rofimoji_wheel="$(basename "$rofimoji_url")"
+	if ! _curl "$rofimoji_url" --output "$rofimoji_wheel"; then
+		fatal 'failed to download rofimoji'
+	fi
+	if ! pip install --user "$rofimoji_wheel"; then
+		fatal 'failed to install rofimoji'
+	fi
+	rm -f "$rofimoji_wheel"
+	message '  %s' 'done installing rofimoji.'
+fi
+
 message "pip done."

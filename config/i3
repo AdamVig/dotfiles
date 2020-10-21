@@ -34,6 +34,9 @@ bindsym $mod+Shift+q kill
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show run
 
+# open emoji input
+bindsym $mod+period exec --no-startup-id ~/.local/bin/rofimoji
+
 # Press $mod+o followed by a shortcut to launch programs
 # Press Escape or Return to exit
 set $mode_launcher Launch: [b]rowser [e]mail
