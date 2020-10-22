@@ -107,6 +107,12 @@ if ! is_repository_configured 'mpv-tests'; then
 	message '  %s' 'done adding mpv repository.'
 fi
 
+if ! is_repository_configured 'ubuntu-elisp'; then
+	message '  %s' 'adding Ubuntu Emacs snapshot repository...'
+	request-sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
+	message '  %s' 'done adding Ubuntu Emacs snapshot repository.'
+fi
+
 message '  %s' 'updating lists...'
 if request-sudo apt-get update >/dev/null; then
 	message '  %s' 'done updating lists.'
@@ -185,7 +191,7 @@ declare -a packages=(
 	chromium-browser
 	code
 	docker.io
-	emacs
+	emacs-snapshot
 	figma-linux
 	firefox
 	gnome-shell-extension-impatience
@@ -324,9 +330,22 @@ request-sudo update-grub
 message '    %s' 'done re-generating Grub configuration.'
 message '  %s' 'done configuring Grub.'
 
-if ! systemctl --user is-enabled --quiet emacs; then
+user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
+if ! [ -f "$user_emacs_unit_path" ]; then
+	message '  %s' 'linking Emacs snapshot service into place...'
+	if ! package_emacs_unit_path="$(find /usr/lib -name emacs-snapshot.service)"; then
+		fatal 'failed to find path to Emacs Systemd unit'
+	fi
+	systemctl --user link "$package_emacs_unit_path"
+	# Create an alias from "emacs-snapshot" to "emacs" for more convenient usage
+	ln -sf "$user_emacs_unit_path" "$(xdg_config)"/systemd/user/emacs.service
+	systemctl --user daemon-reload
+	message '  %s' 'done linking Emacs snapshot service into place.'
+fi
+
+if ! systemctl --user is-enabled --quiet emacs-snapshot.service; then
 	message '  %s' 'setting up Emacs daemon...'
-	systemctl --user enable --now emacs.service
+	systemctl --user enable --now emacs-snapshot.service
 	message '  %s' 'done setting up Emacs daemon.'
 fi
 
