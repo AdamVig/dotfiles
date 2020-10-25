@@ -32,7 +32,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi -combi-modi run,drun"
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi -combi-modi drun,run"
 
 # open emoji input
 bindsym $mod+period exec --no-startup-id ~/.local/bin/rofimoji
