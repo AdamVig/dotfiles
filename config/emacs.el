@@ -14,9 +14,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-	'(package-selected-packages
-		 (quote
-			 (unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))))
+ '(package-selected-packages
+   '(unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -139,14 +138,19 @@
 	:ensure t
 	:config (global-set-key "\C-cg" 'writegood-mode))
 
-;; Define function to archive all DONE tasks in Org mode (https://stackoverflow.com/a/27043756/1850656)
+;; https://stackoverflow.com/a/27043756/1850656
 (defun org-archive-done-tasks ()
+	"Archive all DONE tasks in the current Org mode file and save all Org files"
   (interactive)
   (org-map-entries
    (lambda ()
      (org-archive-subtree)
-     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-      "/DONE" 'tree))
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point)))
+		 (org-save-all-org-buffers))
+    "/DONE" 'file))
+
+(add-hook 'org-mode-hook
+  (lambda () (local-set-key (kbd "C-c a") 'org-archive-done-tasks)))
 
 ;; https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 (defun move-line-up ()
