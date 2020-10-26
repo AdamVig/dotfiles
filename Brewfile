@@ -21,6 +21,7 @@ brew "emacs" if OS.mac?
 brew "expect" # Scripting tool for interactive programs
 brew "fzf" # Fuzzy finder
 brew "gifsicle" # Gif tool
+brew "glow" # Markdown viewer
 brew "graphviz" # Graph visualization tool
 brew "hugo" # Static site builder
 brew "hyperfine" # Command-line benchmarking tool

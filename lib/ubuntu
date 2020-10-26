@@ -146,6 +146,7 @@ declare -a packages=(
 	expect   # Scripting tool for interactive programs
 	fzf      # Fuzzy finder
 	gifsicle # Gif tool
+	glow     # Markdown viewer
 	graphviz # Graph visualization tool
 	hugo     # Static site builder
 	imagemagick
