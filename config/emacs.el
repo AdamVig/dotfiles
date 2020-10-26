@@ -168,8 +168,8 @@
   (forward-line -1)
   (indent-according-to-mode))
 
-(global-set-key [(meta u)]  'move-line-up)
-(global-set-key [(meta p)]  'move-line-down)
+(global-set-key [(meta p)]  'move-line-up)
+(global-set-key [(meta n)]  'move-line-down)
 
 ;; Add Magit (https://magit.vc/)
 (use-package magit
