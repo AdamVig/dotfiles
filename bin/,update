@@ -10,7 +10,7 @@ if command -v brew >/dev/null; then
 	brew upgrade
 
 	echo 'upgrading Homebrew Cask formulas...'
-	brew cask upgrade || true
+	brew upgrade --cask || true
 fi
 
 echo 'updating npm...'
