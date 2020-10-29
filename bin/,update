@@ -25,7 +25,7 @@ pip install --upgrade --user pip
 echo 'updating global pip packages...'
 pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
 
-if command -v apt >/dev/null; then
+if command -v apt-get >/dev/null; then
 	echo 'updating apt packages...'
 	sudo apt-get update
 	sudo apt-get upgrade --yes
