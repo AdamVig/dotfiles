@@ -133,6 +133,8 @@
 (add-hook 'org-mode-hook 'visual-line-mode)
 ;; Disable "Validate" link in Org HTML exports
 (setq org-html-validation-link nil)
+;; Set global key binding for org-agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (use-package writegood-mode
 	:ensure t
@@ -150,7 +152,7 @@
     "/DONE" 'file))
 
 (add-hook 'org-mode-hook
-  (lambda () (local-set-key (kbd "C-c a") 'org-archive-done-tasks)))
+  (lambda () (local-set-key (kbd "C-c s") 'org-archive-done-tasks)))
 
 ;; https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 (defun move-line-up ()
