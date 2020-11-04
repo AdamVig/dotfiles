@@ -15,7 +15,7 @@ request-sudo
 
 message "symlinking dotfiles to your home directory..."
 ln -sf "$_dir"/../.bashrc "$HOME"
-ln -sf "$_dir"/../.exports "$HOME"
+ln -sf "$_dir"/../.profile "$HOME"
 
 message 'setting up Emacs configuration...'
 # Remove legacy configuration location

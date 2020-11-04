@@ -1,4 +1,4 @@
-# shellcheck source=.exports
-source ~/.exports
+# shellcheck source=.profile
+source "$HOME"/.profile
 
 eval "$(nodenv init - --no-rehash)"

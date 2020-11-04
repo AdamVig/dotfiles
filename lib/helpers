@@ -5,8 +5,8 @@ set -euo pipefail
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
-# shellcheck source=./.exports
-source "$_dir"/../.exports
+# shellcheck source=./.profile
+source "$_dir"/../.profile
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 

@@ -2,6 +2,9 @@
 
 _dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
 
+# Explicitly source .profile (in a mode compatible with Bash) in case the current shell is not a login shell
+BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.profile'
+
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
 
@@ -77,13 +80,6 @@ if command -v exa > /dev/null; then
   alias ls='exa'
 fi
 
-# Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
-if [ -f /etc/profile ] && [[ "$OSTYPE" == darwin* ]]; then
-	# shellcheck disable=SC2123
-  PATH=""
-  source /etc/profile
-fi
-
 if [ -f "$HOME"/.wsl ]; then
 	source "$HOME"/.wsl
 fi
@@ -91,10 +87,6 @@ fi
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true
-
-# Source exports late so that PATH overrides take effect
-# shellcheck source=.exports
-source ~/.exports
 
 # Initialize Nodenv if not already initialized
 if [[ "$PATH" != *"nodenv/shims"* ]]; then

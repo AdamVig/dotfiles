@@ -1,9 +1,4 @@
-
-if [ -v BASH_SOURCE ]; then
-	_dir_exports="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-else
-	_dir_exports="$(dirname "$(realpath "${(%):-%x}")")"
-fi
+# For login shells and graphical applications; must be compatible with Bash
 
 prepend_path() {
   if [[ "$PATH" != *"$1"* ]]; then
@@ -19,25 +14,44 @@ append_path() {
   fi
 }
 
-# Force brew cask to symlink applications to global dir
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# Default editor
+export VISUAL='emacsclient --create-frame'
+export EDITOR='emacsclient --tty'
 
+# Allow GPG to make prompts
+export GPG_TTY
+GPG_TTY=$(tty)
 
-# Prevent Nodenv from storing data in ~/.nodenv
-export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
+# Fix ansi-term support in emacs
+export TERM=xterm-256color
 
-if "$_dir_exports"/bin/is-linux; then
-  # Prevent Docker from storing configuration in  ~/.docker
-  export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
+# Make word-related macros observe special characters
+export WORDCHARS=''
 
-	append_path "$NODENV_ROOT"/bin
-fi
+# Use ripgrep for fzf search
+export FZF_DEFAULT_COMMAND='rg --files'
 
-if "$_dir_exports"/bin/is-macos; then
-  # https://stackoverflow.com/a/5084892/1850656
+export PAGER='bat'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Set golang workspace directory
+export GOPATH="$HOME/code/go"
+
+if [[ "$OSTYPE" == darwin* ]]; then
+	# Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
+	if [ -f /etc/profile ]; then
+		# shellcheck disable=SC2123
+		PATH=""
+		source /etc/profile
+	fi
+
+	# https://stackoverflow.com/a/5084892/1850656
   export XDG_CONFIG_HOME="$HOME"/Library/Preferences
   export XDG_DATA_HOME="$HOME"/Library
   export XDG_CACHE_HOME="$HOME"/Library/Caches
+
+	# Force brew cask to symlink applications to global dir
+	export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
   # Prefer GNU utilities over built-in BSD variants
   if [ -d /usr/local/opt/gnu-getopt ]; then
@@ -56,8 +70,15 @@ if "$_dir_exports"/bin/is-macos; then
   fi
 fi
 
-# Set golang workspace directory
-export GOPATH="$HOME/code/go"
+# Prevent Nodenv from storing data in ~/.nodenv
+export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
+
+if [[ "$OSTYPE" == *linux* ]]; then
+  # Prevent Docker from storing configuration in  ~/.docker
+  export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
+
+	append_path "$NODENV_ROOT"/bin
+fi
 
 # Add golang directory to PATH
 append_path "$GOPATH/bin"
@@ -69,27 +90,10 @@ fi
 
 # Add user bin directories to PATH
 prepend_path "$HOME"/.local/bin
-prepend_path "$_dir_exports"/bin
-
-# Default editor
-export VISUAL='emacsclient --create-frame'
-export EDITOR='emacsclient --tty'
-
-# Allow GPG to make prompts
-export GPG_TTY
-GPG_TTY=$(tty)
-
-# Fix ansi-term support in emacs
-export TERM=xterm-256color
-
-# Make word-related macros observe special characters
-export WORDCHARS=''
+prepend_path "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"/bin
 
 # Tell ripgrep where to load config from
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"/ripgrep/config
-
-# Use ripgrep for fzf search
-export FZF_DEFAULT_COMMAND='rg --files'
 
 # Prevent Postgres from storing history in ~/.psql_history
 export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/psql-history
@@ -99,6 +103,3 @@ export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 
 # Prevent less from storing history in ~/.lesshst
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
-
-export PAGER='bat'
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
