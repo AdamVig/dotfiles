@@ -44,8 +44,8 @@ set $mode_launcher Launch: [b]rowser [e]mail
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
-    bindsym b exec firefox
-    bindsym e exec ~/.local/bin/thunderbird
+    bindsym b exec firefox, mode "default"
+    bindsym e exec ~/.local/bin/thunderbird, mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
