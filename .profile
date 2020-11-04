@@ -103,3 +103,10 @@ export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 
 # Prevent less from storing history in ~/.lesshst
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
+
+# Load local overrides if the user has created the file
+local_profile_path="$HOME"/.profile-local
+if [ -f "$local_profile_path" ]; then
+	# shellcheck source=/dev/null
+	source "$local_profile_path"
+fi
