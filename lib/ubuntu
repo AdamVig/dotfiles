@@ -204,7 +204,8 @@ declare -a packages=(
 	meld # Comparison tool for version control, files, and directories
 	mpv  # Media player
 	nautilus-nextcloud
-	rofi # Application launcher
+	redshift # Screen color temperature adjustment tool
+	rofi     # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
@@ -350,6 +351,12 @@ if ! systemctl --user is-enabled --quiet emacs-snapshot.service; then
 	message '  %s' 'done setting up Emacs daemon.'
 fi
 
+if ! systemctl --user is-enabled --quiet redshift.service; then
+	message '  %s' 'setting up Redshift daemon...'
+	systemctl --user enable --now redshift.service
+	message '  %s' 'done setting up Redshift daemon.'
+fi
+
 emacs_client_desktop_path="$HOME"/.local/share/applications/emacs-client.desktop
 if ! [ -f "$emacs_client_desktop_path" ]; then
 	message '  %s' 'installing Emacs client desktop file...'
@@ -409,6 +416,9 @@ ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
 
 mkdir -p "$config_dir"/i3status
 ln -sf "$_dir"/../config/i3status "$config_dir"/i3status/config
+
+mkdir -p "$config_dir"/redshift
+ln -sf "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf
 
 xresources_path="$HOME"/.Xresources
 if ! [ -f "$xresources_path" ]; then
