@@ -52,6 +52,21 @@ mode "$mode_launcher" {
     bindsym Escape mode "default"
 }
 
+# Press $mod+i followed by a shortcut to set Slack status
+# Press Escape to exit
+set $mode_i i [a]fk un[A]fk [f]ocus un[F]ocus
+bindsym $mod+i mode "$mode_i"
+
+mode "$mode_i" {
+    bindsym a exec --no-startup-id i afk; mode "default"
+    bindsym Shift+a exec --no-startup-id i unafk; mode "default"
+
+		bindsym f exec --no-startup-id i focus; mode "default"
+		bindsym Shift+f exec --no-startup-id i unfocus; mode "default"
+
+    bindsym Escape mode "default"
+}
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
