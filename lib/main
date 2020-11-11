@@ -36,14 +36,21 @@ if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path
 	echo "$ssh_config" >>"$ssh_config_path"
 fi
 
-message "configure GPG..."
+message "configuring GPG..."
 mkdir -p "$HOME"/.gnupg
 gpg_agent_config='default-cache-ttl 34560000
 max-cache-ttl 34560000'
+if is-linux; then
+	gpg_agent_config+='\n'
+	gpg_agent_config+='pinentry-program /usr/bin/pinentry-gnome3'
+fi
 gpg_agent_config_path="$HOME"/.gnupg/gpg-agent.conf
 if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg_agent_config_path"; then
-	echo "$gpg_agent_config" >>"$gpg_agent_config_path"
+	message '  %s' "updating GPG Agent configuration..."
+	echo -e "$gpg_agent_config" >>"$gpg_agent_config_path"
+	message '  %s' "done updating GPG Agent configuration."
 fi
+message "done configuring GPG."
 
 bin_dir="$HOME"/.local/bin
 message "creating '$bin_dir'..."
