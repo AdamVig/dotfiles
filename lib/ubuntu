@@ -196,7 +196,8 @@ declare -a packages=(
 	figma-linux
 	firefox
 	gnome-shell-extension-impatience
-	i3 # Window manager
+	gnome-keyring # Secret manager
+	i3            # Window manager
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
@@ -427,5 +428,12 @@ if ! [ -f "$xresources_path" ]; then
 	echo 'Xft.dpi: 96' >"$xresources_path"
 	message '  %s' 'done writing .Xresources file.'
 fi
+
+message '  %s' 'configuring GNOME Keyring...'
+# Create customized versions of the desktop files for the secrets and SSH components so they start automatically
+# By default, the OnlyShowIn lines in the desktop files would prevent these components from being started
+sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-secrets.desktop >"$config_dir"/autostart/gnome-keyring-secrets.desktop
+sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-ssh.desktop >"$config_dir"/autostart/gnome-keyring-ssh.desktop
+message '  %s' 'done configuring GNOME Keyring.'
 
 message "done setting up Ubuntu."

@@ -78,6 +78,12 @@ if [[ "$OSTYPE" == *linux* ]]; then
   export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
 
 	append_path "$NODENV_ROOT"/bin
+
+	# When in a graphical environment, initialize the already-running GNOME Keyring daemon
+	if [ -n "$DESKTOP_SESSION" ];then
+		eval "$(gnome-keyring-daemon --start)"
+		export SSH_AUTH_SOCK
+	fi
 fi
 
 # Add golang directory to PATH
