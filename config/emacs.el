@@ -14,9 +14,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-	'(git-commit-summary-max-length 72)
+ '(git-commit-summary-max-length 72)
 	'(package-selected-packages
-		 '(unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
+		 '(ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -152,10 +152,17 @@
 		 (org-save-all-org-buffers))
     "/DONE" 'file))
 
-(add-hook 'org-mode-hook
-  (lambda () (local-set-key (kbd "C-c s") 'org-archive-done-tasks)))
+(use-package ox-gfm
+	:ensure t)
 
-;; https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
+(add-hook 'org-mode-hook
+  (lambda ()
+		(local-set-key (kbd "C-c s") 'org-archive-done-tasks)
+		(require 'ox-md nil t)
+		(require 'ox-gfm nil t)
+		))
+
+;; Https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 (defun move-line-up ()
   "Move up the current line."
   (interactive)
