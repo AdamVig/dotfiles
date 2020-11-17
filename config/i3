@@ -9,7 +9,7 @@ font pango: Noto Sans Display 12
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-exec --no-startup-id tmux -f ~/.config/tmux/tmux.conf start-server
+exec --no-startup-id tmux -f ~/.config/tmux/tmux.conf new-session -d
 exec --no-startup-id nextcloud
 
 # Use pactl to adjust volume in PulseAudio.
