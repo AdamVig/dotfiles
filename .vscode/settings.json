@@ -6,9 +6,7 @@
   "editor.fontFamily": "Fira Code",
   "editor.fontWeight": "600",
   "editor.fontLigatures": true,
-  "editor.rulers": [
-    120
-  ],
+  "editor.rulers": [120],
   "editor.wordWrap": "on",
   // Disable minimap
   "editor.minimap.enabled": false,
@@ -31,7 +29,7 @@
   "workbench.colorTheme": "Atomize",
   "workbench.colorCustomizations": {
     "statusBar.debuggingBackground": "#511f1f",
-    "editor.background": "#222429",
+    "editor.background": "#222429"
   },
   "workbench.iconTheme": "atom-icons",
   "workbench.statusBar.visible": false,
@@ -59,7 +57,7 @@
   // Disable file delete confirmation
   "explorer.confirmDelete": false,
   // Disable confirmation window on drag and drop in file explorer
-  "explorer.confirmDragAndDrop": false,  
+  "explorer.confirmDragAndDrop": false,
   // ------------------------------
   // Terminal
   // ------------------------------
@@ -81,10 +79,7 @@
   "html.format.extraLiners": "",
   // Add a ruler at 50 characters (for commit subjects)
   "[git-commit]": {
-    "editor.rulers": [
-      50,
-      72
-    ],
+    "editor.rulers": [50, 72],
     // Wrap at 72 characters instead of 50
     "rewrap.wrappingColumn": 72
   },
@@ -115,8 +110,8 @@
   },
   "gitlens.menus": {
     "editorGroup": {
-        "blame": false,
-        "compare": false
+      "blame": false,
+      "compare": false
     }
   },
   // Remove leading zero from time
@@ -141,11 +136,7 @@
   // Spell checker configuration
   "cSpell.language": "en",
   // Only enable for text-centric language types
-  "cSpell.enabledLanguageIds": [
-    "markdown",
-    "git-commit",
-    "latex"
-  ],
+  "cSpell.enabledLanguageIds": ["markdown", "git-commit", "latex"],
   // Remove ".git" from the default list of ignored paths
   "cSpell.ignorePaths": [
     "node_modules", // this will ignore anything the node_modules directory
@@ -161,5 +152,7 @@
     "borderColor": "#528BFF"
   },
   // Hide spell check indicator in status bar
-  "cSpell.showStatus": false
+  "cSpell.showStatus": false,
+  // Hide menu bar (show by pressing Alt key)
+  "window.menuBarVisibility": "toggle"
 }
