@@ -140,6 +140,7 @@ declare -a packages=(
 	fd-find # Better find
 	htop    # Better top
 	httpie  # Better curl
+	mosh    # Better ssh
 	ripgrep # Better grep
 
 	# command line tools
