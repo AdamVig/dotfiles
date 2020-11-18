@@ -38,7 +38,7 @@ fi
 
 if ! is_repository_configured 'spotify'; then
 	message '  %s' 'adding Spotify repository...'
-	add_key https://download.spotify.com/debian/pubkey.gpg
+	add_key https://download.spotify.com/debian/pubkey_0D811D58.gpg
 	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
 	message '  %s' 'done adding Spotify repository.'
 fi
