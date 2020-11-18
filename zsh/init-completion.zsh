@@ -13,6 +13,10 @@ if [ -f "$hub_completion_path" ] && [[ "$FPATH" != *"$hub_completion_path"* ]]; 
 	fpath=("$hub_completion_path" $fpath)
 fi
 
+if command -v hass-cli >/dev/null; then
+	source <(hass-cli completion zsh)
+fi
+
 zmodload -i zsh/complist
 autoload -U compinit
 compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump
