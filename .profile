@@ -42,7 +42,9 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	if [ -f /etc/profile ]; then
 		# shellcheck disable=SC2123
 		PATH=""
+		set +u
 		source /etc/profile
+		set -u
 	fi
 
 	# https://stackoverflow.com/a/5084892/1850656
