@@ -70,6 +70,8 @@ else
 fi
 
 message "  %s" "setting Python path..."
+# Must initialize Nodenv in order for npm to be available in PATH
+eval "$(nodenv init -)"
 npm config set --global python "$(command -v python3)"
 message "  %s" "done setting Python path."
 
