@@ -12,9 +12,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id tmux -f ~/.config/tmux/tmux.conf new-session -d
 exec --no-startup-id nextcloud
 
-# Monitor default audio source in default audio sink
-exec --no-startup-id pactl load-module module-loopback latency_msec=1
-
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
