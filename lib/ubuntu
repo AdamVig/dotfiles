@@ -206,8 +206,9 @@ declare -a packages=(
 	meld # Comparison tool for version control, files, and directories
 	mpv  # Media player
 	nautilus-nextcloud
-	redshift # Screen color temperature adjustment tool
-	rofi     # Application launcher
+	pulseeffects # Audio effects
+	redshift     # Screen color temperature adjustment tool
+	rofi         # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
