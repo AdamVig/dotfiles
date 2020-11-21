@@ -357,6 +357,9 @@ fi
 
 if ! systemctl --user is-enabled --quiet redshift.service; then
 	message '  %s' 'setting up Redshift daemon...'
+	_curl https://raw.githubusercontent.com/jonls/redshift/master/data/systemd/redshift.service.in |
+		sed 's|@bindir@|/usr/bin|' >"$(xdg_config)"/systemd/user/redshift.service
+	systemctl --user daemon-reload
 	systemctl --user enable --now redshift.service
 	message '  %s' 'done setting up Redshift daemon.'
 fi
