@@ -355,15 +355,6 @@ if ! systemctl --user is-enabled --quiet emacs-snapshot.service; then
 	message '  %s' 'done setting up Emacs daemon.'
 fi
 
-if ! systemctl --user is-enabled --quiet redshift.service; then
-	message '  %s' 'setting up Redshift daemon...'
-	_curl https://raw.githubusercontent.com/jonls/redshift/master/data/systemd/redshift.service.in |
-		sed 's|@bindir@|/usr/bin|' >"$(xdg_config)"/systemd/user/redshift.service
-	systemctl --user daemon-reload
-	systemctl --user enable --now redshift.service
-	message '  %s' 'done setting up Redshift daemon.'
-fi
-
 emacs_client_desktop_path="$HOME"/.local/share/applications/emacs-client.desktop
 if ! [ -f "$emacs_client_desktop_path" ]; then
 	message '  %s' 'installing Emacs client desktop file...'
