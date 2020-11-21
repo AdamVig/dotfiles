@@ -196,6 +196,7 @@ declare -a packages=(
 	emacs-snapshot
 	figma-linux
 	firefox
+	flameshot # Screenshot tool
 	gnome-shell-extension-impatience
 	gnome-keyring # Secret manager
 	i3            # Window manager
