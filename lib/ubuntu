@@ -131,6 +131,7 @@ declare -a packages=(
 
 	# default utilities
 	gnupg
+	openssh-server
 	rsync
 	wget
 
