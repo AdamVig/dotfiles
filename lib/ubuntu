@@ -164,6 +164,7 @@ declare -a packages=(
 	tmux
 	tree
 	unzip
+	x11vnc  # X server VNC
 	xclip   # Clipboard CLI
 	xdotool # X input event generator
 	xdg-utils
