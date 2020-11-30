@@ -62,9 +62,9 @@
 (setq ring-bell-function 'ignore) ; Disable audio bell
 (setq initial-scratch-message "") ; Disable scratch buffer comment
 (setq column-number-mode t) ; Enable column number
-(tool-bar-mode -1) ; Disable toolbar
-(menu-bar-mode -1) ; Disable menu bar
-(scroll-bar-mode -1) ; Disable scrollbar
+(if (functionp 'tool-bar-mode) (tool-bar-mode -1)) ; Disable toolbar
+(if (functionp 'menu-bar-mode) (menu-bar-mode -1)) ; Disable menu bar
+(if (functionp 'scroll-bar-mode) (scroll-bar-mode -1)) ; Disable scrollbar
 
 ;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
