@@ -22,14 +22,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
-	'(package-selected-packages
-		 '(ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
+ '(package-selected-packages
+   '(comapny tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Add exec-path-from-shell (https://github.com/purcell/exec-path-from-shell)
+(use-package exec-path-from-shell
+	:ensure t
+	:config (exec-path-from-shell-initialize))
 
 ;; Set the font and font size (in 1/10pt)
 (set-face-attribute 'default nil :font "Fira Code" :height 120)
@@ -191,6 +196,23 @@
 ;; Add Magit (https://magit.vc/)
 (use-package magit
 	:ensure t)
+
+;; Add Company mode (https://company-mode.github.io/)
+(use-package comapny
+  :ensure t
+  :init (global-company-mode t))
+
+;; Add Flycheck (https://github.com/flycheck/flycheck)
+(use-package flycheck
+	:ensure t
+	:init (global-flycheck-mode))
+
+;; Add TypeScript Interactive Development Environment (https://github.com/ananthakumaran/tide)
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck exec-path-from-shell)
+  :hook ((typescript-mode . tide-setup)
+					(typescript-mode . tide-hl-identifier-mode)))
 
 ;; Load all Lisp files in the `lisp/` subdirectory of the user's Emacs directory
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
