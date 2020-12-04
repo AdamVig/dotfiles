@@ -428,6 +428,33 @@ if ! [ -f "$xresources_path" ]; then
 	message '  %s' 'done writing .Xresources file.'
 fi
 
+x11vnc_unit_path=/etc/systemd/system/x11vnc.service
+if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
+	message '  %s' 'creating x11vnc Systemd unit...'
+	request_sudo echo '[Unit]
+Description="x11vnc"
+Requires=display-manager.service
+After=display-manager.service
+
+[Service]
+ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth guess
+ExecStop=/usr/bin/killall x11vnc
+Restart=on-failure
+Restart-sec=2
+
+[Install]
+WantedBy=multi-user.target
+' >"$x11vnc_unit_path"
+	request_sudo systemctl daemon-reload
+	message '  %s' 'done creating x11vnc Systemd unit.'
+fi
+
+if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
+	message '  %s' 'setting up x11vnc service...'
+	request_sudo systemctl enable --now x11vnc.service
+	message '  %s' 'done setting up x11vnc service.'
+fi
+
 message '  %s' 'configuring GNOME Keyring...'
 # Create customized versions of the desktop files for the secrets and SSH components so they start automatically
 # By default, the OnlyShowIn lines in the desktop files would prevent these components from being started
