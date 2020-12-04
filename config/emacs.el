@@ -1,3 +1,10 @@
+;;; emacs.el --- Configure Emacs.
+;;; Commentary:
+
+;;; This file configures Emacs.  See the bottom of the file for instructions on providing local, machine-specific configuration.
+
+;;; Code:
+
 ;; Initialize package.el (http://melpa.org/#/getting-started)
 (require 'package)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
@@ -143,7 +150,7 @@
 
 ;; https://stackoverflow.com/a/27043756/1850656
 (defun org-archive-done-tasks ()
-	"Archive all DONE tasks in the current Org mode file and save all Org files"
+	"Archive all DONE tasks in the current Org mode file and save all Org files."
   (interactive)
   (org-map-entries
    (lambda ()
@@ -192,3 +199,8 @@
 ;; Load user-specific settings if present
 ;; To add user-specific settings, create a file in `<your Emacs directory>/lisp` containing `(provide 'init-local)`
 (require 'init-local nil t)
+
+(provide 'emacs)
+
+;;; emacs.el ends here
+
