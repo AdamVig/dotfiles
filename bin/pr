@@ -37,7 +37,7 @@ done
 # Subject, followed by a newline, followed by the body with every line indented by two spaces
 readonly message="
 
-### Commits
+**Commits**
 
 $(log-branch-commits --pr --remote "$remote" "$base_branch")"
 
