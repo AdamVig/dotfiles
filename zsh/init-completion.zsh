@@ -22,3 +22,5 @@ autoload -U compinit
 compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump
 
 zstyle ':completion:*' menu select
+
+compdef _git log-branch-commits=git-branch
