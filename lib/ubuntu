@@ -113,6 +113,12 @@ if ! is_repository_configured 'ubuntu-elisp'; then
 	message '  %s' 'done adding Ubuntu Emacs snapshot repository.'
 fi
 
+if ! is_repository_configured 'xournal'; then
+	message '  %s' 'adding Xournal++ repository...'
+	request-sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
+	message '  %s' 'done adding Xournal++ repository.'
+fi
+
 message '  %s' 'updating lists...'
 if request-sudo apt-get update >/dev/null; then
 	message '  %s' 'done updating lists.'
@@ -168,6 +174,7 @@ declare -a packages=(
 	xclip   # Clipboard CLI
 	xdotool # X input event generator
 	xdg-utils
+	xournalpp # Note taking tool
 	wpasupplicant
 
 	# shell
