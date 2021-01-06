@@ -169,6 +169,7 @@ declare -a packages=(
 	tig               # Visual Git client
 	tmux
 	tree
+	units # Unit conversion calculator
 	unzip
 	x11vnc  # X server VNC
 	xclip   # Clipboard CLI
