@@ -148,6 +148,8 @@
 (setq org-html-validation-link nil)
 ;; Set global key binding for org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
+;; Open Org files folded
+(setq org-startup-folded t)
 
 (use-package writegood-mode
 	:ensure t
