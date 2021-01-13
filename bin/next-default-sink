@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly usage="Usage: $(basename "$0") [-h|--help]
+Set the default PulseAudio sink to the next available sink.
+
+Flags:
+    -h, --help    show this help text"
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+sink_index_pattern=".*index: ([0-9])"
+default_sink_pattern="\* $sink_index_pattern"
+default_sink_index=
+sink_indexes=()
+max_sink_index=-1
+while read -r line; do
+	if [[ $line =~ $default_sink_pattern ]]; then
+		default_sink_index="${BASH_REMATCH[1]}"
+	fi
+
+	if [[ $line =~ $sink_index_pattern ]]; then
+		sink_index="${BASH_REMATCH[1]}"
+		sink_indexes+=("$sink_index")
+
+		if ((sink_index > max_sink_index)); then
+			max_sink_index="$sink_index"
+		fi
+	fi
+done < <(pacmd list-sinks)
+
+if [ -z "$default_sink_index" ]; then
+	echo 'failed to get default sink index'
+	exit 1
+fi
+
+if [ "$max_sink_index" = -1 ]; then
+	echo 'failed to get max sink index'
+	exit 1
+fi
+
+echo "default sink index: $default_sink_index"
+echo "sink indexes:" "${sink_indexes[@]}"
+echo "maximum sink index: $max_sink_index"
+
+next_sink_index="$((default_sink_index + 1))"
+if ((next_sink_index > max_sink_index)); then
+	next_sink_index="${sink_indexes[0]}"
+fi
+
+echo "switching default sink to sink $next_sink_index"
+pactl set-default-sink "$next_sink_index"
