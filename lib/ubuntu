@@ -156,7 +156,6 @@ declare -a packages=(
 	gifsicle # Gif tool
 	glow     # Markdown viewer
 	graphviz # Graph visualization tool
-	hugo     # Static site builder
 	imagemagick
 	ipcalc         # IP address calculator
 	jq             # JSON processor
@@ -273,6 +272,20 @@ if ! request-sudo apt-get install "$github_cli_tmp"; then
 fi
 rm -f "$github_cli_tmp"
 message '  %s' 'done installing GitHub CLI.'
+
+message '  %s' 'installing Hugo...'
+if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then
+	fatal 'failed to get Hugo release URL'
+fi
+hugo_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$hugo_url" --output "$hugo_tmp"; then
+	fatal 'failed to download Hugo'
+fi
+if ! request-sudo apt-get install "$hugo_tmp"; then
+	fatal 'failed to install Hugo'
+fi
+rm -f "$hugo_tmp"
+message '  %s' 'done installing Hugo.'
 
 message '  %s' 'installing hyperfine...'
 if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
