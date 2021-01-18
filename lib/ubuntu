@@ -438,9 +438,9 @@ if ! [ -f "$xresources_path" ]; then
 fi
 
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
-if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
+if ! request-sudo [ -f "$x11vnc_unit_path" ]; then
 	message '  %s' 'creating x11vnc Systemd unit...'
-	request_sudo echo '[Unit]
+	echo '[Unit]
 Description="x11vnc"
 Requires=display-manager.service
 After=display-manager.service
@@ -453,14 +453,14 @@ Restart-sec=2
 
 [Install]
 WantedBy=multi-user.target
-' >"$x11vnc_unit_path"
-	request_sudo systemctl daemon-reload
+' | request-sudo tee "$x11vnc_unit_path" >/dev/null
+	request-sudo systemctl daemon-reload
 	message '  %s' 'done creating x11vnc Systemd unit.'
 fi
 
-if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
+if ! request-sudo systemctl is-enabled --quiet x11vnc.service; then
 	message '  %s' 'setting up x11vnc service...'
-	request_sudo systemctl enable --now x11vnc.service
+	request-sudo systemctl enable --now x11vnc.service
 	message '  %s' 'done setting up x11vnc service.'
 fi
 
