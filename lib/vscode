@@ -31,6 +31,7 @@ fi
 
 declare -a extensions=(
 	Angular.ng-template                   # Angular template IntelliSense support
+	bungcip.better-toml                   # TOML support
 	dbaeumer.vscode-eslint                # JavaScript linter
 	eamodio.gitlens                       # Advanced Git integration
 	EditorConfig.editorconfig             # Editor text style configuration
