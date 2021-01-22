@@ -82,6 +82,9 @@
 ;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Enable typing over a selection (https://www.emacswiki.org/emacs/DeleteSelectionMode)
+(delete-selection-mode 1)
+
 ;; Hide buffers that start with an asterisk in Ibuffer mode
 (require 'ibuf-ext)
 (add-to-list 'ibuffer-never-show-predicates "^\\*")
