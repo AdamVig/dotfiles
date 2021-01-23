@@ -442,6 +442,14 @@ ln -sf "$_dir"/../config/i3status "$config_dir"/i3status/config
 mkdir -p "$config_dir"/redshift
 ln -sf "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf
 
+mkdir -p "$config_dir"/i3/workspaces
+if ! [ -x "$config_dir"/i3/workspaces/init ]; then
+	echo 'initializing workspace initialization script...'
+	touch "$config_dir"/i3/workspaces/init
+	chmod +x "$config_dir"/i3/workspaces/init
+	echo 'done initializing workspace initialization script.'
+fi
+
 xresources_path="$HOME"/.Xresources
 if ! [ -f "$xresources_path" ]; then
 	message '  %s' 'writing .Xresources file...'

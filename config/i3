@@ -211,3 +211,6 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Initialize workspaces (file should always exist but will be a no-op by default)
+exec ~/.config/i3/workspaces/init
