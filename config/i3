@@ -215,3 +215,6 @@ bar {
 
 # Initialize workspaces (file should always exist but will be a no-op by default)
 exec ~/.config/i3/workspaces/init
+
+# Run local login script (file should always exist but will be a no-op by default)
+exec ~/.config/i3/login-local

@@ -452,6 +452,13 @@ if ! [ -x "$config_dir"/i3/workspaces/init ]; then
 	echo 'done initializing workspace initialization script.'
 fi
 
+if ! [ -x "$config_dir"/i3/login-local ]; then
+	echo 'initializing local login script...'
+	touch "$config_dir"/i3/login-local
+	chmod +x "$config_dir"/i3/login-local
+	echo 'done initializing local login script.'
+fi
+
 xresources_path="$HOME"/.Xresources
 if ! [ -f "$xresources_path" ]; then
 	message '  %s' 'writing .Xresources file...'
