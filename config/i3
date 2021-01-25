@@ -12,6 +12,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id tmux -f ~/.config/tmux/tmux.conf new-session -d
 exec --no-startup-id nextcloud
 exec --no-startup-id redshift
+exec --no-startup-id compton
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status

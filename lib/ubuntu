@@ -202,6 +202,7 @@ declare -a packages=(
 	balena-etcher-electron
 	chromium-browser
 	code
+	compton # Compositor for X
 	docker.io
 	emacs-snapshot
 	figma-linux
