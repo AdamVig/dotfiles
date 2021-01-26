@@ -208,7 +208,7 @@
 	:ensure t)
 
 ;; Add Company mode (https://company-mode.github.io/)
-(use-package comapny
+(use-package company
   :ensure t
   :init (global-company-mode t))
 
