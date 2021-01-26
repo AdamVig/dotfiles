@@ -154,6 +154,8 @@
 (setq org-html-validation-link nil)
 ;; Set global key binding for org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
+;; Set global key binding for inserting inactive time stamp
+(global-set-key (kbd "C-c !") 'org-time-stamp-inactive)
 ;; Open Org files folded
 (setq org-startup-folded t)
 
