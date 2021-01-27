@@ -23,7 +23,7 @@
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
  '(org-archive-location "%s-archive::")
- '(org-babel-load-languages '((emacs-lisp . t) (shell . t) (js . t)))
+ '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
 		'(comapny tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
