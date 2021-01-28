@@ -165,6 +165,7 @@ declare -a packages=(
 	pandoc
 	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
+	scrot             # Screenshot capture tool
 	tig               # Visual Git client
 	tmux
 	tree
