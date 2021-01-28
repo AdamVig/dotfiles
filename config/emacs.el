@@ -59,8 +59,6 @@
 		mode-line-buffer-identification
 		"  "
 		"Line %l, Column %c"
-		"  "
-		mode-line-modes
 		mode-line-end-spaces
 	  )
 	)
