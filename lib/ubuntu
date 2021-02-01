@@ -502,4 +502,8 @@ sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-secrets.desktop >"$conf
 sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-ssh.desktop >"$config_dir"/autostart/gnome-keyring-ssh.desktop
 message '  %s' 'done configuring GNOME Keyring.'
 
+message '  %s' 'disabling input language icon in system tray...'
+gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
+message '  %s' 'done disabling input language icon in system tray.'
+
 message "done setting up Ubuntu."
