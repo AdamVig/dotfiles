@@ -228,7 +228,6 @@ declare -a packages=(
 	mpv  # Media player
 	# Nextcloud version pinned to avoid error: "nextcloud-desktop : Depends: qtbase-abi-5-12-8 but it is not installable"
 	nautilus-nextcloud=2.6.4-1 # Nextcloud Nautilus integration (includes client)
-	pulseeffects               # Audio effects
 	redshift                   # Screen color temperature adjustment tool
 	rofi                       # Application launcher
 	signal-desktop
