@@ -1,5 +1,14 @@
 [time]
-command=date '+%Y-%m-%d %l:%M %p'
+command=echo "<span font_weight=\"bold\">$(date '+%l:%M %p')</span>"
+interval=1
+markup=pango
+
+[date]
+command=date '+%Y-%m-%d'
+interval=5
+
+[time eastern]
+command=TZ='America/New_York' date '+%l:%M %p %Z'
 interval=1
 
 [audio]
