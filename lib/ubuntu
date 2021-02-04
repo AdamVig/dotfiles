@@ -212,6 +212,7 @@ declare -a packages=(
 	gnome-shell-extension-impatience
 	gnome-keyring # Secret manager
 	i3            # Window manager
+	i3blocks      # Status bar generator
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
@@ -439,8 +440,8 @@ config_dir="$(xdg_config)"
 mkdir -p "$config_dir"/i3
 ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
 
-mkdir -p "$config_dir"/i3status
-ln -sf "$_dir"/../config/i3status "$config_dir"/i3status/config
+mkdir -p "$config_dir"/i3blocks
+ln -sf "$_dir"/../config/i3blocks "$config_dir"/i3blocks/config
 
 mkdir -p "$config_dir"/redshift
 ln -sf "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf

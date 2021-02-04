@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+fatal() {
+	echo >&2 "$@"
+	exit 1
+}
+
+get_default_sink_name() {
+	# In the capturing group, match anything other than a newline
+	default_sink_pattern=$'Default Sink: ([^\n]+)'
+	if [[ "$(pactl info)" =~ $default_sink_pattern ]]; then
+		echo "${BASH_REMATCH[1]}"
+	else
+		fatal 'failed to get default sink name'
+	fi
+}
+
+# $1: name of default sink
+get_volume_percentage() {
+	sink_name="${1:?missing sink name}"
+	sink_pattern="Name: $sink_name"
+	# Example volume string:
+	# Volume: front-left: 39804 /  61% / -12.99 dB,   front-right: 39804 /  61% / -12.99 dB
+	volume_pattern='Volume: .*: .* / .* ([0-9]+)% / .*'
+
+	found_name=false
+	while read -r line; do
+		# Check if line includes default sink name
+		if [ "$found_name" = false ] && [[ $line =~ $sink_pattern ]]; then
+			found_name=true
+
+		# Check if line is the line containing volume
+		elif [ "$found_name" = true ] && [[ $line =~ $volume_pattern ]]; then
+			echo "${BASH_REMATCH[1]}"
+			break
+		fi
+	done < <(pactl list sinks)
+
+	if [ "$found_name" = false ]; then
+		fatal 'failed to get volume'
+	fi
+}
+
+# $1: name of default sink
+get_sink_type() {
+	sink_name="${1:?missing sink name}"
+	headphones_sink="${HEADPHONES_SINK:-}"
+	speakers_sink="${SPEAKERS_SINK:-}"
+	if [ -z "$speakers_sink" ] || [ -z "$headphones_sink" ]; then
+		return
+	fi
+
+	if [ "$sink_name" = "$headphones_sink" ]; then
+		echo "🎧"
+	elif [ "$sink_name" = "$speakers_sink" ]; then
+		echo "🔊"
+	else
+		echo "❔"
+	fi
+}
+
+build_status() {
+	default_sink_name="$(get_default_sink_name)"
+	volume_percentage="$(get_volume_percentage "$default_sink_name")"
+	sink_type="$(get_sink_type "$default_sink_name")"
+
+	echo "${sink_type:+$sink_type }${volume_percentage}%"
+}
+
+build_status
+
+while read -r; do
+	build_status
+done < <(
+	pactl subscribe |
+		grep --line-buffered \
+			-e "Event 'change' on sink #" \
+			-e "Event 'change' on sink-input #"
+)
