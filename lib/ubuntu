@@ -119,6 +119,12 @@ if ! is_repository_configured 'xournal'; then
 	message '  %s' 'done adding Xournal++ repository.'
 fi
 
+if ! is_repository_configured 'copyq'; then
+	message '  %s' 'adding CopyQ repository...'
+	request-sudo add-apt-repository --yes ppa:hluk/copyq
+	message '  %s' 'done adding CopyQ repository.'
+fi
+
 message '  %s' 'updating lists...'
 if request-sudo apt-get update >/dev/null; then
 	message '  %s' 'done updating lists.'
@@ -204,6 +210,7 @@ declare -a packages=(
 	chromium-browser
 	code
 	compton # Compositor for X
+	copyq   # Clipboard manager
 	docker.io
 	emacs-snapshot
 	figma-linux
