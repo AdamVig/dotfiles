@@ -62,4 +62,6 @@ fi
 
 if is-macos; then
 	osascript -e "display notification \"$message\" with title \"watch-ci\""
+elif command -v notify-send >/dev/null; then
+	notify-send 'watch-ci' "$message"
 fi
