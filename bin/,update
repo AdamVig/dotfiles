@@ -17,7 +17,8 @@ echo 'updating npm...'
 npm i -g npm
 
 echo 'updating global npm packages...'
-npm update -g
+# Temporarily diabled due to Nodenv `.hooks` directory causing problems with npm 7
+# npm update -g
 
 echo 'updating pip...'
 pip install --upgrade --user pip
