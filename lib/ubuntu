@@ -206,6 +206,7 @@ declare -a packages=(
 	lastpass-cli
 
 	# applications
+	arbtt # Automatic time tracker
 	balena-etcher-electron
 	chromium-browser
 	code
@@ -515,5 +516,9 @@ message '  %s' 'done configuring GNOME Keyring.'
 message '  %s' 'disabling input language icon in system tray...'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
 message '  %s' 'done disabling input language icon in system tray.'
+
+message '  %s' 'enabling arbtt autostart...'
+ln -sf /usr/share/doc/arbtt/examples/arbtt-capture.desktop "$config_dir"/autostart
+message '  %s' 'done enabling arbtt autostart.'
 
 message "done setting up Ubuntu."
