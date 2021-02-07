@@ -9,33 +9,40 @@ source "$_dir"/helpers
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
-readonly profile_picture_dir="$HOME"/Pictures
+readonly profile_picture_dirs=("$HOME"/Pictures "$HOME"/pictures)
 readonly profile_picture_filename='profile.jpg'
-readonly profile_picture_path="${profile_picture_dir}/${profile_picture_filename}"
-if ! [ -f "$profile_picture_path" ]; then
-	message 'downloading profile picture...'
+found_dir=false
+for profile_picture_dir in "${profile_picture_dirs[@]}"; do
+	profile_picture_path="${profile_picture_dir}/${profile_picture_filename}"
 	if [ -d "$profile_picture_dir" ]; then
-		email="$(git config user.email)"
-		if [ -n "$email" ]; then
+		found_dir=true
+		if ! [ -f "$profile_picture_path" ]; then
+			message "downloading profile picture to $profile_picture_dir..."
+			email="$(git config user.email)"
+			if [ -n "$email" ]; then
 
-			if command -v md5sum >/dev/null; then
-				md5_command='md5sum'
-			elif command -v md5 >/dev/null; then
-				md5_command='md5'
-			else
-				fatal 'could not find md5 or md5sum'
-			fi
+				if command -v md5sum >/dev/null; then
+					md5_command='md5sum'
+				elif command -v md5 >/dev/null; then
+					md5_command='md5'
+				else
+					fatal 'could not find md5 or md5sum'
+				fi
 
-			email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
-			if _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
-				message 'done downloading profile picture.'
+				email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
+				if _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
+					message 'done downloading profile picture.'
+				else
+					fatal 'failed to download profile picture'
+				fi
 			else
-				fatal 'failed to download profile picture'
+				warn 'Git email is not set, skipping profile picture download'
 			fi
-		else
-			warn 'Git email is not set, skipping profile picture download'
 		fi
-	else
-		warn "$profile_picture_dir does not exist, skipping profile picture download"
+		break
 	fi
+done
+
+if [ "$found_dir" = false ]; then
+	warn "could not find any profile picture directories, skipping profile picture download"
 fi
