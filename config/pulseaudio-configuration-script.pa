@@ -95,9 +95,6 @@ load-module module-always-sink
 ### Honour intended role device property
 load-module module-intended-roles
 
-### Automatically suspend sinks/sources that become idle for too long
-load-module module-suspend-on-idle
-
 ### If autoexit on idle is enabled we want to make sure we only quit
 ### when no local session needs us anymore.
 .ifexists module-console-kit.so
