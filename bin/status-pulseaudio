@@ -78,7 +78,8 @@ print_and_subscribe() {
 		pactl subscribe |
 			grep --line-buffered \
 				-e "Event 'change' on sink #" \
-				-e "Event 'change' on sink-input #"
+				-e "Event 'change' on sink-input #" \
+				-e "Event 'change' on server #"
 	)
 
 	return 1
