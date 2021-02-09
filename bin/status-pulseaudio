@@ -69,13 +69,23 @@ build_status() {
 	echo "${sink_type:+$sink_type }${volume_percentage}%"
 }
 
-build_status
-
-while read -r; do
+print_and_subscribe() {
 	build_status
-done < <(
-	pactl subscribe |
-		grep --line-buffered \
-			-e "Event 'change' on sink #" \
-			-e "Event 'change' on sink-input #"
-)
+
+	while read -r; do
+		build_status
+	done < <(
+		pactl subscribe |
+			grep --line-buffered \
+				-e "Event 'change' on sink #" \
+				-e "Event 'change' on sink-input #"
+	)
+
+	return 1
+}
+
+until print_and_subscribe; do
+	echo '⏸'
+	sleep 1
+	echo '🔄'
+done
