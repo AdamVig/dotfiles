@@ -202,9 +202,6 @@ declare -a packages=(
 	python3-pip
 	shellcheck # Shell script linter
 
-	# web service clients
-	lastpass-cli
-
 	# applications
 	arbtt # Automatic time tracker
 	balena-etcher-electron

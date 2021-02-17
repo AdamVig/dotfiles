@@ -29,9 +29,6 @@ KARMA_CHROME_USER_DATA_DIR="$("$_dir_wsl"/bin/expand-windows-path %LOCALAPPDATA%
 # To make xdg-open work for URLs
 export BROWSER="$_dir_wsl"/bin/wsl-open
 
-# Make lpass --clip flag work
-export LPASS_CLIPBOARD_COMMAND='clip.exe'
-
 # Set up X server connection
 export DISPLAY
 DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2; exit;}'):0.0

@@ -117,4 +117,13 @@ install "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"
 rm -rf "$hub_extracted_tmp"
 message '  %s' 'done installing Hub.'
 
+message "    %s" "installing Bitwarden..."
+bitwarden_path="$HOME"/.local/bin/Bitwarden.AppImage
+if ! _curl 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage' \
+	--output "$bitwarden_path"; then
+	fatal 'failed to download Bitwarden'
+fi
+chmod +x "$bitwarden_path"
+message "    %s" "done installing Bitwarden."
+
 message "  %s" "done setting up Linux."

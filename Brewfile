@@ -67,7 +67,6 @@ brew "ddgr" # DuckDuckGo
 brew "ffsend" # Firefox Send
 brew "gh" # GitHub
 brew "hub", args: ["HEAD"] # GitHub
-brew "lastpass-cli"
 tap "rockymadden/rockymadden"
 brew "rockymadden/rockymadden/slack-cli"
 
@@ -83,6 +82,7 @@ cask "xquartz" # Needed by Inkscape
 
 # applications
 cask "authy"
+cask "bitwarden"
 cask "docker"
 cask "emacs"
 cask "firefox"
