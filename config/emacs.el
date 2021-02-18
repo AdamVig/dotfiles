@@ -26,7 +26,7 @@
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
-		'(company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
+   '(ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -173,6 +173,8 @@
     "/DONE" 'file))
 
 (use-package ox-gfm
+	:ensure t)
+(use-package ox-jira
 	:ensure t)
 
 (add-hook 'org-mode-hook
