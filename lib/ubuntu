@@ -180,6 +180,7 @@ declare -a packages=(
 	wmctrl  # X window manager control CLI
 	x11vnc  # X server VNC
 	xclip   # Clipboard CLI
+	xsel    # Clipboard CLI
 	xdotool # X input event generator
 	xdg-utils
 	xournalpp # Note taking tool
