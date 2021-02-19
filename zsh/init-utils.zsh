@@ -16,3 +16,7 @@ if [[ "$FPATH" != *"zsh-z"* ]]; then
 fi
 
 source "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+# Enable built-in functions (see man zshcontrib)
+autoload zcalc
+autoload zmv
