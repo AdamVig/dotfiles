@@ -30,6 +30,7 @@ if "$_dir"/../bin/is-linux; then
 		nodenv-update
 		nodenv-default-packages
 		nodenv-package-rehash
+		nodenv-package-json-engine
 	)
 
 	for nodenv_plugin in "${nodenv_plugins[@]}"; do
