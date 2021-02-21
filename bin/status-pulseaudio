@@ -61,12 +61,41 @@ get_sink_type() {
 	fi
 }
 
+# $1: name of default sink
+is_muted() {
+	sink_name="${1:?missing sink name}"
+	sink_pattern="Name: $sink_name"
+	muted_pattern='Mute: yes'
+	unmuted_pattern='Mute: no'
+
+	found_name=false
+	while read -r line; do
+		# Check if line includes default sink name
+		if [ "$found_name" = false ] && [[ $line =~ $sink_pattern ]]; then
+			found_name=true
+
+		# Check if line is the line containing mute
+		elif [ "$found_name" = true ] && [[ $line =~ $muted_pattern ]]; then
+			return 0
+		# Check if line is the line containing mute
+		elif [ "$found_name" = true ] && [[ $line =~ $unmuted_pattern ]]; then
+			return 1
+			break
+		fi
+	done < <(pactl list sinks)
+}
+
 build_status() {
 	default_sink_name="$(get_default_sink_name)"
 	volume_percentage="$(get_volume_percentage "$default_sink_name")"
 	sink_type="$(get_sink_type "$default_sink_name")"
+	status="${sink_type:+$sink_type }${volume_percentage}%"
 
-	echo "${sink_type:+$sink_type }${volume_percentage}%"
+	if is_muted "$default_sink_name"; then
+		echo "<span strikethrough=\"true\" alpha=\"50%\">$status</span>"
+	else
+		echo "$status"
+	fi
 }
 
 print_and_subscribe() {
