@@ -324,6 +324,20 @@ fi
 rm -f "$git_delta_tmp"
 message '  %s' 'done installing git-delta.'
 
+message '  %s' 'installing websocat...'
+if ! websocat_url="$(get_release_url 'vi/websocat' '_ssl1.1_amd64.deb')"; then
+	fatal 'failed to get websocat release URL'
+fi
+websocat_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$websocat_url" --output "$websocat_tmp"; then
+	fatal 'failed to download websocat'
+fi
+if ! request-sudo apt-get install "$websocat_tmp"; then
+	fatal 'failed to install websocat'
+fi
+rm -f "$websocat_tmp"
+message '  %s' 'done installing websocat.'
+
 message '  %s' 'linking batcat to bat...'
 ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
 message '  %s' 'done linking batcat to bat.'
