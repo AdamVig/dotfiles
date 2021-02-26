@@ -112,8 +112,7 @@ hub_path="$HOME"/.local/bin/hub
 install "$hub_extracted_tmp"/bin/hub "$hub_path"
 install "$hub_extracted_tmp"/share/man/*/*.1 "$HOME"/.local/share/man/man1
 hub_completion_dir="$HOME"/.local/share/hub
-mkdir -p "$hub_completion_dir"
-install "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"
+install -D "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"/_hub
 rm -rf "$hub_extracted_tmp"
 message '  %s' 'done installing Hub.'
 

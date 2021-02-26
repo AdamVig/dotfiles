@@ -8,13 +8,13 @@ if [[ "$FPATH" != *"$completion_path"* ]]; then
   fpath=("$completion_path" $fpath)
 fi
 
-hub_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/hub/hub.zsh_completion
-if [ -f "$hub_completion_path" ] && [[ "$FPATH" != *"$hub_completion_path"* ]]; then
+hub_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/hub
+if [ -d "$hub_completion_path" ] && [[ "$FPATH" != *"$hub_completion_path"* ]]; then
 	fpath=("$hub_completion_path" $fpath)
 fi
 
-gh_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/gh/gh.zsh_completion
-if [ -f "$gh_completion_path" ] && [[ "$FPATH" != *"$gh_completion_path"* ]]; then
+gh_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/gh
+if [ -d "$gh_completion_path" ] && [[ "$FPATH" != *"$gh_completion_path"* ]]; then
 	fpath=("$gh_completion_path" $fpath)
 fi
 

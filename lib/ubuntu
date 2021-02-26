@@ -277,7 +277,7 @@ for snap_raw in "${snaps[@]}"; do
 done
 
 message '  %s' 'installing GitHub CLI completions...'
-install -D <(gh completion --shell zsh) "${XDG_DATA_HOME:-$HOME/.local/share}"/gh/gh.zsh_completion
+install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
 message '  %s' 'done installing GitHub CLI completions.'
 
 message '  %s' 'installing Hugo...'
