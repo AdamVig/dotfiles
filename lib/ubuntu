@@ -125,6 +125,13 @@ if ! is_repository_configured 'copyq'; then
 	message '  %s' 'done adding CopyQ repository.'
 fi
 
+if ! is_repository_configured 'cli.github.com'; then
+	message '  %s' 'adding GitHub CLI repository...'
+	request-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+	request-sudo add-apt-repository --yes https://cli.github.com/packages
+	message '  %s' 'done adding GitHub CLI repository.'
+fi
+
 message '  %s' 'updating lists...'
 if request-sudo apt-get update >/dev/null; then
 	message '  %s' 'done updating lists.'
@@ -159,6 +166,7 @@ declare -a packages=(
 	# command line tools
 	expect   # Scripting tool for interactive programs
 	fzf      # Fuzzy finder
+	gh       # GitHub CLI
 	gifsicle # Gif tool
 	glow     # Markdown viewer
 	graphviz # Graph visualization tool
@@ -268,19 +276,9 @@ for snap_raw in "${snaps[@]}"; do
 	message '  %s' "done installing snap '${snap[0]}'."
 done
 
-message '  %s' 'installing GitHub CLI...'
-if ! github_cli_url="$(get_release_url 'cli/cli' 'linux_amd64.deb')"; then
-	fatal 'failed to get GitHub CLI release URL'
-fi
-github_cli_tmp="$(mktemp --suffix .deb)"
-if ! _curl "$github_cli_url" --output "$github_cli_tmp"; then
-	fatal 'failed to download GitHub CLI'
-fi
-if ! request-sudo apt-get install "$github_cli_tmp"; then
-	fatal 'failed to install GitHub CLI'
-fi
-rm -f "$github_cli_tmp"
-message '  %s' 'done installing GitHub CLI.'
+message '  %s' 'installing GitHub CLI completions...'
+install -D <(gh completion --shell zsh) "${XDG_DATA_HOME:-$HOME/.local/share}"/gh/gh.zsh_completion
+message '  %s' 'done installing GitHub CLI completions.'
 
 message '  %s' 'installing Hugo...'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then

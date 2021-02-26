@@ -13,6 +13,11 @@ if [ -f "$hub_completion_path" ] && [[ "$FPATH" != *"$hub_completion_path"* ]]; 
 	fpath=("$hub_completion_path" $fpath)
 fi
 
+gh_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/gh/gh.zsh_completion
+if [ -f "$gh_completion_path" ] && [[ "$FPATH" != *"$gh_completion_path"* ]]; then
+	fpath=("$gh_completion_path" $fpath)
+fi
+
 if command -v hass-cli >/dev/null; then
 	source <(hass-cli completion zsh)
 fi
