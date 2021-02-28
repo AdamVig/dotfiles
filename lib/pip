@@ -7,6 +7,7 @@ source "$_dir"/helpers
 
 message "installing pip tools..."
 pip_packages=(
+	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
 	homeassistant-cli # Home Assistant management tool
 	mozdownload       # Downloader for Mozilla applications
