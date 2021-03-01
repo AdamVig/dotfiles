@@ -105,6 +105,7 @@ cask "spotify"
 cask "standard-notes"
 cask "thunderbird"
 cask "visual-studio-code"
+cask "zoom"
 
 # fonts
 tap "homebrew/cask-fonts"
