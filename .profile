@@ -53,7 +53,10 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export XDG_CACHE_HOME="$HOME"/Library/Caches
 
 	# Force brew cask to symlink applications to global dir
-	export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+	export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+
+	# Use correct committer email for CLI-driven Homebrew commits
+	export HOMEBREW_GIT_EMAIL='adam@adamvig.com'
 
   # Prefer GNU utilities over built-in BSD variants
   if [ -d /usr/local/opt/gnu-getopt ]; then
