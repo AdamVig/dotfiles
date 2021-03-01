@@ -84,7 +84,7 @@ cask "xquartz" # Needed by Inkscape
 
 # applications
 cask "authy"
-cask "bitwarden"
+mas "Bitwarden", id: 1352778147
 cask "docker"
 cask "emacs"
 cask "firefox"
