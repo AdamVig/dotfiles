@@ -115,7 +115,6 @@ print_and_subscribe() {
 }
 
 until print_and_subscribe; do
-	echo '⏸'
-	sleep 1
 	echo '🔄'
+	sleep 1
 done
