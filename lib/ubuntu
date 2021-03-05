@@ -248,6 +248,7 @@ declare -a packages=(
 	fonts-noto
 	fonts-noto-color-emoji
 	fonts-open-sans
+	fonts-roboto
 )
 
 message '  %s' 'installing packages...'
