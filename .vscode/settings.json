@@ -155,5 +155,6 @@
   "cSpell.showStatus": false,
   // Hide menu bar (show by pressing Alt key)
   "window.menuBarVisibility": "toggle",
-  "workbench.sideBar.location": "right"
+  "workbench.sideBar.location": "right",
+  "liveshare.authenticationProvider": "GitHub"
 }
