@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+# Initialize a system user that can be used for remote management of the system.
+# This is intended for use via SSH from another host on the same network. For example, Home Assistant could be
+# configured to run the command `ssh remote-management@HOST suspend` to suspend the computer.
+#
+# This system is designed with security in mind, but undoubtedly has vulnerabilities anyways.
+# - Separate user with no password, no group membership, and an isolated home directory to limit access to the system.
+# - SSH authorized_keys entry is configured to restrict access to many features of SSH, including allocating a TTY.
+# - SSH authorized_keys entry limits user to executing a single command.
+# - Even if the user is able to allocate a TTY, they are limited to rbash, which is a restricted version of bash.
+# - The user is prevented from editing the SSH authorized_keys file.
+#
+# The remote host must have an SSH key without a passphrase. The remote host's public key must be inserted in
+# /usr/local/share/remote-management/.ssh/authorized_keys in place of "<insert key here>".
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+request-sudo
+
+message "  %s" "initializing remote management user..."
+
+readonly remote_management_username='remote-management'
+readonly remote_management_user_home_path=/usr/local/share/"$remote_management_username"
+
+# To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
+if ! id "$remote_management_username" &>/dev/null; then
+	message "    %s" "creating remote management user..."
+	request-sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
+	request-sudo passwd --lock "$remote_management_username"
+	message "    %s" "done creating remote management user."
+
+	message "    %s" "creating template SSH authorized keys file..."
+	request-sudo mkdir -p "$remote_management_user_home_path"/.ssh
+	# Apply restrictions except for TTY access
+	# shellcheck disable=SC2016
+	echo 'restrict,command=",remotecontrol $SSH_ORIGINAL_COMMAND" <insert key here>' |
+		request-sudo tee "$remote_management_user_home_path"/.ssh/authorized_keys >/dev/null
+	request-sudo chown --recursive "$remote_management_username" "$remote_management_user_home_path"/.ssh
+	# Set permissions to r-x------
+	request-sudo chmod 500 "$remote_management_user_home_path"/.ssh
+	# Set permissions to r--------
+	request-sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
+	message "    %s" "done creating template SSH authorized keys file."
+fi
+
+if ! [ -f /etc/sudoers.d/remote-management ]; then
+	message "    %s" "creating sudoers file to allow non-interactive power control..."
+	echo "# Allow for non-interactive execution of system power commands.
+
+$remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot" |
+		(request-sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
+	message "  %s" "done creating sudoers file to allow non-interactive power control."
+fi
+
+message "    %s" "setting up remote control script..."
+# Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
+request-sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
+message "    %s" "done setting up remote control script."
+
+message "  %s" "done initializing remote management user."
