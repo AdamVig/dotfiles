@@ -1,7 +1,6 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
-[core]
-  pager = delta
+[pager]
   diff = delta
 [interactive]
   diffFilter = delta --color-only
@@ -32,7 +31,7 @@
   tool = meld
   colorMoved = default
 [delta]
-  side-by-side = true
+  side-by-side = false
 	syntax-theme = OneHalfDark
 [merge]
   tool = kdiff3
