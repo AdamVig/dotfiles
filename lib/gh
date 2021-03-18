@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+message "setting up GitHub CLI (gh)..."
+
+if ! command -v gh >/dev/null; then
+	echo 'warning: could not find command "gh", skipping'
+	exit
+fi
+
+# Use SSH for Git clone and push operations
+gh config set git_protocol ssh
+
+message "done setting up GitHub CLI (gh)."

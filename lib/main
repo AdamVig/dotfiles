@@ -101,6 +101,7 @@ fi
 "$_dir"/vscode
 "$_dir"/zsh
 "$_dir"/profile-picture
+"$_dir"/gh
 
 if "$_dir"/../bin/is-linux; then
 	# Must run after ./pip because it installs mozdownload
