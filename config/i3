@@ -210,6 +210,10 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3blocks
+
+				# Disable scrolling on bar (defaults to switching workspaces)
+        wheel_up_cmd nop
+        wheel_down_cmd nop
 }
 
 # Initialize workspaces (file should always exist but will be a no-op by default)
