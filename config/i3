@@ -85,6 +85,9 @@ mode "$mode_afk" {
     bindsym Escape mode "default"
 }
 
+# Restart PulseAudio
+bindsym $mod+Shift+p exec --no-startup-id "systemctl restart --user pulseaudio && killall spotify"
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
