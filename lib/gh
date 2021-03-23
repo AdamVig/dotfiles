@@ -19,17 +19,17 @@ gh config set git_protocol ssh
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh alias set prc --shell 'gh pr create --assignee=@me --base="$1" --body-file=<(echo "**Commits**"; log-branch-commits --pr "$1") --title="$2"'
+gh alias set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(echo "**Commits**"; log-branch-commits --pr "$1")" --title="$2"'
 
 # Create a draft pull request
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh alias set prcd --shell 'gh pr create --assignee=@me --base="$1" --body-file=<(echo "**Commits**"; log-branch-commits --pr "$1") --title="$2" --draft'
+gh alias set prcd --shell 'gh pr create --assignee=@me --base="$1" --body="$(echo "**Commits**"; log-branch-commits --pr "$1")" --title="$2" --draft'
 
 # Update the body of the pull request for the current branch
 # $1: base branch
 # shellcheck disable=SC2016
-gh alias set update-pr --shell 'gh pr edit --body "$(echo "**Commits**"; log-branch-commits --pr "$1")"'
+gh alias set update-pr --shell 'gh pr edit --body="$(echo "**Commits**"; log-branch-commits --pr "$1")"'
 
 message "done setting up GitHub CLI (gh)."
