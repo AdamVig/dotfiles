@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+# Daemon for subscribing to events from a Home Assistant instance.
+# Use the hostname of the desired destination computer as the event_type.
+
+set -euo pipefail
+
+if [ -z "${HOME_ASSISTANT_HOST:-}" ]; then
+	echo >&2 'error: HOME_ASSISTANT_HOST must be set'
+	exit 1
+fi
+
+if [ -z "${HOME_ASSISTANT_TOKEN:-}" ]; then
+	echo >&2 'error: HOME_ASSISTANT_TOKEN must be set'
+	exit 1
+fi
+
+if ! command -v websocat >/dev/null; then
+	echo >&2 'error: websocat must be installed'
+	exit 1
+fi
+
+if ! command -v jq >/dev/null; then
+	echo >&2 'error: jq must be installed'
+	exit 1
+fi
+
+if ! command -v notify-send >/dev/null; then
+	echo >&2 'error: notify-send must be installed'
+	exit 1
+fi
+
+main() {
+	readonly event_type="$HOSTNAME"
+	log() {
+		echo >&2 "$@"
+	}
+	log_message() {
+		read -r message
+		echo "$message" | jq '.' >&2
+	}
+	# $1: event JSON
+	# $2: key in event's .event.data object
+	get_event_data() {
+		event="${1:-}"
+		key="${2:-}"
+		if [ -z "$event" ]; then
+			log 'missing event'
+			return 1
+		fi
+		if [ -z "$key" ]; then
+			log 'missing key'
+			return 1
+		fi
+
+		echo "$event" | jq --raw-output ".event.data.${key}"
+	}
+
+	log 'reading authentication prompt...'
+	log_message
+
+	log 'received authentication prompt, sending token...'
+	jq --null-input --compact-output --arg token "$HOME_ASSISTANT_TOKEN" \
+		'{type: "auth", access_token: $token}'
+
+	log 'reading authentication response...'
+	log_message
+
+	log "sending command to subscribe to events of type \"$event_type\"..."
+	jq --null-input --compact-output --arg event_type "$event_type" \
+		'{id: 1, type: "subscribe_events", event_type: $event_type}'
+
+	log 'reading response...'
+	log_message
+
+	log 'reading events...'
+	while read -r event; do
+		log 'received event:'
+		echo "$event" | jq '.' >&2
+		if ! event_category="$(get_event_data "$event" 'category')"; then
+			log 'failed to extract event category, skipping further event processing'
+			continue
+		fi
+
+		if [ "$event_category" = 'notification' ]; then
+			if ! notification_title="$(get_event_data "$event" 'notification_title')"; then
+				log 'failed to extract notification title, not attempting to display notification'
+				continue
+			fi
+			if ! notification_body="$(get_event_data "$event" 'notification_body')"; then
+				log 'failed to extract notification body, not attempting to display notification'
+				continue
+			fi
+			if ! notification_urgency="$(get_event_data "$event" 'notification_urgency')"; then
+				log 'failed to extract notification body, not attempting to display notification'
+				continue
+			fi
+
+			notify-send --expire-time=5000 --urgency="$notification_urgency" "$notification_title" "$notification_body"
+		fi
+	done
+
+	kill "$PPID"
+}
+
+# Export the function to subshells
+export -f main
+
+websocat \
+	--text \
+	wss://"$HOME_ASSISTANT_HOST"/api/websocket \
+	exec:'bash' --exec-args '-c' 'main'

@@ -535,4 +535,40 @@ message '  %s' 'enabling arbtt autostart...'
 ln -sf /usr/share/doc/arbtt/examples/arbtt-capture.desktop "$config_dir"/autostart
 message '  %s' 'done enabling arbtt autostart.'
 
+home_assistant_daemon_unit_path="$(xdg_config)"/systemd/user/home-assistant-daemon.service
+if ! [ -f "$home_assistant_daemon_unit_path" ]; then
+	home_assistant_daemon_environment_file_path="$(xdg_config)"/home-assistant-daemon.env
+	if ! [ -f "$home_assistant_daemon_environment_file_path" ]; then
+		message '  %s' 'creating Home Assistant daemon environment file...'
+		echo '# Home Assistant daemon environment variables, in the format of a Systemd unit EnvironmentFile
+# Hostname of Home Assistant instance
+HOME_ASSISTANT_HOST=example.com
+# API token for Home Assitant instance
+HOME_ASSISTANT_TOKEN=
+' >"$home_assistant_daemon_environment_file_path"
+		message '  %s' 'done creating Home Assistant daemon environment file.'
+		warn "Home Assistant daemon configuration created at $home_assistant_daemon_environment_file_path, open the file and fill in the values"
+	fi
+
+	message '  %s' 'creating Home Assistant daemon Systemd unit...'
+	echo "[Unit]
+Description=\"Home Assistant Daemon\"
+
+[Service]
+EnvironmentFile=$home_assistant_daemon_environment_file_path
+ExecStart=$(realpath "$_dir"/../bin/home-assistant-daemon)
+
+[Install]
+WantedBy=multi-user.target
+" >"$home_assistant_daemon_unit_path"
+	systemctl --user daemon-reload
+	message '  %s' 'done creating Home Assistant daemon Systemd unit.'
+fi
+
+if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
+	message '  %s' 'setting up Home Assistant daemon...'
+	systemctl --user enable --now home-assistant-daemon.service
+	message '  %s' 'done setting up Home Assistant daemon.'
+fi
+
 message "done setting up Ubuntu."
