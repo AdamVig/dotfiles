@@ -140,8 +140,11 @@ else
 fi
 
 message '  %s' 'upgrading packages...'
-request-sudo apt-get upgrade --yes --autoremove >/dev/null
-message '  %s' 'done upgrading packages.'
+if request-sudo apt-get upgrade --yes --autoremove >/dev/null; then
+	message '  %s' 'done upgrading packages.'
+else
+	warn 'failed to upgrade packages, continuing'
+fi
 
 declare -a packages=(
 	# system dependencies
