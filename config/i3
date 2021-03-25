@@ -182,6 +182,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # disable title bars
 default_border pixel
 
+# disable window borders on screen edges in workspaces containing a single window
+hide_edge_borders smart
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
