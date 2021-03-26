@@ -543,7 +543,7 @@ if ! [ -f "$home_assistant_daemon_unit_path" ]; then
 		echo '# Home Assistant daemon environment variables, in the format of a Systemd unit EnvironmentFile
 # Hostname of Home Assistant instance
 HOME_ASSISTANT_HOST=example.com
-# API token for Home Assitant instance
+# API token for Home Assistant instance
 HOME_ASSISTANT_TOKEN=
 ' >"$home_assistant_daemon_environment_file_path"
 		message '  %s' 'done creating Home Assistant daemon environment file.'
