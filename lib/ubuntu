@@ -232,6 +232,7 @@ declare -a packages=(
 	i3blocks      # Status bar generator
 	inkscape
 	kdiff3 # Merge tool
+	kitty  # GPU-accelerated terminal emulator
 	libreoffice
 	lutris
 	meld # Comparison tool for version control, files, and directories

@@ -94,6 +94,7 @@ cask "gpg-suite"
 cask "inkscape"
 cask "kap"
 cask "kdiff3" # Merge tool
+cask "kitty" # GPU-accelerated terminal emulator
 cask "libreoffice"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "nextcloud"
