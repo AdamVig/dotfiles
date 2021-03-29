@@ -560,7 +560,7 @@ EnvironmentFile=$home_assistant_daemon_environment_file_path
 ExecStart=$(realpath "$_dir"/../bin/home-assistant-daemon)
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
 " >"$home_assistant_daemon_unit_path"
 	systemctl --user daemon-reload
 	message '  %s' 'done creating Home Assistant daemon Systemd unit.'
