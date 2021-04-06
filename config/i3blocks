@@ -11,6 +11,10 @@ interval=5
 command=TZ='America/New_York' date '+%l:%M %p %Z'
 interval=1
 
+[time pacific]
+command=TZ='America/Los_Angeles' date '+%l:%M %p %Z'
+interval=1
+
 [audio]
 command=SPEAKERS_SINK=alsa_output.pci-0000_00_1f.3.analog-stereo HEADPHONES_SINK=alsa_output.usb-MOTU_M2_M20000044221-00.analog-stereo status-pulseaudio
 interval=persist
