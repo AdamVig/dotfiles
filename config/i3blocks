@@ -8,11 +8,11 @@ command=date '+%Y-%m-%d'
 interval=5
 
 [time eastern]
-command=TZ='America/New_York' date '+%l:%M %p %Z'
+command=TZ='America/New_York' date '+%l %p %Z'
 interval=1
 
 [time pacific]
-command=TZ='America/Los_Angeles' date '+%l:%M %p %Z'
+command=TZ='America/Los_Angeles' date '+%l %p %Z'
 interval=1
 
 [audio]
