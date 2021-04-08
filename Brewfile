@@ -83,6 +83,7 @@ brew "mosh" if OS.mac? # Mobile shell (Brew formula does not work on Linux)
 cask "xquartz" # Needed by Inkscape
 
 # applications
+cask "android-platform-tools"
 cask "authy"
 mas "Bitwarden", id: 1352778147
 cask "docker"
