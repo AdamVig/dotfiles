@@ -20,3 +20,9 @@
 --max-columns-preview
 --max-columns
 150
+
+# Add a type for test files
+--type-add
+test:*.spec.*
+--type-add
+test:*.test.*
