@@ -490,7 +490,7 @@ xresources_path="$HOME"/.Xresources
 if ! [ -f "$xresources_path" ]; then
 	message '  %s' 'writing .Xresources file...'
 	# Set display DPI
-	echo 'Xft.dpi: 96' >"$xresources_path"
+	echo 'Xft.dpi: 128' >"$xresources_path"
 	message '  %s' 'done writing .Xresources file.'
 fi
 
