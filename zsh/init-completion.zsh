@@ -26,10 +26,6 @@ zstyle ':completion:*' menu select
 
 compdef _git log-branch-commits=git-branch
 
-if command -v hass-cli >/dev/null; then
-	source <(hass-cli completion zsh)
-fi
-
 if command -v kitty >/dev/null; then
 	kitty + complete setup zsh | source /dev/stdin
 fi
