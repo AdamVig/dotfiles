@@ -93,6 +93,7 @@ fi
 source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
-if [ -t 1 ] && ! [ -v SSH_TTY ]  && command -v tmux > /dev/null && ! [ -v TMUX ]; then
-  tmux attach-session || tmux new-session
+if [ -t 1 ] && ! [ -v SSH_TTY ] && command -v tmux > /dev/null && ! [ -v TMUX ]; then
+	# Attach to or create a session named "1" with an initial window named "home"
+  tmux new-session -A -s 1 -n home
 fi
