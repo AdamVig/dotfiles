@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-_dir_zshrc="$(dirname "$(realpath "${(%):-%x}")")"
-
 # Explicitly source .profile (in a mode compatible with Bash) in case the current shell is not a login shell
 BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.profile'
 
@@ -82,7 +80,7 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
 fi
 
 # Initialize broot
-if "$_dir_zshrc"/../bin/is-macos; then
+if [[ $OSTYPE == darwin* ]]; then
   broot_root='org.dystroy.broot'
 else
   broot_root='broot'
