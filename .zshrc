@@ -94,10 +94,5 @@ source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
 
 # If in an interactive session, Tmux is installed, and not in a Tmux pane
 if [ -t 1 ] && ! [ -v SSH_TTY ]  && command -v tmux > /dev/null && ! [ -v TMUX ]; then
-  if ! tmux attach-session; then
-		if command -v notify-send > /dev/null; then
-			notify-send 'zshrc' 'creating new tmux session'
-		fi
-		tmux new-session
-	fi
+  tmux attach-session || tmux new-session
 fi
