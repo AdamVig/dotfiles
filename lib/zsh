@@ -33,6 +33,7 @@ if ! [ -d "$data_dir" ]; then
 fi
 ln -sf "$_dir"/../zsh/* "$data_dir"
 ln -sf "$_dir"/../.zshrc "$HOME"
+ln -sf "$_dir"/../.zshenv "$HOME"
 message "done initializing Zsh configuration."
 
 z_path="$(xdg_data)"/zsh-z
