@@ -25,7 +25,3 @@ compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zcompdump
 zstyle ':completion:*' menu select
 
 compdef _git log-branch-commits=git-branch
-
-if command -v kitty >/dev/null; then
-	kitty + complete setup zsh | source /dev/stdin
-fi
