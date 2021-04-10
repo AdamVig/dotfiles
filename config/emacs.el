@@ -26,6 +26,9 @@
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
+ '(org-html-checkbox-type 'html)
+ '(org-html-doctype "html5")
+ '(org-html-html5-fancy t)
  '(package-selected-packages
    '(ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package)))
 (custom-set-faces
