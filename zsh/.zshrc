@@ -8,16 +8,14 @@ BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.profile'
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
 
-data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh
-if ! [ -d "$data_dir" ]; then
-  mkdir -p "$data_dir"
-fi
-source "$data_dir"/directories.zsh
-source "$data_dir"/key-bindings.zsh
-source "$data_dir"/init-completion.zsh
+source "$ZDOTDIR"/directories.zsh
+source "$ZDOTDIR"/key-bindings.zsh
+source "$ZDOTDIR"/init-completion.zsh
 # Depends on completion
-source "$data_dir"/git.zsh
-source "$data_dir"/init-utils.zsh
+source "$ZDOTDIR"/git.zsh
+source "$ZDOTDIR"/init-utils.zsh
+
+data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh
 
 # history options (from Oh My Zsh lib/history.zsh)
 [ -z "$HISTFILE" ] && HISTFILE="$data_dir"/history
@@ -62,7 +60,7 @@ setopt prompt_subst
 # <remote host info> <bold><dir, max two levels deep><end bold> <git info>
 PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
-source "$data_dir"/aliases.zsh
+source "$ZDOTDIR"/aliases.zsh
 
 if [ -f "$HOME"/.wsl ]; then
 	source "$HOME"/.wsl
@@ -84,7 +82,7 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
 fi
 
 # Initialize broot
-if "$_dir_zshrc"/bin/is-macos; then
+if "$_dir_zshrc"/../bin/is-macos; then
   broot_root='org.dystroy.broot'
 else
   broot_root='broot'

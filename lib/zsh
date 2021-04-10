@@ -27,13 +27,23 @@ if [[ $SHELL != *zsh ]]; then
 fi
 
 message "initializing Zsh configuration..."
+config_dir="$(xdg_config)"/zsh
+if ! [ -d "$config_dir" ]; then
+	mkdir -p "$config_dir"
+fi
 data_dir="$(xdg_data)"/zsh
 if ! [ -d "$data_dir" ]; then
 	mkdir -p "$data_dir"
 fi
-ln -sf "$_dir"/../zsh/* "$data_dir"
-ln -sf "$_dir"/../.zshrc "$HOME"
+
 ln -sf "$_dir"/../.zshenv "$HOME"
+
+# Include dotfiles in glob
+shopt -s dotglob
+
+ln -sf --target-directory="$config_dir" "$(realpath "$_dir"/../zsh)"/*
+
+shopt -u dotglob
 message "done initializing Zsh configuration."
 
 z_path="$(xdg_data)"/zsh-z
