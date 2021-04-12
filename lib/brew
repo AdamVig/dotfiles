@@ -26,4 +26,4 @@ if "$_dir"/../bin/is-macos && brew services list | grep --quiet --extended-regex
 	fi
 fi
 
-message "magenta" "brew done."
+log "brew done."

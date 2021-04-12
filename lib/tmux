@@ -5,7 +5,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-message "initializing Tmux configuration..."
+log 'initializing Tmux configuration...'
 config_path="$(xdg_config)"/tmux
 mkdir -p "$config_path"
 
@@ -14,13 +14,13 @@ if [ -h "$HOME"/.tmux.conf ]; then
 	rm -f "$HOME"/.tmux.conf
 fi
 ln -sf "$_dir"/../config/tmux.conf "$config_path"
-message "done initializing Tmux configuration."
+log 'done initializing Tmux configuration.'
 
-message "initializing Tmux Plugin Manager..."
+log 'initializing Tmux Plugin Manager...'
 readonly tpm_path="$(xdg_data)"/tmux/plugins/tpm
 if ! [ -d "$tpm_path" ]; then
 	git clone --depth 1 https://github.com/tmux-plugins/tpm "$tpm_path"
-	message "done initializing Tmux Plugin Manager."
+	log 'done initializing Tmux Plugin Manager.'
 else
-	message "tmux Plugin Manager already initialized."
+	log 'Tmux Plugin Manager already initialized.'
 fi

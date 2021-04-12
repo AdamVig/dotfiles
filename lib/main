@@ -13,11 +13,11 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck disable=SC2119
 request-sudo
 
-message "symlinking dotfiles to your home directory..."
+log 'symlinking dotfiles to your home directory...'
 ln -sf "$_dir"/../.bashrc "$HOME"
 ln -sf "$_dir"/../.profile "$HOME"
 
-message 'setting up Emacs configuration...'
+log 'setting up Emacs configuration...'
 # Remove legacy configuration location
 rm -f "$HOME"/.emacs
 
@@ -26,9 +26,9 @@ if ! [ -f "$emacs_config_path" ]; then
 	mkdir -p "$(dirname "$emacs_config_path")"
 	ln -sf "$_dir"/../config/emacs.el "$emacs_config_path"
 fi
-message 'done setting up Emacs configuration.'
+log 'done setting up Emacs configuration.'
 
-message "configuring SSH..."
+log "configuring SSH..."
 mkdir -p "$HOME"/.ssh
 ssh_config='AddKeysToAgent yes'
 ssh_config_path="$HOME"/.ssh/config
@@ -36,7 +36,7 @@ if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path
 	echo "$ssh_config" >>"$ssh_config_path"
 fi
 
-message "configuring GPG..."
+log "configuring GPG..."
 mkdir -p "$HOME"/.gnupg
 gpg_agent_config='default-cache-ttl 34560000
 max-cache-ttl 34560000'
@@ -46,15 +46,15 @@ if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg
 	echo -e "$gpg_agent_config" >>"$gpg_agent_config_path"
 	message '  %s' "done updating GPG Agent configuration."
 fi
-message "done configuring GPG."
+log "done configuring GPG."
 
 bin_dir="$HOME"/.local/bin
-message "creating '$bin_dir'..."
+log "creating '$bin_dir'..."
 mkdir -p "$bin_dir"
-message "done creating '$bin_dir'."
+log "done creating '$bin_dir'."
 
 config_dir="$(xdg_config)"
-message "symlinking configurations to '$config_dir'..."
+log "symlinking configurations to '$config_dir'..."
 if [ -h "$HOME"/.ripgreprc ]; then
 	message "  %s" "removing legacy .ripgreprc..."
 	rm -f "$HOME"/.ripgreprc
@@ -66,16 +66,16 @@ mkdir -p "$config_dir"/bat
 ln -sf "$_dir"/../config/bat "$config_dir"/bat/config
 
 if ! [ -d "$config_dir"/docker ]; then
-	message "creating Docker configuration directory..."
+	log "creating Docker configuration directory..."
 	mkdir -p "$config_dir"/docker
 fi
 
-message 'symlinking arbtt configuration...'
+log 'symlinking arbtt configuration...'
 mkdir -p "$HOME"/.arbtt
 ln -sf "$_dir"/../config/arbtt.cfg "$HOME"/.arbtt/categorize.cfg
-message 'done symlinking arbtt configuration.'
+log 'done symlinking arbtt configuration.'
 
-message "running OS-specific scripts..."
+log 'running OS-specific scripts...'
 
 if "$_dir"/../bin/is-macos; then
 	"$_dir"/macos
@@ -145,4 +145,4 @@ if command -v broot >/dev/null && ! [ -f "$broot_dir"/installed-v1 ]; then
 	message '  %s' 'done installing broot shell function.'
 fi
 
-message "done. start a new login shell or run 'source .zshrc'."
+log "done. start a new login shell or run 'source .zshrc'."

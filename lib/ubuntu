@@ -27,7 +27,7 @@ add_key() {
 	fi
 }
 
-message "setting up Ubuntu..."
+log 'setting up Ubuntu...'
 
 if ! is_repository_configured 'vscode'; then
 	message '  %s' 'adding Visual Studio Code repository...'
@@ -572,4 +572,4 @@ if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
 	message '  %s' 'done setting up Home Assistant daemon.'
 fi
 
-message "done setting up Ubuntu."
+log 'done setting up Ubuntu.'

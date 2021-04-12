@@ -17,7 +17,7 @@ for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 	if [ -d "$profile_picture_dir" ]; then
 		found_dir=true
 		if ! [ -f "$profile_picture_path" ]; then
-			message "downloading profile picture to $profile_picture_dir..."
+			log "downloading profile picture to $profile_picture_dir..."
 			email="$(git config user.email)"
 			if [ -n "$email" ]; then
 
@@ -31,9 +31,9 @@ for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 
 				email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
 				if _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
-					message 'done downloading profile picture.'
+					log 'done downloading profile picture.'
 				else
-					fatal 'failed to download profile picture'
+					log 'failed to download profile picture'
 				fi
 			else
 				warn 'Git email is not set, skipping profile picture download'

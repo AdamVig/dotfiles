@@ -5,7 +5,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-message "installing pip tools..."
+log "installing pip tools..."
 pip_packages=(
 	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
@@ -37,4 +37,4 @@ if is-linux; then
 	message '  %s' 'done installing rofimoji.'
 fi
 
-message "pip done."
+log "pip done."

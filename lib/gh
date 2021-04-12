@@ -5,10 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-message "setting up GitHub CLI (gh)..."
+log "setting up GitHub CLI (gh)..."
 
 if ! command -v gh >/dev/null; then
-	echo 'warning: could not find command "gh", skipping'
+	warn 'could not find command "gh", skipping'
 	exit
 fi
 
@@ -32,4 +32,4 @@ gh alias set prcd --shell 'gh pr create --assignee=@me --base="$1" --body="$(ech
 # shellcheck disable=SC2016
 gh alias set update-pr --shell 'gh pr edit --body="$(echo "**Commits**"; log-branch-commits --pr "$1")"'
 
-message "done setting up GitHub CLI (gh)."
+log "done setting up GitHub CLI (gh)."

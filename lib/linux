@@ -8,7 +8,7 @@ source "$_dir"/helpers
 # shellcheck disable=SC2119
 request-sudo
 
-message "  %s" "setting up Linux..."
+log "setting up Linux..."
 
 message "    %s" "installing essential tools..."
 if command -v apt-get >/dev/null; then
@@ -125,4 +125,4 @@ fi
 chmod +x "$bitwarden_path"
 message "    %s" "done installing Bitwarden."
 
-message "  %s" "done setting up Linux."
+log "done setting up Linux."

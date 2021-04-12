@@ -21,7 +21,7 @@ source "$_dir"/helpers
 
 request-sudo
 
-message "  %s" "initializing remote management user..."
+log 'initializing remote management user...'
 
 readonly remote_management_username='remote-management'
 readonly remote_management_user_home_path=/usr/local/share/"$remote_management_username"
@@ -61,4 +61,4 @@ message "    %s" "setting up remote control script..."
 request-sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
 message "    %s" "done setting up remote control script."
 
-message "  %s" "done initializing remote management user."
+log 'done initializing remote management user.'

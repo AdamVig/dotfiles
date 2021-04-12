@@ -66,20 +66,30 @@ message() {
 	printf "\\e[${COLOR}m$TEMPLATE\\e[${OFF}m\\n" "$@"
 }
 
-# Log a warning
-# all arguments will be passed to message, each will be printed on a new line with "warning:" preceding it
+# Log a message
+# $@: passed to echo
+log() {
+	echo '[dotfiles]' "$@"
+}
+
+# Log a message in yellow preceded by "warning: "
+# $@: passed to log
 warn() {
-	message "yellow" "warning: " "$@"
+	tput setaf 3
+	log 'warning:' "$@"
+	tput sgr0
 }
 
-# Log an error
-# all arguments will be passed to message, each will be printed on a new line with "error:" preceding it
+# Log a message in red preceded by "error: "
+# $@: passed to log
 error() {
-	message "red" "error: " "$@"
+	tput setaf 1
+	log 'error:' "$@"
+	tput sgr0
 }
 
-# Log an error and exit with an error code
-# all arguments will be passed to message, each will be printed on a new line with "error:" preceding it
+# Log an error message and exit with an error code
+# $@: passed to error
 fatal() {
 	error "$@"
 	exit 1
@@ -99,7 +109,7 @@ confirm() {
 
 	MESSAGE=${1:-"Proceed?"}
 	read -p "$MESSAGE (y/n) " -n 1 -r
-	message
+	echo
 	[[ $REPLY =~ ^[Yy]$ ]] # REPLY is automatically set to the result of `read`
 	return $?              # result of previous line, either 0 (yes) or 1 (no)
 }

@@ -5,8 +5,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-message "cyan" "setting up Visual Studio Code..."
-
+log 'setting up Visual Studio Code...'
 
 message "cyan" "  %s" "symlinking Visual Studio Code settings..."
 
@@ -60,4 +59,4 @@ for extension in "${extensions[@]}"; do
 	set -e
 done
 
-message "cyan" "done setting up Visual Studio Code."
+log 'done setting up Visual Studio Code.'
