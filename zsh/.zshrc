@@ -28,7 +28,7 @@ setopt inc_append_history # add commands to HISTFILE in order of execution
 setopt share_history # share command history data
 
 remote-host-info() {
-  if [ -n "$SSH_TTY" ] || [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]; then
+  if [ -v SSH_TTY ] || [ -v SSH_CONNECTION ] || [ -v SSH_CLIENT ]; then
     # <username>@<hostname>
     echo '%n@%M '
   fi
