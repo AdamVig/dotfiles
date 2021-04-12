@@ -60,10 +60,6 @@ PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
 source "$ZDOTDIR"/aliases.zsh
 
-if [ -f "$HOME"/.wsl ]; then
-	source "$HOME"/.wsl
-fi
-
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true

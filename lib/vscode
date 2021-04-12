@@ -7,27 +7,20 @@ source "$_dir"/helpers
 
 message "cyan" "setting up Visual Studio Code..."
 
-if "$_dir"/../bin/is-wsl && ! [ -f "$appdata_path"/Code/User/settings.json ]; then
-	readonly appdata_path="$(wslpath "$("$_dir"/../bin/expand-windows-path %APPDATA%)")"
-	message "cyan" "  %s" "copying Visual Studio Code settings..."
-	windows_code_dir="$appdata_path"/Code/User
-	cp "$_dir"/../.vscode/settings.json "$windows_code_dir"
-	cp "$_dir"/../.vscode/keybindings.json "$windows_code_dir"
-else
-	message "cyan" "  %s" "symlinking Visual Studio Code settings..."
 
-	if "$_dir"/../bin/is-macos; then
-		vscode_settings_dir="$HOME"/Library/Application\ Support/Code/User
-	elif "$_dir"/../bin/is-linux; then
-		vscode_settings_dir="$HOME"/.config/Code/User
-	fi
+message "cyan" "  %s" "symlinking Visual Studio Code settings..."
 
-	mkdir -p "$vscode_settings_dir"
-	ln -sf "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
-	ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
-
-	message "cyan" "  %s" "done symlinking Visual Studio Code settings."
+if "$_dir"/../bin/is-macos; then
+	vscode_settings_dir="$HOME"/Library/Application\ Support/Code/User
+elif "$_dir"/../bin/is-linux; then
+	vscode_settings_dir="$HOME"/.config/Code/User
 fi
+
+mkdir -p "$vscode_settings_dir"
+ln -sf "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
+ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
+
+message "cyan" "  %s" "done symlinking Visual Studio Code settings."
 
 declare -a extensions=(
 	Angular.ng-template                   # Angular template IntelliSense support
@@ -58,16 +51,8 @@ message "cyan" "  %s" "installing Visual Studio Code extensions... "
 for extension in "${extensions[@]}"; do
 	set +e
 
-	code_cmd='code'
-	if "$_dir"/../bin/is-wsl; then
-		# Change directory to suppress cmd.exe warning
-		cd /c
-		# With WSL, must use code executable on Windows side
-		code_cmd='cmd.exe /C code'
-	fi
-
 	# Attempt to install extension; log message on success, log warning on failure
-	if $code_cmd --install-extension "$extension" >/dev/null; then
+	if code --install-extension "$extension" >/dev/null; then
 		message "cyan" "    %s" "installed $extension"
 	else
 		warn "extension $extension failed to install; it may no longer be available"

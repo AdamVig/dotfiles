@@ -89,10 +89,6 @@ elif "$_dir"/../bin/is-linux; then
 	fi
 fi
 
-if "$_dir"/../bin/is-wsl; then
-	"$_dir"/wsl
-fi
-
 "$_dir"/git
 "$_dir"/golang
 "$_dir"/node

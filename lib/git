@@ -40,12 +40,6 @@ if ! [ -e "$config_path"/config ]; then
 	[ -n "$email" ] && git config --global user.email "$email"
 	[ -n "$github" ] && git config --global github.user "$github"
 	message "  %s" "done configuring Git user"
-
-	if "$_dir"/../bin/is-wsl; then
-		message "  %s" "setting credential helper for WSL..."
-		git config --global credential.helper \
-			'/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
-	fi
 else
 	message "  %s" "updating Git configuration..."
 	# Read all values from current Git configuration
