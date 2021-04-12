@@ -13,6 +13,7 @@ pip_packages=(
 	mozdownload       # Downloader for Mozilla applications
 	pip               # Package manager
 	visidata          # Data set visualizer
+	youtube-dl        # Media downloader
 )
 
 for package in "${pip_packages[@]}"; do
