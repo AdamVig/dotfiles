@@ -17,17 +17,6 @@ log 'symlinking dotfiles to your home directory...'
 ln -sf "$_dir"/../.bashrc "$HOME"
 ln -sf "$_dir"/../.profile "$HOME"
 
-log 'setting up Emacs configuration...'
-# Remove legacy configuration location
-rm -f "$HOME"/.emacs
-
-emacs_config_path="$HOME"/.emacs.d/init.el
-if ! [ -f "$emacs_config_path" ]; then
-	mkdir -p "$(dirname "$emacs_config_path")"
-	ln -sf "$_dir"/../config/emacs.el "$emacs_config_path"
-fi
-log 'done setting up Emacs configuration.'
-
 log "configuring SSH..."
 mkdir -p "$HOME"/.ssh
 ssh_config='AddKeysToAgent yes'
@@ -89,6 +78,7 @@ elif "$_dir"/../bin/is-linux; then
 	fi
 fi
 
+"$_dir"/emacs
 "$_dir"/git
 "$_dir"/golang
 "$_dir"/node
