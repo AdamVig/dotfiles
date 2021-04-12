@@ -59,11 +59,6 @@ if ! [ -d "$config_dir"/docker ]; then
 	mkdir -p "$config_dir"/docker
 fi
 
-log 'symlinking arbtt configuration...'
-mkdir -p "$HOME"/.arbtt
-ln -sf "$_dir"/../config/arbtt.cfg "$HOME"/.arbtt/categorize.cfg
-log 'done symlinking arbtt configuration.'
-
 log 'running OS-specific scripts...'
 
 if "$_dir"/../bin/is-macos; then
