@@ -44,29 +44,6 @@ fi
 install_binary_from_url 'shfmt' "$shfmt_url"
 log 'done installing shfmt.'
 
-log 'installing exa...'
-if ! exa_url="$(get_release_url 'ogham/exa' 'linux-x86_64')"; then
-	fatal 'failed to get exa release URL'
-fi
-
-exa_zip_tmp="$(mktemp)"
-if ! _curl "$exa_url" --output "$exa_zip_tmp"; then
-	fatal 'failed to download exa'
-fi
-
-exa_tmp="$(mktemp -d)"
-if ! unzip "$exa_zip_tmp" 'exa-linux-x86_64' -d "$exa_tmp" >/dev/null; then
-	fatal 'failed to unzip exa'
-fi
-rm -f "$exa_zip_tmp"
-
-exa_path="$HOME"/.local/bin/exa
-mv "$exa_tmp"/exa-linux-x86_64 "$exa_path"
-rm -rf "$exa_tmp"
-
-chmod +x "$exa_path"
-log 'done installing exa.'
-
 log 'installing scc...'
 if ! scc_url="$(get_release_url 'boyter/scc' 'x86_64-unknown-linux')"; then
 	fatal 'failed to get scc release URL'

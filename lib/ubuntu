@@ -164,6 +164,7 @@ declare -a packages=(
 	# replacements of default utilities
 	bat     # Better cat
 	broot   # Better tree
+	exa     # Better ls
 	fd-find # Better find
 	htop    # Better top
 	httpie  # Better curl
