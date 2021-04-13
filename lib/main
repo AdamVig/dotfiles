@@ -39,6 +39,11 @@ if ! [ -d "$config_dir"/docker ]; then
 	mkdir -p "$config_dir"/docker
 fi
 
+log "creating tig directory..."
+# Prevent tig from writing ~/.tig_history
+mkdir -p "$(xdg_data)"/tig
+log "done creating tig directory."
+
 log 'running OS-specific scripts...'
 
 if is_macos; then
