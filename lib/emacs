@@ -14,7 +14,7 @@ if "$_dir"/../bin/is-macos && brew services list | grep --quiet --extended-regex
 	fi
 fi
 
-if command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Ubuntu' ]; then
+if is_ubuntu; then
 	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
 	if ! [ -f "$user_emacs_unit_path" ]; then
 		log 'linking Emacs snapshot service into place...'

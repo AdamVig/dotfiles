@@ -42,8 +42,7 @@ if "$_dir"/../bin/is-macos; then
 	"$_dir"/brew
 elif "$_dir"/../bin/is-linux; then
 	"$_dir"/linux
-	if command -v lsb_release >/dev/null &&
-		[ "$(lsb_release --id --short)" = 'Ubuntu' ]; then
+	if is_ubuntu; then
 		"$_dir"/ubuntu
 		"$_dir"/remote-management
 	fi

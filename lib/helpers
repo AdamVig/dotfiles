@@ -152,6 +152,10 @@ install_binary_from_url() {
 	chmod +x "$path"
 }
 
+is_ubuntu() {
+	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Ubuntu' ]
+}
+
 # Prompt the user for their password with a custom message
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
