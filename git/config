@@ -1,7 +1,8 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
 [pager]
-  diff = delta
+	# Use less instead of bat to hide bat's line numbers
+  diff = PAGER=less delta
 [interactive]
   diffFilter = delta --color-only
 [init]
