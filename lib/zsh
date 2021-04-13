@@ -5,6 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component zsh "$@"
+}
+
 # shellcheck disable=SC2119
 request-sudo
 

@@ -5,6 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component thunderbird "$@"
+}
+
 if is_linux; then
 	# Must run after ./pip because it installs mozdownload
 	if command -v mozdownload >/dev/null && command -v bunzip2 >/dev/null; then
