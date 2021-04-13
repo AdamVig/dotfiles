@@ -48,19 +48,29 @@ elif is_linux; then
 	fi
 fi
 
-"$_dir"/emacs
-"$_dir"/git
+log 'done running OS-specific scripts.'
+
+log 'running scripts that install dependencies for other scripts...'
 "$_dir"/golang
-"$_dir"/gpg
 "$_dir"/node
 "$_dir"/pip
+log 'done running scripts that install dependencies for other scripts.'
+
+log 'running application setup scripts...'
+"$_dir"/broot
+"$_dir"/emacs
+"$_dir"/gh
+"$_dir"/git
+"$_dir"/gpg
 "$_dir"/ssh
 "$_dir"/thunderbird
 "$_dir"/tmux
 "$_dir"/vscode
 "$_dir"/zsh
+log 'done running application setup scripts.'
+
+log 'running system setup scripts...'
 "$_dir"/profile-picture
-"$_dir"/broot
-"$_dir"/gh
+log 'done running system setup scripts.'
 
 log "done. start a new login shell or run 'source .zshrc'."
