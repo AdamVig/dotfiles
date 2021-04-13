@@ -60,23 +60,7 @@ fi
 "$_dir"/vscode
 "$_dir"/zsh
 "$_dir"/profile-picture
+"$_dir"/broot
 "$_dir"/gh
-
-if is_macos; then
-	broot_root='org.dystroy.broot'
-else
-	broot_root='broot'
-fi
-broot_dir="$(xdg_config)"/"$broot_root"/launcher
-if command -v broot >/dev/null && ! [ -f "$broot_dir"/installed-v1 ]; then
-	message '  %s' 'installing broot shell function...'
-	broot_launcher_dir="$broot_dir"/bash
-	mkdir -p "$broot_launcher_dir"
-	if ! broot --print-shell-function zsh >"$broot_launcher_dir"/br; then
-		fatal 'failed to install broot shell function'
-	fi
-	broot --set-install-state installed
-	message '  %s' 'done installing broot shell function.'
-fi
 
 log "done. start a new login shell or run 'source .zshrc'."
