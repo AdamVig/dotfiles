@@ -24,10 +24,6 @@ log "done creating '$bin_dir'."
 
 config_dir="$(xdg_config)"
 log "symlinking configurations to '$config_dir'..."
-if [ -h "$HOME"/.ripgreprc ]; then
-	message "  %s" "removing legacy .ripgreprc..."
-	rm -f "$HOME"/.ripgreprc
-fi
 mkdir -p "$config_dir"/ripgrep
 ln -sf "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
 
