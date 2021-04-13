@@ -5,6 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component ubuntu "$@"
+}
+
 # shellcheck disable=SC2119
 request-sudo
 
@@ -30,118 +34,118 @@ add_key() {
 log 'setting up Ubuntu...'
 
 if ! is_repository_configured 'vscode'; then
-	message '  %s' 'adding Visual Studio Code repository...'
+	log 'adding Visual Studio Code repository...'
 	add_key https://packages.microsoft.com/keys/microsoft.asc
 	add_repository 'vscode' 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
-	message '  %s' 'done adding Visual Studio Code repository.'
+	log 'done adding Visual Studio Code repository.'
 fi
 
 if ! is_repository_configured 'spotify'; then
-	message '  %s' 'adding Spotify repository...'
+	log 'adding Spotify repository...'
 	add_key https://download.spotify.com/debian/pubkey_0D811D58.gpg
 	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
-	message '  %s' 'done adding Spotify repository.'
+	log 'done adding Spotify repository.'
 fi
 
 if ! is_repository_configured 'slack'; then
-	message '  %s' 'adding Slack repository...'
+	log 'adding Slack repository...'
 	add_key https://packagecloud.io/slacktechnologies/slack/gpgkey
 	add_repository 'slack' 'deb https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
-	message '  %s' 'done adding Slack repository.'
+	log 'done adding Slack repository.'
 fi
 
 if ! is_repository_configured 'signal'; then
-	message '  %s' 'adding Signal repository...'
+	log 'adding Signal repository...'
 	add_key https://updates.signal.org/desktop/apt/keys.asc
 	add_repository 'signal' 'deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main'
-	message '  %s' 'done adding Signal repository.'
+	log 'done adding Signal repository.'
 fi
 
 if ! is_repository_configured 'nextcloud'; then
-	message '  %s' 'adding Nextcloud repository...'
+	log 'adding Nextcloud repository...'
 	request-sudo add-apt-repository --yes ppa:nextcloud-devs/client
-	message '  %s' 'done adding Nextcloud repository.'
+	log 'done adding Nextcloud repository.'
 fi
 
 if ! is_repository_configured 'diff-so-fancy'; then
-	message '  %s' 'adding diff-so-fancy repository...'
+	log 'adding diff-so-fancy repository...'
 	request-sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
-	message '  %s' 'done adding diff-so-fancy repository.'
+	log 'done adding diff-so-fancy repository.'
 fi
 
 if ! is_repository_configured 'git-core'; then
-	message '  %s' 'adding git repository...'
+	log 'adding git repository...'
 	request-sudo add-apt-repository --yes ppa:git-core/ppa
-	message '  %s' 'done adding git repository.'
+	log 'done adding git repository.'
 fi
 
 if ! is_repository_configured 'azlux'; then
-	message '  %s' 'adding broot repository...'
+	log 'adding broot repository...'
 	add_key https://azlux.fr/repo.gpg.key
 	add_repository 'broot' 'deb http://packages.azlux.fr/debian/ buster main'
-	message '  %s' 'done adding broot repository.'
+	log 'done adding broot repository.'
 fi
 
 if ! is_repository_configured 'lutris'; then
-	message '  %s' 'adding lutris repository...'
+	log 'adding lutris repository...'
 	request-sudo add-apt-repository --yes ppa:lutris-team/lutris
-	message '  %s' 'done adding lutris repository.'
+	log 'done adding lutris repository.'
 fi
 
 if ! is_repository_configured 'etcher'; then
-	message '  %s' 'adding etcher repository...'
+	log 'adding etcher repository...'
 	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
 	request-sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
-	message '  %s' 'done adding etcher repository.'
+	log 'done adding etcher repository.'
 fi
 
 if ! is_repository_configured 'figma'; then
-	message '  %s' 'adding figma repository...'
+	log 'adding figma repository...'
 	request-sudo add-apt-repository --yes ppa:chrdevs/figma
-	message '  %s' 'done adding figma repository.'
+	log 'done adding figma repository.'
 fi
 
 if ! is_repository_configured 'mpv-tests'; then
-	message '  %s' 'adding mpv repository...'
+	log 'adding mpv repository...'
 	request-sudo add-apt-repository --yes ppa:mc3man/mpv-tests
-	message '  %s' 'done adding mpv repository.'
+	log 'done adding mpv repository.'
 fi
 
 if ! is_repository_configured 'ubuntu-elisp'; then
-	message '  %s' 'adding Ubuntu Emacs snapshot repository...'
+	log 'adding Ubuntu Emacs snapshot repository...'
 	request-sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
-	message '  %s' 'done adding Ubuntu Emacs snapshot repository.'
+	log 'done adding Ubuntu Emacs snapshot repository.'
 fi
 
 if ! is_repository_configured 'xournal'; then
-	message '  %s' 'adding Xournal++ repository...'
+	log 'adding Xournal++ repository...'
 	request-sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
-	message '  %s' 'done adding Xournal++ repository.'
+	log 'done adding Xournal++ repository.'
 fi
 
 if ! is_repository_configured 'copyq'; then
-	message '  %s' 'adding CopyQ repository...'
+	log 'adding CopyQ repository...'
 	request-sudo add-apt-repository --yes ppa:hluk/copyq
-	message '  %s' 'done adding CopyQ repository.'
+	log 'done adding CopyQ repository.'
 fi
 
 if ! is_repository_configured 'cli.github.com'; then
-	message '  %s' 'adding GitHub CLI repository...'
+	log 'adding GitHub CLI repository...'
 	request-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
 	request-sudo add-apt-repository --yes https://cli.github.com/packages
-	message '  %s' 'done adding GitHub CLI repository.'
+	log 'done adding GitHub CLI repository.'
 fi
 
-message '  %s' 'updating lists...'
+log 'updating lists...'
 if request-sudo apt-get update >/dev/null; then
-	message '  %s' 'done updating lists.'
+	log 'done updating lists.'
 else
 	warn 'failed to update lists'
 fi
 
-message '  %s' 'upgrading packages...'
+log 'upgrading packages...'
 if request-sudo apt-get upgrade --yes --autoremove >/dev/null; then
-	message '  %s' 'done upgrading packages.'
+	log 'done upgrading packages.'
 else
 	warn 'failed to upgrade packages, continuing'
 fi
@@ -254,15 +258,15 @@ declare -a packages=(
 	fonts-roboto
 )
 
-message '  %s' 'installing packages...'
+log 'installing packages...'
 sudo apt-get install --yes "${packages[@]}"
-message '  %s' 'done installing packages.'
+log 'done installing packages.'
 
-message '  %s' 'updating snaps...'
+log 'updating snaps...'
 if ! request-sudo snap refresh >/dev/null; then
 	fatal 'failed to update snaps'
 fi
-message '  %s' 'done updating snaps.'
+log 'done updating snaps.'
 
 declare -a snaps=(
 	'authy --beta'
@@ -273,18 +277,18 @@ declare -a snaps=(
 
 for snap_raw in "${snaps[@]}"; do
 	read -ra snap <<<"$snap_raw"
-	message '  %s' "installing snap '${snap[0]}'..."
+	log "installing snap '${snap[0]}'..."
 	if ! request-sudo snap install "${snap[@]}"; then
 		fatal 'failed to install'
 	fi
-	message '  %s' "done installing snap '${snap[0]}'."
+	log "done installing snap '${snap[0]}'."
 done
 
-message '  %s' 'installing GitHub CLI completions...'
+log 'installing GitHub CLI completions...'
 install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
-message '  %s' 'done installing GitHub CLI completions.'
+log 'done installing GitHub CLI completions.'
 
-message '  %s' 'installing Hugo...'
+log 'installing Hugo...'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then
 	fatal 'failed to get Hugo release URL'
 fi
@@ -296,9 +300,9 @@ if ! request-sudo apt-get install "$hugo_tmp"; then
 	fatal 'failed to install Hugo'
 fi
 rm -f "$hugo_tmp"
-message '  %s' 'done installing Hugo.'
+log 'done installing Hugo.'
 
-message '  %s' 'installing hyperfine...'
+log 'installing hyperfine...'
 if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
 	fatal 'failed to get hyperfine release URL'
 fi
@@ -310,9 +314,9 @@ if ! request-sudo apt-get install "$hyperfine_tmp"; then
 	fatal 'failed to install hyperfine'
 fi
 rm -f "$hyperfine_tmp"
-message '  %s' 'done installing hyperfine.'
+log 'done installing hyperfine.'
 
-message '  %s' 'installing git-delta...'
+log 'installing git-delta...'
 if ! git_delta_url="$(get_release_url 'dandavison/delta' '_amd64.deb')"; then
 	fatal 'failed to get git-delta release URL'
 fi
@@ -324,9 +328,9 @@ if ! request-sudo apt-get install "$git_delta_tmp"; then
 	fatal 'failed to install git-delta'
 fi
 rm -f "$git_delta_tmp"
-message '  %s' 'done installing git-delta.'
+log 'done installing git-delta.'
 
-message '  %s' 'installing websocat...'
+log 'installing websocat...'
 if ! websocat_url="$(get_release_url 'vi/websocat' '_ssl1.1_amd64.deb')"; then
 	fatal 'failed to get websocat release URL'
 fi
@@ -338,54 +342,54 @@ if ! request-sudo apt-get install "$websocat_tmp"; then
 	fatal 'failed to install websocat'
 fi
 rm -f "$websocat_tmp"
-message '  %s' 'done installing websocat.'
+log 'done installing websocat.'
 
-message '  %s' 'linking batcat to bat...'
+log 'linking batcat to bat...'
 ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
-message '  %s' 'done linking batcat to bat.'
+log 'done linking batcat to bat.'
 
-message '  %s' 'linking fdfind to fd...'
+log 'linking fdfind to fd...'
 ln -sf /usr/bin/fdfind "$HOME"/.local/bin/fd
-message '  %s' 'done linking fdfind to fd.'
+log 'done linking fdfind to fd.'
 
-message '  %s' 'configuring Grub...'
-message '    %s' 'disabling generation of recovery options...'
+log 'configuring Grub...'
+log 'disabling generation of recovery options...'
 request-sudo sed -i 's|#GRUB_DISABLE_RECOVERY="true"|GRUB_DISABLE_RECOVERY="true"|' /etc/default/grub
-message '    %s' 'done disabling generation of recovery options.'
+log 'done disabling generation of recovery options.'
 
 grub_theme_dir=/boot/grub/themes/adamvig
 if ! [ -f "$grub_theme_dir"/theme.txt ]; then
-	message '    %s' 'linking theme...'
+	log 'linking theme...'
 	request-sudo mkdir -p "$grub_theme_dir"
 	request-sudo ln -sf "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
-	message '    %s' 'done linking theme.'
+	log 'done linking theme.'
 fi
 
 grub_font_output_path="$grub_theme_dir"/opensans-regular.pf2
 if ! [ -f "$grub_font_output_path" ]; then
-	message '    %s' 'converting font...'
+	log 'converting font...'
 	opensans_path='/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf'
 	if ! request-sudo grub-mkfont --output "$grub_font_output_path" --size 36 "$opensans_path"; then
 		fatal 'failed to convert font'
 	fi
-	message '    %s' 'done converting font.'
+	log 'done converting font.'
 fi
 
 grub_theme_variable="GRUB_THEME=$grub_theme_dir/theme.txt"
 if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
-	message '    %s' 'enabling theme...'
+	log 'enabling theme...'
 	if ! echo "$grub_theme_variable" | request-sudo tee --append /etc/default/grub >/dev/null; then
 		fatal 'failed to enable theme'
 	fi
-	message '    %s' 'done enabling theme.'
+	log 'done enabling theme.'
 fi
 
-message '    %s' 're-generating Grub configuration...'
+log 're-generating Grub configuration...'
 request-sudo update-grub
-message '    %s' 'done re-generating Grub configuration.'
-message '  %s' 'done configuring Grub.'
+log 'done re-generating Grub configuration.'
+log 'done configuring Grub.'
 
-message '  %s' 'updating user directories...'
+log 'updating user directories...'
 declare -A user_directories=(
 	[DESKTOP]="$HOME"/desktop
 	[DOWNLOAD]="$HOME"/downloads
@@ -403,18 +407,18 @@ for user_directory_name in "${!user_directories[@]}"; do
 		user_directory_basename="$(basename "$user_directory_path")"
 		user_directory_path_capitalized="$HOME"/"${user_directory_basename^}"
 		if [ -d "$user_directory_path_capitalized" ]; then
-			message '    %s' "moving '$user_directory_path_capitalized' to '$user_directory_path'"
+			log "moving '$user_directory_path_capitalized' to '$user_directory_path'"
 			mv "$user_directory_path_capitalized" "$user_directory_path"
 		else
-			message '    %s' "creating '$user_directory_path'"
+			log "creating '$user_directory_path'"
 			mkdir -p "$user_directory_path"
 		fi
 	fi
 
-	message '    %s' "setting '$user_directory_name' to '$user_directory_path'"
+	log "setting '$user_directory_name' to '$user_directory_path'"
 	xdg-user-dirs-update --set "$user_directory_name" "$user_directory_path"
 done
-message '  %s' 'done updating user directories.'
+log 'done updating user directories.'
 
 config_dir="$(xdg_config)"
 mkdir -p "$config_dir"/i3
@@ -446,15 +450,15 @@ fi
 
 xresources_path="$HOME"/.Xresources
 if ! [ -f "$xresources_path" ]; then
-	message '  %s' 'writing .Xresources file...'
+	log 'writing .Xresources file...'
 	# Set display DPI
 	echo 'Xft.dpi: 128' >"$xresources_path"
-	message '  %s' 'done writing .Xresources file.'
+	log 'done writing .Xresources file.'
 fi
 
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
 if ! request-sudo [ -f "$x11vnc_unit_path" ]; then
-	message '  %s' 'creating x11vnc Systemd unit...'
+	log 'creating x11vnc Systemd unit...'
 	echo '[Unit]
 Description="x11vnc"
 Requires=display-manager.service
@@ -470,42 +474,42 @@ Restart-sec=2
 WantedBy=multi-user.target
 ' | request-sudo tee "$x11vnc_unit_path" >/dev/null
 	request-sudo systemctl daemon-reload
-	message '  %s' 'done creating x11vnc Systemd unit.'
+	log 'done creating x11vnc Systemd unit.'
 fi
 
 if ! request-sudo systemctl is-enabled --quiet x11vnc.service; then
-	message '  %s' 'setting up x11vnc service...'
+	log 'setting up x11vnc service...'
 	request-sudo systemctl enable --now x11vnc.service
-	message '  %s' 'done setting up x11vnc service.'
+	log 'done setting up x11vnc service.'
 fi
 
-message '  %s' 'configuring GNOME Keyring...'
+log 'configuring GNOME Keyring...'
 # Create customized versions of the desktop files for the secrets and SSH components so they start automatically
 # By default, the OnlyShowIn lines in the desktop files would prevent these components from being started
 sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-secrets.desktop >"$config_dir"/autostart/gnome-keyring-secrets.desktop
 sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-ssh.desktop >"$config_dir"/autostart/gnome-keyring-ssh.desktop
-message '  %s' 'done configuring GNOME Keyring.'
+log 'done configuring GNOME Keyring.'
 
-message '  %s' 'disabling input language icon in system tray...'
+log 'disabling input language icon in system tray...'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
-message '  %s' 'done disabling input language icon in system tray.'
+log 'done disabling input language icon in system tray.'
 
 home_assistant_daemon_unit_path="$(xdg_config)"/systemd/user/home-assistant-daemon.service
 if ! [ -f "$home_assistant_daemon_unit_path" ]; then
 	home_assistant_daemon_environment_file_path="$(xdg_config)"/home-assistant-daemon.env
 	if ! [ -f "$home_assistant_daemon_environment_file_path" ]; then
-		message '  %s' 'creating Home Assistant daemon environment file...'
+		log 'creating Home Assistant daemon environment file...'
 		echo '# Home Assistant daemon environment variables, in the format of a Systemd unit EnvironmentFile
 # Hostname of Home Assistant instance
 HOME_ASSISTANT_HOST=example.com
 # API token for Home Assistant instance
 HOME_ASSISTANT_TOKEN=
 ' >"$home_assistant_daemon_environment_file_path"
-		message '  %s' 'done creating Home Assistant daemon environment file.'
+		log 'done creating Home Assistant daemon environment file.'
 		warn "Home Assistant daemon configuration created at $home_assistant_daemon_environment_file_path, open the file and fill in the values"
 	fi
 
-	message '  %s' 'creating Home Assistant daemon Systemd unit...'
+	log 'creating Home Assistant daemon Systemd unit...'
 	echo "[Unit]
 Description=\"Home Assistant Daemon\"
 
@@ -517,13 +521,13 @@ ExecStart=$(realpath "$_dir"/../bin/home-assistant-daemon)
 WantedBy=default.target
 " >"$home_assistant_daemon_unit_path"
 	systemctl --user daemon-reload
-	message '  %s' 'done creating Home Assistant daemon Systemd unit.'
+	log 'done creating Home Assistant daemon Systemd unit.'
 fi
 
 if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
-	message '  %s' 'setting up Home Assistant daemon...'
+	log 'setting up Home Assistant daemon...'
 	systemctl --user enable --now home-assistant-daemon.service
-	message '  %s' 'done setting up Home Assistant daemon.'
+	log 'done setting up Home Assistant daemon.'
 fi
 
 log 'done setting up Ubuntu.'

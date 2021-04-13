@@ -5,6 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component emacs "$@"
+}
+
 if is_macos && brew services list | grep --quiet --extended-regexp 'emacs .+ stopped'; then
 	log 'enabling Emacs service...'
 	if brew services start emacs; then

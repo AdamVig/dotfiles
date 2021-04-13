@@ -9,6 +9,10 @@ source "$_dir"/helpers
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
+log() {
+	log_with_component main "$@"
+}
+
 # Ask for password at start
 # shellcheck disable=SC2119
 request-sudo

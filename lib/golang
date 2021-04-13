@@ -5,7 +5,11 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-log "installing golang tools..."
+log() {
+	log_with_component golang "$@"
+}
+
+log 'installing golang tools...'
 
 go_packages=(
 	github.com/antonmedv/countdown # Terminal countdown timer
@@ -15,10 +19,10 @@ go_packages=(
 
 for package in "${go_packages[@]}"; do
 	if go get -u "$package" &>/dev/null; then
-		message "    %s" "installed $package"
+		log "installed \"$package\""
 	else
-		warn "package $package failed to install"
+		warn "package \"$package\" failed to install"
 	fi
 done
 
-log "golang done."
+log 'done installing golang tools.'

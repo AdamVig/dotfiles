@@ -7,11 +7,15 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-log "setting up Node..."
+log() {
+	log_with_component node "$@"
+}
+
+log 'setting up Node...'
 
 if is_linux; then
 	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
-	message "  %s" "installing Nodenv to '$nodenv_root'..."
+	log "installing Nodenv to '$nodenv_root'..."
 	mkdir -p "$nodenv_root"
 	if ! [ -x "$nodenv_root"/bin/nodenv ]; then
 		if ! git clone --depth 1 https://github.com/nodenv/nodenv.git "$nodenv_root" >/dev/null; then
@@ -20,9 +24,9 @@ if is_linux; then
 	fi
 
 	eval "$("$nodenv_root"/bin/nodenv init -)"
-	message "  %s" "done installing Nodenv."
+	log "done installing Nodenv."
 
-	message "  %s" "installing Nodenv plugins..."
+	log "installing Nodenv plugins..."
 	mkdir -p "$nodenv_root"/plugins
 
 	declare -a nodenv_plugins=(
@@ -40,23 +44,23 @@ if is_linux; then
 			fi
 		fi
 	done
-	message "  %s" "done installing Nodenv plugins."
+	log "done installing Nodenv plugins."
 fi
 
-message "  %s" "copying default packages file..."
+log "copying default packages file..."
 cp "$_dir"/../config/npm-default-packages "$(nodenv root)"/default-packages &>/dev/null || true
-message "  %s" "done copying default packages file."
+log "done copying default packages file."
 
-message "  %s" "getting latest Node version..."
+log "getting latest Node version..."
 # 1. Get list of Node versions
 # 2. Filter to only get normal Node versions, like "  9.5.0"
 # 3. Take last line of output which will be latest version
 # 4. Remove the leading spaces
 latest_node_version="$(nodenv install --list | grep -E '^[0-9\.]+$' | tail -1 | xargs)"
-message "  %s" "done getting latest Node version."
+log "done getting latest Node version."
 
 if [ -n "$latest_node_version" ]; then
-	message "  %s" "installing Node $latest_node_version and default npm packages..."
+	log "installing Node $latest_node_version and default npm packages..."
 	if ! nodenv install --skip-existing "$latest_node_version" &>/dev/null; then
 		fatal 'failed to install Node'
 	fi
@@ -65,15 +69,15 @@ if [ -n "$latest_node_version" ]; then
 		fatal 'failed to set gloabl Node version'
 	fi
 
-	message "  %s" "done installing Node and default npm packages."
+	log "done installing Node and default npm packages."
 else
 	warn "could not get latest Node version; installation failed"
 fi
 
-message "  %s" "setting Python path..."
+log "setting Python path..."
 # Must initialize Nodenv in order for npm to be available in PATH
 eval "$(nodenv init -)"
 npm config set --global python "$(command -v python3)"
-message "  %s" "done setting Python path."
+log "done setting Python path."
 
 log "done setting up Node."

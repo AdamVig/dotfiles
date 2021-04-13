@@ -10,62 +10,6 @@ source "$_dir"/../.profile
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
-# Colorized output
-# $1: color, template string, or string to print
-# $2: template string or string to print
-# all other arguments will be passed directly to printf
-message() {
-	# Get color from $1 if it matches the preset list of colors, if it does, shift the positional arguments
-	COLOR=34
-	OFF=0
-	# More color codes: https://misc.flogisoft.com/bash/tip_colors_and_formatting
-	case $1 in
-	off)
-		COLOR=0
-		shift
-		;;
-	red)
-		COLOR=31
-		shift
-		;;
-	green)
-		COLOR=32
-		shift
-		;;
-	yellow)
-		COLOR=33
-		shift
-		;;
-	blue)
-		COLOR=34
-		shift
-		;;
-	magenta)
-		COLOR=35
-		shift
-		;;
-	cyan)
-		COLOR=36
-		shift
-		;;
-	esac
-
-	# Get template from $1 if it is set, default to empty otherwise
-	TEMPLATE=
-	if [[ -n $1 ]]; then
-		TEMPLATE=${1:-}
-		shift
-	fi
-
-	# If template string is not actually a template, add %s so that other arguments get printed
-	if [[ $TEMPLATE != *"%s"* ]]; then
-		TEMPLATE="$TEMPLATE%s"
-	fi
-
-	# shellcheck disable=SC2059
-	printf "\\e[${COLOR}m$TEMPLATE\\e[${OFF}m\\n" "$@"
-}
-
 # Internal function intended to be called only by other logging functions
 # Allows scripts to either `log` directly or redefine it to use `log_with_component` without causing an infinite loop
 _log_internal() {

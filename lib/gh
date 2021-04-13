@@ -5,6 +5,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component gh "$@"
+}
+
 log "setting up GitHub CLI (gh)..."
 
 if ! command -v gh >/dev/null; then

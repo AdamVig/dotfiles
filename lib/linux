@@ -5,42 +5,46 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component linux "$@"
+}
+
 # shellcheck disable=SC2119
 request-sudo
 
-log "setting up Linux..."
+log 'setting up Linux...'
 
-message "    %s" "installing essential tools..."
+log 'installing essential tools...'
 if command -v apt-get >/dev/null; then
 	sudo apt-get update >/dev/null
 	sudo apt-get install --yes build-essential curl file git jq >/dev/null
 else
-	error "could not find a supported package manager; skipping install"
+	error 'could not find a supported package manager; skipping install'
 fi
-message "    %s" "done installing essential tools."
+log 'done installing essential tools.'
 
 readonly fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	mkdir -p "$fonts_dir"
-	message '    %s' 'installing Source Code Pro...'
+	log 'installing Source Code Pro...'
 	if ! git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git "$fonts_dir"/source-code-pro; then
 		fatal 'failed to clone Git repository'
 	fi
 	if ! fc-cache "$fonts_dir"/source-code-pro; then
 		fatal 'failed to generate font caches'
 	fi
-	message '    %s' 'done installing Source Code Pro.'
+	log 'done installing Source Code Pro.'
 fi
 
-message "    %s" "installing shfmt..."
+log 'installing shfmt...'
 if ! shfmt_url="$(get_release_url 'mvdan/sh' 'linux_amd64')"; then
 	fatal 'failed to get shfmt release URL'
 fi
 
 install_binary_from_url 'shfmt' "$shfmt_url"
-message "    %s" "done installing shfmt."
+log 'done installing shfmt.'
 
-message "    %s" "installing exa..."
+log 'installing exa...'
 if ! exa_url="$(get_release_url 'ogham/exa' 'linux-x86_64')"; then
 	fatal 'failed to get exa release URL'
 fi
@@ -61,9 +65,9 @@ mv "$exa_tmp"/exa-linux-x86_64 "$exa_path"
 rm -rf "$exa_tmp"
 
 chmod +x "$exa_path"
-message "    %s" "done installing exa."
+log 'done installing exa.'
 
-message "    %s" "installing scc..."
+log 'installing scc...'
 if ! scc_url="$(get_release_url 'boyter/scc' 'x86_64-unknown-linux')"; then
 	fatal 'failed to get scc release URL'
 fi
@@ -84,18 +88,18 @@ mv "$scc_tmp"/scc "$scc_path"
 rm -rf "$scc_tmp"
 
 chmod +x "$scc_path"
-message "    %s" "done installing scc."
+log 'done installing scc.'
 
-message "    %s" "installing Slack CLI..."
+log 'installing Slack CLI...'
 slack_cli_path="$HOME"/.local/bin/slack
 if ! _curl https://raw.githubusercontent.com/rockymadden/slack-cli/master/src/slack --output "$slack_cli_path"; then
 	fatal 'failed to download Slack CLI'
 fi
 
 chmod +x "$slack_cli_path"
-message "    %s" "done installing Slack CLI."
+log 'done installing Slack CLI.'
 
-message '  %s' 'installing Hub...'
+log 'installing Hub...'
 if ! hub_url="$(get_release_url 'github/hub' 'linux-amd64')"; then
 	fatal 'failed to get Hub release URL'
 fi
@@ -114,15 +118,15 @@ install "$hub_extracted_tmp"/share/man/*/*.1 "$HOME"/.local/share/man/man1
 hub_completion_dir="$HOME"/.local/share/hub
 install -D "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"/_hub
 rm -rf "$hub_extracted_tmp"
-message '  %s' 'done installing Hub.'
+log 'done installing Hub.'
 
-message "    %s" "installing Bitwarden..."
+log 'installing Bitwarden...'
 bitwarden_path="$HOME"/.local/bin/Bitwarden.AppImage
 if ! _curl 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage' \
 	--output "$bitwarden_path"; then
 	fatal 'failed to download Bitwarden'
 fi
 chmod +x "$bitwarden_path"
-message "    %s" "done installing Bitwarden."
+log 'done installing Bitwarden.'
 
-log "done setting up Linux."
+log 'done setting up Linux.'

@@ -5,16 +5,20 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component brew "$@"
+}
+
 # Refresh existing sudo session or start a new one
 # shellcheck disable=SC2119
 request-sudo
 
-message "magenta" "  %s" "updating Brew package lists..."
+log 'updating Brew package lists...'
 brew update >/dev/null
 
-message "magenta" "  %s" "installing Brew formulas..."
+log 'installing Brew formulas...'
 if ! brew bundle install --no-lock; then
-	warn "installing Brew formulas may have failed"
+	warn 'installing Brew formulas may have failed'
 fi
 
-log "brew done."
+log 'brew done.'

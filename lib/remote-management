@@ -19,6 +19,10 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component remote-management "$@"
+}
+
 request-sudo
 
 log 'initializing remote management user...'
@@ -28,12 +32,12 @@ readonly remote_management_user_home_path=/usr/local/share/"$remote_management_u
 
 # To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
 if ! id "$remote_management_username" &>/dev/null; then
-	message "    %s" "creating remote management user..."
+	log 'creating remote management user...'
 	request-sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
 	request-sudo passwd --lock "$remote_management_username"
-	message "    %s" "done creating remote management user."
+	log 'done creating remote management user.'
 
-	message "    %s" "creating template SSH authorized keys file..."
+	log 'creating template SSH authorized keys file...'
 	request-sudo mkdir -p "$remote_management_user_home_path"/.ssh
 	# Apply restrictions except for TTY access
 	# shellcheck disable=SC2016
@@ -44,21 +48,21 @@ if ! id "$remote_management_username" &>/dev/null; then
 	request-sudo chmod 500 "$remote_management_user_home_path"/.ssh
 	# Set permissions to r--------
 	request-sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
-	message "    %s" "done creating template SSH authorized keys file."
+	log 'done creating template SSH authorized keys file.'
 fi
 
 if ! [ -f /etc/sudoers.d/remote-management ]; then
-	message "    %s" "creating sudoers file to allow non-interactive power control..."
+	log 'creating sudoers file to allow non-interactive power control...'
 	echo "# Allow for non-interactive execution of system power commands.
 
 $remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot" |
 		(request-sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
-	message "  %s" "done creating sudoers file to allow non-interactive power control."
+	log 'done creating sudoers file to allow non-interactive power control.'
 fi
 
-message "    %s" "setting up remote control script..."
+log 'setting up remote control script...'
 # Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
 request-sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
-message "    %s" "done setting up remote control script."
+log 'done setting up remote control script.'
 
 log 'done initializing remote management user.'

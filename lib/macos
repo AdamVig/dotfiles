@@ -5,17 +5,21 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
+log() {
+	log_with_component macos "$@"
+}
+
 log 'setting up macOS...'
 
 # Check if directory is writable, if not, take ownership of it
-message "  %s" "checking ownership of subdirectories of /usr/local..."
+log 'checking ownership of subdirectories of /usr/local...'
 for dir in "$(brew --prefix)/"*; do
 	if [ ! -w "$dir" ]; then
 		request-sudo chown -R "$(whoami)" "$dir"
-		message "    %s" "took ownership of $dir"
+		log "took ownership of \"$dir\""
 	fi
 done
-message "  %s" "done checking ownership of subdirectories of /usr/local."
+log 'done checking ownership of subdirectories of /usr/local.'
 
 # Disable startup tone
 request-sudo nvram SystemAudioVolume=" "
