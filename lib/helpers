@@ -66,10 +66,34 @@ message() {
 	printf "\\e[${COLOR}m$TEMPLATE\\e[${OFF}m\\n" "$@"
 }
 
+# Internal function intended to be called only by other logging functions
+# Allows scripts to either `log` directly or redefine it to use `log_with_component` without causing an infinite loop
+_log_internal() {
+	dim="$(tput dim)"
+	reset="$(tput sgr0)"
+	echo "${dim}dotfiles${reset}" "$@"
+}
+
 # Log a message
 # $@: passed to echo
 log() {
-	echo '[dotfiles]' "$@"
+	_log_internal "$@"
+}
+
+# Log a message including the name of the component (usually the file where the log line is from)
+# $1: component name
+# $@: passed to log
+log_with_component() {
+	component="${1:-}"
+	if [ -z "$component" ]; then
+		echo 'internal error: log_with_component called without a component'
+		return 1
+	fi
+	shift
+
+	blue="$(tput setaf 4)"
+	reset="$(tput sgr0)"
+	_log_internal "${blue}${component}${reset}" "$@"
 }
 
 # Log a message in yellow preceded by "warning: "
