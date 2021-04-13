@@ -9,9 +9,9 @@ log 'setting up Visual Studio Code...'
 
 message "cyan" "  %s" "symlinking Visual Studio Code settings..."
 
-if "$_dir"/../bin/is-macos; then
+if is_macos; then
 	vscode_settings_dir="$HOME"/Library/Application\ Support/Code/User
-elif "$_dir"/../bin/is-linux; then
+elif is_linux; then
 	vscode_settings_dir="$HOME"/.config/Code/User
 fi
 

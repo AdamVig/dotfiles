@@ -5,7 +5,7 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-if "$_dir"/../bin/is-macos && brew services list | grep --quiet --extended-regexp 'emacs .+ stopped'; then
+if is_macos && brew services list | grep --quiet --extended-regexp 'emacs .+ stopped'; then
 	log 'enabling Emacs service...'
 	if brew services start emacs; then
 		log 'enabled Emacs service.'

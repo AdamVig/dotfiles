@@ -37,10 +37,10 @@ fi
 
 log 'running OS-specific scripts...'
 
-if "$_dir"/../bin/is-macos; then
+if is_macos; then
 	"$_dir"/macos
 	"$_dir"/brew
-elif "$_dir"/../bin/is-linux; then
+elif is_linux; then
 	"$_dir"/linux
 	if is_ubuntu; then
 		"$_dir"/ubuntu
@@ -61,7 +61,7 @@ fi
 "$_dir"/profile-picture
 "$_dir"/gh
 
-if "$_dir"/../bin/is-linux; then
+if is_linux; then
 	# Must run after ./pip because it installs mozdownload
 	if command -v mozdownload >/dev/null && command -v bunzip2 >/dev/null; then
 		message '  %s' 'installing Thunderbird...'
@@ -90,7 +90,7 @@ if "$_dir"/../bin/is-linux; then
 	fi
 fi
 
-if "$_dir"/../bin/is-macos; then
+if is_macos; then
 	broot_root='org.dystroy.broot'
 else
 	broot_root='broot'

@@ -9,7 +9,7 @@ source "$_dir"/helpers
 
 log "setting up Node..."
 
-if "$_dir"/../bin/is-linux; then
+if is_linux; then
 	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
 	message "  %s" "installing Nodenv to '$nodenv_root'..."
 	mkdir -p "$nodenv_root"
