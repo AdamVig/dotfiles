@@ -118,6 +118,9 @@ export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
 # Prevent Node.js REPL from storing history in ~/.node_repl_history
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/node_repl_history
 
+# Prevent Backblaze B2 from storing account info in home directory
+export B2_ACCOUNT_INFO="${XDG_CONFIG_HOME:-$HOME/.config}"/b2_account_info
+
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
 if [ -f "$local_profile_path" ]; then
