@@ -10,6 +10,21 @@ source "$_dir"/../.profile
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
+# FILO (first in, last out) array of operation names passed to log_start
+log_operation_names=()
+
+# Internal function for generating indentation based on length of log_operation_names array
+_get_operation_indentation() {
+	operation_depth="${#log_operation_names[@]}"
+	if [ "$operation_depth" = 0 ]; then
+		return
+	fi
+
+	# Subtract one to avoid indenting when only one operation is in the array
+	num_spaces="$(((operation_depth - 1) * 2))"
+	printf "%${num_spaces}s"
+}
+
 # Internal function intended to be called only by other logging functions
 # Allows scripts to either `log` directly or redefine it to use `log_with_component` without causing an infinite loop
 _log_internal() {
@@ -24,6 +39,40 @@ log() {
 	_log_internal "$@"
 }
 
+# Log the beginning of an operation
+# $1: name of an operation
+# $@: passed to log
+log_start() {
+	operation_name="${1:-}"
+	if [ -z "$operation_name" ]; then
+		echo 'internal error: log_start called without an operation name'
+		return 1
+	fi
+	shift
+	log_operation_names+=("$operation_name")
+
+	bold="$(tput bold)"
+	reset="$(tput sgr0)"
+	log "${bold}start${reset}" "$operation_name" "$@"
+}
+
+# Log the end of an operation
+# Automatically retrieves the name of the current operation from the array log_operation_names
+log_end() {
+	operation_name="${log_operation_names[-1]}"
+	if [ -z "$operation_name" ]; then
+		echo 'internal error: log_end called with nothing in progress'
+		return 1
+	fi
+
+	bold="$(tput bold)"
+	reset="$(tput sgr0)"
+	log "${bold}end  ${reset}" "$operation_name"
+
+	# Remove the current operation from the list
+	unset -v 'log_operation_names[-1]'
+}
+
 # Log a message including the name of the component (usually the file where the log line is from)
 # $1: component name
 # $@: passed to log
@@ -35,9 +84,10 @@ log_with_component() {
 	fi
 	shift
 
+	indent="$(_get_operation_indentation)"
 	blue="$(tput setaf 4)"
 	reset="$(tput sgr0)"
-	_log_internal "${blue}${component}${reset}" "$@"
+	_log_internal "${blue}${component}${reset}${indent}" "$@"
 }
 
 # Log a message in yellow preceded by "warning: "

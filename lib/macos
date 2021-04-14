@@ -9,17 +9,17 @@ log() {
 	log_with_component macos "$@"
 }
 
-log 'setting up macOS...'
+log_start 'setting up macOS'
 
 # Check if directory is writable, if not, take ownership of it
-log 'checking ownership of subdirectories of /usr/local...'
+log_start 'checking ownership of subdirectories of /usr/local'
 for dir in "$(brew --prefix)/"*; do
 	if [ ! -w "$dir" ]; then
 		request-sudo chown -R "$(whoami)" "$dir"
 		log "took ownership of \"$dir\""
 	fi
 done
-log 'done checking ownership of subdirectories of /usr/local.'
+log_end
 
 # Disable startup tone
 request-sudo nvram SystemAudioVolume=" "
@@ -75,4 +75,4 @@ defaults write com.apple.dock no-bouncing -bool true
 killall Dock
 killall Finder
 
-log 'done setting up macOS.'
+log_end

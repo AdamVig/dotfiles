@@ -9,16 +9,16 @@ log() {
 	log_with_component gpg "$@"
 }
 
-log 'configuring GPG...'
+log_start 'configuring GPG'
 
 mkdir -p "$HOME"/.gnupg
 gpg_agent_config='default-cache-ttl 34560000
 max-cache-ttl 34560000'
 gpg_agent_config_path="$HOME"/.gnupg/gpg-agent.conf
 if ! [ -f "$gpg_agent_config_path" ] || ! grep --quiet "$gpg_agent_config" "$gpg_agent_config_path"; then
-	log 'updating GPG Agent configuration...'
+	log_start 'updating GPG Agent configuration'
 	echo -e "$gpg_agent_config" >>"$gpg_agent_config_path"
-	log 'done updating GPG Agent configuration.'
+	log_end
 fi
 
-log 'done configuring GPG.'
+log_end

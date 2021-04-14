@@ -9,7 +9,7 @@ log() {
 	log_with_component golang "$@"
 }
 
-log 'installing golang tools...'
+log_start 'installing golang tools'
 
 go_packages=(
 	github.com/antonmedv/countdown # Terminal countdown timer
@@ -25,4 +25,4 @@ for package in "${go_packages[@]}"; do
 	fi
 done
 
-log 'done installing golang tools.'
+log_end

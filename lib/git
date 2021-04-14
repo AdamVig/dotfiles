@@ -9,32 +9,32 @@ log() {
 	log_with_component git "$@"
 }
 
-log 'setting up Git...'
+log_start 'setting up Git'
 
 config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
 
 if [ -e "$HOME"/.gitconfig ]; then
-	log 'migrating to new configuration file location...'
+	log 'migrating to new configuration file location'
 	mv "$HOME"/.gitconfig "$config_path"/config
 fi
 
-log 'symlinking commit template...'
+log 'symlinking commit template'
 if [ -h "$HOME"/.git-template ]; then
-	log 'removing legacy .git-template...'
+	log 'removing legacy .git-template'
 	rm -f "$HOME"/.git-template
 fi
 ln -sf "$_dir"/../git/template "$config_path"/template
 
-log 'symlinking attributes...'
+log 'symlinking attributes'
 ln -sf "$_dir"/../git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
-	log "copying gitconfig to '$config_path/config'..."
+	log "copying gitconfig to \"$config_path/config\""
 	cp "$_dir"/../git/config "$config_path"/config
 
-	log 'configuring Git user...'
+	log_start 'configuring Git user'
 	read -r -p "  Full name: " name
 	read -r -p "  Email address: " email
 	read -r -p "  GitHub username: " github
@@ -43,9 +43,9 @@ if ! [ -e "$config_path"/config ]; then
 	[ -n "$name" ] && git config --global user.name "$name"
 	[ -n "$email" ] && git config --global user.email "$email"
 	[ -n "$github" ] && git config --global github.user "$github"
-	log 'done configuring Git user'
+	log_end
 else
-	log 'updating Git configuration...'
+	log_start 'updating Git configuration'
 	# Read all values from current Git configuration
 	git config --list --file "$_dir"/../git/config | while read -r conf_line; do
 		# Split line into name and value at equals sign
@@ -55,11 +55,11 @@ else
 		if ! git config --global "$name" &>/dev/null; then
 			# shellcheck disable=SC2016
 			value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
-			log "setting '$name' to '$value'..."
+			log "setting '$name' to '$value'"
 			git config --global "$name" "$value"
 		fi
 	done
-	log 'done updating Git configuration.'
+	log_end
 fi
 
-log 'done setting up Git.'
+log_end

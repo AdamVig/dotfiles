@@ -17,17 +17,16 @@ log() {
 # shellcheck disable=SC2119
 request-sudo
 
-log 'symlinking dotfiles to your home directory...'
+log "symlinking dotfiles to \"$HOME\""
 ln -sf "$_dir"/../.bashrc "$HOME"
 ln -sf "$_dir"/../.profile "$HOME"
 
 bin_dir="$HOME"/.local/bin
-log "creating '$bin_dir'..."
+log "creating \"$bin_dir\""
 mkdir -p "$bin_dir"
-log "done creating '$bin_dir'."
 
 config_dir="$(xdg_config)"
-log "symlinking configurations to '$config_dir'..."
+log "symlinking configurations to \"'$config_dir\""
 mkdir -p "$config_dir"/ripgrep
 ln -sf "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
 
@@ -35,16 +34,15 @@ mkdir -p "$config_dir"/bat
 ln -sf "$_dir"/../config/bat "$config_dir"/bat/config
 
 if ! [ -d "$config_dir"/docker ]; then
-	log "creating Docker configuration directory..."
+	log 'creating Docker configuration directory'
 	mkdir -p "$config_dir"/docker
 fi
 
-log "creating tig directory..."
+log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig
-log "done creating tig directory."
 
-log 'running OS-specific scripts...'
+log_start 'running OS-specific scripts'
 
 if is_macos; then
 	"$_dir"/macos
@@ -57,15 +55,15 @@ elif is_linux; then
 	fi
 fi
 
-log 'done running OS-specific scripts.'
+log_end
 
-log 'running scripts that install dependencies for other scripts...'
+log_start 'running scripts that install dependencies for other scripts'
 "$_dir"/golang
 "$_dir"/node
 "$_dir"/pip
-log 'done running scripts that install dependencies for other scripts.'
+log_end
 
-log 'running application setup scripts...'
+log_start 'running application setup scripts'
 "$_dir"/broot
 "$_dir"/emacs
 "$_dir"/gh
@@ -76,10 +74,10 @@ log 'running application setup scripts...'
 "$_dir"/tmux
 "$_dir"/vscode
 "$_dir"/zsh
-log 'done running application setup scripts.'
+log_end
 
-log 'running system setup scripts...'
+log_start 'running system setup scripts'
 "$_dir"/profile-picture
-log 'done running system setup scripts.'
+log_end
 
 log "done. start a new login shell or run 'source .zshrc'."

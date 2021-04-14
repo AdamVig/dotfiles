@@ -9,10 +9,12 @@ log() {
 	log_with_component thunderbird "$@"
 }
 
+log_start 'setting up Thunderbird'
+
 if is_linux; then
 	# Must run after ./pip because it installs mozdownload
 	if command -v mozdownload >/dev/null && command -v bunzip2 >/dev/null; then
-		log 'installing Thunderbird...'
+		log_start 'installing Thunderbird'
 		thunderbird_tmp_bz2="$(mktemp --dry-run --suffix .tar.bz2)"
 		thunderbird_tmp_tar="${thunderbird_tmp_bz2%.bz2}"
 		if ! mozdownload --application thunderbird --version latest --destination "$thunderbird_tmp_bz2"; then
@@ -32,8 +34,10 @@ if is_linux; then
 
 		ln -sf "$thunderbird_path"/thunderbird "$HOME"/.local/bin
 
-		log 'done installing Thunderbird.'
+		log_end
 	else
 		warn 'could not install Thunderbird, ensure mozdownload and bunzip2 are installed'
 	fi
 fi
+
+log_end

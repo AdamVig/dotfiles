@@ -9,9 +9,9 @@ log() {
 	log_with_component vscode "$@"
 }
 
-log 'setting up Visual Studio Code...'
+log_start 'setting up Visual Studio Code'
 
-log "symlinking Visual Studio Code settings..."
+log_start 'symlinking Visual Studio Code settings'
 
 if is_macos; then
 	vscode_settings_dir="$HOME"/Library/Application\ Support/Code/User
@@ -23,7 +23,7 @@ mkdir -p "$vscode_settings_dir"
 ln -sf "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
 ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 
-log "done symlinking Visual Studio Code settings."
+log_end
 
 declare -a extensions=(
 	Angular.ng-template                   # Angular template IntelliSense support
@@ -50,7 +50,7 @@ declare -a extensions=(
 	timonwong.shellcheck                  # Shell script linting
 )
 
-log "installing Visual Studio Code extensions... "
+log_start 'installing Visual Studio Code extensions'
 for extension in "${extensions[@]}"; do
 	set +e
 
@@ -62,5 +62,6 @@ for extension in "${extensions[@]}"; do
 	fi
 	set -e
 done
+log_end
 
-log 'done setting up Visual Studio Code.'
+log_end

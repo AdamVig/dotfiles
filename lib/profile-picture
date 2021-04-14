@@ -13,6 +13,8 @@ log() {
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
+log_start 'setting up profile picture'
+
 readonly profile_picture_dirs=("$HOME"/Pictures "$HOME"/pictures)
 readonly profile_picture_filename='profile.jpg'
 found_dir=false
@@ -21,7 +23,7 @@ for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 	if [ -d "$profile_picture_dir" ]; then
 		found_dir=true
 		if ! [ -f "$profile_picture_path" ]; then
-			log "downloading profile picture to $profile_picture_dir..."
+			log_start "downloading profile picture to \"$profile_picture_dir\""
 			email="$(git config user.email)"
 			if [ -n "$email" ]; then
 
@@ -34,11 +36,10 @@ for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 				fi
 
 				email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
-				if _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
-					log 'done downloading profile picture.'
-				else
-					log 'failed to download profile picture'
+				if ! _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
+					warn 'failed to download profile picture'
 				fi
+				log_end
 			else
 				warn 'Git email is not set, skipping profile picture download'
 			fi
@@ -50,3 +51,5 @@ done
 if [ "$found_dir" = false ]; then
 	warn "could not find any profile picture directories, skipping profile picture download"
 fi
+
+log_end

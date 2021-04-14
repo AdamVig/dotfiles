@@ -9,28 +9,30 @@ log() {
 	log_with_component zsh "$@"
 }
 
+log_start 'setting up Zsh'
+
 # shellcheck disable=SC2119
 request-sudo
 
 if [[ $SHELL != *zsh ]]; then
-	log 'changing default shell to Zsh...'
+	log_start 'changing default shell to Zsh'
 	zsh_path="$(command -v zsh)"
 
 	if is-macos; then
 		request-sudo chsh -s "$zsh_path" "$USER"
 	else
 		if ! grep 'zsh' /etc/shells >/dev/null; then
-			log 'adding Zsh to /etc/shells...'
+			log_start 'adding Zsh to /etc/shells'
 			echo "$zsh_path" | request-sudo tee -a /etc/shells
-			log 'done adding Zsh to /etc/shells.'
+			log_end
 		fi
 		chsh --shell "$zsh_path"
 	fi
 
-	log 'done changing default shell to Zsh.'
+	log_end
 fi
 
-log 'initializing Zsh configuration...'
+log_start 'initializing Zsh configuration'
 config_dir="$(xdg_config)"/zsh
 if ! [ -d "$config_dir" ]; then
 	mkdir -p "$config_dir"
@@ -48,22 +50,24 @@ shopt -s dotglob
 ln -sf --target-directory="$config_dir" "$(realpath "$_dir"/../zsh)"/*
 
 shopt -u dotglob
-log 'done initializing Zsh configuration.'
+log_end
 
 z_path="$(xdg_data)"/zsh-z
 if ! [ -d "$z_path" ]; then
-	log 'installing z...'
+	log_start 'installing z'
 	if ! git clone --depth 1 https://github.com/agkozak/zsh-z.git "$z_path" >/dev/null; then
 		fatal 'failed to clone zsh-z'
 	fi
-	log 'done installing z.'
+	log_end
 fi
 
 fast_syntax_highlighting_path="$(xdg_data)"/zsh-fast-syntax-highlighting
 if ! [ -d "$fast_syntax_highlighting_path" ]; then
-	log 'installing Fast Syntax Highlighting...'
+	log_start 'installing Fast Syntax Highlighting'
 	if ! git clone --depth 1 https://github.com/zdharma/fast-syntax-highlighting.git "$fast_syntax_highlighting_path" >/dev/null; then
 		fatal 'failed to clone Fast Syntax Highlighting'
 	fi
-	log 'done installing Fast Syntax Highlighting.'
+	log_end
 fi
+
+log_end

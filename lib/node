@@ -11,11 +11,11 @@ log() {
 	log_with_component node "$@"
 }
 
-log 'setting up Node...'
+log_start 'setting up Node'
 
 if is_linux; then
 	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
-	log "installing Nodenv to '$nodenv_root'..."
+	log_start "installing Nodenv to '$nodenv_root'"
 	mkdir -p "$nodenv_root"
 	if ! [ -x "$nodenv_root"/bin/nodenv ]; then
 		if ! git clone --depth 1 https://github.com/nodenv/nodenv.git "$nodenv_root" >/dev/null; then
@@ -24,9 +24,9 @@ if is_linux; then
 	fi
 
 	eval "$("$nodenv_root"/bin/nodenv init -)"
-	log "done installing Nodenv."
+	log_end
 
-	log "installing Nodenv plugins..."
+	log_start 'installing Nodenv plugins'
 	mkdir -p "$nodenv_root"/plugins
 
 	declare -a nodenv_plugins=(
@@ -44,23 +44,22 @@ if is_linux; then
 			fi
 		fi
 	done
-	log "done installing Nodenv plugins."
+	log_end
 fi
 
-log "copying default packages file..."
+log 'copying default packages file'
 cp "$_dir"/../config/npm-default-packages "$(nodenv root)"/default-packages &>/dev/null || true
-log "done copying default packages file."
 
-log "getting latest Node version..."
+log_start 'getting latest Node version'
 # 1. Get list of Node versions
 # 2. Filter to only get normal Node versions, like "  9.5.0"
 # 3. Take last line of output which will be latest version
 # 4. Remove the leading spaces
 latest_node_version="$(nodenv install --list | grep -E '^[0-9\.]+$' | tail -1 | xargs)"
-log "done getting latest Node version."
+log_end
 
 if [ -n "$latest_node_version" ]; then
-	log "installing Node $latest_node_version and default npm packages..."
+	log_start "installing Node $latest_node_version and default npm packages"
 	if ! nodenv install --skip-existing "$latest_node_version" &>/dev/null; then
 		fatal 'failed to install Node'
 	fi
@@ -69,15 +68,15 @@ if [ -n "$latest_node_version" ]; then
 		fatal 'failed to set gloabl Node version'
 	fi
 
-	log "done installing Node and default npm packages."
+	log_end
 else
 	warn "could not get latest Node version; installation failed"
 fi
 
-log "setting Python path..."
+log_start 'setting Python path'
 # Must initialize Nodenv in order for npm to be available in PATH
 eval "$(nodenv init -)"
 npm config set --global python "$(command -v python3)"
-log "done setting Python path."
+log_end
 
-log "done setting up Node."
+log_end

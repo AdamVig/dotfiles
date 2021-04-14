@@ -25,19 +25,19 @@ log() {
 
 request-sudo
 
-log 'initializing remote management user...'
+log_start 'initializing remote management user'
 
 readonly remote_management_username='remote-management'
 readonly remote_management_user_home_path=/usr/local/share/"$remote_management_username"
 
 # To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
 if ! id "$remote_management_username" &>/dev/null; then
-	log 'creating remote management user...'
+	log_start 'creating remote management user'
 	request-sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
 	request-sudo passwd --lock "$remote_management_username"
-	log 'done creating remote management user.'
+	log_end
 
-	log 'creating template SSH authorized keys file...'
+	log_start 'creating template SSH authorized keys file'
 	request-sudo mkdir -p "$remote_management_user_home_path"/.ssh
 	# Apply restrictions except for TTY access
 	# shellcheck disable=SC2016
@@ -48,21 +48,21 @@ if ! id "$remote_management_username" &>/dev/null; then
 	request-sudo chmod 500 "$remote_management_user_home_path"/.ssh
 	# Set permissions to r--------
 	request-sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
-	log 'done creating template SSH authorized keys file.'
+	log_end
 fi
 
 if ! [ -f /etc/sudoers.d/remote-management ]; then
-	log 'creating sudoers file to allow non-interactive power control...'
+	log_start 'creating sudoers file to allow non-interactive power control'
 	echo "# Allow for non-interactive execution of system power commands.
 
 $remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot" |
 		(request-sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
-	log 'done creating sudoers file to allow non-interactive power control.'
+	log_end
 fi
 
-log 'setting up remote control script...'
+log_start 'setting up remote control script'
 # Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
 request-sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
-log 'done setting up remote control script.'
+log_end
 
-log 'done initializing remote management user.'
+log_end

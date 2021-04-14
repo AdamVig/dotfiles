@@ -9,6 +9,8 @@ log() {
 	log_with_component broot "$@"
 }
 
+log_start 'setting up broot'
+
 if is_macos; then
 	broot_root='org.dystroy.broot'
 else
@@ -16,12 +18,14 @@ else
 fi
 broot_dir="$(xdg_config)"/"$broot_root"/launcher
 if command -v broot >/dev/null && ! [ -f "$broot_dir"/installed-v1 ]; then
-	log 'installing broot shell function...'
+	log_start 'installing broot shell function'
 	broot_launcher_dir="$broot_dir"/bash
 	mkdir -p "$broot_launcher_dir"
 	if ! broot --print-shell-function zsh >"$broot_launcher_dir"/br; then
 		fatal 'failed to install broot shell function'
 	fi
 	broot --set-install-state installed
-	log 'done installing broot shell function.'
+	log_end
 fi
+
+log_end

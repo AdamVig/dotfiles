@@ -9,22 +9,26 @@ log() {
 	log_with_component tmux "$@"
 }
 
-log 'initializing Tmux configuration...'
+log_start 'setting up Tmux'
+
+log_start 'initializing Tmux configuration'
 config_path="$(xdg_config)"/tmux
 mkdir -p "$config_path"
 
 if [ -h "$HOME"/.tmux.conf ]; then
-	log 'removing old configuration file...'
+	log 'removing old configuration file'
 	rm -f "$HOME"/.tmux.conf
 fi
 ln -sf "$_dir"/../config/tmux.conf "$config_path"
-log 'done initializing Tmux configuration.'
+log_end
 
-log 'initializing Tmux Plugin Manager...'
+log_start 'initializing Tmux Plugin Manager'
 readonly tpm_path="$(xdg_data)"/tmux/plugins/tpm
 if ! [ -d "$tpm_path" ]; then
 	git clone --depth 1 https://github.com/tmux-plugins/tpm "$tpm_path"
-	log 'done initializing Tmux Plugin Manager.'
 else
-	log 'Tmux Plugin Manager already initialized.'
+	log 'Tmux Plugin Manager already initialized'
 fi
+log_end
+
+log_end

@@ -9,7 +9,7 @@ log() {
 	log_with_component pip "$@"
 }
 
-log 'installing pip tools...'
+log_start 'installing pip tools'
 pip_packages=(
 	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
@@ -26,7 +26,7 @@ for package in "${pip_packages[@]}"; do
 done
 
 if is_linux; then
-	log 'installing rofimoji...'
+	log_start 'installing rofimoji'
 	if ! rofimoji_url="$(get_release_url 'fdw/rofimoji' '.whl')"; then
 		fatal 'failed to get rofimoji release URL'
 	fi
@@ -38,7 +38,7 @@ if is_linux; then
 		fatal 'failed to install rofimoji'
 	fi
 	rm -f "$rofimoji_wheel"
-	log 'done installing rofimoji.'
+	log_end
 fi
 
-log 'pip done.'
+log_end

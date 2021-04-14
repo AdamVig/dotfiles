@@ -9,7 +9,7 @@ log() {
 	log_with_component ssh "$@"
 }
 
-log 'configuring SSH...'
+log_start 'configuring SSH'
 
 mkdir -p "$HOME"/.ssh
 ssh_config='AddKeysToAgent yes'
@@ -18,4 +18,4 @@ if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path
 	echo "$ssh_config" >>"$ssh_config_path"
 fi
 
-log 'done configuring SSH.'
+log_end

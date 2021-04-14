@@ -9,16 +9,20 @@ log() {
 	log_with_component brew "$@"
 }
 
+log_start 'setting up Homebrew'
+
 # Refresh existing sudo session or start a new one
 # shellcheck disable=SC2119
 request-sudo
 
-log 'updating Brew package lists...'
+log_start 'updating package lists'
 brew update >/dev/null
+log_end
 
-log 'installing Brew formulas...'
+log_start 'installing formulas'
 if ! brew bundle install --no-lock; then
-	warn 'installing Brew formulas may have failed'
+	warn 'installing formulas may have failed'
 fi
+log_end
 
-log 'brew done.'
+log_end

@@ -9,19 +9,20 @@ log() {
 	log_with_component emacs "$@"
 }
 
+log_start 'setting up Emacs'
+
 if is_macos && brew services list | grep --quiet --extended-regexp 'emacs .+ stopped'; then
-	log 'enabling Emacs service...'
-	if brew services start emacs; then
-		log 'enabled Emacs service.'
-	else
+	log_start 'enabling Emacs service'
+	if ! brew services start emacs; then
 		warn 'failed to enable Emacs service.'
 	fi
+	log_end
 fi
 
 if is_ubuntu; then
 	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
 	if ! [ -f "$user_emacs_unit_path" ]; then
-		log 'linking Emacs snapshot service into place...'
+		log_start 'linking Emacs snapshot service into place'
 		if ! package_emacs_unit_path="$(find /usr/lib -name emacs-snapshot.service)"; then
 			fatal 'failed to find path to Emacs Systemd unit'
 		fi
@@ -29,18 +30,18 @@ if is_ubuntu; then
 		# Create an alias from "emacs-snapshot" to "emacs" for more convenient usage
 		ln -sf "$user_emacs_unit_path" "$(xdg_config)"/systemd/user/emacs.service
 		systemctl --user daemon-reload
-		log 'done linking Emacs snapshot service into place.'
+		log_end 'done linking Emacs snapshot service into place.'
 	fi
 
 	if ! systemctl --user is-enabled --quiet emacs-snapshot.service; then
-		log 'setting up Emacs daemon...'
+		log_start 'setting up Emacs daemon'
 		systemctl --user enable --now emacs-snapshot.service
-		log 'done setting up Emacs daemon.'
+		log_end
 	fi
 
 	emacs_client_desktop_path="$HOME"/.local/share/applications/emacs-client.desktop
 	if ! [ -f "$emacs_client_desktop_path" ]; then
-		log 'installing Emacs client desktop file...'
+		log_start 'installing Emacs client desktop file'
 		mkdir -p "$(dirname "$emacs_client_desktop_path")"
 		echo '[Desktop Entry]
 Version=1.0
@@ -57,11 +58,11 @@ Categories=Utility;Development;TextEditor;
 StartupWMClass=Emacs
 Keywords=Text;Editor;
 ' >"$emacs_client_desktop_path"
-		log 'done installing Emacs client desktop file.'
+		log_end
 	fi
 fi
 
-log 'setting up Emacs configuration...'
+log_start 'setting up Emacs configuration'
 # Remove legacy configuration location
 rm -f "$HOME"/.emacs
 
@@ -70,4 +71,6 @@ if ! [ -f "$emacs_config_path" ]; then
 	mkdir -p "$(dirname "$emacs_config_path")"
 	ln -sf "$_dir"/../config/emacs.el "$emacs_config_path"
 fi
-log 'done setting up Emacs configuration.'
+log_end
+
+log_end
