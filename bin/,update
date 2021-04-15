@@ -13,33 +13,113 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
 	exit 0
 fi
 
-if command -v brew >/dev/null; then
-	echo 'updating Homebrew...'
+standout="$(tput smso)"
+background_blue="$(tput setab 4)"
+background_green="$(tput setab 2)"
+background_red="$(tput setab 1)"
+reset="$(tput sgr0)"
+
+log_operation() {
+	operation="${1:-}"
+	if [ -z "$operation" ]; then
+		echo 'internal error: log_operation called without an operation'
+		return 1
+	fi
+
+	echo -n "${standout} ${operation} ${reset}"
+}
+
+log_success() {
+	echo "${background_green} succeeded ${reset}"
+}
+
+log_failure() {
+	echo "${background_red} failed ${reset}"
+}
+
+update_brew() {
+	echo 'brew registry'
 	brew update
 
-	echo 'upgrading Homebrew formulas...'
+	echo 'brew formulas'
 	brew upgrade
 
-	echo 'upgrading Homebrew Cask formulas...'
-	brew upgrade --cask || true
-fi
+	echo 'brew casks'
+	brew upgrade --cask
+}
 
-echo 'updating npm...'
-npm i -g npm
+update_npm() {
+	echo 'npm'
+	npm i -g npm
 
-echo 'updating global npm packages...'
-# Temporarily diabled due to Nodenv `.hooks` directory causing problems with npm 7
-# npm update -g
+	echo 'npm packages'
+	# Temporarily diabled due to Nodenv `.hooks` directory causing problems with npm 7
+	# npm update -g
+}
 
-echo 'updating pip...'
-pip install --upgrade --user pip
+update_pip() {
+	echo 'pip'
+	pip install --upgrade --user pip
 
-echo 'updating global pip packages...'
-pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
+	echo 'pip packages'
+	pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
+}
+
+update_apt() {
+	echo 'apt registry'
+	sudo apt-get update
+
+	echo 'apt packages'
+	sudo apt-get upgrade --yes
+
+	echo 'apt cleanup'
+	sudo apt-get autoremove --yes
+}
 
 if command -v apt-get >/dev/null; then
-	echo 'updating apt packages...'
-	sudo apt-get update
-	sudo apt-get upgrade --yes
-	sudo apt-get autoremove --yes
+	sudo --validate --prompt="${background_blue} password: ${reset} "
+fi
+
+if command -v brew >/dev/null; then
+	log_operation brew
+	brew_log="$(mktemp)"
+	if ! update_brew &>"$brew_log"; then
+		log_failure
+		cat "$brew_log"
+	else
+		log_success
+	fi
+	rm -f "$brew_log"
+fi
+
+log_operation npm
+npm_log="$(mktemp)"
+if ! update_npm &>"$npm_log"; then
+	log_failure
+	cat "$npm_log"
+else
+	log_success
+fi
+rm -f "$npm_log"
+
+log_operation pip
+pip_log="$(mktemp)"
+if ! update_pip $ >"$pip_log"; then
+	log_failure
+	cat "$pip_log"
+else
+	log_success
+fi
+rm -f "$pip_log"
+
+if command -v apt-get >/dev/null; then
+	log_operation apt
+	apt_log="$(mktemp)"
+	if ! update_apt &>"$apt_log"; then
+		log_failure
+		cat "$apt_log"
+	else
+		log_success
+	fi
+	rm -f "$apt_log"
 fi
