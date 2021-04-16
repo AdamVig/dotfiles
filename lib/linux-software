@@ -6,13 +6,13 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 source "$_dir"/helpers
 
 log() {
-	log_with_component linux "$@"
+	log_with_component 'linux software' "$@"
 }
 
 # shellcheck disable=SC2119
 request-sudo
 
-log_start 'setting up Linux'
+log_start 'installing Linux distribution-agnostic software'
 
 readonly fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then

@@ -51,7 +51,7 @@ if is_macos; then
 	"$_dir"/macos
 	"$_dir"/brew
 elif is_linux; then
-	"$_dir"/linux
+	"$_dir"/linux-software
 	if command -v apt >/dev/null; then
 		"$_dir"/apt
 	fi
