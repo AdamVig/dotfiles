@@ -64,7 +64,7 @@ fi
 
 log_end
 
-log_start 'running scripts that install dependencies for other scripts'
+log_start 'running programming language setup scripts'
 "$_dir"/golang
 "$_dir"/node
 "$_dir"/pip
