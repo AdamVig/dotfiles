@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
 set -euo pipefail
 
 readonly usage="Usage: $(basename "$0") [-h|--help]
@@ -76,6 +78,11 @@ update_apt() {
 	sudo apt-get autoremove --yes
 }
 
+update_linux_software() {
+	echo 'linux software'
+	"$_dir"/../lib/linux-software
+}
+
 if command -v apt-get >/dev/null; then
 	sudo --validate --prompt="${background_blue} password: ${reset} "
 fi
@@ -122,4 +129,16 @@ if command -v apt-get >/dev/null; then
 		log_success
 	fi
 	rm -f "$apt_log"
+fi
+
+if is-linux; then
+	log_operation 'linux software'
+	linux_software_log="$(mktemp)"
+	if ! update_linux_software &>"$linux_software_log"; then
+		log_failure
+		cat "$linux_software_log"
+	else
+		log_success
+	fi
+	rm -f "$linux_software_log"
 fi
