@@ -9,7 +9,6 @@ font pango: Noto Sans Display 12
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-exec --no-startup-id tmux -f ~/.config/tmux/tmux.conf new-session -d
 exec --no-startup-id nextcloud
 exec --no-startup-id redshift
 exec --no-startup-id compton

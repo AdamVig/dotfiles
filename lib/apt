@@ -191,7 +191,6 @@ declare -a packages=(
 	postgresql-client # PostgreSQL CLI
 	scrot             # Screenshot capture tool
 	tig               # Visual Git client
-	tmux
 	tree
 	units # Unit conversion calculator
 	unzip

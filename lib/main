@@ -78,7 +78,6 @@ log_start 'running application setup scripts'
 "$_dir"/gpg
 "$_dir"/ssh
 "$_dir"/thunderbird
-"$_dir"/tmux
 "$_dir"/vscode
 "$_dir"/zsh
 log_end

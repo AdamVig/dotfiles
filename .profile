@@ -38,15 +38,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GOPATH="$HOME/code/go"
 
 if [[ "$OSTYPE" == darwin* ]]; then
-	# Clear out path to prevent reordering in Tmux (https://superuser.com/a/583502/201849)
-	if [ -f /etc/profile ]; then
-		# shellcheck disable=SC2123
-		PATH=""
-		set +u
-		source /etc/profile
-		set -u
-	fi
-
 	# https://stackoverflow.com/a/5084892/1850656
   export XDG_CONFIG_HOME="$HOME"/Library/Preferences
   export XDG_DATA_HOME="$HOME"/Library

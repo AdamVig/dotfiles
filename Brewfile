@@ -36,7 +36,6 @@ brew "pandoc"
 brew "scc" # Lines of code counter
 brew "ssh-copy-id"
 brew "tig" # Visual Git client
-brew "tmux"
 brew "tree"
 brew "uni" # Unicode CLI
 brew "unzip"
