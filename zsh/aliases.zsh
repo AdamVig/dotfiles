@@ -5,6 +5,9 @@ alias npr='npm run --silent'
 
 alias glb="log-branch-commits"
 
+# Display image in terminal
+alias icat='kitty +kitten icat'
+
 # Prevent wget from storing HSTS database in home directory
 alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}"/wget-hsts'
 
