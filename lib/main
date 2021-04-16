@@ -55,6 +55,7 @@ elif is_linux; then
 	if command -v apt >/dev/null; then
 		"$_dir"/apt
 	fi
+	"$_dir"/grub
 	if is_ubuntu; then
 		"$_dir"/ubuntu
 		"$_dir"/remote-management

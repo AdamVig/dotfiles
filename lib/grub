@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component grub "$@"
+}
+
+# shellcheck disable=SC2119
+request-sudo
+
+log_start 'setting up grub'
+
+log_start 'disabling generation of recovery options'
+request-sudo sed -i 's|#GRUB_DISABLE_RECOVERY="true"|GRUB_DISABLE_RECOVERY="true"|' /etc/default/grub
+log_end
+
+grub_theme_dir=/boot/grub/themes/adamvig
+if ! [ -f "$grub_theme_dir"/theme.txt ]; then
+	log_start 'linking theme'
+	request-sudo mkdir -p "$grub_theme_dir"
+	request-sudo ln -sf "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
+	log_end
+fi
+
+grub_font_output_path="$grub_theme_dir"/opensans-regular.pf2
+if ! [ -f "$grub_font_output_path" ]; then
+	log_start 'converting font'
+	opensans_path='/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf'
+	if ! request-sudo grub-mkfont --output "$grub_font_output_path" --size 36 "$opensans_path"; then
+		fatal 'failed to convert font'
+	fi
+	log_end
+fi
+
+grub_theme_variable="GRUB_THEME=$grub_theme_dir/theme.txt"
+if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
+	log_start 'enabling theme'
+	if ! echo "$grub_theme_variable" | request-sudo tee --append /etc/default/grub >/dev/null; then
+		fatal 'failed to enable theme'
+	fi
+	log_end
+fi
+
+log_start 're-generating Grub configuration'
+request-sudo update-grub
+log_end
+
+log_end
