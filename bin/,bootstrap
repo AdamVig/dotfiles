@@ -21,4 +21,19 @@ if [ "$(uname)" = 'Darwin' ] && ! command -v realpath >/dev/null; then
 	exit
 fi
 
+# If running on a fresh boot of a Linux system that uses apt
+if command -v apt-get >/dev/null && ! command -v jq >/dev/null; then
+	echo 'detected fresh Linux system, running pre-bootstrap steps...'
+	echo 'updating apt lists...'
+	sudo apt-get update >/dev/null
+	echo 'done updating apt lists.'
+
+	echo 'installing dependencies...'
+	sudo apt-get install --yes build-essential curl file git jq >/dev/null
+	echo 'done installing dependencies.'
+
+	echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
+	exit
+fi
+
 exec "$(dirname "$(realpath "$0")")"/../lib/main

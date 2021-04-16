@@ -14,15 +14,6 @@ request-sudo
 
 log_start 'setting up Linux'
 
-log_start 'installing essential tools'
-if command -v apt-get >/dev/null; then
-	sudo apt-get update >/dev/null
-	sudo apt-get install --yes build-essential curl file git jq >/dev/null
-else
-	error 'could not find a supported package manager; skipping install'
-fi
-log_end
-
 readonly fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	mkdir -p "$fonts_dir"
