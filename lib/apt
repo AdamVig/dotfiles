@@ -1,0 +1,326 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component apt "$@"
+}
+
+log_start 'setting up apt'
+
+# shellcheck disable=SC2119
+request-sudo
+
+log_start 'configuring repositories'
+# $1: string that uniquely identifies repository
+is_repository_configured() {
+	grep --quiet --recursive "$1" /etc/apt/sources.list /etc/apt/sources.list.d/
+}
+
+# $1: human-readable name, will be used to build filename (<name>.list)
+# $2: repository configuration string
+add_repository() {
+	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list >/dev/null
+}
+
+# $1: URL
+add_key() {
+	local url="${1:-}"
+	if ! _curl "$url" | sudo apt-key add -; then
+		fatal 'failed to add key'
+	fi
+}
+
+if ! is_repository_configured 'vscode'; then
+	log_start 'adding Visual Studio Code repository'
+	add_key https://packages.microsoft.com/keys/microsoft.asc
+	add_repository 'vscode' 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
+	log_end
+fi
+
+if ! is_repository_configured 'spotify'; then
+	log_start 'adding Spotify repository'
+	add_key https://download.spotify.com/debian/pubkey_0D811D58.gpg
+	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
+	log_end
+fi
+
+if ! is_repository_configured 'slack'; then
+	log_start 'adding Slack repository'
+	add_key https://packagecloud.io/slacktechnologies/slack/gpgkey
+	add_repository 'slack' 'deb https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
+	log_end
+fi
+
+if ! is_repository_configured 'signal'; then
+	log_start 'adding Signal repository'
+	add_key https://updates.signal.org/desktop/apt/keys.asc
+	add_repository 'signal' 'deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main'
+	log_end
+fi
+
+if ! is_repository_configured 'nextcloud'; then
+	log_start 'adding Nextcloud repository'
+	request-sudo add-apt-repository --yes ppa:nextcloud-devs/client
+	log_end
+fi
+
+if ! is_repository_configured 'diff-so-fancy'; then
+	log_start 'adding diff-so-fancy repository'
+	request-sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
+	log_end
+fi
+
+if ! is_repository_configured 'git-core'; then
+	log_start 'adding git repository'
+	request-sudo add-apt-repository --yes ppa:git-core/ppa
+	log_end
+fi
+
+if ! is_repository_configured 'azlux'; then
+	log_start 'adding broot repository'
+	add_key https://azlux.fr/repo.gpg.key
+	add_repository 'broot' 'deb http://packages.azlux.fr/debian/ buster main'
+	log_end
+fi
+
+if ! is_repository_configured 'lutris'; then
+	log_start 'adding lutris repository'
+	request-sudo add-apt-repository --yes ppa:lutris-team/lutris
+	log_end
+fi
+
+if ! is_repository_configured 'etcher'; then
+	log_start 'adding etcher repository'
+	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
+	request-sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
+	log_end
+fi
+
+if ! is_repository_configured 'figma'; then
+	log_start 'adding figma repository'
+	request-sudo add-apt-repository --yes ppa:chrdevs/figma
+	log_end
+fi
+
+if ! is_repository_configured 'mpv-tests'; then
+	log_start 'adding mpv repository'
+	request-sudo add-apt-repository --yes ppa:mc3man/mpv-tests
+	log_end
+fi
+
+if ! is_repository_configured 'ubuntu-elisp'; then
+	log_start 'adding Ubuntu Emacs snapshot repository'
+	request-sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
+	log_end
+fi
+
+if ! is_repository_configured 'xournal'; then
+	log_start 'adding Xournal++ repository'
+	request-sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
+	log_end
+fi
+
+if ! is_repository_configured 'copyq'; then
+	log_start 'adding CopyQ repository'
+	request-sudo add-apt-repository --yes ppa:hluk/copyq
+	log_end
+fi
+
+if ! is_repository_configured 'cli.github.com'; then
+	log_start 'adding GitHub CLI repository'
+	request-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+	request-sudo add-apt-repository --yes https://cli.github.com/packages
+	log_end
+fi
+log_end
+
+log_start 'updating lists'
+if request-sudo apt-get update >/dev/null; then
+	log_end
+else
+	warn 'failed to update lists'
+fi
+
+log_start 'upgrading packages'
+if request-sudo apt-get upgrade --yes --autoremove >/dev/null; then
+	log_end
+else
+	warn 'failed to upgrade packages, continuing'
+fi
+
+declare -a packages=(
+	# system dependencies
+	apt-transport-https
+	software-properties-common
+
+	# default utilities
+	gnupg
+	openssh-server
+	rsync
+	wget
+
+	# replacements of default utilities
+	bat     # Better cat
+	broot   # Better tree
+	exa     # Better ls
+	fd-find # Better find
+	htop    # Better top
+	httpie  # Better curl
+	mosh    # Better ssh
+	ripgrep # Better grep
+
+	# command line tools
+	expect   # Scripting tool for interactive programs
+	fzf      # Fuzzy finder
+	gh       # GitHub CLI
+	gifsicle # Gif tool
+	glow     # Markdown viewer
+	graphviz # Graph visualization tool
+	imagemagick
+	ipcalc         # IP address calculator
+	jq             # JSON processor
+	magic-wormhole # Point-to-point file sharing
+	nnn            # Command-line file browser
+	p7zip
+	pandoc
+	playerctl         # Media player controller
+	postgresql-client # PostgreSQL CLI
+	scrot             # Screenshot capture tool
+	tig               # Visual Git client
+	tmux
+	tree
+	units # Unit conversion calculator
+	unzip
+	wmctrl  # X window manager control CLI
+	x11vnc  # X server VNC
+	xclip   # Clipboard CLI
+	xsel    # Clipboard CLI
+	xdotool # X input event generator
+	xdg-utils
+	xournalpp # Note taking tool
+	wpasupplicant
+
+	# shell
+	bash
+	zsh
+
+	# programming languages
+	golang
+	php
+	python3
+	ruby
+	rustc
+
+	# programming language tools
+	composer # PHP
+	go-dep   # Golang
+	python3-pip
+	shellcheck # Shell script linter
+
+	# applications
+	balena-etcher-electron
+	chromium-browser
+	code
+	compton # Compositor for X
+	copyq   # Clipboard manager
+	docker.io
+	emacs-snapshot
+	figma-linux
+	firefox
+	flameshot # Screenshot tool
+	gnome-shell-extension-impatience
+	gnome-keyring # Secret manager
+	i3            # Window manager
+	i3blocks      # Status bar generator
+	inkscape
+	kdiff3 # Merge tool
+	kitty  # GPU-accelerated terminal emulator
+	libreoffice
+	lutris
+	meld # Comparison tool for version control, files, and directories
+	mpv  # Media player
+	# Nextcloud version pinned to avoid error: "nextcloud-desktop : Depends: qtbase-abi-5-12-8 but it is not installable"
+	nautilus-nextcloud=2.6.4-1 # Nextcloud Nautilus integration (includes client)
+	redshift                   # Screen color temperature adjustment tool
+	rofi                       # Application launcher
+	signal-desktop
+	slack-desktop
+	spotify-client
+	steam
+	vino # GNOME VNC server
+
+	# fonts
+	fonts-firacode
+	fonts-noto
+	fonts-noto-color-emoji
+	fonts-open-sans
+	fonts-roboto
+)
+
+log_start 'installing packages'
+sudo apt-get install --yes "${packages[@]}"
+log_end
+
+log_start 'installing packages from non-repository sources'
+log_start 'installing Hugo'
+if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then
+	fatal 'failed to get Hugo release URL'
+fi
+hugo_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$hugo_url" --output "$hugo_tmp"; then
+	fatal 'failed to download Hugo'
+fi
+if ! request-sudo apt-get install "$hugo_tmp"; then
+	fatal 'failed to install Hugo'
+fi
+rm -f "$hugo_tmp"
+log_end
+
+log_start 'installing hyperfine'
+if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
+	fatal 'failed to get hyperfine release URL'
+fi
+hyperfine_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
+	fatal 'failed to download hyperfine'
+fi
+if ! request-sudo apt-get install "$hyperfine_tmp"; then
+	fatal 'failed to install hyperfine'
+fi
+rm -f "$hyperfine_tmp"
+log_end
+
+log_start 'installing git-delta'
+if ! git_delta_url="$(get_release_url 'dandavison/delta' '_amd64.deb')"; then
+	fatal 'failed to get git-delta release URL'
+fi
+git_delta_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
+	fatal 'failed to download git-delta'
+fi
+if ! request-sudo apt-get install "$git_delta_tmp"; then
+	fatal 'failed to install git-delta'
+fi
+rm -f "$git_delta_tmp"
+log_end
+
+log_start 'installing websocat'
+if ! websocat_url="$(get_release_url 'vi/websocat' '_ssl1.1_amd64.deb')"; then
+	fatal 'failed to get websocat release URL'
+fi
+websocat_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$websocat_url" --output "$websocat_tmp"; then
+	fatal 'failed to download websocat'
+fi
+if ! request-sudo apt-get install "$websocat_tmp"; then
+	fatal 'failed to install websocat'
+fi
+rm -f "$websocat_tmp"
+log_end
+log_end
+
+log_end

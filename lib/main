@@ -52,6 +52,9 @@ if is_macos; then
 	"$_dir"/brew
 elif is_linux; then
 	"$_dir"/linux
+	if command -v apt >/dev/null; then
+		"$_dir"/apt
+	fi
 	if is_ubuntu; then
 		"$_dir"/ubuntu
 		"$_dir"/remote-management
