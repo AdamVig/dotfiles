@@ -309,7 +309,7 @@ rm -f "$git_delta_tmp"
 log_end
 
 log_start 'installing websocat'
-if ! websocat_url="$(get_release_url 'vi/websocat' '_ssl1.1_amd64.deb')"; then
+if ! websocat_url="$(get_release_url 'vi/websocat' '_amd64.deb')"; then
 	fatal 'failed to get websocat release URL'
 fi
 websocat_tmp="$(mktemp --suffix .deb)"
