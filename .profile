@@ -35,7 +35,7 @@ export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # Set golang workspace directory
-export GOPATH="$HOME/code/go"
+export GOPATH="$HOME"/src/go
 
 if [[ "$OSTYPE" == darwin* ]]; then
 	# https://stackoverflow.com/a/5084892/1850656
