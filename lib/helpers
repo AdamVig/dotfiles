@@ -9,6 +9,7 @@ bold="$(tput bold)"
 dim="$(tput dim)"
 red_background="$(tput setab 1)"
 reset="$(tput sgr0)"
+standout="$(tput smso)"
 yellow_background="$(tput setab 3)"
 
 # FILO (first in, last out) array of operation names passed to log_start
@@ -175,7 +176,7 @@ is_ubuntu() {
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
 request-sudo() {
-	SUDO_PROMPT="Enter the system password for user %p: "
+	SUDO_PROMPT="$(log "${standout} input ${reset}" 'Enter the system password for user %p: ')"
 	if [[ $# -eq 0 ]]; then
 		sudo --validate --prompt "$SUDO_PROMPT"
 	else
