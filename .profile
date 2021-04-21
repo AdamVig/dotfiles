@@ -22,9 +22,6 @@ export EDITOR='emacsclient --tty'
 export GPG_TTY
 GPG_TTY=$(tty)
 
-# Fix ansi-term support in emacs
-export TERM=xterm-256color
-
 # Make word-related macros observe special characters
 export WORDCHARS=''
 
