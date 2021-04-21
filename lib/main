@@ -7,8 +7,6 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 log() {
 	log_with_component main "$@"
 }

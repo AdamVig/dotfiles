@@ -11,8 +11,6 @@ log() {
 	log_with_component profile-picture "$@"
 }
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 log_start 'setting up profile picture'
 
 readonly profile_picture_dirs=("$HOME"/Pictures "$HOME"/pictures)

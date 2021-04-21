@@ -3,13 +3,6 @@
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
-# shellcheck source=./.profile
-source "$_dir"/../.profile
-
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 # FILO (first in, last out) array of operation names passed to log_start
 log_operation_names=()
 
