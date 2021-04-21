@@ -176,11 +176,11 @@ is_ubuntu() {
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
 request-sudo() {
-	SUDO_PROMPT="$(log "${standout} input ${reset}" 'Enter the system password for user %p: ')"
-	if [[ $# -eq 0 ]]; then
-		sudo --validate --prompt "$SUDO_PROMPT"
+	prompt="$(log "${standout} input ${reset}" 'Enter the system password for user %p: ')"
+	if [ $# -eq 0 ]; then
+		sudo --validate --prompt "$prompt"
 	else
-		sudo --prompt "$SUDO_PROMPT" "$@"
+		sudo --prompt "$prompt" "$@"
 	fi
 }
 
