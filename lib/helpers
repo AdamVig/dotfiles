@@ -3,6 +3,11 @@
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 
+blue="$(tput setaf 4)"
+bold="$(tput bold)"
+dim="$(tput dim)"
+reset="$(tput sgr0)"
+
 # FILO (first in, last out) array of operation names passed to log_start
 log_operation_names=()
 
@@ -21,8 +26,6 @@ _get_operation_indentation() {
 # Internal function intended to be called only by other logging functions
 # Allows scripts to either `log` directly or redefine it to use `log_with_component` without causing an infinite loop
 _log_internal() {
-	dim="$(tput dim)"
-	reset="$(tput sgr0)"
 	echo "${dim}dotfiles${reset}" "$@"
 }
 
@@ -44,8 +47,6 @@ log_start() {
 	shift
 	log_operation_names+=("$operation_name")
 
-	bold="$(tput bold)"
-	reset="$(tput sgr0)"
 	log "${bold}start${reset}" "$operation_name" "$@"
 }
 
@@ -58,8 +59,6 @@ log_end() {
 		return 1
 	fi
 
-	bold="$(tput bold)"
-	reset="$(tput sgr0)"
 	log "${bold}end  ${reset}" "$operation_name"
 
 	# Remove the current operation from the list
@@ -78,8 +77,6 @@ log_with_component() {
 	shift
 
 	indent="$(_get_operation_indentation)"
-	blue="$(tput setaf 4)"
-	reset="$(tput sgr0)"
 	_log_internal "${blue}${component}${reset}${indent}" "$@"
 }
 
