@@ -38,11 +38,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GOPATH="$HOME"/src/go
 
 if [[ "$OSTYPE" == darwin* ]]; then
-	# https://stackoverflow.com/a/5084892/1850656
-  export XDG_CONFIG_HOME="$HOME"/Library/Preferences
-  export XDG_DATA_HOME="$HOME"/Library
-  export XDG_CACHE_HOME="$HOME"/Library/Caches
-
 	# Force brew cask to symlink applications to global dir
 	export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 
