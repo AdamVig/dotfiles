@@ -84,7 +84,7 @@ fi
 
 # Add user bin directories to PATH
 prepend_path "$HOME"/.local/bin
-prepend_path "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"/bin
+prepend_path "$(realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"/../bin)"
 
 # Tell ripgrep where to load config from
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"/ripgrep/config
