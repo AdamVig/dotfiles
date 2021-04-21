@@ -3,10 +3,13 @@
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 
+black="$(tput setaf 0)"
 blue="$(tput setaf 4)"
 bold="$(tput bold)"
 dim="$(tput dim)"
+red_background="$(tput setab 1)"
 reset="$(tput sgr0)"
+yellow_background="$(tput setab 3)"
 
 # FILO (first in, last out) array of operation names passed to log_start
 log_operation_names=()
@@ -80,20 +83,16 @@ log_with_component() {
 	_log_internal "${blue}${component}${reset}${indent}" "$@"
 }
 
-# Log a message in yellow preceded by "warning: "
+# Log a warning message
 # $@: passed to log
 warn() {
-	tput setaf 3
-	log 'warning:' "$@"
-	tput sgr0
+	log "${black}${yellow_background} warning ${reset}" "$@"
 }
 
-# Log a message in red preceded by "error: "
+# Log an error message
 # $@: passed to log
 error() {
-	tput setaf 1
-	log 'error:' "$@"
-	tput sgr0
+	log "${black}${red_background} error ${reset}" "$@"
 }
 
 # Log an error message and exit with an error code
