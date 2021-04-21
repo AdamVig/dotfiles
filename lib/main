@@ -13,7 +13,7 @@ log() {
 
 # Ask for password at start
 # shellcheck disable=SC2119
-request-sudo
+request_sudo
 
 log "symlinking dotfiles to \"$HOME\""
 ln -sf "$_dir"/../.bashrc "$HOME"

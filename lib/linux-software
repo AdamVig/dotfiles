@@ -10,7 +10,7 @@ log() {
 }
 
 # shellcheck disable=SC2119
-request-sudo
+request_sudo
 
 log_start 'installing Linux distribution-agnostic software'
 

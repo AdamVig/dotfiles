@@ -12,18 +12,18 @@ log() {
 log_start 'setting up Zsh'
 
 # shellcheck disable=SC2119
-request-sudo
+request_sudo
 
 if [[ $SHELL != *zsh ]]; then
 	log_start 'changing default shell to Zsh'
 	zsh_path="$(command -v zsh)"
 
 	if is-macos; then
-		request-sudo chsh -s "$zsh_path" "$USER"
+		request_sudo chsh -s "$zsh_path" "$USER"
 	else
 		if ! grep 'zsh' /etc/shells >/dev/null; then
 			log_start 'adding Zsh to /etc/shells'
-			echo "$zsh_path" | request-sudo tee -a /etc/shells
+			echo "$zsh_path" | request_sudo tee -a /etc/shells
 			log_end
 		fi
 		chsh --shell "$zsh_path"

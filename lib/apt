@@ -12,7 +12,7 @@ log() {
 log_start 'setting up apt'
 
 # shellcheck disable=SC2119
-request-sudo
+request_sudo
 
 log_start 'configuring repositories'
 # $1: string that uniquely identifies repository
@@ -23,7 +23,7 @@ is_repository_configured() {
 # $1: human-readable name, will be used to build filename (<name>.list)
 # $2: repository configuration string
 add_repository() {
-	echo "$2" | request-sudo tee /etc/apt/sources.list.d/"$1".list >/dev/null
+	echo "$2" | request_sudo tee /etc/apt/sources.list.d/"$1".list >/dev/null
 }
 
 # $1: URL
@@ -64,19 +64,19 @@ fi
 
 if ! is_repository_configured 'nextcloud'; then
 	log_start 'adding Nextcloud repository'
-	request-sudo add-apt-repository --yes ppa:nextcloud-devs/client
+	request_sudo add-apt-repository --yes ppa:nextcloud-devs/client
 	log_end
 fi
 
 if ! is_repository_configured 'diff-so-fancy'; then
 	log_start 'adding diff-so-fancy repository'
-	request-sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
+	request_sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
 	log_end
 fi
 
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
-	request-sudo add-apt-repository --yes ppa:git-core/ppa
+	request_sudo add-apt-repository --yes ppa:git-core/ppa
 	log_end
 fi
 
@@ -89,64 +89,64 @@ fi
 
 if ! is_repository_configured 'lutris'; then
 	log_start 'adding lutris repository'
-	request-sudo add-apt-repository --yes ppa:lutris-team/lutris
+	request_sudo add-apt-repository --yes ppa:lutris-team/lutris
 	log_end
 fi
 
 if ! is_repository_configured 'etcher'; then
 	log_start 'adding etcher repository'
 	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
-	request-sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
+	request_sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
 	log_end
 fi
 
 if ! is_repository_configured 'figma'; then
 	log_start 'adding figma repository'
-	request-sudo add-apt-repository --yes ppa:chrdevs/figma
+	request_sudo add-apt-repository --yes ppa:chrdevs/figma
 	log_end
 fi
 
 if ! is_repository_configured 'mpv-tests'; then
 	log_start 'adding mpv repository'
-	request-sudo add-apt-repository --yes ppa:mc3man/mpv-tests
+	request_sudo add-apt-repository --yes ppa:mc3man/mpv-tests
 	log_end
 fi
 
 if ! is_repository_configured 'ubuntu-elisp'; then
 	log_start 'adding Ubuntu Emacs snapshot repository'
-	request-sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
+	request_sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
 	log_end
 fi
 
 if ! is_repository_configured 'xournal'; then
 	log_start 'adding Xournal++ repository'
-	request-sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
+	request_sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
 	log_end
 fi
 
 if ! is_repository_configured 'copyq'; then
 	log_start 'adding CopyQ repository'
-	request-sudo add-apt-repository --yes ppa:hluk/copyq
+	request_sudo add-apt-repository --yes ppa:hluk/copyq
 	log_end
 fi
 
 if ! is_repository_configured 'cli.github.com'; then
 	log_start 'adding GitHub CLI repository'
-	request-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-	request-sudo add-apt-repository --yes https://cli.github.com/packages
+	request_sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+	request_sudo add-apt-repository --yes https://cli.github.com/packages
 	log_end
 fi
 log_end
 
 log_start 'updating lists'
-if request-sudo apt-get update >/dev/null; then
+if request_sudo apt-get update >/dev/null; then
 	log_end
 else
 	warn 'failed to update lists'
 fi
 
 log_start 'upgrading packages'
-if request-sudo apt-get upgrade --yes --autoremove >/dev/null; then
+if request_sudo apt-get upgrade --yes --autoremove >/dev/null; then
 	log_end
 else
 	warn 'failed to upgrade packages, continuing'
@@ -273,7 +273,7 @@ hugo_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$hugo_url" --output "$hugo_tmp"; then
 	fatal 'failed to download Hugo'
 fi
-if ! request-sudo apt-get install "$hugo_tmp"; then
+if ! request_sudo apt-get install "$hugo_tmp"; then
 	fatal 'failed to install Hugo'
 fi
 rm -f "$hugo_tmp"
@@ -287,7 +287,7 @@ hyperfine_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
 	fatal 'failed to download hyperfine'
 fi
-if ! request-sudo apt-get install "$hyperfine_tmp"; then
+if ! request_sudo apt-get install "$hyperfine_tmp"; then
 	fatal 'failed to install hyperfine'
 fi
 rm -f "$hyperfine_tmp"
@@ -301,7 +301,7 @@ git_delta_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
 	fatal 'failed to download git-delta'
 fi
-if ! request-sudo apt-get install "$git_delta_tmp"; then
+if ! request_sudo apt-get install "$git_delta_tmp"; then
 	fatal 'failed to install git-delta'
 fi
 rm -f "$git_delta_tmp"
@@ -315,7 +315,7 @@ websocat_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$websocat_url" --output "$websocat_tmp"; then
 	fatal 'failed to download websocat'
 fi
-if ! request-sudo apt-get install "$websocat_tmp"; then
+if ! request_sudo apt-get install "$websocat_tmp"; then
 	fatal 'failed to install websocat'
 fi
 rm -f "$websocat_tmp"

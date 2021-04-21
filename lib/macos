@@ -15,14 +15,14 @@ log_start 'setting up macOS'
 log_start 'checking ownership of subdirectories of /usr/local'
 for dir in "$(brew --prefix)/"*; do
 	if [ ! -w "$dir" ]; then
-		request-sudo chown -R "$(whoami)" "$dir"
+		request_sudo chown -R "$(whoami)" "$dir"
 		log "took ownership of \"$dir\""
 	fi
 done
 log_end
 
 # Disable startup tone
-request-sudo nvram SystemAudioVolume=" "
+request_sudo nvram SystemAudioVolume=" "
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -56,7 +56,7 @@ defaults write com.apple.finder ShowRecentTags -bool false
 defaults write com.apple.dock mru-spaces -bool false
 
 # Hide username in menu bar
-request-sudo defaults write /Library/Preferences/.GlobalPreferences \
+request_sudo defaults write /Library/Preferences/.GlobalPreferences \
 	MultipleSessionEnabled -bool NO
 
 # Reduce alert volume to 75%

@@ -10,12 +10,12 @@ log() {
 }
 
 # shellcheck disable=SC2119
-request-sudo
+request_sudo
 
 log_start 'setting up Ubuntu'
 
 log_start 'updating snaps'
-if ! request-sudo snap refresh >/dev/null; then
+if ! request_sudo snap refresh >/dev/null; then
 	fatal 'failed to update snaps'
 fi
 log_end
@@ -30,7 +30,7 @@ declare -a snaps=(
 for snap_raw in "${snaps[@]}"; do
 	read -ra snap <<<"$snap_raw"
 	log_start "installing snap '${snap[0]}'"
-	if ! request-sudo snap install "${snap[@]}"; then
+	if ! request_sudo snap install "${snap[@]}"; then
 		fatal 'failed to install'
 	fi
 	log_end
@@ -116,7 +116,7 @@ if ! [ -f "$xresources_path" ]; then
 fi
 
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
-if ! request-sudo [ -f "$x11vnc_unit_path" ]; then
+if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
 	log_start 'creating x11vnc Systemd unit'
 	echo '[Unit]
 Description="x11vnc"
@@ -131,14 +131,14 @@ Restart-sec=2
 
 [Install]
 WantedBy=multi-user.target
-' | request-sudo tee "$x11vnc_unit_path" >/dev/null
-	request-sudo systemctl daemon-reload
+' | request_sudo tee "$x11vnc_unit_path" >/dev/null
+	request_sudo systemctl daemon-reload
 	log_end
 fi
 
-if ! request-sudo systemctl is-enabled --quiet x11vnc.service; then
+if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
 	log_start 'setting up x11vnc service'
-	request-sudo systemctl enable --now x11vnc.service
+	request_sudo systemctl enable --now x11vnc.service
 	log_end
 fi
 

@@ -23,7 +23,7 @@ log() {
 	log_with_component remote-management "$@"
 }
 
-request-sudo
+request_sudo
 
 log_start 'initializing remote management user'
 
@@ -33,21 +33,21 @@ readonly remote_management_user_home_path=/usr/local/share/"$remote_management_u
 # To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
 if ! id "$remote_management_username" &>/dev/null; then
 	log_start 'creating remote management user'
-	request-sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
-	request-sudo passwd --lock "$remote_management_username"
+	request_sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
+	request_sudo passwd --lock "$remote_management_username"
 	log_end
 
 	log_start 'creating template SSH authorized keys file'
-	request-sudo mkdir -p "$remote_management_user_home_path"/.ssh
+	request_sudo mkdir -p "$remote_management_user_home_path"/.ssh
 	# Apply restrictions except for TTY access
 	# shellcheck disable=SC2016
 	echo 'restrict,command=",remotecontrol $SSH_ORIGINAL_COMMAND" <insert key here>' |
-		request-sudo tee "$remote_management_user_home_path"/.ssh/authorized_keys >/dev/null
-	request-sudo chown --recursive "$remote_management_username" "$remote_management_user_home_path"/.ssh
+		request_sudo tee "$remote_management_user_home_path"/.ssh/authorized_keys >/dev/null
+	request_sudo chown --recursive "$remote_management_username" "$remote_management_user_home_path"/.ssh
 	# Set permissions to r-x------
-	request-sudo chmod 500 "$remote_management_user_home_path"/.ssh
+	request_sudo chmod 500 "$remote_management_user_home_path"/.ssh
 	# Set permissions to r--------
-	request-sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
+	request_sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
 	log_end
 fi
 
@@ -56,13 +56,13 @@ if ! [ -f /etc/sudoers.d/remote-management ]; then
 	echo "# Allow for non-interactive execution of system power commands.
 
 $remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot" |
-		(request-sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
+		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
 	log_end
 fi
 
 log_start 'setting up remote control script'
 # Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
-request-sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
+request_sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
 log_end
 
 log_end
