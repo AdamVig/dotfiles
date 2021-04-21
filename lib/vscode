@@ -26,7 +26,6 @@ ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.js
 log_end
 
 declare -a extensions=(
-	Angular.ng-template                   # Angular template IntelliSense support
 	bungcip.better-toml                   # TOML support
 	dbaeumer.vscode-eslint                # JavaScript linter
 	eamodio.gitlens                       # Advanced Git integration
@@ -38,7 +37,6 @@ declare -a extensions=(
 	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
 	jpoissonnier.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
-	ms-azuretools.vscode-docker           # Docker support
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	msjsdiag.debugger-for-chrome          # Chrome debugger integration
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
