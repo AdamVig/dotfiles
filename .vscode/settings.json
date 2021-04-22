@@ -85,6 +85,8 @@
   },
   // Update TypeScript imports when file is moved
   "typescript.updateImportsOnFileMove.enabled": "always",
+  // Rename properties everywhere instead of aliasing them to the previous name
+  "typescript.preferences.useAliasesForRenames": false,
   // Disable jarring scroll behavior
   "markdown.preview.scrollEditorWithPreview": false,
   // Select a default formatter for JSON and JSONC
