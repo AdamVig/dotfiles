@@ -1,4 +1,4 @@
-# For login shells and graphical applications; must be compatible with Bash
+# For login shells and graphical applications. Intended to be sourced. Must be compatible with Bash.
 
 prepend_path() {
   if [[ "$PATH" != *"$1"* ]]; then
