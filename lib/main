@@ -23,6 +23,9 @@ bin_dir="$HOME"/.local/bin
 log "creating \"$bin_dir\""
 mkdir -p "$bin_dir"
 
+log "symlinking executables to \"$bin_dir\""
+ln -sf --target-directory="$bin_dir" "$(realpath "$_dir"/../bin)"/*
+
 config_dir="$(xdg_config)"
 log "symlinking configurations to \"$config_dir\""
 mkdir -p "$config_dir"/ripgrep

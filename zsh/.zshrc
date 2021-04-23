@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Explicitly source .profile (in a mode compatible with Bash) in case the current shell is not a login shell
-BASH_SOURCE=("${(%):-%x}") emulate ksh -c 'source "$HOME"/.profile'
+emulate ksh -c 'source "$HOME"/.profile'
 
 # enable Ctrl+Q shortcut
 unsetopt flowcontrol
