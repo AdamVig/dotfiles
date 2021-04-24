@@ -22,7 +22,8 @@ grub_theme_dir=/boot/grub/themes/adamvig
 if ! [ -f "$grub_theme_dir"/theme.txt ]; then
 	log_start 'linking theme'
 	request_sudo mkdir -p "$grub_theme_dir"
-	request_sudo ln -sf "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
+	# Cannot use _ln with sudo
+	request_sudo ln -sfr "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
 	log_end
 fi
 

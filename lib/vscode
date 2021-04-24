@@ -20,8 +20,8 @@ elif is_linux; then
 fi
 
 mkdir -p "$vscode_settings_dir"
-ln -sf "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
-ln -sf "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
+_ln "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
+_ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 
 log_end
 

@@ -127,6 +127,19 @@ _curl() {
 	curl --silent --fail --show-error --location "$@"
 }
 
+# ln wrapper with common default options
+_ln() {
+	# Use short flags for portability
+	# -s: make symbolic links instead of hard links
+	# -f: overwrite link if it already exists
+	# -r: make links relative to link location
+	ln \
+		-s \
+		-f \
+		-r \
+		"$@"
+}
+
 # Get the GitHub release URL matching a given pattern
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match

@@ -24,10 +24,10 @@ if [ -h "$HOME"/.git-template ]; then
 	log 'removing legacy .git-template'
 	rm -f "$HOME"/.git-template
 fi
-ln -sf "$_dir"/../git/template "$config_path"/template
+_ln "$_dir"/../git/template "$config_path"/template
 
 log 'symlinking attributes'
-ln -sf "$_dir"/../git/attributes "$config_path"/attributes
+_ln "$_dir"/../git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then

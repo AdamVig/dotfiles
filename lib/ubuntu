@@ -41,11 +41,11 @@ install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
 log_end
 
 log_start 'linking batcat to bat'
-ln -sf /usr/bin/batcat "$HOME"/.local/bin/bat
+_ln /usr/bin/batcat "$HOME"/.local/bin/bat
 log_end
 
 log_start 'linking fdfind to fd'
-ln -sf /usr/bin/fdfind "$HOME"/.local/bin/fd
+_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 log_end
 
 log_start 'updating user directories'
@@ -81,16 +81,16 @@ log_end
 
 config_dir="$(xdg_config)"
 mkdir -p "$config_dir"/i3
-ln -sf "$_dir"/../config/i3 "$config_dir"/i3/config
+_ln "$_dir"/../config/i3 "$config_dir"/i3/config
 
 mkdir -p "$config_dir"/i3blocks
-ln -sf "$_dir"/../config/i3blocks "$config_dir"/i3blocks/config
+_ln "$_dir"/../config/i3blocks "$config_dir"/i3blocks/config
 
 mkdir -p "$config_dir"/redshift
-ln -sf "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf
+_ln "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf
 
 mkdir -p "$config_dir"/pulse
-ln -sf "$_dir"/../config/pulseaudio-configuration-script.pa "$config_dir"/pulse/default.pa
+_ln "$_dir"/../config/pulseaudio-configuration-script.pa "$config_dir"/pulse/default.pa
 
 mkdir -p "$config_dir"/i3/workspaces
 if ! [ -x "$config_dir"/i3/workspaces/init ]; then

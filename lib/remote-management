@@ -62,7 +62,8 @@ fi
 
 log_start 'setting up remote control script'
 # Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
-request_sudo ln -sf "$_dir"/../bin/,remotecontrol /usr/local/bin
+# Cannot use _ln with sudo
+request_sudo ln -sfr "$_dir"/../bin/,remotecontrol /usr/local/bin
 log_end
 
 log_end

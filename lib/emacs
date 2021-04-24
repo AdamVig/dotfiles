@@ -28,7 +28,7 @@ if is_ubuntu; then
 		fi
 		systemctl --user link "$package_emacs_unit_path"
 		# Create an alias from "emacs-snapshot" to "emacs" for more convenient usage
-		ln -sf "$user_emacs_unit_path" "$(xdg_config)"/systemd/user/emacs.service
+		_ln "$user_emacs_unit_path" "$(xdg_config)"/systemd/user/emacs.service
 		systemctl --user daemon-reload
 		log_end 'done linking Emacs snapshot service into place.'
 	fi
@@ -69,7 +69,7 @@ rm -f "$HOME"/.emacs
 emacs_config_path="$HOME"/.emacs.d/init.el
 if ! [ -f "$emacs_config_path" ]; then
 	mkdir -p "$(dirname "$emacs_config_path")"
-	ln -sf "$_dir"/../config/emacs.el "$emacs_config_path"
+	_ln "$_dir"/../config/emacs.el "$emacs_config_path"
 fi
 log_end
 

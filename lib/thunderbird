@@ -32,7 +32,7 @@ if is_linux; then
 		fi
 		rm -rf "$thunderbird_tmp_tar"
 
-		ln -sf "$thunderbird_path"/thunderbird "$HOME"/.local/bin
+		_ln "$thunderbird_path"/thunderbird "$HOME"/.local/bin
 
 		log_end
 	else
