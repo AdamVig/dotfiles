@@ -55,8 +55,7 @@ update_npm() {
 	npm i -g npm
 
 	echo 'npm packages'
-	# Temporarily diabled due to Nodenv `.hooks` directory causing problems with npm 7
-	# npm update -g
+	npm update -g
 }
 
 update_pip() {

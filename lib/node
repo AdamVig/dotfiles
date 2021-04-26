@@ -33,7 +33,6 @@ if is_linux; then
 		node-build
 		nodenv-update
 		nodenv-default-packages
-		nodenv-package-rehash
 		nodenv-package-json-engine
 	)
 
