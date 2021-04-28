@@ -18,11 +18,15 @@ function git_current_branch() {
 
 # Check if main exists and use instead of master
 function git_main_branch() {
-  if [[ -n "$(git branch --list main)" ]]; then
-    echo main
-  else
-    echo master
-  fi
+  command git rev-parse --git-dir &>/dev/null || return
+  local branch
+  for branch in main trunk; do
+    if command git show-ref -q --verify refs/heads/$branch; then
+      echo $branch
+      return
+    fi
+  done
+  echo master
 }
 
 alias g='git'
@@ -90,7 +94,7 @@ function gdv() { git diff -w "$@" | view - }
 compdef _git gdv=git-diff
 
 alias gf='git fetch'
-alias gfa='git fetch --all --prune'
+alias gfa='git fetch --all --prune --jobs=10'
 alias gfo='git fetch origin'
 
 alias gfg='git ls-files | grep'
