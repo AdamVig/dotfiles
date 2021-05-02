@@ -20,3 +20,8 @@ alias et='emacsclient --tty'
 if command -v exa > /dev/null; then
   alias ls='exa'
 fi
+
+if [[ "$OSTYPE" = *linux* ]]; then
+	# Show webcam feed locally
+	alias mirror='vlc v4l2:///dev/video0'
+fi
