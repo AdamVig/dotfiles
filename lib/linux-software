@@ -97,4 +97,22 @@ fi
 chmod +x "$bitwarden_path"
 log_end
 
+log_start 'installing ncspot'
+if ! ncspot_url="$(get_release_url 'hrkfdn/ncspot' 'linux.tar.gz')"; then
+	fatal 'failed to get ncspot release URL'
+fi
+ncspot_tmp="$(mktemp --suffix .tar.gz)"
+if ! _curl "$ncspot_url" --output "$ncspot_tmp"; then
+	fatal 'failed to download ncspot'
+fi
+ncspot_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$ncspot_tmp" -C "$ncspot_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract ncspot'
+fi
+rm -f "$ncspot_tmp"
+ncspot_path="$HOME"/.local/bin/ncspot
+install "$ncspot_extracted_tmp"/ncspot "$ncspot_path"
+rm -rf "$ncspot_extracted_tmp"
+log_end
+
 log_end
