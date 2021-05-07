@@ -2,7 +2,8 @@
 # List of npm packages to install by default in any new version of Node installed by Nodenv
 
 # update npm
-npm
+# Pin to v6 until issues with nodenv-package-rehash are resolved
+npm@^6.14.13
 
 # process manager
 pm2
