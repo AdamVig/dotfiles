@@ -11,33 +11,6 @@
         "key": "alt+f",
         "when": "editorTextFocus"
     },
-    // Toggle between editor and terminal
-    {
-        "command": "workbench.action.focusActiveEditorGroup",
-        "key": "ctrl+`",
-        "when": "terminalFocus"
-    },
-    {
-        "command": "workbench.action.terminal.focus",
-        "key": "ctrl+`",
-        "when": "!terminalFocus"
-    },
-    // Toggle terminal
-    {
-        "command": "workbench.action.terminal.toggleTerminal",
-        "key": "ctrl+1"
-    },
-    // Switch between terminals
-    {
-        "command": "workbench.action.terminal.focusNext",
-        "key": "ctrl+tab",
-        "when": "terminalFocus"
-    },
-    {
-        "command": "workbench.action.terminal.focusPrevious",
-        "key": "ctrl+shift+tab",
-        "when": "terminalFocus"
-    },
     {
         "command": "-workbench.action.quickOpenView",
         "key": "ctrl+q"
@@ -46,10 +19,6 @@
     {
         "command": "workbench.view.scm",
         "key": "ctrl+shift+g",
-    },
-    {
-        "key": "alt+cmd+t",
-        "command": "-terminals.runTerminal"
     },
     // Make Ctrl+Tab work in a predictable order
     {
@@ -76,15 +45,4 @@
         "key": "shift+cmd+[",
         "command": "-workbench.action.previousEditor"
     },
-    {
-        "key": "ctrl+tab",
-        "command": "workbench.action.terminal.focusNext",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+shift+tab",
-        "command": "workbench.action.terminal.focusPrevious",
-        "when": "terminalFocus"
-    },
-    // Restore Ctrl+Tab functionality in terminals
 ]

@@ -59,16 +59,6 @@
   // Disable confirmation window on drag and drop in file explorer
   "explorer.confirmDragAndDrop": false,
   // ------------------------------
-  // Terminal
-  // ------------------------------
-  // Increase terminal buffer
-  "terminal.integrated.scrollback": 5000,
-  // Enable commands like opt+b and opt+f for moving cursor
-  "terminal.integrated.macOptionIsMeta": true,
-  "terminal.integrated.rendererType": "canvas",
-  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
-  "terminal.integrated.windowsEnableConpty": true,
-  // ------------------------------
   // Languages
   // ------------------------------
   // Wrap lines so they're shorter than 120 chars
