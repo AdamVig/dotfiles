@@ -18,7 +18,7 @@
   "editor.hideCursorInOverviewRuler": true,
   "editor.renderIndentGuides": false,
   // Rely on Subtle Brackets instead
-  "editor.matchBrackets": false,
+  "editor.matchBrackets": "never",
   // ------------------------------
   // Workbench
   // ------------------------------
@@ -93,13 +93,8 @@
   "gitlens.statusBar.enabled": false,
   "gitlens.codeLens.recentChange.enabled": false,
   "gitlens.codeLens.authors.enabled": false,
-  "gitlens.views.repositories.enabled": false,
   "gitlens.views.fileHistory.enabled": false,
-  "gitlens.views.lineHistory.enabled": false,
   "gitlens.keymap": "chorded",
-  "gitlens.advanced.messages": {
-    "suppressShowKeyBindingsNotice": true
-  },
   "gitlens.menus": {
     "editorGroup": {
       "blame": false,
