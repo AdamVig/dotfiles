@@ -30,7 +30,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
+		'(super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -83,6 +83,13 @@
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1)) ; Disable toolbar
 (if (functionp 'menu-bar-mode) (menu-bar-mode -1)) ; Disable menu bar
 (if (functionp 'scroll-bar-mode) (scroll-bar-mode -1)) ; Disable scrollbar
+
+;; Automatically save buffer when idle (https://github.com/bbatsov/super-save)
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1)
+	(setq super-save-auto-save-when-idle t))
 
 ;; Enable shortcut for Ibuffer mode (https://www.emacswiki.org/emacs/IbufferMode)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
