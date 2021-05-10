@@ -161,6 +161,7 @@
   :ensure t
   :config (add-hook 'js-mode-hook 'prettier-js-mode))
 
+;;; Org mode
 ;; Enable visual line wrapping in Org mode
 (add-hook 'org-mode-hook 'visual-line-mode)
 ;; Disable "Validate" link in Org HTML exports
