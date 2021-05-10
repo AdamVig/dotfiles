@@ -172,6 +172,8 @@
 (global-set-key (kbd "C-c !") 'org-time-stamp-inactive)
 ;; Open Org files folded
 (setq org-startup-folded t)
+;; Automatically revert Org buffer when file changes on disk
+(add-hook 'org-mode-hook 'auto-revert-mode)
 
 (use-package writegood-mode
 	:ensure t
