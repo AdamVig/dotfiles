@@ -84,6 +84,9 @@
 (if (functionp 'menu-bar-mode) (menu-bar-mode -1)) ; Disable menu bar
 (if (functionp 'scroll-bar-mode) (scroll-bar-mode -1)) ; Disable scrollbar
 
+;; Automatically revert dired buffer when files change
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+
 ;; Automatically save buffer when idle (https://github.com/bbatsov/super-save)
 (use-package super-save
   :ensure t
