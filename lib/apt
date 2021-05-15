@@ -93,13 +93,6 @@ if ! is_repository_configured 'lutris'; then
 	log_end
 fi
 
-if ! is_repository_configured 'etcher'; then
-	log_start 'adding etcher repository'
-	add_repository 'etcher' 'deb https://deb.etcher.io stable etcher'
-	request_sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
-	log_end
-fi
-
 if ! is_repository_configured 'figma'; then
 	log_start 'adding figma repository'
 	request_sudo add-apt-repository --yes ppa:chrdevs/figma
@@ -221,7 +214,7 @@ declare -a packages=(
 	shellcheck # Shell script linter
 
 	# applications
-	balena-etcher-electron
+	balena-etcher-electron # Image flashing tool
 	chromium-browser
 	code
 	compton # Compositor for X
