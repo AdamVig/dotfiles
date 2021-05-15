@@ -226,6 +226,7 @@ declare -a packages=(
 	flameshot # Screenshot tool
 	gnome-shell-extension-impatience
 	gnome-keyring # Secret manager
+	gpsbabel      # GPS file conversion tool
 	i3            # Window manager
 	i3blocks      # Status bar generator
 	inkscape
