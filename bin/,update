@@ -4,7 +4,8 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help]
+readonly usage
+usage="Usage: $(basename "$0") [-h|--help]
 Update applications, packages, and tools.
 
 Flags:
@@ -82,9 +83,7 @@ update_linux_software() {
 	"$_dir"/../lib/linux-software
 }
 
-if command -v apt-get >/dev/null; then
-	sudo --validate --prompt="${background_blue} password: ${reset} "
-fi
+sudo --validate --prompt="${background_blue} password: ${reset} "
 
 if command -v brew >/dev/null; then
 	log_operation brew
