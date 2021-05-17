@@ -35,6 +35,7 @@ brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
 brew "ssh-copy-id"
+brew "svn" # Version control needed by some cask fonts
 brew "tig" # Visual Git client
 brew "tree"
 brew "uni" # Unicode CLI
