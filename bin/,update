@@ -4,7 +4,6 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 set -euo pipefail
 
-readonly usage
 usage="Usage: $(basename "$0") [-h|--help]
 Update applications, packages, and tools.
 
