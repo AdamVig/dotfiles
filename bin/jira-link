@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help] [--format=<format>] <Jira ticket URL>
+Convert a Jira URL into a formatted link.
+
+Flags:
+    -f, --format  markup format to use, markdown or org, defaults to markdown
+    -h, --help    show this help text"
+
+set +e
+getopt --test >/dev/null
+if [ $? -ne 4 ]; then
+	echo 'error: enhanced getopt is not installed' >&2
+	exit 1
+fi
+set -e
+
+opts=$(getopt -o 'h,f:' --long 'help,format:' --name "$(basename "$0")" -- "$@")
+eval set -- "$opts"
+unset opts
+
+format='markdown'
+
+while true; do
+	case "$1" in
+	'-h' | '--help')
+		echo "$usage"
+		exit
+		;;
+	'-f' | '--format')
+		format="$2"
+		shift 2
+		continue
+		;;
+	'--')
+		shift
+		break
+		;;
+	*)
+		echo 'error: failed to parse arguments' >&2
+		exit 1
+		;;
+	esac
+done
+
+url="${1:-}"
+if [ -z "$url" ]; then
+	echo >&2 'must provide a URL'
+	exit 1
+fi
+
+if ! ticket_id="$(basename "$url")"; then
+	echo >&2 "failed to extract ticket ID from URL \"$url\""
+	exit 1
+fi
+
+if [ "$format" = 'markdown' ]; then
+	echo "[${ticket_id}](${url})"
+elif [ "$format" = 'org' ]; then
+	echo "[[${url}][${ticket_id}]]"
+else
+	echo >&2 "unsupported format \"$format\""
+	exit 1
+fi
