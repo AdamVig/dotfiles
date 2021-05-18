@@ -45,7 +45,13 @@ while true; do
 	esac
 done
 
+# Read from argument
 url="${1:-}"
+# If argument is missing, read from stdin
+if [ -z "$url" ] && ! [ -t 0 ]; then
+	url="$(</dev/stdin)"
+fi
+# If argument and stdin are missing
 if [ -z "$url" ]; then
 	echo >&2 'must provide a URL'
 	exit 1
