@@ -97,13 +97,16 @@ mode "$mode_clipboard" {
 
 # From $mode_clipboard, press j to perform Jira-specific clipboard operations
 # Press Escape to exit
-set $mode_jira Jira: [m]arkdown/[o]rg/[j]ira ticket link
+set $mode_jira Jira: [m]arkdown/[o]rg/[j]ira ticket link, [t]able with header column
 
 mode "$mode_jira" {
 		# Assume that the clipboard contains a Jira URL
     bindsym m exec xsel --output --clipboard | jira-link --format=markdown | xsel --input --clipboard; mode "default"
     bindsym o exec xsel --output --clipboard | jira-link --format=org | xsel --input --clipboard; mode "default"
     bindsym j exec xsel --output --clipboard | jira-link --format=jira | xsel --input --clipboard; mode "default"
+
+		set $table_with_header_column <table><tbody><tr><th></th><td></td></tr></tbody></table>
+		bindsym t exec echo "$table_with_header_column" | xclip -in -target text/html -selection clipboard; mode "default"
 
     bindsym Escape mode "default"
 }
