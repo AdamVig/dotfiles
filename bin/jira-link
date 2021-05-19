@@ -6,8 +6,9 @@ usage="Usage: $(basename "$0") [-h|--help] [--format=<format>] <Jira ticket URL>
 Convert a Jira URL into a formatted link.
 
 Flags:
-    -f, --format  markup format to use, markdown or org, defaults to markdown
-    -h, --help    show this help text"
+	-f, --format	markup format to use, defaults to 'markdown'
+	            	options are 'markdown', 'org', and 'jira'
+	-h, --help		show this help text"
 
 set +e
 getopt --test >/dev/null
@@ -66,6 +67,8 @@ if [ "$format" = 'markdown' ]; then
 	echo "[${ticket_id}](${url})"
 elif [ "$format" = 'org' ]; then
 	echo "[[${url}][${ticket_id}]]"
+elif [ "$format" = 'jira' ]; then
+	echo "[${ticket_id}|${url}]"
 else
 	echo >&2 "unsupported format \"$format\""
 	exit 1
