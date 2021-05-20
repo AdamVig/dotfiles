@@ -42,6 +42,9 @@ fi
 mkdir -p "$config_dir"/kitty
 _ln "$_dir"/../config/kitty.conf "$config_dir"/kitty/kitty.conf
 
+mkdir -p "$config_dir"/ncspot
+_ln "$_dir"/../config/ncspot.toml "$config_dir"/ncspot/config.toml
+
 log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig
