@@ -1,3 +1,22 @@
 gapless = true
 shuffle = true
 repeat = "off"
+
+# https://ncspot-theme-generator.vaa.red/
+[theme]
+background = "#181818"
+primary = "#F1F1F1"
+secondary = "#DCDCDC"
+playing = "#1ED760"
+title = "#F1F1F1"
+playing_selected = "#1ED760"
+playing_bg = "#181818"
+highlight = "#61AFEF"
+highlight_bg = "#000000"
+error = "#FFE4E4"
+error_bg = "#A50000"
+statusbar = "#000000"
+statusbar_progress = "#00AC4C"
+statusbar_bg = "#ABB2BF"
+cmdline = "#CBFFDE"
+cmdline_bg = "#444444"
