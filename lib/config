@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component config "$@"
+}
+
+log_start 'setting up configuration'
+
+log "symlinking dotfiles to \"$HOME\""
+_ln "$_dir"/../.bashrc "$HOME"
+_ln "$_dir"/../.profile "$HOME"
+
+bin_dir="$HOME"/.local/bin
+log "creating \"$bin_dir\""
+mkdir -p "$bin_dir"
+
+log "symlinking executables to \"$bin_dir\""
+_ln "$_dir"/../bin/* "$bin_dir"
+
+config_dir="$(xdg_config)"
+log "symlinking configurations to \"$config_dir\""
+mkdir -p "$config_dir"/ripgrep
+_ln "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
+
+mkdir -p "$config_dir"/bat
+_ln "$_dir"/../config/bat "$config_dir"/bat/config
+
+if ! [ -d "$config_dir"/docker ]; then
+	log 'creating Docker configuration directory'
+	mkdir -p "$config_dir"/docker
+fi
+
+mkdir -p "$config_dir"/kitty
+_ln "$_dir"/../config/kitty.conf "$config_dir"/kitty/kitty.conf
+
+mkdir -p "$config_dir"/ncspot
+_ln "$_dir"/../config/ncspot.toml "$config_dir"/ncspot/config.toml
+
+log "creating tig directory"
+# Prevent tig from writing ~/.tig_history
+mkdir -p "$(xdg_data)"/tig
+
+log_end
