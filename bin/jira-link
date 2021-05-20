@@ -48,7 +48,7 @@ done
 
 # Read from argument
 url="${1:-}"
-# If argument is missing, read from stdin
+# If argument is missing and stdin is not a terminal, read from stdin
 if [ -z "$url" ] && ! [ -t 0 ]; then
 	url="$(</dev/stdin)"
 fi
@@ -64,11 +64,11 @@ if ! ticket_id="$(basename "$url")"; then
 fi
 
 if [ "$format" = 'markdown' ]; then
-	echo "[${ticket_id}](${url})"
+	echo -n "[${ticket_id}](${url})"
 elif [ "$format" = 'org' ]; then
-	echo "[[${url}][${ticket_id}]]"
+	echo -n "[[${url}][${ticket_id}]]"
 elif [ "$format" = 'jira' ]; then
-	echo "[${ticket_id}|${url}]"
+	echo -n "[${ticket_id}|${url}]"
 else
 	echo >&2 "unsupported format \"$format\""
 	exit 1
