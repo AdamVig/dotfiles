@@ -21,9 +21,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 # Use F15 to cycle between PulseAudio sinks
 bindsym XF86Launch6 exec --no-startup-id next-default-sink
 
-bindsym XF86AudioPlay exec playerctl --player spotify play-pause
-bindsym XF86AudioNext exec playerctl --player spotify next
-bindsym XF86AudioPrev exec playerctl --player spotify previous
+bindsym XF86AudioPlay exec "playerctl --player=ncspot,spotify play-pause"
+bindsym XF86AudioNext exec "playerctl --player=ncspot,spotify next"
+bindsym XF86AudioPrev exec "playerctl --player=ncspot,spotify previous"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
