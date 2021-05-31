@@ -23,5 +23,5 @@ fi
 
 if [[ "$OSTYPE" = *linux* ]]; then
 	# Show webcam feed locally
-	alias mirror='vlc v4l2:///dev/video0'
+	alias mirror='vlc --transform-type=hflip --live-caching=0 v4l2:///dev/video0'
 fi
