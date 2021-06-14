@@ -94,6 +94,7 @@ cask "google-chrome"
 cask "gpg-suite"
 cask "inkscape"
 cask "kap"
+cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
 cask "libreoffice"
