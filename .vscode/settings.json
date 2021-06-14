@@ -18,7 +18,7 @@
   "editor.hideCursorInOverviewRuler": true,
   "editor.renderIndentGuides": false,
   // Rely on Subtle Brackets instead
-  "editor.matchBrackets": "never",
+  "editor.matchBrackets": false,
   // ------------------------------
   // Workbench
   // ------------------------------
