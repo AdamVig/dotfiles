@@ -24,4 +24,7 @@ fi
 if [[ "$OSTYPE" = *linux* ]]; then
 	# Show webcam feed locally (https://github.com/mpv-player/mpv/wiki/Video4Linux2-Input)
 	alias mirror='mpv --demuxer-lavf-o=video_size=1920x1080,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed -vf=hflip --fs'
+
+	# Shorten command for systemd user units
+	alias sysu='systemctl --user'
 fi
