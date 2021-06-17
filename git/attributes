@@ -1,6 +1,6 @@
-# use npm-merge-driver for merging and hide from diffs
-npm-shrinkwrap.json merge=npm-merge-driver -diff
-package-lock.json merge=npm-merge-driver -diff
+# use npm-merge-driver for merging
+npm-shrinkwrap.json merge=npm-merge-driver
+package-lock.json merge=npm-merge-driver
 
 # handle line endings correctly on Windows
 * text=auto eol=lf
