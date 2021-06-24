@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help] [-f|--force]
+readonly usage
+usage="Usage: $(basename "$0") [-h|--help] [-f|--force]
 Use metadata from an open GitHub pull request to merge the current branch into the pull request's base branch.
 
 Flags:
@@ -45,29 +46,12 @@ while true; do
 	esac
 done
 
-if ! check-installed hub https://hub.github.com/; then
+if ! check-installed gh https://cli.github.com/; then
 	return 1
 fi
 
 errlog() {
 	echo >&2 "$@"
-}
-
-parse_remote() {
-	remote='origin'
-	if ! remote_url="$(git remote get-url "$remote")"; then
-		errlog "error: failed to get remote URL from remote '$remote'"
-		return 1
-	fi
-
-	regex=".+[:\/](.+\/.+)\.git"
-	if [[ $remote_url =~ $regex ]]; then
-		echo "${BASH_REMATCH[1]}"
-		return
-	fi
-
-	errlog "error: failed to parse remote URL '$remote_url'"
-	return 1
 }
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
@@ -99,21 +83,15 @@ $pull_request_url"
 fi
 
 if [ $force -eq 0 ]; then
-	if ! owner_slash_repository="$(parse_remote)"; then
-		errlog 'error: failed to extract owner/repository from Git remotes'
-	fi
-fi
-
-if [ $force -eq 0 ]; then
 	echo 'disabling branch protection...'
-	if ! hub api -X DELETE /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins >/dev/null; then
-		errlog "warning: failed to disable branch protection on '$owner_slash_repository' branch '$base_branch'"
+	if ! gh api --method=DELETE "/repos/{owner}/{repo}/branches/${base_branch}/protection/enforce_admins" >/dev/null; then
+		errlog "warning: failed to disable branch protection on branch '$base_branch'"
 	fi
 
 	enable_branch_protection() {
 		echo 're-enabling branch protection...'
-		if ! hub api -X POST /repos/"$owner_slash_repository"/branches/"$base_branch"/protection/enforce_admins >/dev/null; then
-			errlog "warning: failed to enable branch protection on '$owner_slash_repository' branch '$base_branch'"
+		if ! gh api --method=POST "/repos/{owner}/{repo}/branches/${base_branch}/protection/enforce_admins" >/dev/null; then
+			errlog "warning: failed to enable branch protection on branch '$base_branch'"
 		fi
 	}
 
