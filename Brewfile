@@ -88,6 +88,7 @@ cask "authy"
 mas "Bitwarden", id: 1352778147
 cask "docker"
 cask "emacs"
+cask "figma"
 cask "firefox"
 cask "google-backup-and-sync"
 cask "google-chrome"
