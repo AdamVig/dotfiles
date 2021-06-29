@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-readonly usage
 usage="Usage: $(basename "$0") [-h|--help] [-f|--force]
 Use metadata from an open GitHub pull request to merge the current branch into the pull request's base branch.
 
