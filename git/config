@@ -32,6 +32,8 @@
 [rebase]
 	abbreviateCommands = true
 	instructionFormat = %an (%cr) %s
+[rerere]
+	enabled = true
 [diff]
   tool = meld
   colorMoved = default
