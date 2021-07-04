@@ -220,6 +220,7 @@ declare -a packages=(
 	code
 	compton # Compositor for X
 	copyq   # Clipboard manager
+	digikam # Photo library manager
 	docker.io
 	emacs-snapshot
 	figma-linux
