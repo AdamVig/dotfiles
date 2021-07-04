@@ -14,7 +14,7 @@ log() {
 log_start 'setting up profile picture'
 
 readonly profile_picture_dirs=("$HOME"/Pictures "$HOME"/pictures)
-readonly profile_picture_filename='profile.jpg'
+readonly profile_picture_filename='profile.png'
 found_dir=false
 for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 	profile_picture_path="${profile_picture_dir}/${profile_picture_filename}"
@@ -34,7 +34,7 @@ for profile_picture_dir in "${profile_picture_dirs[@]}"; do
 				fi
 
 				email_hash="$(echo -n "$email" | "$md5_command" | cut --delimiter ' ' --fields 1)"
-				if ! _curl "https://gravatar.com/avatar/${email_hash}?s=1000" --output "$profile_picture_path"; then
+				if ! _curl "https://gravatar.com/avatar/${email_hash}.png?s=1000" --output "$profile_picture_path"; then
 					warn 'failed to download profile picture'
 				fi
 				log_end
