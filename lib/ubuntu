@@ -115,6 +115,13 @@ if ! [ -f "$xresources_path" ]; then
 	log_end
 fi
 
+log_start 'overriding default GNOME scaling factor for GDM3'
+echo \
+	'[org.gnome.desktop.interface]
+scaling-factor=2' | request_sudo tee /usr/share/glib-2.0/schemas/30_scaling-factor.gschema.override >/dev/null
+request_sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+log_end
+
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
 if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
 	log_start 'creating x11vnc Systemd unit'
