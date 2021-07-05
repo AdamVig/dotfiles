@@ -11,7 +11,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 exec --no-startup-id nextcloud
 exec --no-startup-id redshift
-exec_always --no-startup-id xsetroot -solid '#263238'
+exec_always --no-startup-id xsetroot -solid "$(random-flat-ui-color)"
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
