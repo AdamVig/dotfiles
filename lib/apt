@@ -174,10 +174,11 @@ declare -a packages=(
 	glow     # Markdown viewer
 	graphviz # Graph visualization tool
 	imagemagick
-	ipcalc         # IP address calculator
-	jq             # JSON processor
-	magic-wormhole # Point-to-point file sharing
-	nnn            # Command-line file browser
+	ipcalc             # IP address calculator
+	jq                 # JSON processor
+	libglib2.0-dev-bin # For compiling .gresources files
+	magic-wormhole     # Point-to-point file sharing
+	nnn                # Command-line file browser
 	p7zip
 	pandoc
 	playerctl         # Media player controller
