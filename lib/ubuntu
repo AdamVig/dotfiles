@@ -122,6 +122,12 @@ scaling-factor=2' | request_sudo tee /usr/share/glib-2.0/schemas/30_scaling-fact
 request_sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 log_end
 
+if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
+	log_start 'disabling Ubuntu logo on login screen'
+	request_sudo sed -i "s|#.*logo=.*|logo=''|" /etc/gdm3/greeter.dconf-defaults
+	log_end
+fi
+
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
 if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
 	log_start 'creating x11vnc Systemd unit'
