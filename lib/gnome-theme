@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component gnome-theme "$@"
+}
+
+# shellcheck disable=SC2119
+request_sudo
+
+log_start 'setting up GNOME theme'
+
+if ! command -v gresource >/dev/null; then
+	warn "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
+	log_end
+	exit
+fi
+
+theme_path='/usr/share/gnome-shell/theme/Yaru/gnome-shell-theme.gresource'
+if ! [ -f "$theme_path" ]; then
+	warn "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
+	log_end
+	exit
+fi
+
+tmp_dir="$(mktemp -d)"
+cleanup() {
+	rm -rf "$tmp_dir"
+}
+trap cleanup EXIT
+
+log_start 'extracting resources'
+
+manifest_entries=()
+
+# Examples:
+# - "/org/gnome/shell/theme/gdm3.css"
+# - "/org/gnome/shell/theme/icons/scalable/actions/color-pick.svg"
+while read -r resource_identifier; do
+	# Examples:
+	# - "theme/gdm3.css"
+	# - "theme/icons/scalable/actions/color-pick.svg"
+	resource_path="${resource_identifier#/org/gnome/shell/theme/}"
+
+	# Assemble entries for manifest file
+	manifest_entries+=("    <file>${resource_path}</file>")
+
+	# Examples:
+	# - "theme"
+	# - "theme/icons/scalable/actions"
+	resource_directory_path="$(dirname "$resource_path")"
+	mkdir -p "${tmp_dir}/${resource_directory_path}"
+
+	gresource extract "$theme_path" "$resource_identifier" >"${tmp_dir}/${resource_path}"
+done < <(gresource list "$theme_path")
+
+log_end
+
+log_start 'creating manifest file'
+manifest_file_path="$tmp_dir"/gnome-shell-theme.gresource.xml
+cat <<EOF >"$manifest_file_path"
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/shell/theme">
+	$(printf '%s\n' "${manifest_entries[@]}")
+  </gresource>
+</gresources>
+EOF
+
+log_end
+
+log_start 'updating styles'
+# Must be a non-greedy match (question mark) in order to only capture the relevant rule
+greeter_background_styles_pattern='#lockDialogGroup {.*?}'
+greeter_background_color='#263238'
+greeter_background_styles_replacement="#lockDialogGroup { background-color: ${greeter_background_color}; }"
+perl \
+	-i \
+	-p0 \
+	-e "s/${greeter_background_styles_pattern}/${greeter_background_styles_replacement}/s" \
+	"$tmp_dir"/gdm3.css
+log_end
+
+log_start 'compiling resources'
+glib-compile-resources --sourcedir="$tmp_dir" "$manifest_file_path"
+log_end
+
+log_start 'moving new theme into place'
+request_sudo install --backup=numbered --owner=root --group=root --mode=644 "$tmp_dir"/gnome-shell-theme.gresource "$theme_path"
+log_end
+
+log_end

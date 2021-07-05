@@ -30,6 +30,7 @@ elif is_linux; then
 	"$_dir"/grub
 	if is_ubuntu; then
 		"$_dir"/ubuntu
+		"$_dir"/gnome-theme
 		"$_dir"/remote-management
 	fi
 fi
