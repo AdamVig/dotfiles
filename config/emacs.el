@@ -30,7 +30,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
+		'(olivetti super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -123,6 +123,10 @@
   :ensure t
   :config
   (load-theme 'zenburn t))
+
+;; Install Olivetti (https://github.com/rnkn/olivetti/)
+(use-package olivetti
+  :ensure t)
 
 ;; Add go-mode and automatic format/import on save
 (use-package go-mode
