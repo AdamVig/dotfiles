@@ -42,6 +42,9 @@
 	syntax-theme = OneHalfDark
 [merge]
   tool = kdiff3
+[mergetool]
+	# Do not generate `.orig` files after using mergetool
+	keepBackup = false
 [merge "npm-merge-driver"]
     name = automatically merge npm lockfiles
     driver = npx npm-merge-driver merge %A %O %B %P
