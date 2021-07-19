@@ -39,7 +39,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi -combi-modi drun,run"
 
 # open emoji input
-bindsym $mod+period exec --no-startup-id rofimoji
+bindsym $mod+period exec --no-startup-id rofimoji --action=clipboard
 
 # Press $mod+o followed by a shortcut to launch programs
 # Press Escape to exit
