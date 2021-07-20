@@ -82,6 +82,13 @@ update_linux_software() {
 	"$_dir"/../lib/linux-software
 }
 
+update_nodenv_plugins() {
+	echo 'nodenv plugins'
+	for plugin in "$NODENV_ROOT"/plugins/*; do
+		git -C "$plugin" pull --no-rebase
+	done
+}
+
 sudo --validate --prompt="${background_blue} password: ${reset} "
 
 if command -v brew >/dev/null; then
@@ -138,4 +145,14 @@ if is-linux; then
 		log_success
 	fi
 	rm -f "$linux_software_log"
+
+	log_operation 'nodenv plugins'
+	nodenv_plugins_log="$(mktemp)"
+	if ! update_nodenv_plugins $ >"$nodenv_plugins_log"; then
+		log_failure
+		cat "$nodenv_plugins_log"
+	else
+		log_success
+	fi
+	rm -f "$nodenv_plugins_log"
 fi
