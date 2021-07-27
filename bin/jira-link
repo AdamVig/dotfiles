@@ -58,6 +58,13 @@ if [ -z "$url" ]; then
 	exit 1
 fi
 
+# First remove the atlOrigin query parameter along with the & after it, if there is one
+# Then, if there is one, remove the trailing question mark
+if ! url="$(echo "$url" | sed --regexp-extended --expression='s/atlOrigin=[a-zA-Z0-9]+&?//' --expression='s/\?$//')"; then
+	echo >&2 "failed to strip atlOrigin query parameter from URL \"$url\""
+	exit 1
+fi
+
 ticket_id_pattern=".*/browse/([A-Z]+-[0-9]+).*"
 if ! [[ $url =~ $ticket_id_pattern ]]; then
 	echo >&2 "failed to extract ticket ID from URL \"$url\""
