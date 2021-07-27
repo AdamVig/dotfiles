@@ -58,10 +58,13 @@ if [ -z "$url" ]; then
 	exit 1
 fi
 
-if ! ticket_id="$(basename "$url")"; then
+ticket_id_pattern=".*/browse/([A-Z]+-[0-9]+).*"
+if ! [[ $url =~ $ticket_id_pattern ]]; then
 	echo >&2 "failed to extract ticket ID from URL \"$url\""
 	exit 1
 fi
+
+ticket_id="${BASH_REMATCH[1]}"
 
 if [ "$format" = 'markdown' ]; then
 	echo -n "[${ticket_id}](${url})"
