@@ -51,8 +51,9 @@ update_brew() {
 }
 
 update_npm() {
-	echo 'npm'
-	npm i -g npm
+	# Disabled until npm v7 is commonplace
+	# echo 'npm'
+	# npm i -g npm
 
 	echo 'npm packages'
 	npm update -g
