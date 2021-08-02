@@ -149,7 +149,7 @@ if is-linux; then
 
 	log_operation 'nodenv plugins'
 	nodenv_plugins_log="$(mktemp)"
-	if ! update_nodenv_plugins $ >"$nodenv_plugins_log"; then
+	if ! update_nodenv_plugins &>"$nodenv_plugins_log"; then
 		log_failure
 		cat "$nodenv_plugins_log"
 	else
