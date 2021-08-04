@@ -22,6 +22,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
+ '(org-agenda-sorting-strategy
+		'((agenda habit-down time-up priority-down category-keep)
+			 (todo priority-down category-keep todo-state-up)
+			 (tags priority-down category-keep)
+			 (search category-keep)))
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-confirm-babel-evaluate nil)
