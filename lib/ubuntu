@@ -210,12 +210,13 @@ ncspot_desktop_path="$HOME"/.local/share/applications/ncspot.desktop
 if ! [ -f "$ncspot_desktop_path" ]; then
 	log_start 'installing ncspot desktop file'
 	mkdir -p "$(dirname "$ncspot_desktop_path")"
+	# In Exec=, remove playlist database to work around ncspot caching bug
 	echo "[Desktop Entry]
 Version=1.0
 Name=ncspot
 GenericName=Music player
 Comment=Command-line Spotify client
-Exec=kitty --class ncspot --override 'font_family=Roboto Medium' --override 'font_size=12' --override 'adjust_line_height=125%' ncspot
+Exec=rm \"$HOME\"/.cache/ncspot/playlists.db && kitty --class ncspot --override 'font_family=Roboto Medium' --override 'font_size=12' --override 'adjust_line_height=125%' ncspot
 Type=Application
 Terminal=false
 " >"$ncspot_desktop_path"
