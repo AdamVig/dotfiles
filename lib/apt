@@ -129,6 +129,36 @@ if ! is_repository_configured 'cli.github.com'; then
 	request_sudo add-apt-repository --yes https://cli.github.com/packages
 	log_end
 fi
+
+if ! is_repository_configured 'deb.debian.org/debian stable'; then
+	log_start 'adding Debian Stable repository'
+	log_start 'installing keys'
+	request_sudo apt install -y debian-archive-keyring
+	log_end
+	log_start 'adding sources file'
+	# From https://www.inx.one/blog/debian-repo-on-ubuntu
+	add_repository 'debian-stable' 'deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable main
+deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable main
+
+deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian-security/ stable/updates main
+deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian-security/ stable/updates main
+
+deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable-updates main
+deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable-updates main'
+	log_end
+	log_start 'adding apt policy'
+	echo 'Explanation: Accept chromium from the debian repo.
+Package: chromium*
+Pin: origin "*.debian.org"
+Pin-Priority: 100
+
+Explanation: Avoid other packages from the debian repo.
+Package: *
+Pin: origin "*.debian.org"
+Pin-Priority: 1' | request_sudo tee /etc/apt/preferences.d/debian-chromium >/dev/null
+	log_end
+	log_end
+fi
 log_end
 
 log_start 'updating lists'
@@ -217,7 +247,7 @@ declare -a packages=(
 
 	# applications
 	balena-etcher-electron # Image flashing tool
-	chromium-browser
+	chromium
 	code
 	copyq   # Clipboard manager
 	digikam # Photo library manager
