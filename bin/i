@@ -111,6 +111,9 @@ afk() {
 	elif [ "$type" = 'tea' ]; then
 		status='away from keyboard (making tea)'
 		emoji='tea'
+	elif [ "$type" = 'transit' ]; then
+		status='away from keyboard (in transit)'
+		emoji='car'
 	else
 		status='away from keyboard'
 		emoji='timer_clock'

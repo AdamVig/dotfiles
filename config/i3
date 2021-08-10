@@ -73,12 +73,13 @@ mode "$mode_i" {
 
 # From $mode_i, press Ctrl+a to set a specific type of "afk" status
 # Press Escape to exit
-set $mode_afk i [a]fk [l]unch [o]ut [t]ea
+set $mode_afk i [a]fk [l]unch [o]ut [b]everage [t]ransit
 
 mode "$mode_afk" {
 		bindsym l exec --no-startup-id i afk lunch; mode "default"
 		bindsym o exec --no-startup-id i afk out; mode "default"
-		bindsym t exec --no-startup-id i afk tea; mode "default"
+		bindsym b exec --no-startup-id i afk tea; mode "default"
+		bindsym t exec --no-startup-id i afk transit; mode "default"	
 
 		bindsym a exec --no-startup-id i afk; mode "default"
 
