@@ -90,6 +90,11 @@ update_nodenv_plugins() {
 	done
 }
 
+update_thunderbird() {
+	echo 'thunderbird'
+	"$_dir"/../lib/thunderbird
+}
+
 sudo --validate --prompt="${background_blue} password: ${reset} "
 
 if command -v brew >/dev/null; then
@@ -156,4 +161,14 @@ if is-linux; then
 		log_success
 	fi
 	rm -f "$nodenv_plugins_log"
+
+	log_operation thunderbird
+	thunderbird_log="$(mktemp)"
+	if ! update_thunderbird &>"$thunderbird_log"; then
+		log_failure
+		cat "$thunderbird_log"
+	else
+		log_success
+	fi
+	rm -f "$thunderbird_log"
 fi
