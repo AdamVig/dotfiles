@@ -28,3 +28,12 @@ else
 	source /usr/share/doc/fzf/examples/key-bindings.zsh
 	source /usr/share/doc/fzf/examples/completion.zsh
 fi
+
+# Initialize broot
+if [[ $OSTYPE == darwin* ]]; then
+  broot_root='org.dystroy.broot'
+else
+  broot_root='broot'
+fi
+# shellcheck disable=SC1090
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br

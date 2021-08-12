@@ -74,12 +74,3 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
 		source "$nodenv_completions_path"
 	fi
 fi
-
-# Initialize broot
-if [[ $OSTYPE == darwin* ]]; then
-  broot_root='org.dystroy.broot'
-else
-  broot_root='broot'
-fi
-# shellcheck disable=SC1090
-source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br
