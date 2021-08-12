@@ -1,5 +1,8 @@
 # Create command aliases.
 
+# Shorter version of bat -p
+alias batp='bat --plain'
+
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
 
