@@ -68,12 +68,6 @@ if ! is_repository_configured 'nextcloud'; then
 	log_end
 fi
 
-if ! is_repository_configured 'diff-so-fancy'; then
-	log_start 'adding diff-so-fancy repository'
-	request_sudo add-apt-repository --yes ppa:aos1/diff-so-fancy
-	log_end
-fi
-
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
 	request_sudo add-apt-repository --yes ppa:git-core/ppa
