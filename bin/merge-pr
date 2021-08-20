@@ -46,7 +46,7 @@ while true; do
 done
 
 if ! check-installed gh https://cli.github.com/; then
-	return 1
+	exit 1
 fi
 
 errlog() {

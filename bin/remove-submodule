@@ -8,7 +8,7 @@ path="${1:-}"
 
 if [ -z "$path" ]; then
 	echo "error: must provide path to submodule"
-	return 1
+	exit 1
 fi
 
 git submodule deinit -f "$path" || true

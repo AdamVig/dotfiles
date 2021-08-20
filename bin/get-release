@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Wait for continuous integration to finish, refreshing at a set interval, then print out the list of releases
 if ! check-installed gh https://cli.github.com/; then
-	return 1
+	exit 1
 fi
 
 prev_releases=""

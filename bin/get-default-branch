@@ -10,7 +10,7 @@ remote=${1:-origin}
 if ! git symbolic-ref --quiet "refs/remotes/$remote/HEAD" &>/dev/null &&
 	! git remote set-head "$remote" --auto &>/dev/null; then
 	echo 'failed to get default branch from remote'
-	return 1
+	exit 1
 fi
 
 default_branch="$(git symbolic-ref "refs/remotes/$remote/HEAD")"

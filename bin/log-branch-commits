@@ -62,7 +62,7 @@ done
 
 if ! default_branch="$(get-default-branch)"; then
 	echo 'error: could not get default branch'
-	return 1
+	exit 1
 fi
 
 branch="${1:-$default_branch}"
