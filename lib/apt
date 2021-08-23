@@ -328,6 +328,20 @@ fi
 rm -f "$git_delta_tmp"
 log_end
 
+log_start 'installing pastel'
+if ! pastel_url="$(get_release_url 'sharkdp/pastel' '_amd64.deb')"; then
+	fatal 'failed to get pastel release URL'
+fi
+pastel_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$pastel_url" --output "$pastel_tmp"; then
+	fatal 'failed to download pastel'
+fi
+if ! request_sudo apt-get install "$pastel_tmp"; then
+	fatal 'failed to install pastel'
+fi
+rm -f "$pastel_tmp"
+log_end
+
 log_start 'installing websocat'
 if ! websocat_url="$(get_release_url 'vi/websocat' '_amd64.deb')"; then
 	fatal 'failed to get websocat release URL'
