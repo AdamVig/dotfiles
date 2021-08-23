@@ -9,8 +9,8 @@ unsetopt flowcontrol
 source "$ZDOTDIR"/directories.zsh
 source "$ZDOTDIR"/key-bindings.zsh
 source "$ZDOTDIR"/init-completion.zsh
-# Depends on completion
-source "$ZDOTDIR"/git.zsh
+source "$ZDOTDIR"/fzf.zsh # Depends on completion
+source "$ZDOTDIR"/git.zsh # Depends on completion
 source "$ZDOTDIR"/init-utils.zsh
 
 data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh

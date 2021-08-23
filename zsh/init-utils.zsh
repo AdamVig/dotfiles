@@ -21,14 +21,6 @@ source "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-fast-syntax-highlighting/fast-
 autoload zcalc
 autoload zmv
 
-# Enable fzf keybindings and fuzzy auto-completion
-if [[ $OSTYPE == darwin* ]]; then
-	"$(brew --prefix)"/opt/fzf/install
-else
-	source /usr/share/doc/fzf/examples/key-bindings.zsh
-	source /usr/share/doc/fzf/examples/completion.zsh
-fi
-
 # Initialize broot
 if [[ $OSTYPE == darwin* ]]; then
   broot_root='org.dystroy.broot'
