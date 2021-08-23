@@ -35,6 +35,8 @@ if ! [ -d "$config_dir"/docker ]; then
 	mkdir -p "$config_dir"/docker
 fi
 
+cp "$_dir"/../config/kdiff3rc "$config_dir"/kdiff3rc
+
 mkdir -p "$config_dir"/kitty
 _ln "$_dir"/../config/kitty.conf "$config_dir"/kitty/kitty.conf
 

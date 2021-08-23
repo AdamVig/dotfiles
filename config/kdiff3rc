@@ -1,0 +1,32 @@
+# Partial configuration file intended to be copied into place
+# Update by running ./lib/config
+
+[KDiff3 Options]
+ApplicationFont=Sans Serif,12,-1,5,50,0,0,0,0,0
+Font=Fira Code,12,-1,2,50,0,0,0,0,0
+
+FgColor=171,178,191
+BgColor=34,36,41
+ColorA=139,233,253
+ColorB=80,250,123
+ColorC=189,147,249
+ColorForConflict=255,255,255
+CurrentRangeBgColor=83,88,100
+CurrentRangeDiffBgColor=83,88,100
+DiffBgColor=34,36,41
+ManualAlignmentRangeColor=255,184,108
+MidAgeFileColor=255,184,108
+MissingFileColor=40,42,54
+NewestFileColor=80,250,123
+OldestFileColor=255,85,85
+
+# Suppress "Conflicts" dialog on open
+ShowInfoDialogs=false
+
+# Hide statusbar
+Show Statusbar=false
+
+# Hide indentation arrows
+ShowWhiteSpaceCharacters=false
+
+TabSize=2
