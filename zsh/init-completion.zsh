@@ -36,4 +36,8 @@ unset _comp_path
 
 zstyle ':completion:*' menu select
 
+# Enable hyphen-insensitive and case-insensitive completion
+# https://github.com/ohmyzsh/ohmyzsh/blob/c47ac2d86d1aec3dcc3106c58d3ef0a91aa8cc3c/lib/completion.zsh#L16-L25
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
+
 compdef _git log-branch-commits=git-branch
