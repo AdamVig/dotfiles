@@ -11,6 +11,16 @@ else
 	source /usr/share/doc/fzf/examples/completion.zsh
 fi
 
+# Use fd to generate the list for path candidate completion
+_fzf_compgen_path() {
+  fd --hidden --follow . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type directory --hidden --follow . "$1"
+}
+
 # Git shortcuts
 # From https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
 # Usage guide: https://github.com/junegunn/fzf/blob/master/ADVANCED.md#key-bindings-for-git-objects
