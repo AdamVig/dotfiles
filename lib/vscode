@@ -38,7 +38,6 @@ declare -a extensions=(
 	jpoissonnier.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-vsliveshare.vsliveshare            # Live code sharing
-	msjsdiag.debugger-for-chrome          # Chrome debugger integration
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	QassimFarid.ejs-language-support      # EJS (Embedded JS) template language support
 	rafamel.subtle-brackets               # Better bracket matching
