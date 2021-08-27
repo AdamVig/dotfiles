@@ -5,11 +5,17 @@
 
 # Enable fzf keybindings and fuzzy auto-completion
 if [[ $OSTYPE == darwin* ]]; then
-	"$(brew --prefix)"/opt/fzf/install
+	fzf_shell_root='/usr/local/opt/fzf/shell/'
 else
-	source /usr/share/doc/fzf/examples/key-bindings.zsh
-	source /usr/share/doc/fzf/examples/completion.zsh
+	fzf_shell_root='/usr/share/doc/fzf/examples'
 fi
+
+if ! [ -d "$fzf_shell_root" ]; then
+	exit
+fi
+
+source "$fzf_shell_root"/key-bindings.zsh
+source "$fzf_shell_root"/completion.zsh
 
 # Use fd to generate the list for path candidate completion
 _fzf_compgen_path() {
