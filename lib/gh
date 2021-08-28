@@ -44,6 +44,7 @@ log_end
 
 log_start 'installing extensions'
 declare -a gh_extensions=(
+	davidraviv/gh-clean-branches
 )
 
 for gh_extension in "${gh_extensions[@]}"; do
