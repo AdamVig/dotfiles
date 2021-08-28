@@ -95,6 +95,11 @@ update_thunderbird() {
 	"$_dir"/../lib/thunderbird
 }
 
+update_gh_extensions() {
+	echo 'gh extensions'
+	gh extension upgrade --all
+}
+
 sudo --validate --prompt="${background_blue} password: ${reset} "
 
 if command -v brew >/dev/null; then
@@ -172,3 +177,13 @@ if is-linux; then
 	fi
 	rm -f "$thunderbird_log"
 fi
+
+log_operation 'gh extensions'
+gh_extensions_log="$(mktemp)"
+if ! update_gh_extensions &>"$gh_extensions_log"; then
+	log_failure
+	cat "$gh_extensions_log"
+else
+	log_success
+fi
+rm -f "$gh_extensions_log"

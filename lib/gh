@@ -17,9 +17,12 @@ if ! command -v gh >/dev/null; then
 	exit
 fi
 
+log_start 'setting configuration'
 # Use SSH for Git clone and push operations
 gh config set git_protocol ssh
+log_end
 
+log_start 'setting aliases'
 # Create a pull request
 # $1: base branch
 # $2: title
@@ -36,5 +39,17 @@ gh alias set prcd --shell 'gh pr create --assignee=@me --base="$1" --body="$(ech
 # $1: base branch
 # shellcheck disable=SC2016
 gh alias set update-pr --shell 'gh pr edit --body="$(echo "**Commits**"; log-branch-commits --pr "$1")"'
+
+log_end
+
+log_start 'installing extensions'
+declare -a gh_extensions=(
+)
+
+for gh_extension in "${gh_extensions[@]}"; do
+	log "$gh_extension"
+	gh extension install "$gh_extension" &>/dev/null || true
+done
+log_end
 
 log_end
