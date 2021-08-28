@@ -1,5 +1,7 @@
 # Copied from Oh My Zsh lib/directories.zsh
 
+setopt auto_cd
+
 # Changing/making/removing directory
 setopt auto_pushd
 setopt pushd_ignore_dups
