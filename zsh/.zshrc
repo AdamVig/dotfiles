@@ -8,10 +8,10 @@ unsetopt flowcontrol
 
 source "$ZDOTDIR"/directories.zsh
 source "$ZDOTDIR"/key-bindings.zsh
-source "$ZDOTDIR"/init-completion.zsh
+source "$ZDOTDIR"/completion.zsh
 source "$ZDOTDIR"/fzf.zsh # Depends on completion
 source "$ZDOTDIR"/git.zsh # Depends on completion
-source "$ZDOTDIR"/init-utils.zsh
+source "$ZDOTDIR"/utils.zsh
 source "$ZDOTDIR"/history.zsh
 
 remote-host-info() {
