@@ -17,8 +17,7 @@
   "editor.fontSize": 12,
   "editor.hideCursorInOverviewRuler": true,
   "editor.renderIndentGuides": false,
-  // Rely on Subtle Brackets instead
-  "editor.matchBrackets": false,
+  "editor.bracketPairColorization.enabled": true,
   // ------------------------------
   // Workbench
   // ------------------------------
@@ -134,14 +133,11 @@
     "*.dll", // Ignore all .dll files.
     "**/*.dll" // Ignore all .dll files
   ],
-  "subtleBrackets.style": {
-    "borderWidth": "1px",
-    "borderColor": "#528BFF"
-  },
   // Hide spell check indicator in status bar
   "cSpell.showStatus": false,
   // Hide menu bar (show by pressing Alt key)
   "window.menuBarVisibility": "toggle",
   "workbench.sideBar.location": "right",
-  "liveshare.authenticationProvider": "GitHub"
+  "liveshare.authenticationProvider": "GitHub",
+  "editor.matchBrackets": false
 }

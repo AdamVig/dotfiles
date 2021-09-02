@@ -40,10 +40,13 @@ declare -a extensions=(
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	QassimFarid.ejs-language-support      # EJS (Embedded JS) template language support
-	rafamel.subtle-brackets               # Better bracket matching
 	stkb.rewrap                           # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker # Spell checker
 	timonwong.shellcheck                  # Shell script linting
+)
+
+declare -a no_longer_needed_extensions=(
+	rafamel.subtle-brackets # Better bracket matching
 )
 
 log_start 'installing Visual Studio Code extensions'
@@ -55,6 +58,18 @@ for extension in "${extensions[@]}"; do
 		log "installed \"$extension\""
 	else
 		warn "extension $extension failed to install; it may no longer be available"
+	fi
+	set -e
+done
+log_end
+
+log_start 'uninstalling no-longer-needed Visual Studio Code extensions'
+for extension in "${no_longer_needed_extensions[@]}"; do
+	set +e
+
+	# Attempt to uninstall extension; log message on success, ignore failure
+	if code --uninstall-extension "$extension" &>/dev/null; then
+		log "removed \"$extension\""
 	fi
 	set -e
 done
