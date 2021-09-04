@@ -70,4 +70,12 @@ if ! [ -d "$fast_syntax_highlighting_path" ]; then
 	log_end
 fi
 
+if is-macos; then
+	log_start 'overriding Homebrew Git completions'
+	# https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/#comment-5090505791
+	mkdir -p "$(xdg_data)"/zsh-site-functions
+	_ln /usr/local/opt/zsh/share/zsh/functions/_git "$(xdg_data)"/zsh-site-functions
+	log_end
+fi
+
 log_end

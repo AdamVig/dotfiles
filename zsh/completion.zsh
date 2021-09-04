@@ -2,6 +2,10 @@
 
 # Initialize command completion.
 
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions ]; then
+	fpath=("${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions $fpath)
+fi
+
 completion_path=/usr/local/share/zsh/site-functions
 
 if [[ "$FPATH" != *"$completion_path"* ]]; then
