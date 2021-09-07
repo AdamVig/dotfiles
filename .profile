@@ -72,6 +72,9 @@ if [[ "$OSTYPE" == *linux* ]]; then
 		eval "$(gnome-keyring-daemon --start)"
 		export SSH_AUTH_SOCK
 	fi
+
+	# Map right meta key to the "compose" key for special characters
+	setxkbmap -option compose:rwin
 fi
 
 # Add golang directory to PATH
