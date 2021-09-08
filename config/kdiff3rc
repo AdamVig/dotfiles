@@ -20,6 +20,9 @@ MissingFileColor=40,42,54
 NewestFileColor=80,250,123
 OldestFileColor=255,85,85
 
+# Disable .orig backup files
+CreateBakFiles=false
+
 # Suppress "Conflicts" dialog on open
 ShowInfoDialogs=false
 
