@@ -192,6 +192,9 @@ Description=\"Home Assistant Daemon\"
 [Service]
 EnvironmentFile=$home_assistant_daemon_environment_file_path
 ExecStart=$(realpath "$_dir"/../bin/home-assistant-daemon)
+Restart=on-failure
+# Wait two minutes before attempting to restart
+RestartSec=2min
 
 [Install]
 WantedBy=default.target
