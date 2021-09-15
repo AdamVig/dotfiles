@@ -11,13 +11,16 @@ log() {
 
 log_start 'installing pip tools'
 pip_packages=(
-	b2                # Backblaze B2 CLI
-	csvkit            # CSV processing tools
-	homeassistant-cli # Home Assistant management tool
-	mozdownload       # Downloader for Mozilla applications
-	pip               # Package manager
-	visidata          # Data set visualizer
-	youtube-dl        # Media downloader
+	b2                   # Backblaze B2 CLI
+	csvkit               # CSV processing tools
+	homeassistant-cli    # Home Assistant management tool
+	khal                 # Calendar CLI
+	mozdownload          # Downloader for Mozilla applications
+	pip                  # Package manager
+	visidata             # Data set visualizer
+	vdirsyncer           # Synchronize calendars and contacts
+	'vdirsyncer[google]' # Extension for Google support
+	youtube-dl           # Media downloader
 )
 
 for package in "${pip_packages[@]}"; do
