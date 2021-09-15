@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+# Benchmark Zsh prompt evaluation time
+
+TIMEFMT='%*E'
+sum=0
+for _ in {1..100}; do
+	set +e
+	time="$(
+		# Use brackets to redirect output of time keyword (https://www.zsh.org/mla/users/2011/msg00066.html)
+		{
+			# Use a subshell because Zsh `time` can't directly evaluate builtins (https://unix.stackexchange.com/a/427377)
+			time (
+				# shellcheck disable=SC2034
+				# Run many times so that the total execution takes long enough to analyze
+				for __ in {1..10000}; do
+					# Print the PS1 variable with prompt-style expansion
+					print -P "$PS1"
+				done
+			) >/dev/null
+		} 2>&1
+	)"
+	set -e
+	sum="$(bc <<<"scale=3; $sum+$time")"
+done
+bc <<<"scale=3; $sum/100"
