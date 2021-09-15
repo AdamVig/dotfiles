@@ -2,8 +2,6 @@
 
 # Initialize Zsh utilities.
 
-_dir_init_utils="$(dirname "$(realpath "${(%):-%x}")")"
-
 z_dir="${XDG_DATA_HOME:-$HOME/.local/share}"/z
 if ! [ -d "$z_dir" ]; then
     mkdir -p "$z_dir"
