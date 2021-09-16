@@ -124,6 +124,12 @@ if ! is_repository_configured 'cli.github.com'; then
 	log_end
 fi
 
+if ! is_repository_configured 'yubico'; then
+	log_start 'adding Yubico repository'
+	request_sudo add-apt-repository --yes ppa:yubico/stable
+	log_end
+fi
+
 if ! is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'adding Debian Stable repository'
 	log_start 'installing keys'
@@ -272,6 +278,7 @@ declare -a packages=(
 	spotify-client
 	steam
 	vino # GNOME VNC server
+	yubikey-manager
 
 	# fonts
 	fonts-firacode
