@@ -45,4 +45,10 @@
         "key": "shift+cmd+[",
         "command": "-workbench.action.previousEditor"
     },
+    // Remap Help menu shortcut to show hover
+    {
+        "key": "ctrl+h",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
+    }
 ]
