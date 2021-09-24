@@ -29,6 +29,11 @@
 			 (search category-keep)))
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
+ '(org-capture-templates
+		'(("r" "Pull request review." entry
+				(file "work.org")
+				(file "templates/pull-request-review.tmpl")
+				:prepend t)))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
