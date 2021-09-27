@@ -40,7 +40,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(olivetti super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
+   '(forge olivetti super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -240,6 +240,11 @@
 ;; Add Magit (https://magit.vc/)
 (use-package magit
 	:ensure t)
+
+;; Add Magit Forge (https://magit.vc/manual/forge/)
+(use-package forge
+	:ensure t
+	:after magit)
 
 ;; Add Company mode (https://company-mode.github.io/)
 (use-package company
