@@ -202,6 +202,7 @@ declare -a packages=(
 	gh       # GitHub CLI
 	gifsicle # Gif tool
 	glow     # Markdown viewer
+	gnuplot  # Command-line plotting
 	graphviz # Graph visualization tool
 	imagemagick
 	ipcalc             # IP address calculator
