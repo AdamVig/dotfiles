@@ -184,6 +184,8 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 ;; Set global key binding for inserting inactive time stamp
 (global-set-key (kbd "C-c !") 'org-time-stamp-inactive)
+;; Set global key binding for org-capture
+(global-set-key (kbd "C-c c") 'org-capture)
 ;; Open Org files folded
 (setq org-startup-folded t)
 ;; Automatically revert Org buffer when file changes on disk
