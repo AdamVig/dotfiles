@@ -24,6 +24,8 @@
   contributors = shortlog --summary --numbered --email --all
   last = log --max-count=1 --pretty=who-when-what
   tags-by-date = tag --list --sort=committerdate
+  files = !git diff --name-only "$(gh prbase)"..
+  stat = !git diff --stat "$(gh prbase)"..
 [fetch]
 	prune = true
 [pull]

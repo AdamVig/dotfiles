@@ -40,6 +40,10 @@ gh alias set prcd --shell 'gh pr create --assignee=@me --base="$1" --body="$(ech
 # shellcheck disable=SC2016
 gh alias set update-pr --shell 'gh pr edit --body="$(echo "**Commits**"; log-branch-commits --pr "$1")"'
 
+# Get the base branch for the current branch's pull request
+# shellcheck disable=SC2016
+gh alias set prbase "pr view --json baseRefName --jq '.baseRefName'"
+
 log_end
 
 log_start 'installing extensions'
