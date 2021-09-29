@@ -23,7 +23,7 @@
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
  '(org-agenda-sorting-strategy
-		'((agenda habit-down time-up priority-down category-keep todo-state-up)
+		'((agenda todo-state-up priority-down)
 			 (todo priority-down category-keep todo-state-up)
 			 (tags priority-down category-keep)
 			 (search category-keep)))
