@@ -83,48 +83,26 @@ if (Test-Path $env:SystemRoot\SysWOW64\) {
   & $env:SystemRoot\System32\OneDriveSetup.exe /uninstall
 }
 
-# Fonts
-cinst hasklig
-cinst Noto
-cinst OpenSans
-
 # Tools
 cinst 7zip
-# cinst docker
-# cinst git
-# cinst kdiff3
-# cinst meld
 cinst procexp
 
 # Apps
-# cinst arq
 cinst battle.net --allow-empty-checksums
 cinst bluescreenview
-# cinst calibre
-# cinst cyberduck
-# cinst deluge
-# cinst docker-desktop
-# cinst Emacs
 cinst epicgameslauncher
 cinst etcher
 cinst Firefox
 cinst foxitreader
-# cinst google-backup-and-sync
 cinst GoogleChrome
 cinst hwmonitor
-# cinst InkScape
 cinst IrfanView
-# cinst keybase
-# cinst reaper
 cinst signal
-# cinst slack
 cinst spotify
 cinst steam
 cinst thunderbird
 cinst vlc
 cinst vscode
-# cinst vcxsrv # X server
-# cinst zoom
 
 # Privacy: Let apps use my advertising ID: Disable
 If (-Not (Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo")) {
