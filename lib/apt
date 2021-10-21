@@ -251,6 +251,7 @@ declare -a packages=(
 	chromium
 	code
 	copyq   # Clipboard manager
+	d-feet  # D-Bus debugger
 	digikam # Photo library manager
 	docker.io
 	emacs-snapshot
