@@ -15,6 +15,7 @@ go_packages=(
 	github.com/antonmedv/countdown # Terminal countdown timer
 	github.com/genuinetools/udict  # Urban Dictionary CLI
 	github.com/Rican7/define       # Dictionary/thesaurus CLI
+	golang.org/x/tools/gopls       # Go language server
 )
 
 for package in "${go_packages[@]}"; do
