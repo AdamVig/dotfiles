@@ -19,11 +19,14 @@ go_packages=(
 )
 
 for package in "${go_packages[@]}"; do
-	if go get -u "$package" &>/dev/null; then
+	log_file="$(mktemp)"
+	if go get -u "$package" &>"$log_file"; then
 		log "installed \"$package\""
 	else
 		warn "package \"$package\" failed to install"
+		cat "$log_file"
 	fi
+	rm -f "$log_file"
 done
 
 log_end
