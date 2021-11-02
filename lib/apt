@@ -130,32 +130,14 @@ if ! is_repository_configured 'yubico'; then
 	log_end
 fi
 
-if ! is_repository_configured 'deb.debian.org/debian stable'; then
-	log_start 'adding Debian Stable repository'
-	log_start 'installing keys'
-	request_sudo apt install -y debian-archive-keyring
+# Remove previous workaround for installing Chromium
+if is_repository_configured 'deb.debian.org/debian stable'; then
+	log_start 'removing Debian Stable repository'
+	log_start 'removing sources file'
+	request_sudo rm -f /etc/apt/sources.list.d/debian-stable.list*
 	log_end
-	log_start 'adding sources file'
-	# From https://www.inx.one/blog/debian-repo-on-ubuntu
-	add_repository 'debian-stable' 'deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable main
-deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable main
-
-deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian-security/ stable/updates main
-deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian-security/ stable/updates main
-
-deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable-updates main
-deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://deb.debian.org/debian stable-updates main'
-	log_end
-	log_start 'adding apt policy'
-	echo 'Explanation: Accept chromium from the debian repo.
-Package: chromium*
-Pin: origin "*.debian.org"
-Pin-Priority: 100
-
-Explanation: Avoid other packages from the debian repo.
-Package: *
-Pin: origin "*.debian.org"
-Pin-Priority: 1' | request_sudo tee /etc/apt/preferences.d/debian-chromium >/dev/null
+	log_start 'removing apt policy'
+	request_sudo rm -f /etc/apt/preferences.d/debian-chromium >/dev/null
 	log_end
 	log_end
 fi
@@ -248,7 +230,6 @@ declare -a packages=(
 
 	# applications
 	balena-etcher-electron # Image flashing tool
-	chromium
 	code
 	copyq   # Clipboard manager
 	d-feet  # D-Bus debugger
@@ -294,7 +275,27 @@ log_start 'installing packages'
 sudo apt-get install --yes "${packages[@]}"
 log_end
 
+declare -a unwanted_packages=(
+	chromium
+)
+
+log_start 'removing unwanted packages'
+sudo apt-get remove --yes "${unwanted_packages[@]}"
+log_end
+
 log_start 'installing packages from non-repository sources'
+log_start 'installing Google Chrome'
+chrome_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+chrome_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$chrome_url" --output "$chrome_tmp"; then
+	fatal 'failed to download Google Chrome'
+fi
+if ! request_sudo apt-get install "$chrome_tmp"; then
+	fatal 'failed to install Google Chrome'
+fi
+rm -f "$chrome_tmp"
+log_end
+
 log_start 'installing Hugo'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then
 	fatal 'failed to get Hugo release URL'
