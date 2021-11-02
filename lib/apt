@@ -277,10 +277,15 @@ log_end
 
 declare -a unwanted_packages=(
 	chromium
+
+	# Used to be installed via .deb, now installed as a binary
+	websocat
 )
 
 log_start 'removing unwanted packages'
-sudo apt-get remove --yes "${unwanted_packages[@]}"
+for unwanted_package in "${unwanted_packages[@]}"; do
+	sudo apt-get remove --yes "$unwanted_package" &>/dev/null || true
+done
 log_end
 
 log_start 'installing packages from non-repository sources'
@@ -350,20 +355,6 @@ if ! request_sudo apt-get install "$pastel_tmp"; then
 	fatal 'failed to install pastel'
 fi
 rm -f "$pastel_tmp"
-log_end
-
-log_start 'installing websocat'
-if ! websocat_url="$(get_release_url 'vi/websocat' '_amd64.deb')"; then
-	fatal 'failed to get websocat release URL'
-fi
-websocat_tmp="$(mktemp --suffix .deb)"
-if ! _curl "$websocat_url" --output "$websocat_tmp"; then
-	fatal 'failed to download websocat'
-fi
-if ! request_sudo apt-get install "$websocat_tmp"; then
-	fatal 'failed to install websocat'
-fi
-rm -f "$websocat_tmp"
 log_end
 log_end
 
