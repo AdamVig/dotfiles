@@ -30,7 +30,8 @@ _get_operation_indentation() {
 # Internal function intended to be called only by other logging functions
 # Allows scripts to either `log` directly or redefine it to use `log_with_component` without causing an infinite loop
 _log_internal() {
-	echo "${dim}dotfiles${reset}" "$@"
+	# Redirect to stderr so output appears even when stdout is redirected
+	echo >&2 "${dim}dotfiles${reset}" "$@"
 }
 
 # Log a message
@@ -189,7 +190,8 @@ is_ubuntu() {
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
 request_sudo() {
-	prompt="$(log "${standout} input ${reset}" 'Enter the system password for user %p: ')"
+	# Redirect stderr to stdout so the output can be captured
+	prompt="$(log 2>&1 "${standout} input ${reset}" 'Enter the system password for user %p: ')"
 	if [ $# -eq 0 ]; then
 		sudo --validate --prompt "$prompt"
 	else
