@@ -15,7 +15,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 fi
 
 if [[ $1 == *meet.google.com* ]] && command -v google-chrome >/dev/null; then
-	google-chrome --app="$1"
+	exec google-chrome --app="$1"
 else
-	xdg-open "$@"
+	exec /bin/xdg-open "$@"
 fi
