@@ -39,6 +39,7 @@
  '(org-html-checkbox-type 'html)
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
+ '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
  '(package-selected-packages
    '(forge olivetti super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
  '(reb-re-syntax 'string))
