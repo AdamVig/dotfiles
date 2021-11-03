@@ -119,11 +119,8 @@ log_start 'installing websocat'
 if ! websocat_url="$(get_release_url 'vi/websocat' '_linux64')"; then
 	fatal 'failed to get websocat release URL'
 fi
-websocat_path="$HOME/.local/bin/websocat"
-if ! _curl "$websocat_url" --output "$websocat_path"; then
-	fatal 'failed to download websocat'
-fi
-chmod +x "$websocat_path"
+
+install_binary_from_url 'websocat' "$websocat_url"
 log_end
 
 log_start 'installing YubiKey Manager'
