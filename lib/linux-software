@@ -81,8 +81,8 @@ if ! tar zxvf "$hub_tmp" -C "$hub_extracted_tmp" --strip-components=1 >/dev/null
 fi
 rm -f "$hub_tmp"
 hub_path="$HOME"/.local/bin/hub
-install "$hub_extracted_tmp"/bin/hub "$hub_path"
-install "$hub_extracted_tmp"/share/man/*/*.1 "$HOME"/.local/share/man/man1
+install -D "$hub_extracted_tmp"/bin/hub "$hub_path"
+install -D --target-directory="$HOME"/.local/share/man/man1 "$hub_extracted_tmp"/share/man/*/*.1
 hub_completion_dir="$HOME"/.local/share/hub
 install -D "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"/_hub
 rm -rf "$hub_extracted_tmp"
