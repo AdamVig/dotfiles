@@ -14,6 +14,7 @@ log_start 'installing golang tools'
 go_packages=(
 	github.com/antonmedv/countdown # Terminal countdown timer
 	github.com/genuinetools/udict  # Urban Dictionary CLI
+	github.com/nektos/act          # GitHub Actions local runner
 	github.com/Rican7/define       # Dictionary/thesaurus CLI
 	golang.org/x/tools/gopls       # Go language server
 )
