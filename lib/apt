@@ -119,8 +119,10 @@ fi
 
 if ! is_repository_configured 'cli.github.com'; then
 	log_start 'adding GitHub CLI repository'
-	request_sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-	request_sudo add-apt-repository --yes https://cli.github.com/packages
+	_curl https://cli.github.com/packages/githubcli-archive-keyring.gpg |
+		request_sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |
+		request_sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 	log_end
 fi
 
