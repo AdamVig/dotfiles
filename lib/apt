@@ -20,48 +20,46 @@ is_repository_configured() {
 	grep --quiet --recursive "$1" /etc/apt/sources.list /etc/apt/sources.list.d/
 }
 
-# $1: human-readable name, will be used to build filename (<name>.list)
-# $2: repository configuration string
+# $1: human-readable name, used in filenames of sources file and key
+# $2: URL to signing key
+# $3: latter part of repository configuration string, e.g. "http://repository.spotify.com stable non-free", not
+# including the arch or signed-by options
 add_repository() {
-	echo "$2" | request_sudo tee /etc/apt/sources.list.d/"$1".list >/dev/null
-}
+	local friendly_name="${1:-}"
+	local key_url="${2:-}"
+	local repo_config="${3:-}"
 
-# $1: URL
-add_key() {
-	local url="${1:-}"
-	if ! _curl "$url" | sudo apt-key add -; then
+	local key_path=/usr/share/keyrings/"$friendly_name"-archive-keyring.gpg
+
+	if ! _curl "$key_url" | request_sudo gpg --dearmor -o "$key_path"; then
 		fatal 'failed to add key'
 	fi
+
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=$key_path] $repo_config" |
+		request_sudo tee /etc/apt/sources.list.d/"$friendly_name".list >/dev/null
 }
 
 if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_start 'adding Visual Studio Code repository'
-	_curl https://packages.microsoft.com/keys/microsoft.asc |
-		request_sudo gpg --dearmor -o /usr/share/keyrings/packages.microsoft.gpg
-	echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |
-		request_sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+	add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
 	log_end
 fi
 
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
-	_curl https://download.spotify.com/debian/pubkey_0D811D58.gpg |
-		request_sudo gpg --dearmor -o /usr/share/keyrings/spotify.gpg
-	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
+	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_0D811D58.gpg' 'http://repository.spotify.com stable non-free'
 	log_end
 fi
 
 if ! is_repository_configured 'slack'; then
 	log_start 'adding Slack repository'
-	add_key https://packagecloud.io/slacktechnologies/slack/gpgkey
-	add_repository 'slack' 'deb https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
+	add_repository 'slack' 'https://packagecloud.io/slacktechnologies/slack/gpgkey' 'https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
 	log_end
 fi
 
 if ! is_repository_configured 'signal'; then
 	log_start 'adding Signal repository'
-	add_key https://updates.signal.org/desktop/apt/keys.asc
-	add_repository 'signal' 'deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main'
+	add_repository 'signal' 'https://updates.signal.org/desktop/apt/keys.asc' 'https://updates.signal.org/desktop/apt xenial main'
 	log_end
 fi
 
@@ -79,8 +77,7 @@ fi
 
 if ! is_repository_configured 'azlux'; then
 	log_start 'adding broot repository'
-	add_key https://azlux.fr/repo.gpg.key
-	add_repository 'broot' 'deb http://packages.azlux.fr/debian/ buster main'
+	add_repository 'broot' 'https://azlux.fr/repo.gpg.key' 'http://packages.azlux.fr/debian/ buster main'
 	log_end
 fi
 
@@ -122,10 +119,7 @@ fi
 
 if ! is_repository_configured 'cli.github.com'; then
 	log_start 'adding GitHub CLI repository'
-	_curl https://cli.github.com/packages/githubcli-archive-keyring.gpg |
-		request_sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |
-		request_sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+	add_repository 'githubcli' 'https://cli.github.com/packages/githubcli-archive-keyring.gpg' 'https://cli.github.com/packages stable main'
 	log_end
 fi
 
