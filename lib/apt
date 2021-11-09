@@ -34,10 +34,12 @@ add_key() {
 	fi
 }
 
-if ! is_repository_configured 'vscode'; then
+if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_start 'adding Visual Studio Code repository'
-	add_key https://packages.microsoft.com/keys/microsoft.asc
-	add_repository 'vscode' 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
+	_curl https://packages.microsoft.com/keys/microsoft.asc |
+		request_sudo gpg --dearmor -o /usr/share/keyrings/packages.microsoft.gpg
+	echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |
+		request_sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
 	log_end
 fi
 
