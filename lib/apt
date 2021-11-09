@@ -45,7 +45,8 @@ fi
 
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
-	add_key https://download.spotify.com/debian/pubkey_0D811D58.gpg
+	_curl https://download.spotify.com/debian/pubkey_0D811D58.gpg |
+		request_sudo gpg --dearmor -o /usr/share/keyrings/spotify.gpg
 	add_repository 'spotify' 'deb http://repository.spotify.com stable non-free'
 	log_end
 fi
