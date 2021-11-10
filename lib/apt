@@ -71,13 +71,13 @@ fi
 
 if ! is_repository_configured 'nextcloud'; then
 	log_start 'adding Nextcloud repository'
-	request_sudo add-apt-repository --yes ppa:nextcloud-devs/client
+	request_sudo add-apt-repository --no-update --yes ppa:nextcloud-devs/client
 	log_end
 fi
 
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
-	request_sudo add-apt-repository --yes ppa:git-core/ppa
+	request_sudo add-apt-repository --no-update --yes ppa:git-core/ppa
 	log_end
 fi
 
@@ -89,37 +89,37 @@ fi
 
 if ! is_repository_configured 'lutris'; then
 	log_start 'adding lutris repository'
-	request_sudo add-apt-repository --yes ppa:lutris-team/lutris
+	request_sudo add-apt-repository --no-update --yes ppa:lutris-team/lutris
 	log_end
 fi
 
 if ! is_repository_configured 'figma'; then
 	log_start 'adding figma repository'
-	request_sudo add-apt-repository --yes ppa:chrdevs/figma
+	request_sudo add-apt-repository --no-update --yes ppa:chrdevs/figma
 	log_end
 fi
 
 if ! is_repository_configured 'mpv-tests'; then
 	log_start 'adding mpv repository'
-	request_sudo add-apt-repository --yes ppa:mc3man/mpv-tests
+	request_sudo add-apt-repository --no-update --yes ppa:mc3man/mpv-tests
 	log_end
 fi
 
 if ! is_repository_configured 'ubuntu-elisp'; then
 	log_start 'adding Ubuntu Emacs snapshot repository'
-	request_sudo add-apt-repository --yes ppa:ubuntu-elisp/ppa
+	request_sudo add-apt-repository --no-update --yes ppa:ubuntu-elisp/ppa
 	log_end
 fi
 
 if ! is_repository_configured 'xournal'; then
 	log_start 'adding Xournal++ repository'
-	request_sudo add-apt-repository --yes ppa:apandada1/xournalpp-stable
+	request_sudo add-apt-repository --no-update --yes ppa:apandada1/xournalpp-stable
 	log_end
 fi
 
 if ! is_repository_configured 'copyq'; then
 	log_start 'adding CopyQ repository'
-	request_sudo add-apt-repository --yes ppa:hluk/copyq
+	request_sudo add-apt-repository --no-update --yes ppa:hluk/copyq
 	log_end
 fi
 
@@ -131,7 +131,7 @@ fi
 
 if ! is_repository_configured 'yubico'; then
 	log_start 'adding Yubico repository'
-	request_sudo add-apt-repository --yes ppa:yubico/stable
+	request_sudo add-apt-repository --no-update --yes ppa:yubico/stable
 	log_end
 fi
 
