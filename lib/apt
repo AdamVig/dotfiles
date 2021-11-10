@@ -39,6 +39,12 @@ add_repository() {
 		request_sudo tee /etc/apt/sources.list.d/"$friendly_name".list >/dev/null
 }
 
+if ! is_repository_configured 'balena'; then
+	log_start 'adding Balena Etcher repository'
+	add_repository 'balena' 'https://dl.cloudsmith.io/public/balena/etcher/gpg.70528471AFF9A051.key' "https://dl.cloudsmith.io/public/balena/etcher/deb/ubuntu $(lsb_release --short --codename) main"
+	log_end
+fi
+
 if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_start 'adding Visual Studio Code repository'
 	add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
