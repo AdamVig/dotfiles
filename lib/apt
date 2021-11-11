@@ -59,7 +59,7 @@ fi
 
 if ! is_repository_configured 'slack'; then
 	log_start 'adding Slack repository'
-	add_repository 'slack' 'https://packagecloud.io/slacktechnologies/slack/gpgkey' 'https://packagecloud.io/slacktechnologies/slack/ubuntu/ bionic main'
+	add_repository 'slack' 'https://packagecloud.io/slacktechnologies/slack/gpgkey' 'https://packagecloud.io/slacktechnologies/slack/debian/ jessie main'
 	log_end
 fi
 
