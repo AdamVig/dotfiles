@@ -99,12 +99,6 @@ if ! is_repository_configured 'figma'; then
 	log_end
 fi
 
-if ! is_repository_configured 'mpv-tests'; then
-	log_start 'adding mpv repository'
-	request_sudo add-apt-repository --no-update --yes ppa:mc3man/mpv-tests
-	log_end
-fi
-
 if ! is_repository_configured 'ubuntu-elisp'; then
 	log_start 'adding Ubuntu Emacs snapshot repository'
 	request_sudo add-apt-repository --no-update --yes ppa:ubuntu-elisp/ppa
