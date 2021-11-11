@@ -188,7 +188,6 @@ declare -a packages=(
 	fzf      # Fuzzy finder
 	gh       # GitHub CLI
 	gifsicle # Gif tool
-	glow     # Markdown viewer
 	gnuplot  # Command-line plotting
 	graphviz # Graph visualization tool
 	imagemagick
@@ -346,6 +345,20 @@ if ! request_sudo apt-get install "$git_delta_tmp"; then
 	fatal 'failed to install git-delta'
 fi
 rm -f "$git_delta_tmp"
+log_end
+
+log_start 'installing glow'
+if ! glow_url="$(get_release_url 'charmbracelet/glow' '_linux_amd64.deb')"; then
+	fatal 'failed to get glow release URL'
+fi
+glow_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$glow_url" --output "$glow_tmp"; then
+	fatal 'failed to download glow'
+fi
+if ! request_sudo apt-get install "$glow_tmp"; then
+	fatal 'failed to install glow'
+fi
+rm -f "$glow_tmp"
 log_end
 
 log_start 'installing pastel'
