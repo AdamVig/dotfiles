@@ -187,6 +187,7 @@ HOME_ASSISTANT_TOKEN=
 	fi
 
 	log_start 'creating Home Assistant daemon Systemd unit'
+	mkdir -p "$(xdg_config)"/systemd/user
 	echo "[Unit]
 Description=\"Home Assistant Daemon\"
 
