@@ -156,6 +156,7 @@ if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
 fi
 
 log_start 'configuring GNOME Keyring'
+mkdir -p "$config_dir"/autostart
 # Create customized versions of the desktop files for the secrets and SSH components so they start automatically
 # By default, the OnlyShowIn lines in the desktop files would prevent these components from being started
 sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-secrets.desktop >"$config_dir"/autostart/gnome-keyring-secrets.desktop
