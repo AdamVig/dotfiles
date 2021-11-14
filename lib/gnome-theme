@@ -78,11 +78,12 @@ log_start 'updating styles'
 greeter_background_styles_pattern='#lockDialogGroup {.*?}'
 greeter_background_color='#263238'
 greeter_background_styles_replacement="#lockDialogGroup { background-color: ${greeter_background_color}; }"
+# Use "gdm*.css" to capture both "gdm.css" (21.10+) and "gdm3.css" (20.10)
 perl \
 	-i \
 	-p0 \
 	-e "s/${greeter_background_styles_pattern}/${greeter_background_styles_replacement}/s" \
-	"$tmp_dir"/gdm3.css
+	"$tmp_dir"/gdm*.css
 log_end
 
 log_start 'compiling resources'
