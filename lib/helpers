@@ -166,10 +166,14 @@ install_binary_from_url() {
 	local name="${1:-}"
 	local url="${2:-}"
 	local path="$HOME"/.local/bin/"$name"
+	output_path="$(mktemp)"
 
-	if ! _curl "$url" --output "$path"; then
+	if ! _curl "$url" --output "$output_path"; then
 		fatal "failed to download '$name' from '$url'"
 	fi
+
+	# Use mv because cURL's --output flag can't replace a running binary
+	mv "$output_path" "$path"
 
 	chmod +x "$path"
 }
