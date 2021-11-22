@@ -1,5 +1,8 @@
 # Create command aliases.
 
+# Use case-insensitive search in bat by default
+alias bat='LESS="--ignore-case" bat'
+
 # Shorter version of bat -p
 alias batp='bat --plain'
 
