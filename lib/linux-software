@@ -14,6 +14,29 @@ request_sudo
 
 log_start 'installing Linux distribution-agnostic software'
 
+log_start 'installing Calibre'
+if ! calibre_url="$(get_release_url 'kovidgoyal/calibre' 'x86_64.txz')"; then
+	fatal 'failed to get Calibre release URL'
+fi
+calibre_tmp="$(mktemp --suffix .txz)"
+if ! _curl "$calibre_url" --output "$calibre_tmp"; then
+	fatal 'failed to download Calibre'
+fi
+calibre_extracted_tmp="$(mktemp -d)"
+if ! tar xvf "$calibre_tmp" -C "$calibre_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract Calibre'
+fi
+rm -f "$calibre_tmp"
+calibre_path="$HOME"/.local/share/calibre
+mv "$calibre_extracted_tmp" "$calibre_path"
+for f in "$calibre_path"/*; do
+	if [ -x "$f" ]; then
+		_ln "$f" "$HOME"/.local/bin
+	fi
+done
+rm -rf "$calibre_extracted_tmp"
+log_end
+
 readonly fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	mkdir -p "$fonts_dir"

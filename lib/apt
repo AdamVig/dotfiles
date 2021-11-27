@@ -227,7 +227,6 @@ declare -a packages=(
 
 	# applications
 	balena-etcher-electron # Image flashing tool
-	calibre                # E-book manager
 	code
 	copyq   # Clipboard manager
 	d-feet  # D-Bus debugger
