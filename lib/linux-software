@@ -28,6 +28,7 @@ if ! tar xvf "$calibre_tmp" -C "$calibre_extracted_tmp" >/dev/null; then
 fi
 rm -f "$calibre_tmp"
 calibre_path="$HOME"/.local/share/calibre
+rm -rf "$calibre_path"
 mv "$calibre_extracted_tmp" "$calibre_path"
 for f in "$calibre_path"/*; do
 	if [ -x "$f" ]; then
