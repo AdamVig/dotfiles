@@ -122,7 +122,7 @@ chmod +x "$bitwarden_path"
 log_end
 
 log_start 'installing ncspot'
-if ! ncspot_url="$(get_release_url 'hrkfdn/ncspot' 'linux.tar.gz')"; then
+if ! ncspot_url="$(get_release_url 'hrkfdn/ncspot' 'linux-x86_64.tar.gz')"; then
 	fatal 'failed to get ncspot release URL'
 fi
 ncspot_tmp="$(mktemp --suffix .tar.gz)"
