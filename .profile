@@ -75,6 +75,9 @@ if [[ "$OSTYPE" == *linux* ]]; then
 
 	# Map right meta key to the "compose" key for special characters
 	setxkbmap -option compose:rwin
+
+	# Disable emoji in Minikube
+	export MINIKUBE_IN_STYLE=false
 fi
 
 # Add golang directory to PATH
