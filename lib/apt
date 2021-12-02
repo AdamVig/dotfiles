@@ -355,6 +355,20 @@ fi
 rm -f "$glow_tmp"
 log_end
 
+log_start 'installing Minikube'
+# https://minikube.sigs.k8s.io/docs/start/
+minikube_url='https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb'
+minikube_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$minikube_url" --output "$minikube_tmp"; then
+	fatal 'failed to download Minikube'
+fi
+# Ignore recommends because they include VirtualBox
+if ! request_sudo apt-get install --no-install-recommends "$minikube_tmp"; then
+	fatal 'failed to install Minikube'
+fi
+rm -f "$minikube_tmp"
+log_end
+
 log_start 'installing pastel'
 if ! pastel_url="$(get_release_url 'sharkdp/pastel' '_amd64.deb')"; then
 	fatal 'failed to get pastel release URL'
