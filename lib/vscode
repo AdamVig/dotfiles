@@ -26,23 +26,23 @@ _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 log_end
 
 declare -a extensions=(
-	bungcip.better-toml                   # TOML support
-	dbaeumer.vscode-eslint                # JavaScript linter
-	eamodio.gitlens                       # Advanced Git integration
-	EditorConfig.editorconfig             # Editor text style configuration
-	eg2.vscode-npm-script                 # package.json linting and npm script detection
-	esbenp.prettier-vscode                # Code formatting with Prettier
-	emroussel.atom-icons                  # Atom-inspired icons
-	emroussel.atomize-atom-one-dark-theme # Atom-inspired theme
-	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
-	jpoissonnier.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
-	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
-	ms-vsliveshare.vsliveshare            # Live code sharing
-	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
-	QassimFarid.ejs-language-support      # EJS (Embedded JS) template language support
-	stkb.rewrap                           # Reformats code comments and other text to a given line length
-	streetsidesoftware.code-spell-checker # Spell checker
-	timonwong.shellcheck                  # Shell script linting
+	bungcip.better-toml                        # TOML support
+	dbaeumer.vscode-eslint                     # JavaScript linter
+	eamodio.gitlens                            # Advanced Git integration
+	EditorConfig.editorconfig                  # Editor text style configuration
+	eg2.vscode-npm-script                      # package.json linting and npm script detection
+	esbenp.prettier-vscode                     # Code formatting with Prettier
+	emroussel.atom-icons                       # Atom-inspired icons
+	emroussel.atomize-atom-one-dark-theme      # Atom-inspired theme
+	GitHub.vscode-pull-request-github          # built-in GitHub pull request support
+	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
+	mrmlnc.vscode-scss                         # SCSS IntelliSense and autocomplete
+	ms-vsliveshare.vsliveshare                 # Live code sharing
+	ryanluker.vscode-coverage-gutters          # Code coverage visualizer
+	QassimFarid.ejs-language-support           # EJS (Embedded JS) template language support
+	stkb.rewrap                                # Reformats code comments and other text to a given line length
+	streetsidesoftware.code-spell-checker      # Spell checker
+	timonwong.shellcheck                       # Shell script linting
 )
 
 declare -a no_longer_needed_extensions=(
