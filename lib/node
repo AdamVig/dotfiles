@@ -25,6 +25,11 @@ if is_linux; then
 	log_end
 
 	log_start 'initializing Nodenv environment for this session'
+	# Without this, Nodenv can't find its plugins (e.g. `nodenv install`, which comes from `node-build`)
+	export NODENV_ROOT="$nodenv_root"
+	# Add `nodenv` to PATH so that it can call itself (e.g. `nodenv rehash`)
+	# https://unix.stackexchange.com/a/415028/288259
+	PATH="${PATH:+${PATH}:}$nodenv_root/bin"
 	eval "$("$nodenv_root"/bin/nodenv init -)"
 	log_end
 
