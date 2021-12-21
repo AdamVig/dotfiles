@@ -37,8 +37,7 @@ if command -v apt-get >/dev/null && ! command -v jq >/dev/null; then
 	sudo apt remove --yes gnome-shell-extension-desktop-icons-ng
 	echo 'done removing ding.js GNOME shell extension.'
 
-	echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
-	exit
+	echo 'done running pre-bootstrap steps'
 fi
 
 exec "$(dirname "$(realpath "$0")")"/../lib/main
