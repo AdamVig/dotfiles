@@ -24,7 +24,8 @@ pip_packages=(
 )
 
 for package in "${pip_packages[@]}"; do
-	python3 -m pip install --upgrade --user "$package" >/dev/null
+	# Disable keyring to prevent interactive prompts (https://github.com/pypa/pip/issues/8090#issuecomment-803363268)
+	PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring python3 -m pip install --upgrade --user "$package" >/dev/null
 	log "installed \"$package\""
 done
 
