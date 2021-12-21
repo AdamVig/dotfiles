@@ -22,7 +22,9 @@ if is_linux; then
 			fatal 'failed to clone Nodenv'
 		fi
 	fi
+	log_end
 
+	log_start 'initializing Nodenv environment for this session'
 	eval "$("$nodenv_root"/bin/nodenv init -)"
 	log_end
 
