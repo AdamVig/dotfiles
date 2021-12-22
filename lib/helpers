@@ -171,12 +171,18 @@ is_ubuntu() {
 	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Ubuntu' ]
 }
 
+# Make a prompt using the log function (suitable for passing to `read` or `sudo`, for example)
+# $1: prompt text
+make_prompt() {
+	# Redirect stderr to stdout so the output can be captured
+	log 2>&1 "${standout} input ${reset}" "$1"
+}
+
 # Prompt the user for their password with a custom message
 # If any arguments are provided, they will be passed to sudo
 # If no arguments are provided, update the user's cached credentials and extend the sudo timeout for five minutes
 request_sudo() {
-	# Redirect stderr to stdout so the output can be captured
-	prompt="$(log 2>&1 "${standout} input ${reset}" 'Enter the system password for user %p: ')"
+	prompt="$(make_prompt 'Enter the system password for user %p: ')"
 	if [ $# -eq 0 ]; then
 		sudo --validate --prompt "$prompt"
 	else
