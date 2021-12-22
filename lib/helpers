@@ -104,25 +104,6 @@ fatal() {
 	exit 1
 }
 
-# Confirm if a user wants to do something
-# Bypasses the prompt and proceeds if the variable SHOULD_CONFIRM is set to 0
-# $1: message, defaults to 'Proceed?'
-# returns 0 or 1 depending on user input, 0 means no, 1 means yes
-confirm() {
-	# Whether or not to skip prompt
-	# Use value of SHOULD_CONFIRM; if not set, default to 1 (skip prompt)
-	SHOULD_PROMPT=${SHOULD_CONFIRM:-1}
-	if [[ $SHOULD_PROMPT == 1 ]]; then
-		return 0 # automatic yes
-	fi
-
-	MESSAGE=${1:-"Proceed?"}
-	read -p "$MESSAGE (y/n) " -n 1 -r
-	echo
-	[[ $REPLY =~ ^[Yy]$ ]] # REPLY is automatically set to the result of `read`
-	return $?              # result of previous line, either 0 (yes) or 1 (no)
-}
-
 # cURL wrapper with common default options
 _curl() {
 	curl --silent --fail --show-error --location "$@"
