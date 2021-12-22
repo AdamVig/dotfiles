@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component ssh-key "$@"
+}
+
+log_start 'setting up SSH key'
+
+ssh_key_exists() {
+	stat -t "$HOME"/.ssh/id_* >/dev/null 2>&1
+}
+
+if ssh_key_exists; then
+	log 'found existing SSH key, exiting'
+	log_end
+	exit
+fi
+
+if ! hostname="$(hostname -s)"; then
+	fatal 'failed to get system hostname'
+fi
+
+log_start 'checking for SSH key in Bitwarden vault'
+log "using hostname \"$hostname\""
+
+if ! command -v bw >/dev/null; then
+	warn_and_bail 'cannot set up SSH key: Bitwarden CLI is not available'
+fi
+# shellcheck disable=SC2034
+export BW_SESSION
+
+if ! bw login --check &>/dev/null; then
+	log_start 'logging in to Bitwarden'
+	BW_SESSION="$(bw login --raw)"
+	log_end
+fi
+
+if ! bw unlock --check &>/dev/null; then
+	log_start 'unlocking Bitwarden vault'
+	BW_SESSION="$(bw unlock --raw)"
+	log_end
+fi
+
+if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
+	fatal 'failed to get ID of Bitwarden folder "ssh"'
+fi
+
+log_end
+
+if bw list items --folderid="$ssh_folder_id" --search="$(hostname -s)" |
+	jq --exit-status 'length > 0' >/dev/null; then
+	log_start 'prompting user to install key'
+	read -r -p "$(make_prompt 'waiting for user to manually install key (press enter when done)')"
+	log_end
+else
+	log_start 'prompting user to create key'
+	read -r -p "$(make_prompt 'waiting for user to manually create a key (press enter when done)')"
+	log_end
+fi
+
+if ! ssh_key_exists; then
+	warn 'did not find an SSH key, did you install or create one?'
+fi
+
+log_end

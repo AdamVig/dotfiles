@@ -57,6 +57,7 @@ log_end
 
 log_start 'running system setup scripts'
 "$_dir"/profile-picture
+"$_dir"/ssh-key
 log_end
 
 log "done. start a new login shell or run 'source .zshrc'."
