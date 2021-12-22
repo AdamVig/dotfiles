@@ -15,16 +15,12 @@ request_sudo
 log_start 'setting up GNOME theme'
 
 if ! command -v gresource >/dev/null; then
-	warn "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
-	log_end
-	exit
+	warn_and_bail "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
 fi
 
 theme_path='/usr/share/gnome-shell/theme/Yaru/gnome-shell-theme.gresource'
 if ! [ -f "$theme_path" ]; then
-	warn "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
-	log_end
-	exit
+	warn_and_bail "could not find default theme at \"$theme_path\", skipping GNOME theme setup"
 fi
 
 tmp_dir="$(mktemp -d)"

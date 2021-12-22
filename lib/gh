@@ -12,9 +12,7 @@ log() {
 log_start 'setting up GitHub CLI (gh)'
 
 if ! command -v gh >/dev/null; then
-	warn 'could not find command "gh", skipping'
-	log_end
-	exit
+	warn_and_bail 'could not find command "gh", skipping'
 fi
 
 log_start 'setting configuration'

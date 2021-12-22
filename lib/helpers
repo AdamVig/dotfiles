@@ -91,6 +91,14 @@ warn() {
 	log "${black}${yellow_background} warning ${reset}" "$@"
 }
 
+# Log a warning message and exit cleanly after calling "log_end"
+# $@: passed to log
+warn_and_bail() {
+	warn "$@"
+	log_end
+	exit
+}
+
 # Log an error message
 # $@: passed to log
 error() {
