@@ -143,9 +143,17 @@ get_release_url() {
 	fi
 
 	# Get list of releases
-	curl -s "https://api.github.com/repos/${repository}/releases/latest" |
+	url="https://api.github.com/repos/${repository}/releases/latest"
+	if ! latest_release="$(_curl "$url")"; then
+		warn "failed to get latest release from \"$url\""
+		return 100
+	fi
+	if ! echo "$latest_release" |
 		jq --arg pattern "$pattern" --raw-output \
-			'.assets | map(.browser_download_url | select(contains($pattern))) | first'
+			'.assets | map(.browser_download_url | select(contains($pattern))) | first'; then
+		warn 'failed to find a matching asset in the latest release'
+		return 100
+	fi
 }
 
 # Install a binary to ~/.local/bin from a URL
