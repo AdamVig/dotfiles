@@ -15,6 +15,14 @@ if ! command -v gh >/dev/null; then
 	warn_and_bail 'could not find command "gh", skipping'
 fi
 
+log_start 'checking authentication'
+if ! gh auth status &>/dev/null; then
+	log_start 'authenticating'
+	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user
+	log_end
+fi
+log_end
+
 log_start 'setting configuration'
 # Use SSH for Git clone and push operations
 gh config set git_protocol ssh
