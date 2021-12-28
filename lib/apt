@@ -258,7 +258,6 @@ declare -a packages=(
 	slack-desktop
 	spotify-client
 	steam
-	vino         # GNOME VNC server
 	virt-manager # Virtual machine manager
 	yubikey-manager
 
