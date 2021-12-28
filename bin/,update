@@ -60,11 +60,15 @@ update_npm() {
 }
 
 update_pip() {
+	# Disable keyring to prevent interactive prompts (https://github.com/pypa/pip/issues/8090#issuecomment-803363268)
+	export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
 	echo 'pip'
-	pip install --upgrade --user pip
+	python3 -m pip install --upgrade --user pip
 
 	echo 'pip packages'
-	pip list --user --outdated --format freeze | xargs -n1 pip install --upgrade --user
+	# xargs: -r to skip the run if there is no input; -n1 to use one line per invocation
+	python3 -m pip list --user --outdated --format=freeze | xargs -r -n1 python3 -m pip install --upgrade --user
 }
 
 update_apt() {
