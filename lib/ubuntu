@@ -22,7 +22,6 @@ log_end
 
 declare -a snaps=(
 	'authy --beta'
-	ffsend
 	standard-notes
 	yq
 )

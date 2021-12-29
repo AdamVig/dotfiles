@@ -65,7 +65,6 @@ brew "shfmt" # Shell script formatter
 
 # web service clients
 brew "ddgr" # DuckDuckGo
-brew "ffsend" # Firefox Send
 brew "gh" # GitHub
 brew "hub", args: ["HEAD"] # GitHub
 brew "mas" # Mac App Store CLI
