@@ -41,7 +41,7 @@
  '(org-html-html5-fancy t)
  '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
  '(package-selected-packages
-   '(forge olivetti super-save ox-slack ox-jira company tide ox-gfm unicode-fonts i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
+   '(forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -57,16 +57,6 @@
 
 ;; Set the font and font size (in 1/10pt)
 (set-face-attribute 'default nil :font "Fira Code" :height 120)
-
-;; Add cache for unicode-fonts package
-(use-package persistent-soft
-	:ensure t)
-
-;; Configure Unicode fonts (https://github.com/rolandwalker/unicode-fonts)
-(use-package unicode-fonts
-	:ensure t
-	:config
-	(unicode-fonts-setup))
 
 ;; Customize the mode line
 (setq-default mode-line-format
