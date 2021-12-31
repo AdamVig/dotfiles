@@ -41,7 +41,7 @@
  '(org-html-html5-fancy t)
  '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
  '(package-selected-packages
-		'(flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode atom-one-dark-theme editorconfig use-package))
+		'(flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
