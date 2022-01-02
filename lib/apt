@@ -200,12 +200,14 @@ declare -a packages=(
 	tree
 	units # Unit conversion calculator
 	unzip
-	v4l-utils # Webcam control tools
-	wmctrl    # X window manager control CLI
-	x11vnc    # X server VNC
-	xclip     # Clipboard CLI
-	xsel      # Clipboard CLI
-	xdotool   # X input event generator
+	v4l-utils  # Webcam control tools
+	wine       # Support for Windows applications
+	winetricks # Tools for working with Wine
+	wmctrl     # X window manager control CLI
+	x11vnc     # X server VNC
+	xclip      # Clipboard CLI
+	xsel       # Clipboard CLI
+	xdotool    # X input event generator
 	xdg-utils
 	xournalpp # Note taking tool
 	wpasupplicant
