@@ -35,7 +35,7 @@ elif [ "$command" = 'suspend' ]; then
 elif [ "$command" = 'switch-to-windows' ]; then
 	# awk program inspired by Grub's Bash completion script
 	if ! grub_menuentry_windows="$(
-		awk \
+		sudo awk \
 			--field-separator "[\"']" \
 			'BEGIN{IGNORECASE = 1} /menuentry / { if ($2 ~ "windows") {print $2; exit} }' \
 			/boot/grub/grub.cfg
