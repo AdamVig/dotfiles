@@ -190,6 +190,8 @@ declare -a packages=(
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	magic-wormhole     # Point-to-point file sharing
+	mosquitto          # MQTT broker and password tool
+	mosquitto-clients  # MQTT client
 	nnn                # Command-line file browser
 	p7zip
 	pandoc
