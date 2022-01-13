@@ -18,19 +18,15 @@ brew "ripgrep" # Better grep
 
 # command line tools
 brew "emacs" if OS.mac?
-brew "expect" # Scripting tool for interactive programs
 brew "fzf" # Fuzzy finder
-brew "gifsicle" # Gif tool
 brew "glow" # Markdown viewer
 brew "graphviz" # Graph visualization tool
 brew "hugo" # Static site builder
 brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
-brew "ipcalc" # IP address calculator
 brew "jq" # JSON processor
 brew "libpq" # PostgreSQL CLI
 brew "magic-wormhole" # Point-to-point file sharing
-brew "nnn" # Command-line file browser
 brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
@@ -64,7 +60,6 @@ brew "shellcheck" # Shell script linter
 brew "shfmt" # Shell script formatter
 
 # web service clients
-brew "ddgr" # DuckDuckGo
 brew "gh" # GitHub
 brew "hub", args: ["HEAD"] # GitHub
 brew "mas" # Mac App Store CLI
@@ -83,7 +78,6 @@ cask "xquartz" # Needed by Inkscape
 
 # applications
 cask "android-platform-tools"
-cask "authy"
 mas "Bitwarden", id: 1352778147
 cask "docker"
 cask "emacs"

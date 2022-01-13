@@ -106,12 +106,6 @@ if ! is_repository_configured 'ubuntu-elisp'; then
 	log_end
 fi
 
-if ! is_repository_configured 'xournal'; then
-	log_start 'adding Xournal++ repository'
-	request_sudo add-apt-repository --no-update --yes ppa:apandada1/xournalpp-stable
-	log_end
-fi
-
 if ! is_repository_configured 'copyq'; then
 	log_start 'adding CopyQ repository'
 	request_sudo add-apt-repository --no-update --yes ppa:hluk/copyq
@@ -179,25 +173,20 @@ declare -a packages=(
 	ripgrep # Better grep
 
 	# command line tools
-	expect   # Scripting tool for interactive programs
 	fzf      # Fuzzy finder
 	gh       # GitHub CLI
-	gifsicle # Gif tool
 	gnuplot  # Command-line plotting
 	graphviz # Graph visualization tool
 	imagemagick
-	ipcalc             # IP address calculator
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	magic-wormhole     # Point-to-point file sharing
 	mosquitto          # MQTT broker and password tool
 	mosquitto-clients  # MQTT client
-	nnn                # Command-line file browser
 	p7zip
 	pandoc
 	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
-	scrot             # Screenshot capture tool
 	tig               # Visual Git client
 	tree
 	units # Unit conversion calculator
@@ -211,8 +200,6 @@ declare -a packages=(
 	xsel       # Clipboard CLI
 	xdotool    # X input event generator
 	xdg-utils
-	xournalpp # Note taking tool
-	wpasupplicant
 
 	# shell
 	bash
