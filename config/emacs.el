@@ -22,26 +22,26 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
- '(org-agenda-sorting-strategy
-		'((agenda todo-state-up priority-down)
-			 (todo priority-down category-keep todo-state-up)
-			 (tags priority-down category-keep)
-			 (search category-keep)))
+	'(org-agenda-sorting-strategy
+		 '((agenda todo-state-up priority-down)
+				(todo priority-down category-keep todo-state-up)
+				(tags priority-down category-keep)
+				(search category-keep)))
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
- '(org-capture-templates
-		'(("r" "Pull request review." entry
-				(file "work.org")
-				(file "templates/pull-request-review.tmpl")
-				:prepend t)))
+	'(org-capture-templates
+		 '(("r" "Pull request review." entry
+				 (file "work.org")
+				 (file "templates/pull-request-review.tmpl")
+				 :prepend t)))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
- '(package-selected-packages
-		'(flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+	'(package-selected-packages
+		 '(flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
