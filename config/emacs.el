@@ -30,10 +30,14 @@
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
 	'(org-capture-templates
-		 '(("r" "Pull request review." entry
+		 '(("R" "Pull request re-review." entry
 				 (file "work.org")
-				 (file "templates/pull-request-review.tmpl")
-				 :prepend t)))
+				 (file "templates/pull-request-re-review.tmpl")
+				 :prepend t)
+				("r" "Pull request review." entry
+					(file "work.org")
+					(file "templates/pull-request-review.tmpl")
+					:prepend t)))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
