@@ -88,6 +88,7 @@
   // ------------------------------
   // Extensions
   // ------------------------------
+  "extensions.ignoreRecommendations": true,
   // Git Lens
   "gitlens.statusBar.enabled": false,
   "gitlens.codeLens.recentChange.enabled": false,
