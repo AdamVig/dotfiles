@@ -40,7 +40,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi -combi-modi drun,run"
 
 # open emoji input
-bindsym $mod+period exec --no-startup-id rofimoji --action=clipboard
+bindsym $mod+period exec --no-startup-id rofimoji
 
 # Press $mod+shift+s to take a screenshot
 bindsym $mod+Shift+s exec flameshot gui
