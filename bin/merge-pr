@@ -55,12 +55,18 @@ errlog() {
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 default_branch="$(get-default-branch origin)"
+
 # Extract pull request information into three separate variables
-# - Set IFS to newline so that `read` parses multiple lines of input
-# - Set delimiter (`-d`) to `%` instead of the default, which is newline
-# - Format is title, newline, body, newline, URL, percent sign
-# shellcheck disable=SC2162
-IFS=$'\n' read -d '%' title base_branch pull_request_url < <(hub pr show --head "$current_branch" --format '%t%n%B%n%U%%')
+eval "$(
+	gh pr view \
+		--json='baseRefName,title,url' \
+		--jq='@sh "base_branch=\(.baseRefName) title=\(.title) pull_request_url=\(.url)"'
+)"
+
+# Verify that variables are set
+: "${base_branch:?failed to fetch base branch}"
+: "${title:?failed to fetch pull request title}"
+: "${pull_request_url:?failed to fetch pull request URL}"
 
 if [ "$current_branch" = "$default_branch" ]; then
 	errlog "error: current branch is default branch, please run again from a different branch"
@@ -70,6 +76,20 @@ fi
 branch="$default_branch"
 if [ -n "$base_branch" ]; then
 	branch="$base_branch"
+fi
+
+if ! mergeable="$(gh pr view --json='mergeable,mergeStateStatus' --jq='.mergeStatusStatus == "CLEAN" and .mergeable == "MERGEABLE"')"; then
+	errlog 'warning: failed to check mergeable state'
+fi
+
+if [ "$mergeable" = 'false' ]; then
+	read -r -p 'Pull request does not appear to be mergeable. Enable auto-merge? (Y/n)'
+	if ! [[ $REPLY =~ ^[Nn]$ ]]; then
+		gh pr merge --merge --auto --subject="$title" --body="$pull_request_url"
+		exit 0
+	else
+		echo 'Proceeding with attempt to merge pull request'
+	fi
 fi
 
 message_args=()
