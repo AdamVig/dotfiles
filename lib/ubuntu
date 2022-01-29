@@ -85,8 +85,12 @@ _ln "$_dir"/../config/i3 "$config_dir"/i3/config
 mkdir -p "$config_dir"/i3blocks
 _ln "$_dir"/../config/i3blocks "$config_dir"/i3blocks/config
 
-mkdir -p "$config_dir"/redshift
-_ln "$_dir"/../config/redshift.conf "$config_dir"/redshift/redshift.conf
+if ! [ -f "$config_dir"/redshift.conf ]; then
+	log_start 'copying Redshift configuration template into place'
+	cp "$_dir"/../config/redshift.conf "$config_dir"/redshift.conf
+	warn "Redshift configuration copied to $config_dir/redshift.conf, you will need to manually set your location"
+	log_end
+fi
 
 mkdir -p "$config_dir"/pulse
 _ln "$_dir"/../config/pulseaudio-configuration-script.pa "$config_dir"/pulse/default.pa
