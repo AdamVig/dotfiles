@@ -78,7 +78,7 @@ if [ -n "$base_branch" ]; then
 	branch="$base_branch"
 fi
 
-if ! mergeable="$(gh pr view --json='mergeable,mergeStateStatus' --jq='.mergeStatusStatus == "CLEAN" and .mergeable == "MERGEABLE"')"; then
+if ! mergeable="$(gh pr view --json='mergeable,mergeStateStatus' --jq='.mergeStateStatus == "CLEAN" and .mergeable == "MERGEABLE"')"; then
 	errlog 'warning: failed to check mergeable state'
 fi
 
