@@ -36,12 +36,13 @@
   tool = meld
   colorMoved = default
 [delta]
-	hyperlinks = true
+	# Can't use hyperlinks with navigate until less is >= 581 (https://github.com/dandavison/delta/issues/615)
+	hyperlinks = false
 	navigate = true
 	# Do not navigate through hunks, only files and sections
 	navigate-regex = ^(commit|added:|removed:|renamed:|Δ)
 	# Use less instead of bat to improve performance and simplify output
-	pager = less -rX
+	pager = less
   side-by-side = false
 	syntax-theme = OneHalfDark
 [merge]
