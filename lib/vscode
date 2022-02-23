@@ -40,6 +40,7 @@ declare -a extensions=(
 	ms-vsliveshare.vsliveshare                 # Live code sharing
 	ryanluker.vscode-coverage-gutters          # Code coverage visualizer
 	QassimFarid.ejs-language-support           # EJS (Embedded JS) template language support
+	silvenon.mdx                               # MDX support
 	stkb.rewrap                                # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker      # Spell checker
 	timonwong.shellcheck                       # Shell script linting
