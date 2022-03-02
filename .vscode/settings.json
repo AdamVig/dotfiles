@@ -5,7 +5,7 @@
   "window.zoomLevel": 1,
   "editor.fontFamily": "Fira Code",
   "editor.fontWeight": "600",
-  "editor.fontLigatures": true,
+  "editor.fontLigatures": false,
   "editor.rulers": [120],
   "editor.wordWrap": "on",
   // Disable minimap
