@@ -39,6 +39,33 @@ log_failure() {
 	echo "${background_red} failed ${reset}"
 }
 
+# $1: PID of process to wait for
+# $2: path to file containing output to log
+log_output() {
+	pid="${1:-}"
+	if [ -z "$pid" ]; then
+		echo 'internal error: log_output called without PID'
+		return 1
+	fi
+
+	output_path="${2:-}"
+	if [ -z "$output_path" ]; then
+		echo 'internal error: log_output called without output path'
+		return 1
+	fi
+
+	tput sc
+	while kill -0 "$pid" 2>/dev/null; do
+		tput rc 1
+		tput el
+		echo
+		tail --lines=5 "$output_path"
+		sleep 0.2s
+	done
+	tput rc 1
+	tput el
+}
+
 update_brew() {
 	echo 'brew registry'
 	brew update
@@ -109,7 +136,10 @@ sudo --validate --prompt="${background_blue} password: ${reset} "
 if command -v brew >/dev/null; then
 	log_operation brew
 	brew_log="$(mktemp)"
-	if ! update_brew &>"$brew_log"; then
+	update_brew &>"$brew_log" &
+	pid=$!
+	log_output $pid "$brew_log"
+	if ! wait "$pid"; then
 		log_failure
 		cat "$brew_log"
 	else
@@ -120,7 +150,10 @@ fi
 
 log_operation npm
 npm_log="$(mktemp)"
-if ! update_npm &>"$npm_log"; then
+update_npm &>"$npm_log" &
+pid=$!
+log_output $pid "$npm_log"
+if ! wait "$pid"; then
 	log_failure
 	cat "$npm_log"
 else
@@ -130,7 +163,10 @@ rm -f "$npm_log"
 
 log_operation pip
 pip_log="$(mktemp)"
-if ! update_pip $ >"$pip_log"; then
+update_pip $ >"$pip_log" &
+pid=$!
+log_output $pid "$pip_log"
+if ! wait "$pid"; then
 	log_failure
 	cat "$pip_log"
 else
@@ -141,7 +177,10 @@ rm -f "$pip_log"
 if command -v apt-get >/dev/null; then
 	log_operation apt
 	apt_log="$(mktemp)"
-	if ! update_apt &>"$apt_log"; then
+	update_apt &>"$apt_log" &
+	pid=$!
+	log_output $pid "$apt_log"
+	if ! wait "$pid"; then
 		log_failure
 		cat "$apt_log"
 	else
@@ -153,7 +192,10 @@ fi
 if is-linux; then
 	log_operation 'linux software'
 	linux_software_log="$(mktemp)"
-	if ! update_linux_software &>"$linux_software_log"; then
+	update_linux_software &>"$linux_software_log" &
+	pid=$!
+	log_output $pid "$linux_software_log"
+	if ! wait "$pid"; then
 		log_failure
 		cat "$linux_software_log"
 	else
@@ -163,7 +205,10 @@ if is-linux; then
 
 	log_operation 'nodenv plugins'
 	nodenv_plugins_log="$(mktemp)"
-	if ! update_nodenv_plugins &>"$nodenv_plugins_log"; then
+	update_nodenv_plugins &>"$nodenv_plugins_log" &
+	pid=$!
+	log_output $pid "$nodenv_plugins_log"
+	if ! wait "$pid"; then
 		log_failure
 		cat "$nodenv_plugins_log"
 	else
@@ -173,7 +218,10 @@ if is-linux; then
 
 	log_operation thunderbird
 	thunderbird_log="$(mktemp)"
-	if ! update_thunderbird &>"$thunderbird_log"; then
+	update_thunderbird &>"$thunderbird_log" &
+	pid=$!
+	log_output $pid "$thunderbird_log"
+	if ! wait "$pid"; then
 		log_failure
 		cat "$thunderbird_log"
 	else
@@ -184,7 +232,10 @@ fi
 
 log_operation 'gh extensions'
 gh_extensions_log="$(mktemp)"
-if ! update_gh_extensions &>"$gh_extensions_log"; then
+update_gh_extensions &>"$gh_extensions_log" &
+pid=$!
+log_output $pid "$gh_extensions_log"
+if ! wait "$pid"; then
 	log_failure
 	cat "$gh_extensions_log"
 else
