@@ -29,6 +29,7 @@ brew "libpq" # PostgreSQL CLI
 brew "magic-wormhole" # Point-to-point file sharing
 brew "p7zip"
 brew "pandoc"
+brew "restic" # Backup
 brew "scc" # Lines of code counter
 brew "ssh-copy-id"
 brew "svn" # Version control needed by some cask fonts

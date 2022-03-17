@@ -139,6 +139,24 @@ install "$ncspot_extracted_tmp"/ncspot "$ncspot_path"
 rm -rf "$ncspot_extracted_tmp"
 log_end
 
+log_start 'installing restic'
+if ! restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"; then
+	fatal 'failed to get restic release URL'
+fi
+restic_tmp="$(mktemp --suffix .bz2)"
+if ! _curl "$restic_url" --output "$restic_tmp"; then
+	fatal 'failed to download restic'
+fi
+restic_extracted_tmp="${restic_tmp%.bz2}"
+if ! bunzip2 "$restic_tmp" >/dev/null; then
+	fatal 'failed to extract restic'
+fi
+rm -f "$restic_tmp"
+restic_path="$HOME"/.local/bin/restic
+install "$restic_extracted_tmp" "$restic_path"
+rm -rf "$restic_extracted_tmp"
+log_end
+
 log_start 'installing websocat'
 if ! websocat_url="$(get_release_url 'vi/websocat' '_linux64')"; then
 	fatal 'failed to get websocat release URL'
