@@ -63,15 +63,6 @@ Keywords=Text;Editor;
 fi
 
 log_start 'setting up Emacs configuration'
-# Remove legacy configuration location
-rm -f "$HOME"/.emacs
-
-legacy_emacs_config_path="$HOME"/.emacs.d
-if [ -d "$legacy_emacs_config_path" ]; then
-	log_start 'removing legacy Emacs config path'
-	rm -rf "$legacy_emacs_config_path"
-	log_end
-fi
 
 emacs_config_path="$(xdg_config)"/emacs/init.el
 if ! [ -f "$emacs_config_path" ]; then
