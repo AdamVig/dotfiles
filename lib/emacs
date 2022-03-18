@@ -63,12 +63,21 @@ Keywords=Text;Editor;
 fi
 
 log_start 'setting up Emacs configuration'
-
 emacs_config_path="$(xdg_config)"/emacs/init.el
 if ! [ -f "$emacs_config_path" ]; then
 	log_start 'installing Emacs configuration'
 	mkdir -p "$(dirname "$emacs_config_path")"
 	_ln "$_dir"/../config/emacs.el "$emacs_config_path"
+	log_end
+fi
+
+if is_macos; then
+	log_start 'linking Emacs configuration to home directory for macOS Emacs'
+	mkdir -p "$HOME"/.emacs.d/lisp
+	_ln "$emacs_config_path" "$HOME"/.emacs.d
+	if [ -f "$emacs_config_path"/lisp/init-local.el ]; then
+		_ln "$emacs_config_path"/lisp/init-local.el "$HOME"/.emacs.d/lisp
+	fi
 	log_end
 fi
 log_end
