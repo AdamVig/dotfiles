@@ -214,6 +214,26 @@ if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
 	log_end
 fi
 
+calibre_desktop_path="$HOME"/.local/share/applications/calibre.desktop
+if ! [ -f "$calibre_desktop_path" ]; then
+	log_start 'installing Calibre desktop file'
+	mkdir -p "$(dirname "$calibre_desktop_path")"
+	# From https://github.com/kovidgoyal/calibre/blob/3df6200ca7cf5499a496ab165d12d6e7294830fc/src/calibre/linux.py#L1123-L1135
+	echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Name=calibre
+GenericName=E-book library management
+Comment=E-book library management: Convert, view, share, catalogue all your e-books
+TryExec=calibre
+Exec=calibre %U
+Icon=calibre-gui
+Categories=Office;
+X-GNOME-UsesNotifications=true
+" >"$calibre_desktop_path"
+	log_end
+fi
+
 log_start 'removing legacy desktop files'
 rm -f "$HOME"/.local/share/applications/ncspot.desktop
 log_end
