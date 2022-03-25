@@ -51,6 +51,12 @@ if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_end
 fi
 
+if ! is_repository_configured 'digikam'; then
+	log_start 'adding digiKam repository'
+	request_sudo add-apt-repository --no-update --yes ppa:savoury1/digikam
+	log_end
+fi
+
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
 	# https://www.spotify.com/us/download/linux/
