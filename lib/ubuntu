@@ -214,21 +214,8 @@ if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
 	log_end
 fi
 
-ncspot_desktop_path="$HOME"/.local/share/applications/ncspot.desktop
-if ! [ -f "$ncspot_desktop_path" ]; then
-	log_start 'installing ncspot desktop file'
-	mkdir -p "$(dirname "$ncspot_desktop_path")"
-	# In Exec=, remove playlist database to work around ncspot caching bug
-	echo "[Desktop Entry]
-Version=1.0
-Name=ncspot
-GenericName=Music player
-Comment=Command-line Spotify client
-Exec=ncspot-wrapper
-Type=Application
-Terminal=false
-" >"$ncspot_desktop_path"
-	log_end
-fi
+log_start 'removing legacy desktop files'
+rm -f "$HOME"/.local/share/applications/ncspot.desktop
+log_end
 
 log_end

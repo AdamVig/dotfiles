@@ -121,24 +121,6 @@ fi
 chmod +x "$bitwarden_path"
 log_end
 
-log_start 'installing ncspot'
-if ! ncspot_url="$(get_release_url 'hrkfdn/ncspot' 'linux-x86_64.tar.gz')"; then
-	fatal 'failed to get ncspot release URL'
-fi
-ncspot_tmp="$(mktemp --suffix .tar.gz)"
-if ! _curl "$ncspot_url" --output "$ncspot_tmp"; then
-	fatal 'failed to download ncspot'
-fi
-ncspot_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$ncspot_tmp" -C "$ncspot_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract ncspot'
-fi
-rm -f "$ncspot_tmp"
-ncspot_path="$HOME"/.local/bin/ncspot
-install "$ncspot_extracted_tmp"/ncspot "$ncspot_path"
-rm -rf "$ncspot_extracted_tmp"
-log_end
-
 log_start 'installing restic'
 if ! restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"; then
 	fatal 'failed to get restic release URL'
@@ -172,6 +154,10 @@ if ! _curl 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-ma
 	fatal 'failed to download YubiKey Manager'
 fi
 chmod +x "$yubikey_manager_path"
+log_end
+
+log_start 'removing legacy software'
+rm -f "$HOME"/.local/bin/ncspot
 log_end
 
 log_end
