@@ -45,3 +45,4 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
 
 compdef _git log-branch-commits=git-branch
+compdef _git merge-latest=git-branch
