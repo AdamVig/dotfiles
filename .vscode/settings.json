@@ -72,6 +72,14 @@
     // Wrap at 72 characters instead of 50
     "rewrap.wrappingColumn": 72
   },
+  "[md]": {
+    // Disable automatic line wrapping for Markdown
+    "rewrap.autoWrap.enabled": false
+  },
+  "[mdx]": {
+    // Disable automatic line wrapping for MDX
+    "rewrap.autoWrap.enabled": false
+  },
   // Update TypeScript imports when file is moved
   "typescript.updateImportsOnFileMove.enabled": "always",
   // Rename properties everywhere instead of aliasing them to the previous name
