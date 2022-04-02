@@ -121,7 +121,9 @@
 (use-package undo-tree
 	:ensure t
 	:config
-	(global-undo-tree-mode))
+	(global-undo-tree-mode)
+	;; Do not save history to a file
+	(setq undo-tree-auto-save-history nil))
 
 ;; Install and enable Counsel, Ivy, and Swiper (https://github.com/abo-abo/swiper)
 (use-package counsel
