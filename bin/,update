@@ -131,6 +131,11 @@ update_gh_extensions() {
 	gh extension upgrade --all
 }
 
+update_emacs_packages() {
+	echo 'emacs packages'
+	emacsclient --eval '(auto-package-update-now)'
+}
+
 sudo --validate --prompt="${background_blue} password: ${reset} "
 
 if command -v brew >/dev/null; then
@@ -242,3 +247,16 @@ else
 	log_success
 fi
 rm -f "$gh_extensions_log"
+
+log_operation 'emacs packages'
+emacs_packages_log="$(mktemp)"
+update_emacs_packages &>"$emacs_packages_log" &
+pid=$!
+log_output $pid "$emacs_packages_log"
+if ! wait "$pid"; then
+	log_failure
+	cat "$emacs_packages_log"
+else
+	log_success
+fi
+rm -f "$emacs_packages_log"

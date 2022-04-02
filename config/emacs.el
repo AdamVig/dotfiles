@@ -45,7 +45,7 @@
  '(org-html-html5-fancy t)
  '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
  '(package-selected-packages
-		'(flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+		'(auto-package-update flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,6 +53,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
+(use-package auto-package-update
+  :ensure t
+  :config
+	;; Set automatic update interval (in days)
+	(setq auto-package-update-interval 7)
+	;; Do not prompt before running update
+	(setq auto-package-update-prompt-before-update nil)
+	;; Delete old versions after updating
+	(setq auto-package-update-delete-old-versions t)
+	;; Show summary after updating
+	(setq auto-package-update-hide-results t))
 
 ;; Add exec-path-from-shell (https://github.com/purcell/exec-path-from-shell)
 (use-package exec-path-from-shell
