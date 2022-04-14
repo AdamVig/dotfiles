@@ -34,6 +34,7 @@ declare -a extensions=(
 	esbenp.prettier-vscode                     # Code formatting with Prettier
 	emroussel.atom-icons                       # Atom-inspired icons
 	emroussel.atomize-atom-one-dark-theme      # Atom-inspired theme
+	GitHub.codespaces                          # Support for Codespaces
 	GitHub.vscode-pull-request-github          # built-in GitHub pull request support
 	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
 	mrmlnc.vscode-scss                         # SCSS IntelliSense and autocomplete
