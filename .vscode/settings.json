@@ -36,6 +36,8 @@
   "workbench.editor.enablePreview": false,
   // Use JSON settings editor instead of UI
   "workbench.settings.editor": "json",
+  // Hide release notes
+  "update.showReleaseNotes": false,
   // ------------------------------
   // Sidebar
   // ------------------------------
@@ -100,6 +102,7 @@
   // ------------------------------
   "extensions.ignoreRecommendations": true,
   // Git Lens
+  "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
   "gitlens.codeLens.recentChange.enabled": false,
   "gitlens.codeLens.authors.enabled": false,
