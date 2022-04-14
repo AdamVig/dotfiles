@@ -41,6 +41,8 @@
   // ------------------------------
   // Keep the debug toolbar in its panel
   "debug.toolBarLocation": "docked",
+  // Move sidebar to the right side
+  "workbench.sideBar.location": "right",
   // Render diffs inline
   "diffEditor.renderSideBySide": false,
   // Commit all files when none are staged
@@ -140,7 +142,5 @@
     "**/*.dll" // Ignore all .dll files
   ],
   // Hide spell check indicator in status bar
-  "cSpell.showStatus": false,
-  "workbench.sideBar.location": "right",
-  "editor.matchBrackets": "never"
+  "cSpell.showStatus": false
 }
