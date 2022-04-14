@@ -142,5 +142,10 @@
     "**/*.dll" // Ignore all .dll files
   ],
   // Hide spell check indicator in status bar
-  "cSpell.showStatus": false
+  "cSpell.showStatus": false,
+  // Settings sync is used instead of dotfiles in cloud environments
+  "settingsSync.ignoredSettings": [
+    // Keep the activity bar enabled
+    "workbench.activityBar.visible"
+  ]
 }
