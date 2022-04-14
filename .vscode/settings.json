@@ -47,14 +47,6 @@
   "workbench.sideBar.location": "right",
   // Render diffs inline
   "diffEditor.renderSideBySide": false,
-  // Commit all files when none are staged
-  "git.enableSmartCommit": true,
-  // Enable Git commit message character counter
-  "git.inputValidation": "always",
-  // Disable automatic detection of Git submodules
-  "git.detectSubmodules": false,
-  // Periodically run Git Fetch
-  "git.autofetch": false,
   // Hide panes in Explorer
   "explorer.openEditors.visible": 0,
   // Disable file delete confirmation
