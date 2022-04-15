@@ -46,7 +46,8 @@
  '(org-todo-keywords '((sequence "TODO" "DUE" "DONE")))
  '(package-selected-packages
 		'(auto-package-update flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
- '(reb-re-syntax 'string))
+ '(reb-re-syntax 'string)
+ '(use-short-answers t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
