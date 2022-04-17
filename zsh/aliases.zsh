@@ -21,12 +21,7 @@ alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}"/wget-hsts'
 alias units='units --history="${XDG_CACHE_HOME:-$HOME/.cache}"/units_history'
 
 alias et='emacsclient --tty'
-if [[ "$OSTYPE" = *linux* ]]; then
-	alias e='emacsclient --create-frame --no-wait'
-else
-	# --no-wait does not work on macOS
-	alias e='emacsclient --create-frame'
-fi
+alias e='emacsclient --create-frame --no-wait'
 
 if command -v exa > /dev/null; then
   alias ls='exa'

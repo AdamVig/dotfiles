@@ -17,7 +17,6 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
-brew "emacs" if OS.mac?
 brew "fzf" # Fuzzy finder
 brew "glow" # Markdown viewer
 brew "graphviz" # Graph visualization tool

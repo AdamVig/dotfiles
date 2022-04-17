@@ -11,14 +11,6 @@ log() {
 
 log_start 'setting up Emacs'
 
-if is_macos && brew services list | grep --quiet --extended-regexp 'emacs .+ stopped'; then
-	log_start 'enabling Emacs service'
-	if ! brew services start emacs; then
-		warn 'failed to enable Emacs service.'
-	fi
-	log_end
-fi
-
 if is_ubuntu; then
 	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
 	if ! [ -f "$user_emacs_unit_path" ]; then
