@@ -38,6 +38,7 @@ declare -a extensions=(
 	GitHub.vscode-pull-request-github          # built-in GitHub pull request support
 	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
 	mrmlnc.vscode-scss                         # SCSS IntelliSense and autocomplete
+	ms-vscode-remote.remote-ssh                # Remote development via SSH
 	ms-vsliveshare.vsliveshare                 # Live code sharing
 	ryanluker.vscode-coverage-gutters          # Code coverage visualizer
 	QassimFarid.ejs-language-support           # EJS (Embedded JS) template language support
