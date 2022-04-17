@@ -38,6 +38,7 @@ brew "tree"
 brew "uni" # Unicode CLI
 brew "unzip"
 brew "websocat" # Netcat, curl and socat for WebSockets
+brew "xpdf" # PDF tools, including pdfimages
 brew "yq" # jq for YAML/XML
 
 # shell
