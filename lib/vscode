@@ -41,7 +41,6 @@ declare -a extensions=(
 	ms-vscode-remote.remote-ssh                # Remote development via SSH
 	ms-vsliveshare.vsliveshare                 # Live code sharing
 	ryanluker.vscode-coverage-gutters          # Code coverage visualizer
-	QassimFarid.ejs-language-support           # EJS (Embedded JS) template language support
 	silvenon.mdx                               # MDX support
 	stkb.rewrap                                # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker      # Spell checker
@@ -49,7 +48,11 @@ declare -a extensions=(
 )
 
 declare -a no_longer_needed_extensions=(
-	rafamel.subtle-brackets # Better bracket matching
+	Compulim.vscode-clock
+	QassimFarid.ejs-language-support # EJS (Embedded JS) template language support
+	rafamel.subtle-brackets          # Better bracket matching
+	runem.lit-plugin
+	yzhang.markdown-all-in-one
 )
 
 log_start 'installing Visual Studio Code extensions'
