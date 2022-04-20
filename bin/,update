@@ -16,6 +16,7 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
 fi
 
 standout="$(tput smso)"
+dim="$(tput dim)"
 background_blue="$(tput setab 4)"
 background_green="$(tput setab 2)"
 background_red="$(tput setab 1)"
@@ -136,7 +137,12 @@ update_emacs_packages() {
 	emacsclient --eval '(auto-package-update-now)'
 }
 
-sudo --validate --prompt="${background_blue} password: ${reset} "
+if sudo --validate --prompt="${background_blue} password: ${reset} " 2>/dev/null; then
+	log_success
+else
+	tput cuu1
+	echo "${dim}proceeding without sudo${reset}"
+fi
 
 if command -v brew >/dev/null; then
 	log_operation brew
