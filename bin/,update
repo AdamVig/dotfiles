@@ -67,6 +67,23 @@ log_output() {
 	tput el
 }
 
+# $1: operation name
+# $2: operation function
+run_operation() {
+	log_operation "$1"
+	log="$(mktemp)"
+	$2 &>"$log" &
+	pid=$!
+	log_output $pid "$log"
+	if ! wait "$pid"; then
+		log_failure
+		cat "$log"
+	else
+		log_success
+	fi
+	rm -f "$log"
+}
+
 update_brew() {
 	echo 'brew registry'
 	brew update
@@ -151,124 +168,24 @@ else
 fi
 
 if command -v brew >/dev/null; then
-	log_operation brew
-	brew_log="$(mktemp)"
-	update_brew &>"$brew_log" &
-	pid=$!
-	log_output $pid "$brew_log"
-	if ! wait "$pid"; then
-		log_failure
-		cat "$brew_log"
-	else
-		log_success
-	fi
-	rm -f "$brew_log"
+	run_operation 'brew' update_brew
 fi
 
-log_operation npm
-npm_log="$(mktemp)"
-update_npm &>"$npm_log" &
-pid=$!
-log_output $pid "$npm_log"
-if ! wait "$pid"; then
-	log_failure
-	cat "$npm_log"
-else
-	log_success
-fi
-rm -f "$npm_log"
+run_operation 'npm' update_npm
 
-log_operation pip
-pip_log="$(mktemp)"
-update_pip $ >"$pip_log" &
-pid=$!
-log_output $pid "$pip_log"
-if ! wait "$pid"; then
-	log_failure
-	cat "$pip_log"
-else
-	log_success
-fi
-rm -f "$pip_log"
+run_operation 'pip' update_pip
 
 if command -v apt-get >/dev/null; then
-	log_operation apt
-	apt_log="$(mktemp)"
-	update_apt &>"$apt_log" &
-	pid=$!
-	log_output $pid "$apt_log"
-	if ! wait "$pid"; then
-		log_failure
-		cat "$apt_log"
-	else
-		log_success
-	fi
-	rm -f "$apt_log"
+	run_operation 'apt' update_apt
 fi
 
 if is-linux; then
-	log_operation 'linux software'
-	linux_software_log="$(mktemp)"
-	update_linux_software &>"$linux_software_log" &
-	pid=$!
-	log_output $pid "$linux_software_log"
-	if ! wait "$pid"; then
-		log_failure
-		cat "$linux_software_log"
-	else
-		log_success
-	fi
-	rm -f "$linux_software_log"
+	run_operation 'linux software' update_linux_software
 
-	log_operation 'nodenv plugins'
-	nodenv_plugins_log="$(mktemp)"
-	update_nodenv_plugins &>"$nodenv_plugins_log" &
-	pid=$!
-	log_output $pid "$nodenv_plugins_log"
-	if ! wait "$pid"; then
-		log_failure
-		cat "$nodenv_plugins_log"
-	else
-		log_success
-	fi
-	rm -f "$nodenv_plugins_log"
+	run_operation 'nodenv plugins' update_nodenv_plugins
 
-	log_operation thunderbird
-	thunderbird_log="$(mktemp)"
-	update_thunderbird &>"$thunderbird_log" &
-	pid=$!
-	log_output $pid "$thunderbird_log"
-	if ! wait "$pid"; then
-		log_failure
-		cat "$thunderbird_log"
-	else
-		log_success
-	fi
-	rm -f "$thunderbird_log"
+	run_operation 'thunderbird' update_thunderbird
 fi
 
-log_operation 'gh extensions'
-gh_extensions_log="$(mktemp)"
-update_gh_extensions &>"$gh_extensions_log" &
-pid=$!
-log_output $pid "$gh_extensions_log"
-if ! wait "$pid"; then
-	log_failure
-	cat "$gh_extensions_log"
-else
-	log_success
-fi
-rm -f "$gh_extensions_log"
-
-log_operation 'emacs packages'
-emacs_packages_log="$(mktemp)"
-update_emacs_packages &>"$emacs_packages_log" &
-pid=$!
-log_output $pid "$emacs_packages_log"
-if ! wait "$pid"; then
-	log_failure
-	cat "$emacs_packages_log"
-else
-	log_success
-fi
-rm -f "$emacs_packages_log"
+run_operation 'gh extensions' update_gh_extensions
+run_operation 'emacs packages' update_emacs_packages
