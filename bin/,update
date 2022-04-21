@@ -141,11 +141,13 @@ update_emacs_packages() {
 reset
 
 log_operation sudo
+tput sc
 if sudo --validate --prompt="${background_blue} password: ${reset} " 2>/dev/null; then
+	tput rc 1
 	log_success
 else
-	tput cuu1
-	echo "${dim}proceeding without sudo${reset}"
+	tput rc 1
+	echo "${dim} proceeding without sudo${reset}"
 fi
 
 if command -v brew >/dev/null; then
