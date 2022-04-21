@@ -137,6 +137,10 @@ update_emacs_packages() {
 	emacsclient --eval '(auto-package-update-now)'
 }
 
+# Reset terminal to ensure log_output's overwriting logic works correctly
+reset
+
+log_operation sudo
 if sudo --validate --prompt="${background_blue} password: ${reset} " 2>/dev/null; then
 	log_success
 else
