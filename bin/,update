@@ -189,3 +189,16 @@ fi
 
 run_operation 'gh extensions' update_gh_extensions
 run_operation 'emacs packages' update_emacs_packages
+
+# To add user-specific or device-specific updates, create a file at the following path containing something like this:
+# update_foo() {
+#   echo 'bar'
+#   foo bar
+# }
+# run_operation 'foo' update_foo
+
+update_local_path="${XDG_DATA_HOME:-$HOME/.local/share}"/dotfiles/,update-local
+if [ -f "$update_local_path" ]; then
+	# shellcheck source=/dev/null
+	source "$update_local_path"
+fi
