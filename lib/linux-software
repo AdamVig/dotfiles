@@ -9,9 +9,6 @@ log() {
 	log_with_component 'linux software' "$@"
 }
 
-# shellcheck disable=SC2119
-request_sudo
-
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'installing Calibre'
