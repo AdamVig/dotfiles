@@ -88,6 +88,17 @@ fi
 chmod +x "$slack_cli_path"
 log_end
 
+log_start 'installing GoldenCheetah'
+if ! goldencheetah_url="$(get_release_url 'GoldenCheetah/GoldenCheetah' '_amd64_Linux.AppImage')"; then
+	fatal 'failed to get GoldenCheetah release URL'
+fi
+goldencheetah_path="$HOME/.local/bin/GoldenCheetah.AppImage"
+if ! _curl "$goldencheetah_url" --output "$goldencheetah_path"; then
+	fatal 'failed to download GoldenCheetah'
+fi
+chmod +x "$goldencheetah_path"
+log_end
+
 log_start 'installing Hub'
 if ! hub_url="$(get_release_url 'github/hub' 'linux-amd64')"; then
 	fatal 'failed to get Hub release URL'
