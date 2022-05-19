@@ -148,7 +148,7 @@ rm -rf "$restic_extracted_tmp"
 log_end
 
 log_start 'installing websocat'
-if ! websocat_url="$(get_release_url 'vi/websocat' '_linux64')"; then
+if ! websocat_url="$(get_release_url 'vi/websocat' 'x86_64-unknown-linux-musl')"; then
 	fatal 'failed to get websocat release URL'
 fi
 
