@@ -21,7 +21,7 @@ go_packages=(
 
 for package in "${go_packages[@]}"; do
 	log_file="$(mktemp)"
-	if go get -u "$package" &>"$log_file"; then
+	if go install "$package"@latest &>"$log_file"; then
 		log "installed \"$package\""
 	else
 		warn "package \"$package\" failed to install"
