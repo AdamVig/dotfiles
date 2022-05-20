@@ -57,13 +57,13 @@ log_output() {
 
 	tput sc
 	while kill -0 "$pid" 2>/dev/null; do
-		tput rc 1
+		tput rc
 		tput el
 		echo
 		tail --lines=5 "$output_path"
 		sleep 0.2s
 	done
-	tput rc 1
+	tput rc
 	tput el
 }
 
@@ -160,10 +160,10 @@ reset
 log_operation sudo
 tput sc
 if sudo --validate --prompt="${background_blue} password: ${reset} " 2>/dev/null; then
-	tput rc 1
+	tput rc
 	log_success
 else
-	tput rc 1
+	tput rc
 	echo "${dim} proceeding without sudo${reset}"
 fi
 
