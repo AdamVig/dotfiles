@@ -94,27 +94,9 @@ if ! is_repository_configured 'azlux'; then
 	log_end
 fi
 
-if ! is_repository_configured 'lutris'; then
-	log_start 'adding lutris repository'
-	request_sudo add-apt-repository --no-update --yes ppa:lutris-team/lutris
-	log_end
-fi
-
-if ! is_repository_configured 'figma'; then
-	log_start 'adding figma repository'
-	request_sudo add-apt-repository --no-update --yes ppa:chrdevs/figma
-	log_end
-fi
-
 if ! is_repository_configured 'ubuntu-elisp'; then
 	log_start 'adding Ubuntu Emacs snapshot repository'
 	request_sudo add-apt-repository --no-update --yes ppa:ubuntu-elisp/ppa
-	log_end
-fi
-
-if ! is_repository_configured 'copyq'; then
-	log_start 'adding CopyQ repository'
-	request_sudo add-apt-repository --no-update --yes ppa:hluk/copyq
 	log_end
 fi
 
@@ -226,12 +208,10 @@ declare -a packages=(
 	# applications
 	balena-etcher-electron # Image flashing tool
 	code
-	copyq   # Clipboard manager
 	d-feet  # D-Bus debugger
 	digikam # Photo library manager
 	docker.io
 	emacs-snapshot
-	figma-linux
 	firefox
 	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
@@ -242,7 +222,6 @@ declare -a packages=(
 	kdiff3 # Merge tool
 	kitty  # GPU-accelerated terminal emulator
 	libreoffice
-	lutris
 	lxpolkit           # Polkit authentication agent
 	meld               # Comparison tool for version control, files, and directories
 	mpv                # Media player
@@ -273,6 +252,9 @@ log_end
 
 declare -a unwanted_packages=(
 	chromium
+	copyq
+	figma-linux
+	lutris
 
 	# Used to be installed via .deb, now installed as a binary
 	websocat
