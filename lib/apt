@@ -39,6 +39,20 @@ add_repository() {
 		request_sudo tee /etc/apt/sources.list.d/"$friendly_name".list >/dev/null
 }
 
+# $1: human-readable name, used in filenames of sources file and key
+# $2: fingerprint of signing key
+# $3: latter part of repository configuration string, e.g. "http://repository.spotify.com stable non-free", not
+# including the arch or signed-by options
+add_ppa() {
+	local key_fingerprint="${2:-}"
+	local repo_name="${3:-}"
+
+	add_repository \
+		"$1" \
+		"https://keyserver.ubuntu.com/pks/lookup?op=get&options=mr&search=0x${key_fingerprint}" \
+		"http://ppa.launchpad.net/${repo_name}/ubuntu/ $(lsb_release --short --codename) main"
+}
+
 if ! is_repository_configured 'balena'; then
 	log_start 'adding Balena Etcher repository'
 	add_repository 'balena' 'https://dl.cloudsmith.io/public/balena/etcher/gpg.70528471AFF9A051.key' "https://dl.cloudsmith.io/public/balena/etcher/deb/ubuntu $(lsb_release --short --codename) main"
@@ -53,7 +67,7 @@ fi
 
 if ! is_repository_configured 'digikam'; then
 	log_start 'adding digiKam repository'
-	request_sudo add-apt-repository --no-update --yes ppa:savoury1/digikam
+	add_ppa 'digikam' 'E996735927E427A733BB653E374C7797FB006459' 'savoury1/digikam'
 	log_end
 fi
 
@@ -78,13 +92,13 @@ fi
 
 if ! is_repository_configured 'nextcloud'; then
 	log_start 'adding Nextcloud repository'
-	request_sudo add-apt-repository --no-update --yes ppa:nextcloud-devs/client
+	add_ppa 'nextcloud' '1FCD77DD0DBEF5699AD2610160EE47FBAD3DD469' 'nextcloud-devs/client'
 	log_end
 fi
 
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
-	request_sudo add-apt-repository --no-update --yes ppa:git-core/ppa
+	add_ppa 'git' 'E1DD270288B4E6030699E45FA1715D88E1DF1F24' 'git-core/ppa'
 	log_end
 fi
 
@@ -96,7 +110,7 @@ fi
 
 if ! is_repository_configured 'ubuntu-elisp'; then
 	log_start 'adding Ubuntu Emacs snapshot repository'
-	request_sudo add-apt-repository --no-update --yes ppa:ubuntu-elisp/ppa
+	add_ppa 'emacs' '0D7BAE435ADBC6C3E4918A74062D648FD62FCE72' 'ubuntu-elisp/ppa'
 	log_end
 fi
 
@@ -108,7 +122,7 @@ fi
 
 if ! is_repository_configured 'yubico'; then
 	log_start 'adding Yubico repository'
-	request_sudo add-apt-repository --no-update --yes ppa:yubico/stable
+	add_ppa 'yubico' '3653E21064B19D134466702E43D5C49532CBA1A9' 'yubico/stable'
 	log_end
 fi
 
