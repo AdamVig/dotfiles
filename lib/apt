@@ -233,8 +233,7 @@ declare -a packages=(
 	emacs-snapshot
 	figma-linux
 	firefox
-	flameshot # Screenshot tool
-	gnome-shell-extension-impatience
+	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
 	gpsbabel      # GPS file conversion tool
 	i3            # Window manager
