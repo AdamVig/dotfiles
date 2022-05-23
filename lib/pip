@@ -15,7 +15,6 @@ pip_packages=(
 	csvkit               # CSV processing tools
 	homeassistant-cli    # Home Assistant management tool
 	khal                 # Calendar CLI
-	mozdownload          # Downloader for Mozilla applications
 	pip                  # Package manager
 	visidata             # Data set visualizer
 	vdirsyncer           # Synchronize calendars and contacts

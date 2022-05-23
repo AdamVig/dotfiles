@@ -126,6 +126,12 @@ if ! is_repository_configured 'yubico'; then
 	log_end
 fi
 
+if ! is_repository_configured 'mozillateam'; then
+	log_start 'adding Mozilla Team repository'
+	add_ppa 'mozillateam' '0AB215679C571D1C8325275B9BDB3D89CE49EC21' 'mozillateam/ppa'
+	log_end
+fi
+
 # Remove previous workaround for installing Chromium
 if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'removing Debian Stable repository'
@@ -137,6 +143,26 @@ if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_end
 	log_end
 fi
+log_end
+
+log_start 'adding Apt policy for Firefox'
+request_sudo mkdir -p /etc/apt/preferences.d
+# Increase priority of Firefox from PPA and block installation of Firefox from Ubuntu repository
+echo 'Package: firefox*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 501
+
+Package: firefox*
+Pin: release o=Ubuntu*
+Pin-Priority: -1
+' | request_sudo tee /etc/apt/preferences.d/firefox
+log_end
+
+log_start 'enabling unattended upgrades for Firefox'
+# Must manually enable unattended for the PPA containing Firefox
+# shellcheck disable=SC2016
+echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' |
+	request_sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 log_end
 
 log_start 'updating lists'
@@ -226,7 +252,7 @@ declare -a packages=(
 	digikam # Photo library manager
 	docker.io
 	emacs-snapshot
-	firefox
+	firefox       # Web browser
 	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
 	gpsbabel      # GPS file conversion tool
@@ -247,6 +273,7 @@ declare -a packages=(
 	slack-desktop
 	spotify-client
 	steam
+	thunderbird  # Email client
 	virt-manager # Virtual machine manager
 	yubikey-manager
 
