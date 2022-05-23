@@ -139,11 +139,6 @@ update_nodenv_plugins() {
 	done
 }
 
-update_thunderbird() {
-	echo 'thunderbird'
-	"$_dir"/../lib/thunderbird
-}
-
 update_gh_extensions() {
 	echo 'gh extensions'
 	gh extension upgrade --all
@@ -183,8 +178,6 @@ if is-linux; then
 	run_operation 'linux software' update_linux_software
 
 	run_operation 'nodenv plugins' update_nodenv_plugins
-
-	run_operation 'thunderbird' update_thunderbird
 fi
 
 run_operation 'gh extensions' update_gh_extensions
