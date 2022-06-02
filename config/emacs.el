@@ -27,6 +27,7 @@
 			 (todo priority-down category-keep todo-state-up)
 			 (tags priority-down category-keep)
 			 (search category-keep)))
+ '(org-agenda-span 'day)
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-capture-templates
