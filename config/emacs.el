@@ -44,7 +44,7 @@
  '(org-html-checkbox-type 'html)
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
-  '(package-selected-packages
+ '(package-selected-packages
 		'(auto-package-update flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
@@ -53,7 +53,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-level-1 ((t (:inherit default :extend nil :foreground "#DCDCCC" :weight bold))))
+ '(org-level-2 ((t (:foreground "#DCDCCC" :weight medium)))))
 
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
 (use-package auto-package-update
