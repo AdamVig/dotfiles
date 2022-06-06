@@ -44,6 +44,10 @@
 			 ("r" "Pull request review." entry
 				 (file+headline "work.org" "Today")
 				 (file "templates/pull-request-review.tmpl")
+				 :prepend t)
+			 ("t" "Ticket." entry
+				 (file+headline "work.org" "Today")
+				 (file "templates/ticket.tmpl")
 				 :prepend t)))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
