@@ -22,6 +22,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(git-commit-summary-max-length 72)
+ '(org-agenda-prefix-format
+		'((agenda . "")
+			 (todo . " %i %-12:c")
+			 (tags . " %i %-12:c")
+			 (search . " %i %-12:c")))
+ '(org-agenda-scheduled-leaders '("" "[Overdue %d days] "))
  '(org-agenda-sorting-strategy
 		'((agenda todo-state-up priority-down)
 			 (todo priority-down category-keep todo-state-up)
