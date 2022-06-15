@@ -50,7 +50,6 @@ log_start 'running application setup scripts'
 "$_dir"/git
 "$_dir"/gpg
 "$_dir"/ssh
-"$_dir"/thunderbird
 "$_dir"/vscode
 "$_dir"/zsh
 log_end
