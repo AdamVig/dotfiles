@@ -2,12 +2,12 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help] [branch name] [remote]
-Merge the latest upstream changes into the current branch.
+usage="Usage: $(basename "$0") [-h|--help] [branch name] [remote]
+Merge the latest changes from a given branch into the current branch.
 
 Arguments:
-    branch name     branch name to fetch (defaults to default branch)
-    remote          name of remote to fetch from (defaults to 'origin')
+    branch name     branch name to merge from (defaults to default branch)
+    remote          name of remote to merge from (defaults to 'origin')
 
 Flags:
     -h, --help  show this help text"
@@ -17,12 +17,12 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
 	exit 0
 fi
 
-readonly remote=${2:-origin}
-readonly default_branch="$(get-default-branch "$remote")"
-readonly branch=${1:-"$default_branch"}
+remote=${2:-origin}
+default_branch="$(get-default-branch "$remote")"
+branch=${1:-"$default_branch"}
 
 echo 'fetching...'
-git fetch "$remote" "$branch"
+git fetch
 
 echo 'merging...'
 # Use merge.suppressDest to omit "into <branch name>" from the commit message
