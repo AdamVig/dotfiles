@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help] <command>
+usage="Usage: $(basename "$0") [-h|--help] <command>
 Remotely control a computer running a Debian-derived Linux distribution.
 
 Commands:
@@ -35,17 +35,16 @@ elif [ "$command" = 'suspend' ]; then
 elif [ "$command" = 'switch-to-windows' ]; then
 	# awk program inspired by Grub's Bash completion script
 	if ! grub_menuentry_windows="$(
-		sudo awk \
+		sudo cat /boot/grub/grub.cfg | awk \
 			--field-separator "[\"']" \
-			'BEGIN{IGNORECASE = 1} /menuentry / { if ($2 ~ "windows") {print $2; exit} }' \
-			/boot/grub/grub.cfg
+			'BEGIN{IGNORECASE = 1} /menuentry / { if ($2 ~ "windows") {print $2; exit} }'
 	)"; then
 		echo "error: failed to get title of Grub menuentry for Windows"
 		exit 1
 	fi
 
-	sudo grub-reboot "$grub_menuentry_windows"
-	sudo systemctl reboot
+	grub-reboot "$grub_menuentry_windows"
+	systemctl reboot
 else
 	echo "error: command \"$command\" is not supported"
 	exit 1
