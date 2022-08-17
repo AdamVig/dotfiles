@@ -55,7 +55,7 @@ if ! [ -f /etc/sudoers.d/remote-management ]; then
 	log_start 'creating sudoers file to allow non-interactive power control'
 	echo "# Allow for non-interactive execution of system power commands.
 
-$remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot,/usr/sbin/grub-reboot,/usr/bin/awk" |
+$remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot,/usr/sbin/grub-reboot,/usr/bin/cat" |
 		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
 	log_end
 fi
