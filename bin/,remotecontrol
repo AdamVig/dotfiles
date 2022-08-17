@@ -44,7 +44,7 @@ elif [ "$command" = 'switch-to-windows' ]; then
 	fi
 
 	sudo grub-reboot "$grub_menuentry_windows"
-	systemctl reboot --no-wall
+	sudo systemctl reboot --no-wall
 else
 	echo "error: command \"$command\" is not supported"
 	exit 1
