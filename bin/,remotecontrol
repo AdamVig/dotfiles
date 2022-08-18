@@ -27,9 +27,9 @@ if [ -z "$command" ]; then
 fi
 
 if [ "$command" = 'off' ]; then
-	sudo systemctl poweroff --no-wall
+	sudo systemctl poweroff
 elif [ "$command" = 'reboot' ]; then
-	sudo systemctl reboot --no-wall
+	sudo systemctl reboot
 elif [ "$command" = 'suspend' ]; then
 	sudo systemctl suspend
 elif [ "$command" = 'switch-to-windows' ]; then
@@ -44,7 +44,7 @@ elif [ "$command" = 'switch-to-windows' ]; then
 	fi
 
 	sudo grub-reboot "$grub_menuentry_windows"
-	sudo systemctl reboot --no-wall
+	sudo systemctl reboot
 else
 	echo "error: command \"$command\" is not supported"
 	exit 1
