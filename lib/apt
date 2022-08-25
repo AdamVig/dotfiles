@@ -201,6 +201,7 @@ declare -a packages=(
 	ripgrep # Better grep
 
 	# command line tools
+	flatpak  # Package manager
 	fzf      # Fuzzy finder
 	gh       # GitHub CLI
 	gnuplot  # Command-line plotting
