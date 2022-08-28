@@ -99,6 +99,7 @@ cask "spectacle"
 cask "spotify"
 cask "standard-notes"
 cask "thunderbird"
+cask "vivaldi" # Web browser
 cask "visual-studio-code"
 cask "zoom"
 

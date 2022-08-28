@@ -132,6 +132,12 @@ if ! is_repository_configured 'mozillateam'; then
 	log_end
 fi
 
+if ! is_repository_configured 'vivaldi'; then
+	log_start 'adding Vivaldi repository'
+	add_repository 'vivaldi' 'https://repo.vivaldi.com/archive/linux_signing_key.pub' 'https://repo.vivaldi.com/archive/deb/ stable main'
+	log_end
+fi
+
 # Remove previous workaround for installing Chromium
 if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'removing Debian Stable repository'
@@ -274,8 +280,9 @@ declare -a packages=(
 	slack-desktop
 	spotify-client
 	steam
-	thunderbird  # Email client
-	virt-manager # Virtual machine manager
+	thunderbird    # Email client
+	vivaldi-stable # Web browser
+	virt-manager   # Virtual machine manager
 	yubikey-manager
 
 	# fonts
