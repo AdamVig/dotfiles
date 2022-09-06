@@ -120,12 +120,6 @@ if ! is_repository_configured 'cli.github.com'; then
 	log_end
 fi
 
-if ! is_repository_configured 'yubico'; then
-	log_start 'adding Yubico repository'
-	add_ppa 'yubico' '3653E21064B19D134466702E43D5C49532CBA1A9' 'yubico/stable'
-	log_end
-fi
-
 if ! is_repository_configured 'mozillateam'; then
 	log_start 'adding Mozilla Team repository'
 	add_ppa 'mozillateam' '0AB215679C571D1C8325275B9BDB3D89CE49EC21' 'mozillateam/ppa'
@@ -147,6 +141,12 @@ if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'removing apt policy'
 	request_sudo rm -f /etc/apt/preferences.d/debian-chromium >/dev/null
 	log_end
+	log_end
+fi
+
+if ! is_repository_configured 'yubico'; then
+	log_start 'removing Yubico repository'
+	request_sudo rm -f /etc/apt/sources.list.d/yubico.list* /usr/share/keyrings/yubico-archive-keyring.gpg
 	log_end
 fi
 log_end
@@ -269,7 +269,6 @@ declare -a packages=(
 	thunderbird    # Email client
 	vivaldi-stable # Web browser
 	virt-manager   # Virtual machine manager
-	yubikey-manager
 
 	# fonts
 	fonts-firacode
@@ -293,6 +292,9 @@ declare -a unwanted_packages=(
 
 	# Used to be installed via .deb, now installed as a binary
 	websocat
+
+	# Had been installed both via Apt and in ./linux-software
+	yubikey-manager
 )
 
 log_start 'removing unwanted packages'
