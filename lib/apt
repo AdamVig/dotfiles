@@ -322,7 +322,7 @@ chrome_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$chrome_url" --output "$chrome_tmp"; then
 	fatal 'failed to download Google Chrome'
 fi
-if ! request_sudo apt-get install "$chrome_tmp"; then
+if ! request_sudo apt-get install --yes "$chrome_tmp"; then
 	fatal 'failed to install Google Chrome'
 fi
 rm -f "$chrome_tmp"
@@ -336,7 +336,7 @@ hugo_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$hugo_url" --output "$hugo_tmp"; then
 	fatal 'failed to download Hugo'
 fi
-if ! request_sudo apt-get install "$hugo_tmp"; then
+if ! request_sudo apt-get install --yes "$hugo_tmp"; then
 	fatal 'failed to install Hugo'
 fi
 rm -f "$hugo_tmp"
@@ -350,7 +350,7 @@ hyperfine_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
 	fatal 'failed to download hyperfine'
 fi
-if ! request_sudo apt-get install "$hyperfine_tmp"; then
+if ! request_sudo apt-get install --yes "$hyperfine_tmp"; then
 	fatal 'failed to install hyperfine'
 fi
 rm -f "$hyperfine_tmp"
@@ -364,7 +364,7 @@ git_delta_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
 	fatal 'failed to download git-delta'
 fi
-if ! request_sudo apt-get install "$git_delta_tmp"; then
+if ! request_sudo apt-get install --yes "$git_delta_tmp"; then
 	fatal 'failed to install git-delta'
 fi
 rm -f "$git_delta_tmp"
@@ -378,7 +378,7 @@ glow_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$glow_url" --output "$glow_tmp"; then
 	fatal 'failed to download glow'
 fi
-if ! request_sudo apt-get install "$glow_tmp"; then
+if ! request_sudo apt-get install --yes "$glow_tmp"; then
 	fatal 'failed to install glow'
 fi
 rm -f "$glow_tmp"
@@ -392,7 +392,7 @@ if ! _curl "$minikube_url" --output "$minikube_tmp"; then
 	fatal 'failed to download Minikube'
 fi
 # Ignore recommends because they include VirtualBox
-if ! request_sudo apt-get install --no-install-recommends "$minikube_tmp"; then
+if ! request_sudo apt-get install --yes --no-install-recommends "$minikube_tmp"; then
 	fatal 'failed to install Minikube'
 fi
 rm -f "$minikube_tmp"
@@ -406,7 +406,7 @@ pastel_tmp="$(mktemp --suffix .deb)"
 if ! _curl "$pastel_url" --output "$pastel_tmp"; then
 	fatal 'failed to download pastel'
 fi
-if ! request_sudo apt-get install "$pastel_tmp"; then
+if ! request_sudo apt-get install --yes "$pastel_tmp"; then
 	fatal 'failed to install pastel'
 fi
 rm -f "$pastel_tmp"
