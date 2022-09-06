@@ -83,7 +83,6 @@ mas "Bitwarden", id: 1352778147
 cask "docker"
 cask "emacs"
 cask "figma"
-cask "firefox"
 cask "google-chrome"
 cask "gpg-suite"
 cask "inkscape"

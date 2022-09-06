@@ -92,7 +92,6 @@ cinst battle.net --allow-empty-checksums
 cinst bluescreenview
 cinst epicgameslauncher
 cinst etcher
-cinst Firefox
 cinst foxitreader
 cinst GoogleChrome
 cinst hwmonitor
