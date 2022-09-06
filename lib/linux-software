@@ -156,7 +156,7 @@ install_binary_from_url 'websocat' "$websocat_url"
 log_end
 
 log_start 'installing YubiKey Manager'
-yubikey_manager_path="$HOME/.local/bin/YubiKey Manager.AppImage"
+yubikey_manager_path="$HOME/.local/bin/yubikey-manager.AppImage"
 if ! _curl 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage' \
 	--output "$yubikey_manager_path"; then
 	fatal 'failed to download YubiKey Manager'
@@ -165,7 +165,7 @@ chmod +x "$yubikey_manager_path"
 log_end
 
 log_start 'removing legacy software'
-rm -f "$HOME"/.local/bin/ncspot
+rm -f "$HOME"/.local/bin/ncspot "$HOME/.local/bin/YubiKey Manager.AppImage"
 log_end
 
 log_end
