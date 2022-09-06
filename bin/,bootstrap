@@ -29,7 +29,7 @@ if command -v apt-get >/dev/null && ! command -v jq >/dev/null; then
 	echo 'done updating apt lists.'
 
 	echo 'installing dependencies...'
-	sudo apt-get install --yes build-essential curl file git jq >/dev/null
+	sudo apt-get install --yes build-essential curl file git jq unzip >/dev/null
 	echo 'done installing dependencies.'
 
 	# Causes a crash (https://bugs.launchpad.net/ubuntu/+source/gnome-shell-extension-desktop-icons-ng/+bug/1926863)
