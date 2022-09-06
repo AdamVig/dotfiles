@@ -35,7 +35,7 @@ done
 rm -rf "$calibre_extracted_tmp"
 log_end
 
-readonly fonts_dir="$(xdg_data)"/fonts
+fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	mkdir -p "$fonts_dir"
 	log_start 'installing Source Code Pro'
@@ -43,7 +43,7 @@ if ! [ -d "$fonts_dir"/source-code-pro ]; then
 		fatal 'failed to clone Git repository'
 	fi
 	if ! fc-cache "$fonts_dir"/source-code-pro; then
-		fatal 'failed to generate font caches'
+		warn 'failed to generate font caches, font will not be available until next login'
 	fi
 	log_end
 fi
