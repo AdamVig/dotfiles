@@ -31,6 +31,8 @@ elif is_linux; then
 	if is_ubuntu; then
 		"$_dir"/ubuntu
 		"$_dir"/gnome-theme
+	fi
+	if is_ubuntu || is_debian; then
 		"$_dir"/remote-management
 	fi
 fi

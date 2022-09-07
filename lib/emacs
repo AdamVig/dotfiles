@@ -11,7 +11,7 @@ log() {
 
 log_start 'setting up Emacs'
 
-if is_ubuntu; then
+if is_ubuntu || is_debian; then
 	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
 	if ! [ -f "$user_emacs_unit_path" ]; then
 		log_start 'linking Emacs snapshot service into place'
