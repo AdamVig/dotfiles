@@ -144,7 +144,7 @@ if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_end
 fi
 
-if ! is_repository_configured 'yubico'; then
+if is_repository_configured 'yubico'; then
 	log_start 'removing Yubico repository'
 	request_sudo rm -f /etc/apt/sources.list.d/yubico.list* /usr/share/keyrings/yubico-archive-keyring.gpg
 	log_end
