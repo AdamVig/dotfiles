@@ -187,6 +187,10 @@ is_ubuntu() {
 	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Ubuntu' ]
 }
 
+is_debian() {
+	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Debian' ]
+}
+
 # Make a prompt using the log function (suitable for passing to `read` or `sudo`, for example)
 # $1: prompt text
 make_prompt() {
