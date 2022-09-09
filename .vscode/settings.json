@@ -105,6 +105,8 @@
       "compare": false
     }
   },
+  // Do not prompt to pull the branch when changes are detected on the remote
+  "githubPullRequests.pullBranch": "never",
   "shellcheck.customArgs": [
     // Allow 'source' outside of input files
     "-external-sources"
