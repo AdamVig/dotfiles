@@ -64,7 +64,7 @@ fi
 fast_syntax_highlighting_path="$(xdg_data)"/zsh-fast-syntax-highlighting
 if ! [ -d "$fast_syntax_highlighting_path" ]; then
 	log_start 'installing Fast Syntax Highlighting'
-	if ! git clone --depth 1 https://github.com/z-shell/fast-syntax-highlighting.git "$fast_syntax_highlighting_path" >/dev/null; then
+	if ! git clone --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$fast_syntax_highlighting_path" >/dev/null; then
 		fatal 'failed to clone Fast Syntax Highlighting'
 	fi
 	log_end
