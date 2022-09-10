@@ -241,6 +241,7 @@ declare -a packages=(
 
 	# applications
 	balena-etcher-electron # Image flashing tool
+	brave-browser          # Web browser
 	code
 	d-feet  # D-Bus debugger
 	digikam # Photo library manager

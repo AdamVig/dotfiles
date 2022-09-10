@@ -80,6 +80,7 @@ cask "xquartz" # Needed by Inkscape
 # applications
 cask "android-platform-tools"
 mas "Bitwarden", id: 1352778147
+cask "brave-browser" # Web browser
 cask "docker"
 cask "emacs"
 cask "figma"
