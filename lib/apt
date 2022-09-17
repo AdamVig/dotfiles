@@ -324,7 +324,7 @@ rm -f "$chrome_tmp"
 log_end
 
 log_start 'installing Hugo'
-if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'Linux-64bit.deb')"; then
+if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'linux-amd64.deb')"; then
 	fatal 'failed to get Hugo release URL'
 fi
 hugo_tmp="$(mktemp --suffix .deb)"
