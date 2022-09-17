@@ -132,6 +132,12 @@ if ! is_repository_configured 'vivaldi'; then
 	log_end
 fi
 
+if ! is_repository_configured 'brave'; then
+	log_start 'adding Brave repository'
+	add_repository 'brave' 'https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg' 'https://brave-browser-apt-release.s3.brave.com/ stable main'
+	log_end
+fi
+
 # Remove previous workaround for installing Chromium
 if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'removing Debian Stable repository'
