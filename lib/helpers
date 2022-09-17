@@ -149,7 +149,7 @@ get_release_url() {
 		return 100
 	fi
 	if ! echo "$latest_release" |
-		jq --arg pattern "$pattern" --raw-output \
+		jq --exit-status --arg pattern "$pattern" --raw-output \
 			'.assets | map(.browser_download_url | select(contains($pattern))) | first'; then
 		warn 'failed to find a matching asset in the latest release'
 		return 100
