@@ -57,24 +57,24 @@ install_binary_from_url 'shfmt' "$shfmt_url"
 log_end
 
 log_start 'installing scc'
-if ! scc_url="$(get_release_url 'boyter/scc' 'x86_64-unknown-linux')"; then
+if ! scc_url="$(get_release_url 'boyter/scc' 'Linux_x86_64')"; then
 	fatal 'failed to get scc release URL'
 fi
 
-scc_zip_tmp="$(mktemp)"
-if ! _curl "$scc_url" --output "$scc_zip_tmp"; then
+scc_tmp="$(mktemp)"
+if ! _curl "$scc_url" --output "$scc_tmp"; then
 	fatal 'failed to download scc'
 fi
 
-scc_tmp="$(mktemp -d)"
-if ! unzip "$scc_zip_tmp" 'scc' -d "$scc_tmp" >/dev/null; then
+scc_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$scc_tmp" -C "$scc_extracted_tmp" >/dev/null; then
 	fatal 'failed to unzip scc'
 fi
-rm -f "$scc_zip_tmp"
+rm -f "$scc_tmp"
 
 scc_path="$HOME"/.local/bin/scc
-mv "$scc_tmp"/scc "$scc_path"
-rm -rf "$scc_tmp"
+mv "$scc_extracted_tmp"/scc "$scc_path"
+rm -rf "$scc_extracted_tmp"
 
 chmod +x "$scc_path"
 log_end
