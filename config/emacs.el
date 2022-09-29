@@ -287,7 +287,8 @@
 ;; Add Company mode (https://company-mode.github.io/)
 (use-package company
   :ensure t
-  :init (global-company-mode t))
+  :init (global-company-mode t)
+	:config (setq company-global-modes '(not org-mode git-commit)))
 
 ;; Add Flycheck (https://github.com/flycheck/flycheck)
 (use-package flycheck
