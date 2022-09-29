@@ -45,7 +45,10 @@
 				 (file "templates/pull-request-review.tmpl"))
 			 ("t" "Ticket." entry
 				 (file+headline "work.org" "Today")
-				 (file "templates/ticket.tmpl"))))
+				 (file "templates/ticket.tmpl"))
+			 ("T" "Technical design document." entry
+				 (file+headline "work.org" "Today")
+				 (file "templates/technical-design-document.tmpl"))))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
