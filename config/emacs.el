@@ -39,16 +39,13 @@
  '(org-capture-templates
 		'(("R" "Pull request re-review." entry
 				(file+headline "work.org" "Today")
-				(file "templates/pull-request-re-review.tmpl")
-				:prepend t)
+				(file "templates/pull-request-re-review.tmpl"))
 			 ("r" "Pull request review." entry
 				 (file+headline "work.org" "Today")
-				 (file "templates/pull-request-review.tmpl")
-				 :prepend t)
+				 (file "templates/pull-request-review.tmpl"))
 			 ("t" "Ticket." entry
 				 (file+headline "work.org" "Today")
-				 (file "templates/ticket.tmpl")
-				 :prepend t)))
+				 (file "templates/ticket.tmpl"))))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
