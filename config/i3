@@ -95,11 +95,12 @@ mode "$mode_afk" {
 
 # Press $mod+c followed by a shortcut to perform clipboard-related operations
 # Press Escape to exit
-set $mode_clipboard Clipboard: [j]ira
+set $mode_clipboard Clipboard: [j]ira, [g]ithub
 bindsym $mod+c mode "$mode_clipboard"
 
 mode "$mode_clipboard" {
     bindsym j mode "$mode_jira"
+    bindsym g mode "$mode_github"
 
     bindsym Escape mode "default"
 }
@@ -115,6 +116,18 @@ mode "$mode_jira" {
 
 		set $table_with_header_column <table><tbody><tr><th></th><td></td></tr></tbody></table>
 		bindsym t exec echo "$table_with_header_column" | xclip -in -target text/html -selection clipboard; mode "default"
+
+    bindsym Escape mode "default"
+}
+
+# From $mode_clipboard, press g to perform GitHub-specific clipboard operations
+# Press Escape to exit
+set $mode_github GitHub: [m]arkdown/[o]rg pull request link
+
+mode "$mode_github" {
+    # Assume that the clipboard contains a GitHub pull request URL
+    bindsym m exec xsel --output --clipboard | github-link --format=markdown | xsel --input --clipboard; mode "default"
+    bindsym o exec xsel --output --clipboard | github-link --format=org | xsel --input --clipboard; mode "default"
 
     bindsym Escape mode "default"
 }
