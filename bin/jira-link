@@ -7,7 +7,7 @@ Convert a Jira URL into a formatted link.
 
 Flags:
 	-f, --format	markup format to use, defaults to 'markdown'
-	            	options are 'markdown', 'org', and 'jira'
+	            	options are 'markdown' and 'org'
 	-h, --help		show this help text"
 
 set +e
@@ -77,8 +77,6 @@ if [ "$format" = 'markdown' ]; then
 	echo -n "[${ticket_id}](${url})"
 elif [ "$format" = 'org' ]; then
 	echo -n "[[${url}][${ticket_id}]]"
-elif [ "$format" = 'jira' ]; then
-	echo -n "[${ticket_id}|${url}]"
 else
 	echo >&2 "unsupported format \"$format\""
 	exit 1
