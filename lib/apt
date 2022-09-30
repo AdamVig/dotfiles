@@ -295,6 +295,7 @@ declare -a unwanted_packages=(
 	chromium
 	copyq
 	figma-linux
+	google-chrome-stable
 	lutris
 	vivaldi-stable
 
@@ -312,18 +313,6 @@ done
 log_end
 
 log_start 'installing packages from non-repository sources'
-log_start 'installing Google Chrome'
-chrome_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-chrome_tmp="$(mktemp --suffix .deb)"
-if ! _curl "$chrome_url" --output "$chrome_tmp"; then
-	fatal 'failed to download Google Chrome'
-fi
-if ! request_sudo apt-get install --yes "$chrome_tmp"; then
-	fatal 'failed to install Google Chrome'
-fi
-rm -f "$chrome_tmp"
-log_end
-
 log_start 'installing Hugo'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'linux-amd64.deb')"; then
 	fatal 'failed to get Hugo release URL'

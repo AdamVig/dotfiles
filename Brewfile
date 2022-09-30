@@ -84,7 +84,6 @@ cask "brave-browser" # Web browser
 cask "docker"
 cask "emacs"
 cask "figma"
-cask "google-chrome"
 cask "gpg-suite"
 cask "inkscape"
 cask "kap"
