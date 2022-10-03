@@ -143,7 +143,6 @@ After=display-manager.service
 ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth guess
 ExecStop=/usr/bin/killall x11vnc
 Restart=on-failure
-Restart-sec=2
 
 [Install]
 WantedBy=multi-user.target
