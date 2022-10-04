@@ -140,9 +140,17 @@ Requires=display-manager.service
 After=display-manager.service
 
 [Service]
-ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth guess
+# -forever: keep running after the first client disconnects
+# -env FD_XDM=1: helps "-auth guess" work with GDM when no users are signed in
+# -auth guess: automatically find Xauthority file
+# -nopw: hide banner about missing password configuration
+# -find: automatically find display
+# -no6: disable IPv6 support to suppress error message in logs
+# -rfbport 5900: set port to disable "Autoprobing" messages in logs
+ExecStart=/usr/bin/x11vnc -forever -env FD_XDM=1 -auth guess -nopw -find -no6 -rfbport 5900
 ExecStop=/usr/bin/killall x11vnc
 Restart=on-failure
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
