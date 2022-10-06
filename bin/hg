@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# https://sw.kovidgoyal.net/kitty/kittens/hyperlinked_grep/
+if [ "$TERM" = xterm-kitty ]; then
+	exec kitty +kitten hyperlinked_grep "$@"
+else
+	exec rg "$@"
+fi

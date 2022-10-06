@@ -34,3 +34,6 @@ if [[ "$OSTYPE" = *linux* ]]; then
 	# Shorten command for systemd user units
 	alias sysu='systemctl --user'
 fi
+
+# Default to Kitty's hyperlinked ripgrep
+alias rg='hg'
