@@ -319,7 +319,7 @@ declare -a unwanted_packages=(
 
 log_start 'removing unwanted packages'
 for unwanted_package in "${unwanted_packages[@]}"; do
-	request_sudo apt-get remove --yes "$unwanted_package" &>/dev/null || true
+	request_sudo apt-get remove --yes --autoremove "$unwanted_package" &>/dev/null || true
 done
 log_end
 
