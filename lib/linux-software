@@ -35,6 +35,20 @@ done
 rm -rf "$calibre_extracted_tmp"
 log_end
 
+log_start 'installing DigiKam'
+if ! digikam_version="$(_curl 'https://invent.kde.org/api/v4/projects/graphics%2Fdigikam/repository/tags' |
+	jq --exit-status --raw-output 'map(select(.name | test("^v[0-9]+.[0-9]+.[0-9]+$"))) | first | .name | ltrimstr("v")')"; then
+	fatal 'failed to get DigiKam version'
+fi
+
+digikam_url="https://download.kde.org/stable/digikam/${digikam_version}/digiKam-${digikam_version}-x86-64.appimage"
+digikam_path="$HOME/.local/bin/DigiKam.AppImage"
+if ! _curl "$digikam_url" --output "$digikam_path"; then
+	fatal 'failed to download DigiKam'
+fi
+chmod +x "$digikam_path"
+log_end
+
 fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/source-code-pro ]; then
 	mkdir -p "$fonts_dir"

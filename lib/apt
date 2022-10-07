@@ -76,12 +76,6 @@ if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_end
 fi
 
-if ! is_repository_configured 'digikam'; then
-	log_start 'adding digiKam repository'
-	add_ppa 'digikam' 'E996735927E427A733BB653E374C7797FB006459' 'savoury1/digikam'
-	log_end
-fi
-
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
 	# https://www.spotify.com/us/download/linux/
@@ -152,6 +146,12 @@ if is_repository_configured 'deb.debian.org/debian stable'; then
 	log_start 'removing apt policy'
 	request_sudo rm -f /etc/apt/preferences.d/debian-chromium >/dev/null
 	log_end
+	log_end
+fi
+
+if is_repository_configured 'digikam'; then
+	log_start 'removing digiKam repository'
+	request_sudo rm -f /etc/apt/sources.list.d/digikam.list* /usr/share/keyrings/digikam-archive-keyring.gpg
 	log_end
 fi
 
@@ -261,8 +261,7 @@ declare -a packages=(
 	balena-etcher-electron # Image flashing tool
 	brave-browser          # Web browser
 	code
-	d-feet  # D-Bus debugger
-	digikam # Photo library manager
+	d-feet # D-Bus debugger
 	docker.io
 	emacs-snapshot
 	flameshot     # Screenshot tool
@@ -305,6 +304,7 @@ log_end
 declare -a unwanted_packages=(
 	chromium
 	copyq
+	digikam # Now installed as AppImage in ./linux-software
 	figma-linux
 	google-chrome-stable
 	lutris
