@@ -14,6 +14,17 @@ log_start 'setting up apt'
 # shellcheck disable=SC2119
 request_sudo
 
+if ! [ -f /etc/os-release ]; then
+	fatal '/etc/os-release is missing, cannot detect operating system'
+fi
+
+log_start 'detecting operating system'
+source /etc/os-release
+distro="$ID"
+codename="$VERSION_CODENAME"
+log "detected distribution \"${distro}\" version codename \"${codename}\""
+log_end
+
 log_start 'configuring repositories'
 # $1: string that uniquely identifies repository
 is_repository_configured() {
@@ -50,12 +61,12 @@ add_ppa() {
 	add_repository \
 		"$1" \
 		"https://keyserver.ubuntu.com/pks/lookup?op=get&options=mr&search=0x${key_fingerprint}" \
-		"http://ppa.launchpad.net/${repo_name}/ubuntu/ $(lsb_release --short --codename) main"
+		"http://ppa.launchpad.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
 if ! is_repository_configured 'balena'; then
 	log_start 'adding Balena Etcher repository'
-	add_repository 'balena' 'https://dl.cloudsmith.io/public/balena/etcher/gpg.70528471AFF9A051.key' "https://dl.cloudsmith.io/public/balena/etcher/deb/ubuntu $(lsb_release --short --codename) main"
+	add_repository 'balena' 'https://dl.cloudsmith.io/public/balena/etcher/gpg.70528471AFF9A051.key' "https://dl.cloudsmith.io/public/balena/etcher/deb/${distro} ${codename} main"
 	log_end
 fi
 
