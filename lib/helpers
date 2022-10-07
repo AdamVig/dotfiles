@@ -184,11 +184,11 @@ is_macos() {
 }
 
 is_ubuntu() {
-	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Ubuntu' ]
+	[ -f /etc/os-release ] && grep --quiet Ubuntu /etc/os-release
 }
 
 is_debian() {
-	command -v lsb_release >/dev/null && [ "$(lsb_release --id --short)" = 'Debian' ]
+	[ -f /etc/os-release ] && grep --quiet Debian /etc/os-release
 }
 
 # Make a prompt using the log function (suitable for passing to `read` or `sudo`, for example)
