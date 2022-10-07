@@ -328,7 +328,7 @@ log_start 'installing Hugo'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'linux-amd64.deb')"; then
 	fatal 'failed to get Hugo release URL'
 fi
-hugo_tmp="$(mktemp --suffix .deb)"
+hugo_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$hugo_url" --output "$hugo_tmp"; then
 	fatal 'failed to download Hugo'
 fi
@@ -342,7 +342,7 @@ log_start 'installing hyperfine'
 if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
 	fatal 'failed to get hyperfine release URL'
 fi
-hyperfine_tmp="$(mktemp --suffix .deb)"
+hyperfine_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
 	fatal 'failed to download hyperfine'
 fi
@@ -356,7 +356,7 @@ log_start 'installing git-delta'
 if ! git_delta_url="$(get_release_url 'dandavison/delta' '_amd64.deb')"; then
 	fatal 'failed to get git-delta release URL'
 fi
-git_delta_tmp="$(mktemp --suffix .deb)"
+git_delta_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
 	fatal 'failed to download git-delta'
 fi
@@ -370,7 +370,7 @@ log_start 'installing glow'
 if ! glow_url="$(get_release_url 'charmbracelet/glow' '_linux_amd64.deb')"; then
 	fatal 'failed to get glow release URL'
 fi
-glow_tmp="$(mktemp --suffix .deb)"
+glow_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$glow_url" --output "$glow_tmp"; then
 	fatal 'failed to download glow'
 fi
@@ -383,7 +383,7 @@ log_end
 log_start 'installing Minikube'
 # https://minikube.sigs.k8s.io/docs/start/
 minikube_url='https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb'
-minikube_tmp="$(mktemp --suffix .deb)"
+minikube_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$minikube_url" --output "$minikube_tmp"; then
 	fatal 'failed to download Minikube'
 fi
@@ -398,7 +398,7 @@ log_start 'installing pastel'
 if ! pastel_url="$(get_release_url 'sharkdp/pastel' '_amd64.deb')"; then
 	fatal 'failed to get pastel release URL'
 fi
-pastel_tmp="$(mktemp --suffix .deb)"
+pastel_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
 if ! _curl "$pastel_url" --output "$pastel_tmp"; then
 	fatal 'failed to download pastel'
 fi
