@@ -56,15 +56,9 @@ log_output() {
 	fi
 
 	tput sc
-	while kill -0 "$pid" 2>/dev/null; do
-		tput rc
-		tput el
-		echo
-		tail --lines=5 "$output_path"
-		sleep 0.2s
-	done
+	echo
+	tail --follow --pid="$pid" --sleep-interval=0.2 "$output_path"
 	tput rc
-	tput el
 }
 
 # $1: operation name
