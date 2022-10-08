@@ -19,6 +19,7 @@ if ! [ -f /etc/os-release ]; then
 fi
 
 log_start 'detecting operating system'
+# shellcheck source=/dev/null
 source /etc/os-release
 distro="$ID"
 codename="$VERSION_CODENAME"
