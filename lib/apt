@@ -329,56 +329,36 @@ log_start 'installing Hugo'
 if ! hugo_url="$(get_release_url 'gohugoio/hugo' 'linux-amd64.deb')"; then
 	fatal 'failed to get Hugo release URL'
 fi
-hugo_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$hugo_url" --output "$hugo_tmp"; then
-	fatal 'failed to download Hugo'
-fi
-if ! request_sudo apt-get install --yes "$hugo_tmp"; then
+if ! install_deb_from_url "$hugo_url"; then
 	fatal 'failed to install Hugo'
 fi
-rm -f "$hugo_tmp"
 log_end
 
 log_start 'installing hyperfine'
 if ! hyperfine_url="$(get_release_url 'sharkdp/hyperfine' '_amd64.deb')"; then
 	fatal 'failed to get hyperfine release URL'
 fi
-hyperfine_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$hyperfine_url" --output "$hyperfine_tmp"; then
-	fatal 'failed to download hyperfine'
-fi
-if ! request_sudo apt-get install --yes "$hyperfine_tmp"; then
+if ! install_deb_from_url "$hyperfine_url"; then
 	fatal 'failed to install hyperfine'
 fi
-rm -f "$hyperfine_tmp"
 log_end
 
 log_start 'installing git-delta'
 if ! git_delta_url="$(get_release_url 'dandavison/delta' '_amd64.deb')"; then
 	fatal 'failed to get git-delta release URL'
 fi
-git_delta_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$git_delta_url" --output "$git_delta_tmp"; then
-	fatal 'failed to download git-delta'
-fi
-if ! request_sudo apt-get install --yes "$git_delta_tmp"; then
+if ! install_deb_from_url "$git_delta_url"; then
 	fatal 'failed to install git-delta'
 fi
-rm -f "$git_delta_tmp"
 log_end
 
 log_start 'installing glow'
 if ! glow_url="$(get_release_url 'charmbracelet/glow' '_linux_amd64.deb')"; then
 	fatal 'failed to get glow release URL'
 fi
-glow_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$glow_url" --output "$glow_tmp"; then
-	fatal 'failed to download glow'
-fi
-if ! request_sudo apt-get install --yes "$glow_tmp"; then
+if ! install_deb_from_url "$glow_url"; then
 	fatal 'failed to install glow'
 fi
-rm -f "$glow_tmp"
 log_end
 
 log_start 'installing Minikube'
@@ -399,28 +379,18 @@ log_start 'installing pastel'
 if ! pastel_url="$(get_release_url 'sharkdp/pastel' '_amd64.deb')"; then
 	fatal 'failed to get pastel release URL'
 fi
-pastel_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$pastel_url" --output "$pastel_tmp"; then
-	fatal 'failed to download pastel'
-fi
-if ! request_sudo apt-get install --yes "$pastel_tmp"; then
+if ! install_deb_from_url "$pastel_url"; then
 	fatal 'failed to install pastel'
 fi
-rm -f "$pastel_tmp"
 log_end
 
 log_start 'installing Standard Notes'
 if ! standard_notes_url="$(get_release_url 'standardnotes/app' '-linux-amd64.deb')"; then
 	fatal 'failed to get Standard Notes release URL'
 fi
-standard_notes_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
-if ! _curl "$standard_notes_url" --output "$standard_notes_tmp"; then
-	fatal 'failed to download Standard Notes'
-fi
-if ! request_sudo apt-get install --yes "$standard_notes_tmp"; then
+if ! install_deb_from_url "$standard_notes_url"; then
 	fatal 'failed to install Standard Notes'
 fi
-rm -f "$standard_notes_tmp"
 log_end
 
 log_end

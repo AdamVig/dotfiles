@@ -175,6 +175,23 @@ install_binary_from_url() {
 	chmod +x "$path"
 }
 
+# Install a .deb from a URL
+# $1: url
+install_deb_from_url() {
+	local url="${1:-}"
+	output_path="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
+
+	if ! _curl "$url" --output "$output_path"; then
+		fatal 'failed to download package'
+	fi
+
+	if ! request_sudo apt-get install --yes "$output_path"; then
+		fatal 'failed to install package'
+	fi
+
+	rm -f "$output_path"
+}
+
 is_linux() {
 	[[ $OSTYPE == *linux* ]]
 }
