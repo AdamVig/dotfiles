@@ -14,26 +14,12 @@ request_sudo
 
 log_start 'setting up Ubuntu'
 
-log_start 'updating snaps'
-if ! request_sudo snap refresh >/dev/null; then
-	fatal 'failed to update snaps'
-fi
-log_end
-
-declare -a snaps=(
-	'authy --beta'
-	standard-notes
-	yq
-)
-
-for snap_raw in "${snaps[@]}"; do
-	read -ra snap <<<"$snap_raw"
-	log_start "installing snap '${snap[0]}'"
-	if ! request_sudo snap install "${snap[@]}"; then
-		fatal 'failed to install'
-	fi
+if command -v snap >/dev/null; then
+	log_start 'disabling snaps'
+	request_sudo apt autoremove --purge snapd
+	request_sudo apt-mark hold snapd
 	log_end
-done
+fi
 
 log_start 'installing GitHub CLI completions'
 install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh

@@ -408,6 +408,21 @@ if ! request_sudo apt-get install --yes "$pastel_tmp"; then
 fi
 rm -f "$pastel_tmp"
 log_end
+
+log_start 'installing Standard Notes'
+if ! standard_notes_url="$(get_release_url 'standardnotes/app' '-linux-amd64.deb')"; then
+	fatal 'failed to get Standard Notes release URL'
+fi
+standard_notes_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
+if ! _curl "$standard_notes_url" --output "$standard_notes_tmp"; then
+	fatal 'failed to download Standard Notes'
+fi
+if ! request_sudo apt-get install --yes "$standard_notes_tmp"; then
+	fatal 'failed to install Standard Notes'
+fi
+rm -f "$standard_notes_tmp"
+log_end
+
 log_end
 
 log_end
