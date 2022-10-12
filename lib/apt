@@ -364,15 +364,17 @@ log_end
 log_start 'installing Minikube'
 # https://minikube.sigs.k8s.io/docs/start/
 minikube_url='https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb'
-minikube_tmp="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
+minikube_tmp="$(mktemp --suffix='.deb')"
 if ! _curl "$minikube_url" --output "$minikube_tmp"; then
 	fatal 'failed to download Minikube'
 fi
+# Avoid "Download is performed unsandboxed as root" warning
+request_sudo chown -R _apt:root "$minikube_tmp"
 # Ignore recommends because they include VirtualBox
 if ! request_sudo apt-get install --yes --no-install-recommends "$minikube_tmp"; then
 	fatal 'failed to install Minikube'
 fi
-rm -f "$minikube_tmp"
+request_sudo rm -f "$minikube_tmp"
 log_end
 
 log_start 'installing pastel'

@@ -179,17 +179,20 @@ install_binary_from_url() {
 # $1: url
 install_deb_from_url() {
 	local url="${1:-}"
-	output_path="$(mktemp --tmpdir="$(xdg_cache)" --suffix='.deb')"
+	output_path="$(mktemp --suffix='.deb')"
 
 	if ! _curl "$url" --output "$output_path"; then
 		fatal 'failed to download package'
 	fi
 
+	# Avoid "Download is performed unsandboxed as root" warning
+	request_sudo chown -R _apt:root "$output_path"
+
 	if ! request_sudo apt-get install --yes "$output_path"; then
 		fatal 'failed to install package'
 	fi
 
-	rm -f "$output_path"
+	request_sudo rm -f "$output_path"
 }
 
 is_linux() {
