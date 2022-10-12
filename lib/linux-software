@@ -42,11 +42,9 @@ if ! digikam_version="$(_curl 'https://invent.kde.org/api/v4/projects/graphics%2
 fi
 
 digikam_url="https://download.kde.org/stable/digikam/${digikam_version}/digiKam-${digikam_version}-x86-64.appimage"
-digikam_path="$HOME/.local/bin/DigiKam.AppImage"
-if ! _curl "$digikam_url" --output "$digikam_path"; then
-	fatal 'failed to download DigiKam'
+if ! install_binary_from_url 'DigiKam' "$digikam_url"; then
+	fatal 'failed to install DigiKam'
 fi
-chmod +x "$digikam_path"
 log_end
 
 fonts_dir="$(xdg_data)"/fonts
@@ -63,11 +61,9 @@ if ! [ -d "$fonts_dir"/source-code-pro ]; then
 fi
 
 log_start 'installing shfmt'
-if ! shfmt_url="$(get_release_url 'mvdan/sh' 'linux_amd64')"; then
-	fatal 'failed to get shfmt release URL'
+if ! install_binary_from_github_release 'shfmt' 'mvdan/sh' 'linux_amd64'; then
+	fatal 'failed to install shfmt'
 fi
-
-install_binary_from_url 'shfmt' "$shfmt_url"
 log_end
 
 log_start 'installing scc'
@@ -94,23 +90,15 @@ chmod +x "$scc_path"
 log_end
 
 log_start 'installing Slack CLI'
-slack_cli_path="$HOME"/.local/bin/slack
-if ! _curl https://raw.githubusercontent.com/rockymadden/slack-cli/master/src/slack --output "$slack_cli_path"; then
-	fatal 'failed to download Slack CLI'
+if ! install_binary_from_url 'slack' 'https://raw.githubusercontent.com/rockymadden/slack-cli/master/src/slack'; then
+	fatal 'failed to install Slack CLI'
 fi
-
-chmod +x "$slack_cli_path"
 log_end
 
 log_start 'installing GoldenCheetah'
-if ! goldencheetah_url="$(get_release_url 'GoldenCheetah/GoldenCheetah' '_amd64_Linux.AppImage')"; then
-	fatal 'failed to get GoldenCheetah release URL'
+if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenCheetah' '_amd64_Linux.AppImage'; then
+	fatal 'failed to install GoldenCheetah'
 fi
-goldencheetah_path="$HOME/.local/bin/GoldenCheetah.AppImage"
-if ! _curl "$goldencheetah_url" --output "$goldencheetah_path"; then
-	fatal 'failed to download GoldenCheetah'
-fi
-chmod +x "$goldencheetah_path"
 log_end
 
 log_start 'installing Hub'
@@ -135,12 +123,9 @@ rm -rf "$hub_extracted_tmp"
 log_end
 
 log_start 'installing Bitwarden'
-bitwarden_path="$HOME"/.local/bin/Bitwarden.AppImage
-if ! _curl 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage' \
-	--output "$bitwarden_path"; then
-	fatal 'failed to download Bitwarden'
+if ! install_binary_from_url 'Bitwarden' 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage'; then
+	fatal 'failed to install Bitwarden'
 fi
-chmod +x "$bitwarden_path"
 log_end
 
 log_start 'installing restic'
@@ -162,24 +147,17 @@ rm -rf "$restic_extracted_tmp"
 log_end
 
 log_start 'installing websocat'
-if ! websocat_url="$(get_release_url 'vi/websocat' 'x86_64-unknown-linux-musl')"; then
-	fatal 'failed to get websocat release URL'
+if ! install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'; then
+	fatal 'failed to install websocat'
 fi
-
-install_binary_from_url 'websocat' "$websocat_url"
 log_end
 
 log_start 'installing YubiKey Manager'
-yubikey_manager_path="$HOME/.local/bin/yubikey-manager.AppImage"
-if ! _curl 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage' \
-	--output "$yubikey_manager_path"; then
-	fatal 'failed to download YubiKey Manager'
-fi
-chmod +x "$yubikey_manager_path"
+install_binary_from_url 'yubikey-manager' 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage'
 log_end
 
 log_start 'removing legacy software'
-rm -f "$HOME"/.local/bin/ncspot "$HOME/.local/bin/YubiKey Manager.AppImage"
+rm -f "$HOME"/.local/bin/ncspot "$HOME"/.local/bin/*.AppImage
 log_end
 
 log_end

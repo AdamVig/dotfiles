@@ -175,6 +175,24 @@ install_binary_from_url() {
 	chmod +x "$path"
 }
 
+# Install a binary from the latest GitHub release
+# $1: binary name
+# $2: repository URL in format: [owner]/[repo name]
+# $3: pattern to match
+install_binary_from_github_release() {
+	local name="${1:-}"
+	local repository="${2:-}"
+	local pattern="${3:-}"
+
+	if ! url="$(get_release_url "$repository" "$pattern")"; then
+		fatal 'failed to get release URL'
+	fi
+
+	if ! install_binary_from_url "$name" "$url"; then
+		fatal 'failed to install binary from URL'
+	fi
+}
+
 # Install a .deb from a URL
 # $1: url
 install_deb_from_url() {
