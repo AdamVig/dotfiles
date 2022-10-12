@@ -222,8 +222,6 @@ declare -a packages=(
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	magic-wormhole     # Point-to-point file sharing
-	mosquitto          # MQTT broker and password tool
-	mosquitto-clients  # MQTT client
 	p7zip
 	pandoc
 	playerctl         # Media player controller
@@ -309,6 +307,8 @@ declare -a unwanted_packages=(
 	figma-linux
 	google-chrome-stable
 	lutris
+	mosquitto         # MQTT broker and password tool
+	mosquitto-clients # MQTT client
 	vivaldi-stable
 
 	# Used to be installed via .deb, now installed as a binary
