@@ -195,6 +195,22 @@ install_deb_from_url() {
 	request_sudo rm -f "$output_path"
 }
 
+# Install a .deb from the latest GitHub release
+# $1: repository URL in format: [owner]/[repo name]
+# $2: pattern to match
+install_deb_from_github_release() {
+	local repository="${1:-}"
+	local pattern="${2:-}"
+
+	if ! url="$(get_release_url "$repository" "$pattern")"; then
+		fatal 'failed to get release URL'
+	fi
+
+	if ! install_deb_from_url "$url"; then
+		fatal 'failed to install package from URL'
+	fi
+}
+
 is_linux() {
 	[[ $OSTYPE == *linux* ]]
 }
