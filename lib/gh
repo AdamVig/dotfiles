@@ -50,6 +50,9 @@ gh alias set update-pr --shell 'gh pr edit --body="$(echo "**Commits**"; log-bra
 # shellcheck disable=SC2016
 gh alias set prbase "pr view --json baseRefName --jq '.baseRefName'"
 
+# Convenience shortcut for checking out a pull request
+gh alias set co 'pr checkout'
+
 log_end
 
 log_start 'installing extensions'
