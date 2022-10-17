@@ -229,6 +229,9 @@ default_border pixel
 # disable window borders on screen edges in workspaces containing a single window
 hide_edge_borders smart
 
+# use stacked mode for new default containers
+workspace_layout stacked
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
