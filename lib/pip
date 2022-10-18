@@ -11,11 +11,13 @@ log() {
 
 log_start 'installing pip tools'
 pip_packages=(
+	# Update pip first to suppress warnings about it being outdated
+	pip # Package manager
+
 	b2                   # Backblaze B2 CLI
 	csvkit               # CSV processing tools
 	homeassistant-cli    # Home Assistant management tool
 	khal                 # Calendar CLI
-	pip                  # Package manager
 	visidata             # Data set visualizer
 	vdirsyncer           # Synchronize calendars and contacts
 	'vdirsyncer[google]' # Extension for Google support
