@@ -105,14 +105,17 @@ update_pip() {
 }
 
 update_apt() {
+	# For all commands, use "quiet" to avoid overwriting lines, which breaks formatting
+	# https://salsa.debian.org/apt-team/apt/-/blob/dccfe14ffb9713fbf320691c0f6cd679f2acf4fc/apt-private/acqprogress.cc#L356-357
+
 	echo 'apt registry'
-	sudo apt-get update
+	sudo apt-get --quiet=2 update
 
 	echo 'apt packages'
-	sudo apt-get upgrade --yes
+	sudo apt-get --quiet=2 upgrade --yes
 
 	echo 'apt cleanup'
-	sudo apt-get autoremove --yes
+	sudo apt-get --quiet=2 autoremove --yes
 }
 
 update_linux_software() {
