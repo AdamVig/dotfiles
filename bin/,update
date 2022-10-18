@@ -59,6 +59,7 @@ log_output() {
 	echo
 	tail --follow --pid="$pid" --sleep-interval=0.2 "$output_path"
 	tput rc
+	tput ed
 }
 
 # $1: operation name
