@@ -81,6 +81,9 @@ run_operation() {
 }
 
 update_brew() {
+	echo 'brew cleanup'
+	brew cleanup
+
 	echo 'brew registry'
 	brew update
 
