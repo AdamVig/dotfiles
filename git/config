@@ -36,8 +36,7 @@
   tool = meld
   colorMoved = default
 [delta]
-	# Can't use hyperlinks with navigate until less is >= 581 (https://github.com/dandavison/delta/issues/615)
-	hyperlinks = false
+	hyperlinks = true
 	navigate = true
 	# Do not navigate through hunks, only files and sections
 	navigate-regex = ^(commit|added:|removed:|renamed:|Δ)
