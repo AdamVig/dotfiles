@@ -55,7 +55,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(auto-package-update flycheck forge olivetti super-save ox-slack ox-jira company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+		'(auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -243,10 +243,6 @@
     "/DONE" 'file))
 
 (use-package ox-gfm
-	:ensure t)
-(use-package ox-jira
-	:ensure t)
-(use-package ox-slack
 	:ensure t)
 
 (add-hook 'org-mode-hook
