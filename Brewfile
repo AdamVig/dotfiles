@@ -64,8 +64,6 @@ brew "shfmt" # Shell script formatter
 brew "gh" # GitHub
 brew "hub", args: ["HEAD"] # GitHub
 brew "mas" # Mac App Store CLI
-tap "rockymadden/rockymadden"
-brew "rockymadden/rockymadden/slack-cli"
 
 # macOS-only  command line tools
 brew "gnu-getopt" if OS.mac? # Better than BSD getopt

@@ -89,12 +89,6 @@ rm -rf "$scc_extracted_tmp"
 chmod +x "$scc_path"
 log_end
 
-log_start 'installing Slack CLI'
-if ! install_binary_from_url 'slack' 'https://raw.githubusercontent.com/rockymadden/slack-cli/master/src/slack'; then
-	fatal 'failed to install Slack CLI'
-fi
-log_end
-
 log_start 'installing GoldenCheetah'
 if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenCheetah' '_amd64_Linux.AppImage'; then
 	fatal 'failed to install GoldenCheetah'
@@ -163,7 +157,7 @@ install_binary_from_url 'yubikey-manager' 'https://developers.yubico.com/yubikey
 log_end
 
 log_start 'removing legacy software'
-rm -f "$HOME"/.local/bin/ncspot "$HOME"/.local/bin/*.AppImage
+rm -f "$HOME"/.local/bin/ncspot "$HOME"/.local/bin/*.AppImage "$HOME"/.local/bin/slack
 log_end
 
 log_end
