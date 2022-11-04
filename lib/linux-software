@@ -128,6 +128,12 @@ if ! install_binary_from_url 'Bitwarden' 'https://vault.bitwarden.com/download/?
 fi
 log_end
 
+log_start 'installing NextCloud'
+if ! install_binary_from_github_release 'nextcloud' 'nextcloud/desktop' 'x86_64.AppImage'; then
+	fatal 'failed to install NextCloud'
+fi
+log_end
+
 log_start 'installing restic'
 if ! restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"; then
 	fatal 'failed to get restic release URL'

@@ -96,12 +96,6 @@ if ! is_repository_configured 'signal'; then
 	log_end
 fi
 
-if ! is_repository_configured 'nextcloud'; then
-	log_start 'adding Nextcloud repository'
-	add_ppa 'nextcloud' '1FCD77DD0DBEF5699AD2610160EE47FBAD3DD469' 'nextcloud-devs/client'
-	log_end
-fi
-
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
 	add_ppa 'git' 'E1DD270288B4E6030699E45FA1715D88E1DF1F24' 'git-core/ppa'
@@ -272,13 +266,12 @@ declare -a packages=(
 	kdiff3 # Merge tool
 	kitty  # GPU-accelerated terminal emulator
 	libreoffice
-	lxpolkit          # Polkit authentication agent
-	meld              # Comparison tool for version control, files, and directories
-	mpv               # Media player
-	nextcloud-desktop # Nextcloud client
-	qemu-system-x86   # Virtual machine tool
-	redshift          # Screen color temperature adjustment tool
-	rofi              # Application launcher
+	lxpolkit        # Polkit authentication agent
+	meld            # Comparison tool for version control, files, and directories
+	mpv             # Media player
+	qemu-system-x86 # Virtual machine tool
+	redshift        # Screen color temperature adjustment tool
+	rofi            # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
