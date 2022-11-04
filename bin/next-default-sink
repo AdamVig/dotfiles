@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help]
-Set the default PulseAudio sink to the next available sink.
+usage="Usage: $(basename "$0") [-h|--help]
+Toggle the default sink to the next available sink using pactl.
 
 Flags:
     -h, --help    show this help text"
@@ -13,37 +13,27 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
 	exit 0
 fi
 
-sink_pattern=".*index: ([0-9])"
-default_sink_pattern="\* $sink_pattern"
-default_sink_index=
-sinks=()
-while read -r line; do
-	if [[ $line =~ $default_sink_pattern ]]; then
-		# The index of the default sink in the sinks array is the current length of the array
-		default_sink_index="${#sinks[@]}"
-	fi
-
-	if [[ $line =~ $sink_pattern ]]; then
-		sink="${BASH_REMATCH[1]}"
-		sinks+=("$sink")
-	fi
-done < <(pacmd list-sinks)
-
-if [ -z "$default_sink_index" ]; then
-	echo 'failed to get default sink index'
+speakers_sink="${SPEAKERS_SINK:-}"
+if [ -z "$speakers_sink" ]; then
+	echo 'error: must set SPEAKERS_SINK environment variable'
 	exit 1
 fi
 
-echo "default sink index: $default_sink_index"
-echo "sinks:" "${sinks[@]}"
-
-num_sinks="${#sinks[@]}"
-
-next_sink_index="$((default_sink_index + 1))"
-if ((next_sink_index > num_sinks - 1)); then
-	next_sink_index=0
+headphones_sink="${HEADPHONES_SINK:-}"
+if [ -z "$headphones_sink" ]; then
+	echo 'error: must set HEADPHONES_SINK environment variable'
+	exit 1
 fi
 
-next_sink="${sinks[next_sink_index]}"
-echo "switching default sink to sink $next_sink"
-pactl set-default-sink "$next_sink"
+if ! default_sink="$(pactl get-default-sink)"; then
+	echo 'failed to get default sink'
+	exit 1
+fi
+
+echo "default sink: $default_sink"
+
+if [ "$default_sink" = "$speakers_sink" ]; then
+	pactl set-default-sink "$headphones_sink"
+else
+	pactl set-default-sink "$speakers_sink"
+fi
