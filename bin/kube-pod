@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-# Find the current randomized name of a pod for an application
-# $1: namespace
-# $2: application name
-
-kubectl get pods --output json --namespace "$1" | jq --raw-output --arg app "$2" '.items[] | select(.metadata.labels.app == $app) | .metadata.name'

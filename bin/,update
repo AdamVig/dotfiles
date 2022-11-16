@@ -172,7 +172,7 @@ if command -v apt-get >/dev/null; then
 	run_operation 'apt' update_apt
 fi
 
-if is-linux; then
+if [[ $OSTYPE == *linux* ]]; then
 	run_operation 'linux software' update_linux_software
 
 	run_operation 'nodenv' update_nodenv

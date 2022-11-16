@@ -79,8 +79,11 @@ if ! [ -f "$config_dir"/redshift.conf ]; then
 	log_end
 fi
 
-mkdir -p "$config_dir"/pulse
-_ln "$_dir"/../config/pulseaudio-configuration-script.pa "$config_dir"/pulse/default.pa
+if [ -d "$config_dir"/pulse ]; then
+	log_start 'removing legacy PulseAudio configuration'
+	rm -rf "$config_dir"/pulse
+	log_end
+fi	
 
 mkdir -p "$config_dir"/i3/workspaces
 if ! [ -x "$config_dir"/i3/workspaces/init ]; then
