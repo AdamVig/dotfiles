@@ -14,14 +14,10 @@ pip_packages=(
 	# Update pip first to suppress warnings about it being outdated
 	pip # Package manager
 
-	b2                   # Backblaze B2 CLI
-	csvkit               # CSV processing tools
-	homeassistant-cli    # Home Assistant management tool
-	khal                 # Calendar CLI
-	visidata             # Data set visualizer
-	vdirsyncer           # Synchronize calendars and contacts
-	'vdirsyncer[google]' # Extension for Google support
-	youtube-dl           # Media downloader
+	b2                # Backblaze B2 CLI
+	csvkit            # CSV processing tools
+	homeassistant-cli # Home Assistant management tool
+	youtube-dl        # Media downloader
 )
 
 for package in "${pip_packages[@]}"; do
@@ -29,6 +25,15 @@ for package in "${pip_packages[@]}"; do
 	PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring python3 -m pip install --upgrade --user "$package" >/dev/null
 	log "installed \"$package\""
 done
+
+no_longer_needed_pip_packages=(
+	khal                 # Calendar CLI
+	visidata             # Data set visualizer
+	vdirsyncer           # Synchronize calendars and contacts
+	'vdirsyncer[google]' # Extension for Google support
+)
+
+python3 -m pip uninstall --yes "${no_longer_needed_pip_packages[@]}" &>/dev/null
 
 if is_linux; then
 	log_start 'installing rofimoji'
