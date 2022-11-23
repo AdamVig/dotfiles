@@ -147,17 +147,18 @@ get_latest_github_release() {
 # Get the GitHub release URL matching a given pattern
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
+# $3: optional matching mode: startswith, contains, or endswith (default endswith)
 get_release_url() {
 	repository="${1:-}"
 	pattern="${2:-}"
+	matching_mode="${3:-endswith}"
 	# Check if jq is available for JSON parsing
 	if ! command -v jq >/dev/null; then
 		warn "could not get release url for $1 because jq is not installed"
 		return 100
 	fi
 
-	# shellcheck disable=SC2016
-	filter='.assets | map(.browser_download_url | select(endswith($pattern))) | first'
+	filter=".assets | map(.browser_download_url | select(${matching_mode}(\$pattern))) | first"
 	if ! get_latest_github_release "$repository" | jq --exit-status --arg pattern "$pattern" --raw-output "$filter"; then
 		warn 'failed to find a matching asset in the latest release'
 		return 100
