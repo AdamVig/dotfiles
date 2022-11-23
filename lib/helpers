@@ -130,6 +130,20 @@ _ln() {
 		"$@"
 }
 
+# Get the latest GitHub release in JSON format
+# $1: GitHub repository URL in format: [owner]/[repo name]
+get_latest_github_release() {
+	repository="${1:-}"
+
+	url="https://api.github.com/repos/${repository}/releases/latest"
+	if ! latest_release="$(_curl "$url")"; then
+		warn "failed to get latest release from \"$url\""
+		return 100
+	fi
+
+	echo "$latest_release"
+}
+
 # Get the GitHub release URL matching a given pattern
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
@@ -142,15 +156,9 @@ get_release_url() {
 		return 100
 	fi
 
-	# Get list of releases
-	url="https://api.github.com/repos/${repository}/releases/latest"
-	if ! latest_release="$(_curl "$url")"; then
-		warn "failed to get latest release from \"$url\""
-		return 100
-	fi
-	if ! echo "$latest_release" |
-		jq --exit-status --arg pattern "$pattern" --raw-output \
-			'.assets | map(.browser_download_url | select(contains($pattern))) | first'; then
+	# shellcheck disable=SC2016
+	filter='.assets | map(.browser_download_url | select(endswith($pattern))) | first'
+	if ! get_latest_github_release "$repository" | jq --exit-status --arg pattern "$pattern" --raw-output "$filter"; then
 		warn 'failed to find a matching asset in the latest release'
 		return 100
 	fi
