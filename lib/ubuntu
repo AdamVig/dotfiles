@@ -83,7 +83,7 @@ if [ -d "$config_dir"/pulse ]; then
 	log_start 'removing legacy PulseAudio configuration'
 	rm -rf "$config_dir"/pulse
 	log_end
-fi	
+fi
 
 mkdir -p "$config_dir"/i3/workspaces
 if ! [ -x "$config_dir"/i3/workspaces/init ]; then
@@ -163,12 +163,9 @@ if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
 	log_end
 fi
 
-log_start 'configuring GNOME Keyring'
-mkdir -p "$config_dir"/autostart
-# Create customized versions of the desktop files for the secrets and SSH components so they start automatically
-# By default, the OnlyShowIn lines in the desktop files would prevent these components from being started
-sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-secrets.desktop >"$config_dir"/autostart/gnome-keyring-secrets.desktop
-sed '/^OnlyShowIn.*$/d' /etc/xdg/autostart/gnome-keyring-ssh.desktop >"$config_dir"/autostart/gnome-keyring-ssh.desktop
+log_start 'removing GNOME Keyring autostart files'
+# GNOME Keyring now ships with systemd user units, so the autostart approach is redundant
+rm -f "$config_dir"/autostart/gnome-keyring-secrets.desktop "$config_dir"/autostart/gnome-keyring-ssh.desktop
 log_end
 
 log_start 'disabling input language icon in system tray'
