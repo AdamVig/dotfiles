@@ -12,7 +12,6 @@ log() {
 log_start 'installing golang tools'
 
 go_packages=(
-	github.com/nektos/act    # GitHub Actions local runner
 	golang.org/x/tools/gopls # Go language server
 )
 
