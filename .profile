@@ -31,9 +31,6 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# Set golang workspace directory
-export GOPATH="$HOME"/src/go
-
 if [[ "$OSTYPE" == darwin* ]]; then
 	# Force brew cask to symlink applications to global dir
 	export HOMEBREW_CASK_OPTS='--appdir=/Applications'
@@ -58,6 +55,12 @@ if [[ "$OSTYPE" == darwin* ]]; then
   fi
 fi
 
+# Prevent Golang from storing data in ~/go
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
+
+# Add golang directory to PATH
+append_path "$GOPATH/bin"
+
 # Prevent Nodenv from storing data in ~/.nodenv
 export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
 
@@ -79,9 +82,6 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	# Disable emoji in Minikube
 	export MINIKUBE_IN_STYLE=false
 fi
-
-# Add golang directory to PATH
-append_path "$GOPATH/bin"
 
 if command -v python3 > /dev/null; then
   # Add Python package executable directory to PATH
