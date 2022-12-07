@@ -59,7 +59,7 @@ elif [ $ci_status_exit_code = 1 ]; then
 else
 	message="Something unexpected happened in CI for $project."
 fi
-j
+
 if [[ $OSTYPE == darwin* ]]; then
 	osascript -e "display notification \"$message\" with title \"watch-ci\""
 elif command -v notify-send >/dev/null; then
