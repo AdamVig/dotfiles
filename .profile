@@ -32,12 +32,6 @@ export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ "$OSTYPE" == darwin* ]]; then
-	# Force brew cask to symlink applications to global dir
-	export HOMEBREW_CASK_OPTS='--appdir=/Applications'
-
-	# Use correct committer email for CLI-driven Homebrew commits
-	export HOMEBREW_GIT_EMAIL='adam@adamvig.com'
-
   # Prefer GNU utilities over built-in BSD variants
   if [ -d /usr/local/opt/gnu-getopt ]; then
     prepend_path '/usr/local/opt/gnu-getopt/bin'
