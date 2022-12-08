@@ -71,8 +71,8 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	append_path "$NODENV_ROOT"/bin
 
 	# When in a graphical environment, initialize the already-running GNOME Keyring daemon
-	if [ -n "$DESKTOP_SESSION" ];then
-		eval "$(gnome-keyring-daemon --start)"
+	if [ -n "$DESKTOP_SESSION" ] && [ -z "$SSH_AUTH_SOCK" ]; then
+		SSH_AUTH_SOCK="$(ss -xl | grep --only-matching '/run/user/.*/keyring/ssh')"
 		export SSH_AUTH_SOCK
 	fi
 
