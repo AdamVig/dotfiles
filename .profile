@@ -36,20 +36,22 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	if ! command -v brew >/dev/null; then
 		eval "$(/opt/homebrew/bin/brew shellenv)"
 	fi
+
+	brew_prefix="$(brew --prefix)"
   # Prefer GNU utilities over built-in BSD variants
-  if [ -d /usr/local/opt/gnu-getopt ]; then
-    prepend_path '/usr/local/opt/gnu-getopt/bin'
+  if [ -d "$brew_prefix"/opt/gnu-getopt ]; then
+    prepend_path "$brew_prefix"/opt/gnu-getopt/bin
   fi
-  if [ -d /usr/local/opt/coreutils ]; then
-    prepend_path '/usr/local/opt/coreutils/libexec/gnubin'
+  if [ -d "$brew_prefix"/opt/coreutils ]; then
+    prepend_path "$brew_prefix"/opt/coreutils/libexec/gnubin
   fi
-  if [ -d /usr/local/opt/gnu-sed ]; then
-    prepend_path '/usr/local/opt/gnu-sed/libexec/gnubin'
+  if [ -d "$brew_prefix"/opt/gnu-sed ]; then
+    prepend_path "$brew_prefix"/opt/gnu-sed/libexec/gnubin
   fi
   
   # Add libpq's psql CLI to PATH
-  if [ -d /usr/local/opt/libpq/bin ]; then
-    prepend_path '/usr/local/opt/libpq/bin'
+  if [ -d "$brew_prefix"/opt/libpq/bin ]; then
+    prepend_path "$brew_prefix"/opt/libpq/bin
   fi
 fi
 

@@ -5,7 +5,7 @@
 
 # Enable fzf keybindings and fuzzy auto-completion
 if [[ $OSTYPE == darwin* ]]; then
-	fzf_shell_root='/usr/local/opt/fzf/shell/'
+	fzf_shell_root="$(brew --prefix)"/opt/fzf/shell/
 else
 	fzf_shell_root='/usr/share/doc/fzf/examples'
 fi
