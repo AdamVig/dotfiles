@@ -10,12 +10,10 @@ else
 	fzf_shell_root='/usr/share/doc/fzf/examples'
 fi
 
-if ! [ -d "$fzf_shell_root" ]; then
-	exit
+if [ -d "$fzf_shell_root" ]; then
+	source "$fzf_shell_root"/key-bindings.zsh
+	source "$fzf_shell_root"/completion.zsh
 fi
-
-source "$fzf_shell_root"/key-bindings.zsh
-source "$fzf_shell_root"/completion.zsh
 
 # Use fd to generate the list for path candidate completion
 _fzf_compgen_path() {
