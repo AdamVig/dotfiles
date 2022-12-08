@@ -32,6 +32,10 @@ export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ "$OSTYPE" == darwin* ]]; then
+	# On ARM Macs, the Brew prefix is different and needs to be added to PATH manually
+	if ! command -v brew >/dev/null; then
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	fi
   # Prefer GNU utilities over built-in BSD variants
   if [ -d /usr/local/opt/gnu-getopt ]; then
     prepend_path '/usr/local/opt/gnu-getopt/bin'

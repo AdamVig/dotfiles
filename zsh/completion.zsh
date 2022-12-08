@@ -22,6 +22,13 @@ if [ -d "$gh_completion_path" ] && [[ "$FPATH" != *"$gh_completion_path"* ]]; th
 	fpath=("$gh_completion_path" $fpath)
 fi
 
+if [[ $OSTYPE == darwin* ]]; then
+	brew_completion_path="$(brew --prefix)"/share/zsh/site-functions
+	if [ -d "$brew_completion_path" ] && [[ "$FPATH" != *"$brew_completion_path"* ]]; then
+		fpath=("$brew_completion_path" $fpath)
+	fi
+fi
+
 zmodload -i zsh/complist
 
 # Initialize completion, ignoring insecure directories and caching for 20 hours
