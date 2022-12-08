@@ -21,12 +21,3 @@ FAST_HIGHLIGHT[git-cmsg-len]=71
 # Enable built-in functions (see man zshcontrib)
 autoload zcalc
 autoload zmv
-
-# Initialize broot
-if [[ $OSTYPE == darwin* ]]; then
-  broot_root='org.dystroy.broot'
-else
-  broot_root='broot'
-fi
-# shellcheck disable=SC1090
-source "${XDG_CONFIG_HOME:-$HOME/.config}"/"$broot_root"/launcher/bash/br

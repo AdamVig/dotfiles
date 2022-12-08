@@ -46,7 +46,6 @@ log_start 'running programming language setup scripts'
 log_end
 
 log_start 'running application setup scripts'
-"$_dir"/broot
 "$_dir"/emacs
 "$_dir"/gh
 "$_dir"/git
