@@ -11,11 +11,12 @@ log() {
 
 log_start 'setting up Zsh'
 
-# shellcheck disable=SC2119
-request_sudo
-
 if [[ $SHELL != *zsh ]]; then
 	log_start 'changing default shell to Zsh'
+
+	# shellcheck disable=SC2119
+	request_sudo
+
 	zsh_path="$(command -v zsh)"
 
 	if is-macos; then
