@@ -32,6 +32,9 @@ export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ "$OSTYPE" == darwin* ]]; then
+	# Disable Homebrew usage hints
+	export HOMEBREW_NO_ENV_HINTS
+
 	# On ARM Macs, the Brew prefix is different and needs to be added to PATH manually
 	if ! command -v brew >/dev/null; then
 		eval "$(/opt/homebrew/bin/brew shellenv)"
