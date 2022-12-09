@@ -23,9 +23,12 @@ if ! gh auth status &>/dev/null; then
 fi
 log_end
 
+log_start 'configuring gh as Git credential helper'
+gh auth setup-git
+log_end
+
 log_start 'setting configuration'
-# Use SSH for Git clone and push operations
-gh config set git_protocol ssh
+gh config set git_protocol https
 log_end
 
 log_start 'setting aliases'

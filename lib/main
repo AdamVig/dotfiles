@@ -46,8 +46,8 @@ log_end
 
 log_start 'running application setup scripts'
 "$_dir"/emacs
-"$_dir"/gh
 "$_dir"/git
+"$_dir"/gh
 "$_dir"/gpg
 "$_dir"/ssh
 "$_dir"/vscode
