@@ -60,6 +60,7 @@ cask "gpg-suite"
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
+cask "lunar" # Monitor control
 cask "meld" # Comparison tool for version control, files, and directories
 cask "nextcloud"
 cask "rectangle"
