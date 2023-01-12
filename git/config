@@ -11,6 +11,8 @@
 [push]
   # make `git push -u` default to `origin` and the current branch
   default = current
+  # assume `-u` flag on `git push` and set up remote tracking branch of the same name
+  autoSetupRemote = true
   # push annotated tags along with commits
   followTags = true
 [pretty]
