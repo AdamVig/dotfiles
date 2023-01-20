@@ -20,6 +20,7 @@ pip_packages=(
 	csvkit            # CSV processing tools
 	homeassistant-cli # Home Assistant management tool
 	youtube-dl        # Media downloader
+	yq                # jq for YAML/XML
 )
 
 # Disable keyring to prevent interactive prompts (https://github.com/pypa/pip/issues/8090#issuecomment-803363268)
