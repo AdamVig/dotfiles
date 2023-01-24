@@ -19,8 +19,8 @@ pip_packages=(
 	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
 	homeassistant-cli # Home Assistant management tool
-	youtube-dl        # Media downloader
 	yq                # jq for YAML/XML
+	yt-dlp            # Media downloader
 )
 
 # Disable keyring to prevent interactive prompts (https://github.com/pypa/pip/issues/8090#issuecomment-803363268)
@@ -33,6 +33,7 @@ no_longer_needed_pip_packages=(
 	visidata             # Data set visualizer
 	vdirsyncer           # Synchronize calendars and contacts
 	'vdirsyncer[google]' # Extension for Google support
+	youtube-dl           # Inactive media downloader
 )
 
 python3 -m pip uninstall --yes "${no_longer_needed_pip_packages[@]}" &>/dev/null
