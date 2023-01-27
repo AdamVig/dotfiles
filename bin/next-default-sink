@@ -8,18 +8,18 @@ Toggle the default sink to the next available sink using pactl.
 Flags:
     -h, --help    show this help text"
 
-if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
 	echo "$usage"
 	exit 0
 fi
 
-speakers_sink="${SPEAKERS_SINK:-}"
+speakers_sink="${SPEAKERS_SINK-}"
 if [ -z "$speakers_sink" ]; then
 	echo 'error: must set SPEAKERS_SINK environment variable'
 	exit 1
 fi
 
-headphones_sink="${HEADPHONES_SINK:-}"
+headphones_sink="${HEADPHONES_SINK-}"
 if [ -z "$headphones_sink" ]; then
 	echo 'error: must set HEADPHONES_SINK environment variable'
 	exit 1

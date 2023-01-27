@@ -47,7 +47,7 @@ while true; do
 done
 
 # Read from argument
-url="${1:-}"
+url="${1-}"
 # If argument is missing and stdin is not a terminal, read from stdin
 if [ -z "$url" ] && ! [ -t 0 ]; then
 	url="$(</dev/stdin)"

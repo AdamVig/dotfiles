@@ -5,12 +5,12 @@
 
 set -euo pipefail
 
-if [ -z "${HOME_ASSISTANT_HOST:-}" ]; then
+if [ -z "${HOME_ASSISTANT_HOST-}" ]; then
 	echo >&2 'error: HOME_ASSISTANT_HOST must be set'
 	exit 1
 fi
 
-if [ -z "${HOME_ASSISTANT_TOKEN:-}" ]; then
+if [ -z "${HOME_ASSISTANT_TOKEN-}" ]; then
 	echo >&2 'error: HOME_ASSISTANT_TOKEN must be set'
 	exit 1
 fi
@@ -42,8 +42,8 @@ main() {
 	# $1: event JSON
 	# $2: key in event's .event.data object
 	get_event_data() {
-		event="${1:-}"
-		key="${2:-}"
+		event="${1-}"
+		key="${2-}"
 		if [ -z "$event" ]; then
 			log 'missing event'
 			return 1

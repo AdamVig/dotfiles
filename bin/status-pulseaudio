@@ -46,8 +46,8 @@ get_volume_percentage() {
 # $1: name of default sink
 get_sink_type() {
 	sink_name="${1:?missing sink name}"
-	headphones_sink="${HEADPHONES_SINK:-}"
-	speakers_sink="${SPEAKERS_SINK:-}"
+	headphones_sink="${HEADPHONES_SINK-}"
+	speakers_sink="${SPEAKERS_SINK-}"
 	if [ -z "$speakers_sink" ] || [ -z "$headphones_sink" ]; then
 		return
 	fi

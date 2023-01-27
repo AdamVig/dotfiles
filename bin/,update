@@ -10,7 +10,7 @@ Update applications, packages, and tools.
 Flags:
     -h, --help  show this help text"
 
-if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
 	echo "$usage"
 	exit 0
 fi
@@ -23,7 +23,7 @@ background_red="$(tput setab 1)"
 reset="$(tput sgr0)"
 
 log_operation() {
-	operation="${1:-}"
+	operation="${1-}"
 	if [ -z "$operation" ]; then
 		echo 'internal error: log_operation called without an operation'
 		return 1
@@ -43,13 +43,13 @@ log_failure() {
 # $1: PID of process to wait for
 # $2: path to file containing output to log
 log_output() {
-	pid="${1:-}"
+	pid="${1-}"
 	if [ -z "$pid" ]; then
 		echo 'internal error: log_output called without PID'
 		return 1
 	fi
 
-	output_path="${2:-}"
+	output_path="${2-}"
 	if [ -z "$output_path" ]; then
 		echo 'internal error: log_output called without output path'
 		return 1

@@ -12,12 +12,12 @@ Arguments:
 Flags:
     -h, --help  show this help text"
 
-if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
 	echo "$usage"
 	exit 0
 fi
 
-path="${1:-}"
+path="${1-}"
 if [ -z "$path" ]; then
 	echo 'error: must pass a path'
 	exit 1

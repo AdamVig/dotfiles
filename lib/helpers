@@ -44,7 +44,7 @@ log() {
 # $1: name of an operation
 # $@: passed to log
 log_start() {
-	operation_name="${1:-}"
+	operation_name="${1-}"
 	if [ -z "$operation_name" ]; then
 		echo 'internal error: log_start called without an operation name'
 		return 1
@@ -74,7 +74,7 @@ log_end() {
 # $1: component name
 # $@: passed to log
 log_with_component() {
-	component="${1:-}"
+	component="${1-}"
 	if [ -z "$component" ]; then
 		echo 'internal error: log_with_component called without a component'
 		return 1
@@ -133,7 +133,7 @@ _ln() {
 # Get the latest GitHub release in JSON format
 # $1: GitHub repository URL in format: [owner]/[repo name]
 get_latest_github_release() {
-	repository="${1:-}"
+	repository="${1-}"
 
 	url="https://api.github.com/repos/${repository}/releases/latest"
 	if ! latest_release="$(_curl "$url")"; then
@@ -149,8 +149,8 @@ get_latest_github_release() {
 # $2: pattern to match
 # $3: optional matching mode: startswith, contains, or endswith (default endswith)
 get_release_url() {
-	repository="${1:-}"
-	pattern="${2:-}"
+	repository="${1-}"
+	pattern="${2-}"
 	matching_mode="${3:-endswith}"
 	# Check if jq is available for JSON parsing
 	if ! command -v jq >/dev/null; then
@@ -169,8 +169,8 @@ get_release_url() {
 # $1: binary name
 # $2: URL
 install_binary_from_url() {
-	local name="${1:-}"
-	local url="${2:-}"
+	local name="${1-}"
+	local url="${2-}"
 	local path="$HOME"/.local/bin/"$name"
 	output_path="$(mktemp)"
 
@@ -189,9 +189,9 @@ install_binary_from_url() {
 # $2: repository URL in format: [owner]/[repo name]
 # $3: pattern to match
 install_binary_from_github_release() {
-	local name="${1:-}"
-	local repository="${2:-}"
-	local pattern="${3:-}"
+	local name="${1-}"
+	local repository="${2-}"
+	local pattern="${3-}"
 
 	if ! url="$(get_release_url "$repository" "$pattern")"; then
 		fatal 'failed to get release URL'
@@ -205,7 +205,7 @@ install_binary_from_github_release() {
 # Install a .deb from a URL
 # $1: url
 install_deb_from_url() {
-	local url="${1:-}"
+	local url="${1-}"
 	output_path="$(mktemp --suffix='.deb')"
 
 	if ! _curl "$url" --output "$output_path"; then
@@ -226,8 +226,8 @@ install_deb_from_url() {
 # $1: repository URL in format: [owner]/[repo name]
 # $2: pattern to match
 install_deb_from_github_release() {
-	local repository="${1:-}"
-	local pattern="${2:-}"
+	local repository="${1-}"
+	local pattern="${2-}"
 
 	if ! url="$(get_release_url "$repository" "$pattern")"; then
 		fatal 'failed to get release URL'
