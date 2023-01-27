@@ -12,31 +12,27 @@ log() {
 log_start 'setting up Emacs'
 
 if is_ubuntu || is_debian; then
-	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs-snapshot.service
+	if systemctl --user is-enabled --quiet emacs-snapshot.service; then
+		log_start 'disabling Emacs snapshot service'
+		systemctl --user disable --now emacs-snapshot.service
+		log_end
+	fi
+
+	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs.service
 	if ! [ -f "$user_emacs_unit_path" ]; then
-		log_start 'linking Emacs snapshot service into place'
-		if ! package_emacs_unit_path="$(find /usr/lib -name emacs-snapshot.service)"; then
-			fatal 'failed to find path to Emacs Systemd unit'
-		fi
+		log_start 'linking Emacs service into place'
+		package_emacs_unit_path=/usr/lib/systemd/user/emacs.service
 		systemctl --user link "$package_emacs_unit_path"
-		# Create an alias from "emacs-snapshot" to "emacs" for more convenient usage
-		_ln "$user_emacs_unit_path" "$(xdg_config)"/systemd/user/emacs.service
 		systemctl --user daemon-reload
-		log_end 'done linking Emacs snapshot service into place.'
+		log_end 'done linking Emacs service into place.'
 	fi
 
-	if ! systemctl --user is-enabled --quiet emacs-snapshot.service; then
+	if ! systemctl --user is-enabled --quiet emacs.service; then
 		log_start 'setting up Emacs daemon'
-		systemctl --user enable --now emacs-snapshot.service
+		systemctl --user enable --now emacs.service
 		log_end
 	fi
 
-	emacs_client_desktop_path="$HOME"/.local/share/applications/emacs-client.desktop
-	if [ -f "$emacs_client_desktop_path" ]; then
-		log_start 'removing no-longer-needed Emacs client desktop file'
-		rm -f "$emacs_client_desktop_path"
-		log_end
-	fi
 fi
 
 log_start 'setting up Emacs configuration'
