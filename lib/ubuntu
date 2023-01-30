@@ -122,44 +122,18 @@ if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
 fi
 
 x11vnc_password_file_path=/etc/x11vnc-password
-if ! request_sudo [ -f "$x11vnc_password_file_path" ]; then
-	log_start 'creating x11vnc password file'
-	read -r -p "$(make_prompt 'Enter an eight-character VNC password: ')"
-	request_sudo x11vnc -storepasswd "$REPLY" "$x11vnc_password_file_path"
+if request_sudo [ -f "$x11vnc_password_file_path" ]; then
+	log_start 'removing x11vnc password file'
+	request_sudo rm -f "$x11vnc_password_file_path"
 	log_end
 fi
 
 x11vnc_unit_path=/etc/systemd/system/x11vnc.service
-if ! request_sudo [ -f "$x11vnc_unit_path" ]; then
-	log_start 'creating x11vnc Systemd unit'
-	echo "[Unit]
-Description=\"x11vnc\"
-Requires=display-manager.service
-After=display-manager.service
-
-[Service]
-# -forever: keep running after the first client disconnects
-# -env FD_XDM=1: helps '-auth guess' work with GDM when no users are signed in
-# -auth guess: automatically find Xauthority file
-# -find: automatically find display
-# -no6: disable IPv6 support to suppress error message in logs
-# -rfbport 5900: set port to disable \"Autoprobing\" messages in logs
-# -rfbauth: use password from specified file
-ExecStart=/usr/bin/x11vnc -forever -env FD_XDM=1 -auth guess -find -no6 -rfbport 5900 -rfbauth $x11vnc_password_file_path
-ExecStop=/usr/bin/killall x11vnc
-Restart=on-failure
-RestartSec=3
-
-[Install]
-WantedBy=multi-user.target
-" | request_sudo tee "$x11vnc_unit_path" >/dev/null
+if request_sudo [ -f "$x11vnc_unit_path" ]; then
+	log_start 'removing x11vnc Systemd unit'
+	request_sudo systemctl disable x11vnc
+	request_sudo rm -f "$x11vnc_unit_path"
 	request_sudo systemctl daemon-reload
-	log_end
-fi
-
-if ! request_sudo systemctl is-enabled --quiet x11vnc.service; then
-	log_start 'setting up x11vnc service'
-	request_sudo systemctl enable --now x11vnc.service
 	log_end
 fi
 

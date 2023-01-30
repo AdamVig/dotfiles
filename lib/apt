@@ -228,7 +228,6 @@ declare -a packages=(
 	wine       # Support for Windows applications
 	winetricks # Tools for working with Wine
 	wmctrl     # X window manager control CLI
-	x11vnc     # X server VNC
 	xclip      # Clipboard CLI
 	xsel       # Clipboard CLI
 	xdotool    # X input event generator
@@ -261,7 +260,7 @@ declare -a packages=(
 	gnome-keyring # Secret manager
 	gpsbabel      # GPS file conversion tool
 	i3            # Window manager
-	i3blocks      # Status bar generator
+	i3blocks      # Status bar generatorn
 	inkscape
 	kdiff3 # Merge tool
 	kitty  # GPU-accelerated terminal emulator
@@ -307,6 +306,8 @@ declare -a unwanted_packages=(
 
 	# Used to be installed via .deb, now installed as a binary
 	websocat
+
+	x11vnc # X server VNC
 
 	# Had been installed both via Apt and in ./linux-software
 	yubikey-manager
