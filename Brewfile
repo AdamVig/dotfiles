@@ -26,6 +26,7 @@ brew "pandoc"
 brew "scc" # Lines of code counter
 brew "tig" # Visual Git client
 brew "unzip"
+brew "switchaudio-osx" # Audio output switcher
 
 # shell
 brew "bash"
