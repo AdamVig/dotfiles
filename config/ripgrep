@@ -26,3 +26,7 @@
 test:*.spec.*
 --type-add
 test:*.test.*
+
+# Add a type for Storybook files
+--type-add
+story:*.stories.*
