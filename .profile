@@ -119,6 +119,9 @@ export B2_ACCOUNT_INFO="${XDG_CONFIG_HOME:-$HOME/.config}"/b2_account_info
 # Prevent VS Code from storing extensions in home directory (https://github.com/microsoft/vscode/issues/3884)
 export VSCODE_EXTENSIONS="${XDG_DATA_HOME:-$HOME/.local/share}"/vscode/extensions
 
+# Prevent Rush from storing data in home directory
+export RUSH_GLOBAL_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}"/rush
+
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
 if [ -f "$local_profile_path" ]; then
