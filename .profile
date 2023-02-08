@@ -51,6 +51,11 @@ if [[ "$OSTYPE" == darwin* ]]; then
   if [ -d "$brew_prefix"/opt/gnu-sed ]; then
     prepend_path "$brew_prefix"/opt/gnu-sed/libexec/gnubin
   fi
+
+	# Add unversioned Python binaries to PATH
+	if [ -d "$brew_prefix"/opt/python ]; then
+		prepend_path "$brew_prefix"/opt/python/libexec/bin
+	fi
   
   # Add libpq's psql CLI to PATH
   if [ -d "$brew_prefix"/opt/libpq/bin ]; then
