@@ -95,27 +95,6 @@ if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenChe
 fi
 log_end
 
-log_start 'installing Hub'
-if ! hub_url="$(get_release_url 'github/hub' 'linux-amd64' 'contains')"; then
-	fatal 'failed to get Hub release URL'
-fi
-hub_tmp="$(mktemp --suffix .tgz)"
-if ! _curl "$hub_url" --output "$hub_tmp"; then
-	fatal 'failed to download Hub'
-fi
-hub_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$hub_tmp" -C "$hub_extracted_tmp" --strip-components=1 >/dev/null; then
-	fatal 'failed to extract Hub'
-fi
-rm -f "$hub_tmp"
-hub_path="$HOME"/.local/bin/hub
-install -D "$hub_extracted_tmp"/bin/hub "$hub_path"
-install -D --target-directory="$HOME"/.local/share/man/man1 "$hub_extracted_tmp"/share/man/*/*.1
-hub_completion_dir="$HOME"/.local/share/hub
-install -D "$hub_extracted_tmp"/etc/hub.zsh_completion "$hub_completion_dir"/_hub
-rm -rf "$hub_extracted_tmp"
-log_end
-
 log_start 'installing Bitwarden'
 if ! install_binary_from_url 'Bitwarden' 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage'; then
 	fatal 'failed to install Bitwarden'

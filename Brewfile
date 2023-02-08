@@ -45,7 +45,6 @@ brew "shfmt" # Shell script formatter
 
 # web service clients
 brew "gh" # GitHub
-brew "hub", args: ["HEAD"] # GitHub
 
 # macOS-only command line tools
 brew "gnu-getopt" if OS.mac? # Better than BSD getopt

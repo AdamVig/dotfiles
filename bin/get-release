@@ -7,30 +7,23 @@ if ! check-installed gh https://cli.github.com/; then
 	exit 1
 fi
 
-prev_releases=""
+# Do not pipe gh output to a pager
+unset PAGER
 
-# If CI status is pending, get current list of releases then wait for CI to finish
-if [ "$(gh pr view \
-	--json=statusCheckRollup \
-	--jq='.statusCheckRollup | map(.state) | any(. == "PENDING")')" = "true" ]; then
-	# Get current list of releases, which will be diffed against later to show the new version
-	prev_releases="$(gh release list)"
-
-	echo "Waiting for CI..."
-	watch-ci
-fi
-
-# Print list of releases, diffing against previous list of releases if it is set
-if [ -n "$prev_releases" ]; then
-	echo
-	echo "New release:"
-	# Diff, only displaying changed groups, and hiding any control characters
-	diff \
-		--ignore-all-space \
-		--changed-group-format='%<%>' \
-		--unchanged-group-format='' \
-		<(echo "$prev_releases") <(gh release list)
-else
-	echo 'No CI status found, getting ten most recent releases...'
+get_releases() {
 	gh release list --limit=10
+}
+
+if ! [ "$(gh api '/repos/{owner}/{repo}/commits/{branch}/status' --jq='.state')" = 'pending' ]; then
+	echo 'Commit status is not "pending", so here are the ten most recent releases:'
+	get_releases
+	exit
 fi
+
+prev_releases="$(get_releases)"
+watch-ci
+# Diff, only displaying changed groups, and hiding any control characters
+diff \
+	--ignore-all-space \
+	--changed-group-format='%<%>' \
+	<(echo "$prev_releases") <(get_releases)
