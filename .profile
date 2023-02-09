@@ -127,6 +127,9 @@ export VSCODE_EXTENSIONS="${XDG_DATA_HOME:-$HOME/.local/share}"/vscode/extension
 # Prevent Rush from storing data in home directory
 export RUSH_GLOBAL_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}"/rush
 
+# Disable prompts to update the GitHub CLI (gh)
+export GH_NO_UPDATE_NOTIFIER="true"
+
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
 if [ -f "$local_profile_path" ]; then
