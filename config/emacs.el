@@ -36,19 +36,6 @@
  '(org-agenda-span 'day)
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
- '(org-capture-templates
-		'(("R" "Pull request re-review." entry
-				(file+headline "work.org" "Today")
-				(file "templates/pull-request-re-review.tmpl"))
-			 ("r" "Pull request review." entry
-				 (file+headline "work.org" "Today")
-				 (file "templates/pull-request-review.tmpl"))
-			 ("t" "Ticket." entry
-				 (file+headline "work.org" "Today")
-				 (file "templates/ticket.tmpl"))
-			 ("T" "Technical design document." entry
-				 (file+headline "work.org" "Today")
-				 (file "templates/technical-design-document.tmpl"))))
  '(org-confirm-babel-evaluate nil)
  '(org-export-with-toc nil)
  '(org-html-checkbox-type 'html)
