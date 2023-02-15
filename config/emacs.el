@@ -308,5 +308,7 @@
 
 (provide 'emacs)
 
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars unresolved)
+;; End:
 ;;; emacs.el ends here
-
