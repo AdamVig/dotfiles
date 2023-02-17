@@ -144,5 +144,6 @@
   "settingsSync.ignoredSettings": [
     // Keep the activity bar enabled
     "workbench.activityBar.visible"
-  ]
+  ],
+  "go.toolsManagement.autoUpdate": true
 }
