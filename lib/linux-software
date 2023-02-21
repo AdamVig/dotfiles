@@ -48,13 +48,23 @@ fi
 log_end
 
 fonts_dir="$(xdg_data)"/fonts
-if ! [ -d "$fonts_dir"/source-code-pro ]; then
+if ! [ -d "$fonts_dir"/input ]; then
 	mkdir -p "$fonts_dir"
-	log_start 'installing Source Code Pro'
-	if ! git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git "$fonts_dir"/source-code-pro; then
-		fatal 'failed to clone Git repository'
+	log_start 'installing Input fonts'
+	input_tmp="$(mktemp)"
+	input_url='https://input.djr.com/build/?basic=1&fontSelection=whole&a=0&g=0&i=0&l=0&zero=0&asterisk=0&lineHeight=1.2&accept=I+do'
+	if ! _curl "$input_url" --output "$input_tmp"; then
+		fatal 'failed to download Input fonts'
 	fi
-	if ! fc-cache "$fonts_dir"/source-code-pro; then
+	input_extracted_tmp="$(mktemp)"
+	if ! unzip "$input_tmp" -d "$input_extracted_tmp"; then
+		fatal 'failed to extract Input fonts'
+	fi
+	if ! mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input; then
+		fatal 'failed to move Input fonts into place'
+	fi
+	rm -f "$input_tmp" "$input_extracted_tmp"
+	if ! fc-cache "$fonts_dir"/input; then
 		warn 'failed to generate font caches, font will not be available until next login'
 	fi
 	log_end

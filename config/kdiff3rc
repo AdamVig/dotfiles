@@ -3,7 +3,7 @@
 
 [KDiff3 Options]
 ApplicationFont=Sans Serif,12,-1,5,50,0,0,0,0,0
-Font=Fira Code,12,-1,2,50,0,0,0,0,0
+Font=Input Sans,12,-1,2,50,0,0,0,0,0
 
 FgColor=171,178,191
 BgColor=34,36,41

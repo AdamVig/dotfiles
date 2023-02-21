@@ -69,8 +69,7 @@ cask "visual-studio-code"
 
 # fonts
 tap "homebrew/cask-fonts"
-cask "font-fira-code"
+cask "font-input"
 cask "font-noto-sans"
 cask "font-open-sans"
 cask "font-roboto"
-cask "font-source-code-pro"

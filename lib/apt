@@ -279,7 +279,6 @@ declare -a packages=(
 	virt-manager # Virtual machine manager
 
 	# fonts
-	fonts-firacode
 	fonts-noto
 	fonts-noto-color-emoji
 	fonts-open-sans

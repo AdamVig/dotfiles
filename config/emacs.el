@@ -79,8 +79,8 @@
 
 ;; Set the font and font size (in 1/10pt), custom for macOS
 (if (eq system-type 'darwin)
-	(set-face-attribute 'default nil :font "Fira Code" :height 160)
-	(set-face-attribute 'default nil :font "Fira Code" :height 120)
+	(set-face-attribute 'default nil :font "Input Sans" :height 160)
+	(set-face-attribute 'default nil :font "Input Sans" :height 120)
 )
 
 

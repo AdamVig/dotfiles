@@ -3,7 +3,7 @@
   // Editor
   // ------------------------------
   "window.zoomLevel": 1,
-  "editor.fontFamily": "Fira Code",
+  "editor.fontFamily": "Input Sans",
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
   "editor.rulers": [120],
