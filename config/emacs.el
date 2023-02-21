@@ -77,8 +77,12 @@
 	:ensure t
 	:config (exec-path-from-shell-initialize))
 
-;; Set the font and font size (in 1/10pt)
-(set-face-attribute 'default nil :font "Fira Code" :height 120)
+;; Set the font and font size (in 1/10pt), custom for macOS
+(if (eq system-type 'darwin)
+	(set-face-attribute 'default nil :font "Fira Code" :height 160)
+	(set-face-attribute 'default nil :font "Fira Code" :height 120)
+)
+
 
 ;; Customize the mode line
 (setq-default mode-line-format
