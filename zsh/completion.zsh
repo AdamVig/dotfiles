@@ -2,16 +2,6 @@
 
 # Initialize command completion.
 
-if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions ]; then
-	fpath=("${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions $fpath)
-fi
-
-completion_path=/usr/local/share/zsh/site-functions
-
-if [[ "$FPATH" != *"$completion_path"* ]]; then
-  fpath=("$completion_path" $fpath)
-fi
-
 hub_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/hub
 if [ -d "$hub_completion_path" ] && [[ "$FPATH" != *"$hub_completion_path"* ]]; then
 	fpath=("$hub_completion_path" $fpath)
@@ -27,6 +17,16 @@ if [[ $OSTYPE == darwin* ]]; then
 	if [ -d "$brew_completion_path" ] && [[ "$FPATH" != *"$brew_completion_path"* ]]; then
 		fpath=("$brew_completion_path" $fpath)
 	fi
+fi
+
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions ]; then
+	fpath=("${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions $fpath)
+fi
+
+completion_path=/usr/local/share/zsh/site-functions
+
+if [[ "$FPATH" != *"$completion_path"* ]]; then
+  fpath=("$completion_path" $fpath)
 fi
 
 zmodload -i zsh/complist
