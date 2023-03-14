@@ -33,7 +33,10 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ "$OSTYPE" == darwin* ]]; then
 	# Disable Homebrew usage hints
-	export HOMEBREW_NO_ENV_HINTS
+	export HOMEBREW_NO_ENV_HINTS='true'
+
+	# Disable Homebrew cleanup after installation
+	export HOMEBREW_NO_INSTALL_CLEANUP='true'
 
 	# On ARM Macs, the Brew prefix is different and needs to be added to PATH manually
 	if ! command -v brew >/dev/null; then
