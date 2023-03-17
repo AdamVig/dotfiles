@@ -61,3 +61,10 @@ if [[ "$PATH" != *"nodenv/shims"* ]]; then
 		source "$nodenv_completions_path"
 	fi
 fi
+
+# Initialize Kitty shell integration
+if [ -n "$KITTY_INSTALLATION_DIR" ]; then
+	autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+  kitty-integration
+  unfunction kitty-integration
+fi
