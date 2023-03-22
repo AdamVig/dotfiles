@@ -52,7 +52,8 @@ else
 		IFS='=' read -r name value <<<"$conf_line"
 
 		# If this configuration key is not already set, set it
-		if ! git config --global "$name" &>/dev/null; then
+		if ! git config --global "$name" &>/dev/null || \
+				[ "$(git config --global "$name")" != "$value" ] ; then
 			# shellcheck disable=SC2016
 			value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
 			log "setting '$name' to '$value'"
