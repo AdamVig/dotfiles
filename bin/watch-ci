@@ -9,7 +9,7 @@ fi
 # Cache head commit to avoid breaking when the user makes a new commit on the branch locally
 head="$(git rev-parse HEAD)"
 api_url="/repos/{owner}/{repo}/commits/${head}/status"
-output_template='{{range .statuses}}{{if (eq .state "success")}}🟢{{else}}{{if (eq .state "pending")}}🟡{{else}}🔴{{end}}{{end}} {{if .target_url }}{{hyperlink .target_url .context}}{{else}}{{.context}}{{end}}{{"\n"}}{{end}}'
+output_template='{{range .statuses}}{{if (eq .state "success")}}🟢{{else}}{{if (eq .state "pending")}}🟡{{else}}🔴{{end}}{{end}} {{if .target_url }}{{hyperlink .target_url (autocolor "default+b" .context)}}{{else}}{{autocolor "default+b" .context}}{{end}} {{autocolor "250:default" .description}}{{"\n"}}{{end}}'
 
 # Do not pipe gh output to a pager
 unset PAGER
