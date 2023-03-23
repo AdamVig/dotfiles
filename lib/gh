@@ -60,6 +60,7 @@ log_end
 
 log_start 'installing extensions'
 declare -a gh_extensions=(
+	AdamVig/gh-watch
 	davidraviv/gh-clean-branches
 )
 
