@@ -29,6 +29,8 @@ log_end
 
 log_start 'setting configuration'
 gh config set git_protocol https
+# Do not use the default pager, bat, because it adds unnecessary clutter
+gh config set pager less
 log_end
 
 log_start 'setting aliases'
