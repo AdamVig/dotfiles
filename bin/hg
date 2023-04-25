@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # https://sw.kovidgoyal.net/kitty/kittens/hyperlinked_grep/
-if [ "$TERM" = xterm-kitty ]; then
+# Only activate this mode when running in a terminal
+if [ "$TERM" = xterm-kitty ] && [ -t 1 ]; then
 	exec kitty +kitten hyperlinked_grep "$@"
 else
 	exec rg "$@"
