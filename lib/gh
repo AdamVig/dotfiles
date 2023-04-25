@@ -38,7 +38,7 @@ log_start 'setting aliases'
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh alias set prc --shell 'gh pull-request-body-commit-log "$1" | gh pr create --assignee=@me --base="$1" --body-file="-" --title="$2" "${@:3}"'
+gh alias set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(gh pull-request-body-commit-log "$1")" --title="$2" "${@:3}"'
 
 # Create a draft pull request
 # $1: base branch
