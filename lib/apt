@@ -65,12 +65,6 @@ add_ppa() {
 		"http://ppa.launchpad.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
-if ! is_repository_configured 'balena'; then
-	log_start 'adding Balena Etcher repository'
-	add_repository 'balena' 'https://dl.cloudsmith.io/public/balena/etcher/gpg.70528471AFF9A051.key' "https://dl.cloudsmith.io/public/balena/etcher/deb/${distro} ${codename} main"
-	log_end
-fi
-
 if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_start 'adding Visual Studio Code repository'
 	add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
@@ -162,6 +156,12 @@ if is_repository_configured 'ubuntu-elisp'; then
 	log_end
 fi
 
+if is_repository_configured 'balena'; then
+	log_start 'removing Balena Etcher repository'
+	request_sudo rm -f /etc/apt/sources.list.d/balena.list* /usr/share/keyrings/balena-archive-keyring.gpg
+	log_end
+fi
+
 log_end
 
 if [ -f /etc/apt/preferences.d/firefox ] || [ -f /etc/apt/apt.conf.d/51unattended-upgrades-firefox ] || command -v firefox >/dev/null; then
@@ -250,8 +250,7 @@ declare -a packages=(
 	shellcheck # Shell script linter
 
 	# applications
-	balena-etcher-electron # Image flashing tool
-	brave-browser          # Web browser
+	brave-browser # Web browser
 	code
 	d-feet # D-Bus debugger
 	docker.io
@@ -319,6 +318,12 @@ done
 log_end
 
 log_start 'installing packages from non-repository sources'
+log_start 'installing balenaEtcher'
+if ! install_deb_from_github_release 'balena-io/etcher' '_amd64.deb'; then
+	fatal 'failed to install balenaEtcher'
+fi
+log_end
+
 log_start 'installing Hugo'
 if ! install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'; then
 	fatal 'failed to install Hugo'
