@@ -147,6 +147,11 @@ update_emacs_packages() {
 	emacsclient --eval '(auto-package-update-now)'
 }
 
+update_macos() {
+	echo 'macos'
+	softwareupdate --install --recommended
+}
+
 # Reset terminal to ensure log_output's overwriting logic works correctly
 reset
 
@@ -180,6 +185,10 @@ fi
 
 run_operation 'gh extensions' update_gh_extensions
 run_operation 'emacs packages' update_emacs_packages
+
+if [[ $OSTYPE == darwin* ]]; then
+	run_operation 'macos' update_macos
+fi
 
 # To add user-specific or device-specific updates, create a file at the following path containing something like this:
 # update_foo() {
