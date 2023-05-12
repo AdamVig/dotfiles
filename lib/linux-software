@@ -56,14 +56,15 @@ if ! [ -d "$fonts_dir"/input ]; then
 	if ! _curl "$input_url" --output "$input_tmp"; then
 		fatal 'failed to download Input fonts'
 	fi
-	input_extracted_tmp="$(mktemp)"
+	input_extracted_tmp="$(mktemp -d)"
 	if ! unzip "$input_tmp" -d "$input_extracted_tmp"; then
 		fatal 'failed to extract Input fonts'
 	fi
+	mkdir -p "$fonts_dir"/input
 	if ! mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input; then
 		fatal 'failed to move Input fonts into place'
 	fi
-	rm -f "$input_tmp" "$input_extracted_tmp"
+	rm -rf "$input_tmp" "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
 		warn 'failed to generate font caches, font will not be available until next login'
 	fi
