@@ -18,7 +18,7 @@ fi
 log_start 'checking authentication'
 if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
-	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user
+	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user --git-protocol=https
 	log_end
 fi
 log_end
