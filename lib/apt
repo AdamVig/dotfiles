@@ -343,7 +343,7 @@ fi
 log_end
 
 log_start 'installing glow'
-if ! install_deb_from_github_release 'charmbracelet/glow' '_linux_amd64.deb'; then
+if ! install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'; then
 	fatal 'failed to install glow'
 fi
 log_end
