@@ -161,6 +161,7 @@ get_release_url() {
 	filter=".assets | map(.browser_download_url | select(${matching_mode}(\$pattern))) | first"
 	if ! get_latest_github_release "$repository" | jq --exit-status --arg pattern "$pattern" --raw-output "$filter"; then
 		warn 'failed to find a matching asset in the latest release'
+		log "See https://github.com/${repository}/releases/latest"
 		return 100
 	fi
 }
