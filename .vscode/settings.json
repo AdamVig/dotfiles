@@ -4,6 +4,7 @@
   // ------------------------------
   "window.zoomLevel": 1,
   "editor.fontFamily": "Input Sans",
+  "terminal.integrated.fontFamily": "Input Mono",
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
   "editor.rulers": [120],
