@@ -14,25 +14,16 @@ log_start 'setting up Git'
 config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
 
-if [ -e "$HOME"/.gitconfig ]; then
-	log 'migrating to new configuration file location'
-	mv "$HOME"/.gitconfig "$config_path"/config
-fi
-
 log 'symlinking commit template'
-if [ -h "$HOME"/.git-template ]; then
-	log 'removing legacy .git-template'
-	rm -f "$HOME"/.git-template
-fi
-_ln "$_dir"/../git/template "$config_path"/template
+_ln "$_dir"/../config/git/template "$config_path"/template
 
 log 'symlinking attributes'
-_ln "$_dir"/../git/attributes "$config_path"/attributes
+_ln "$_dir"/../config/git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
 	log "copying gitconfig to \"$config_path/config\""
-	cp "$_dir"/../git/config "$config_path"/config
+	cp "$_dir"/../config/git/config "$config_path"/config
 
 	log_start 'configuring Git user'
 	read -r -p "  Full name: " name
@@ -47,13 +38,13 @@ if ! [ -e "$config_path"/config ]; then
 else
 	log_start 'updating Git configuration'
 	# Read all values from current Git configuration
-	git config --list --file "$_dir"/../git/config | while read -r conf_line; do
+	git config --list --file "$_dir"/../config/git/config | while read -r conf_line; do
 		# Split line into name and value at equals sign
 		IFS='=' read -r name value <<<"$conf_line"
 
 		# If this configuration key is not already set, set it
-		if ! git config --global "$name" &>/dev/null || \
-				[ "$(git config --global "$name")" != "$value" ] ; then
+		if ! git config --global "$name" &>/dev/null ||
+			[ "$(git config --global "$name")" != "$value" ]; then
 			# shellcheck disable=SC2016
 			value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
 			log "setting '$name' to '$value'"
