@@ -20,7 +20,6 @@ brew "glow" # Markdown viewer
 brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
 brew "jq" # JSON processor
-brew "libpq" # PostgreSQL CLI
 brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
@@ -53,14 +52,12 @@ brew "gnu-time" if OS.mac? # Better than BSD time
 brew "grep" if OS.mac?
 
 # applications
-cask "android-platform-tools"
 cask "emacs"
 cask "figma"
 cask "gpg-suite"
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
-cask "lunar" # Monitor control
 cask "meld" # Comparison tool for version control, files, and directories
 cask "nextcloud"
 cask "rectangle"
