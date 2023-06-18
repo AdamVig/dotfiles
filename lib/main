@@ -59,4 +59,4 @@ log_start 'running system setup scripts'
 "$_dir"/ssh-key
 log_end
 
-log "done. start a new login shell or run 'source .zshrc'."
+log "done. start a new login shell or run 'source zsh/.zshrc'."

@@ -13,15 +13,25 @@ git config --local core.hooksPath scripts/git-hooks
 ```
 
 ### File Structure
-#### `.vscode/`
-Settings, keybindings, and snippets for Visual Studio Code.  
-#### `bin/`
-Various scripts, including `,bootstrap`.
-#### `.bashrc`  
+#### `.bashrc`
 Basic Bash configuration for scripts that run interactively.
-#### `.profile`  
-Environment variable exports.  
-#### `.zshrc`  
+#### `.profile`
+Environment variable exports.
+#### `.vscode/`
+Settings, keybindings, and snippets for Visual Studio Code.
+#### `bin/`
+Various user-facing scripts, including `,bootstrap`.
+### `boxstarter.ps1`
+Bootstrap script for Windows.
+### `Brewfile`
+Homebrew configuration for macOS.
+### `config/`
+Configuration files for applications.
+### `lib/`
+Scripts for configuring a system. Use `lib/main` to run them all.
+### `scripts/`
+Scripts for this repository.
+#### `zsh/`
 Shell configuration.
 
-For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.zshrc`.
+For machine-specific environment variables or shell configuration, create `~/.locals`. This file will be sourced by `.zshrc`. For environment variables that need to be available to desktop applications on Linux, use `~/.profile-local` instead.
