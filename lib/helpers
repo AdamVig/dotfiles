@@ -3,14 +3,37 @@
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# .profile must be sourced in order to put binaries in PATH during bootstrap of a fresh system
+# shellcheck source=./.profile
+source "$_dir"/../.profile
+
 black="$(tput setaf 0)"
 blue="$(tput setaf 4)"
 bold="$(tput bold)"
-dim="$(tput dim)"
+# Not all terminal emulators support "dim", so fall back to an empty string
+dim="$(tput dim || echo '')"
 red_background="$(tput setab 1)"
 reset="$(tput sgr0)"
 standout="$(tput smso)"
 yellow_background="$(tput setab 3)"
+
+is_linux() {
+	[[ $OSTYPE == *linux* ]]
+}
+
+is_macos() {
+	[[ $OSTYPE == darwin* ]]
+}
+
+is_ubuntu() {
+	[ -f /etc/os-release ] && grep --quiet Ubuntu /etc/os-release
+}
+
+is_debian() {
+	[ -f /etc/os-release ] && grep --quiet Debian /etc/os-release
+}
 
 # FILO (first in, last out) array of operation names passed to log_start
 log_operation_names=()
@@ -122,12 +145,19 @@ _ln() {
 	# Use short flags for portability
 	# -s: make symbolic links instead of hard links
 	# -f: overwrite link if it already exists
-	# -r: make links relative to link location
-	ln \
-		-s \
-		-f \
-		-r \
-		"$@"
+	# (Linux only) -r: make links relative to link location
+	if is_linux; then
+		ln \
+			-s \
+			-f \
+			-r \
+			"$@"
+	else
+		ln \
+                        -s \
+                        -f \
+                        "$@"
+	fi
 }
 
 # Get the latest GitHub release in JSON format
@@ -237,22 +267,6 @@ install_deb_from_github_release() {
 	if ! install_deb_from_url "$url"; then
 		fatal 'failed to install package from URL'
 	fi
-}
-
-is_linux() {
-	[[ $OSTYPE == *linux* ]]
-}
-
-is_macos() {
-	[[ $OSTYPE == darwin* ]]
-}
-
-is_ubuntu() {
-	[ -f /etc/os-release ] && grep --quiet Ubuntu /etc/os-release
-}
-
-is_debian() {
-	[ -f /etc/os-release ] && grep --quiet Debian /etc/os-release
 }
 
 # Make a prompt using the log function (suitable for passing to `read` or `sudo`, for example)

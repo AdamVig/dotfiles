@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component macos "$@"
+}
+
+log_start 'setting up macOS'
+
+# Enable tap to click
+defaults -currentHost write -globalDomain com.apple.mouse.tapBehavior -int 0
+
+# Disable natural scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Remove all default dock icons
+if defaults read com.apple.dock persistent-apps | grep --quiet 'com.apple.Photos'; then
+	defaults write com.apple.dock persistent-apps -array
+fi
+
+# Disable user interface sound effects
+defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
+
+# Disable the sound effects on boot
+request_sudo nvram SystemAudioVolume=" "
+
+# Set hostname if the current hostname has capital letters (heuristic for detecting default value)
+if echo "$HOSTNAME" | grep --quiet -E '[A-Z]+'; then
+	log_start 'configuring hostname'
+	read -r -p "  Hostname: " hostname
+	request_sudo scutil --set ComputerName "$hostname"
+	request_sudo scutil --set HostName "$hostname"
+	request_sudo scutil --set LocalHostName "$hostname"
+	request_sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+	log_end
+fi
+
+# Disable screensaver
+request_sudo osascript -e 'tell application "System Events" to set delay interval of screen saver preferences to 0'
+
+# Set machine sleep while charging (minutes)
+request_sudo pmset -c displaysleep 180
+request_sudo pmset -c sleep 180
+
+# Set machine sleep on battery (minutes)
+request_sudo pmset -b displaysleep 20
+request_sudo pmset -b sleep 20
+
+# Restart Dock and Finder
+killall Dock
+killall Finder
+
+log_end

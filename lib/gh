@@ -18,7 +18,7 @@ fi
 log_start 'checking authentication'
 if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
-	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user --git-protocol=https
+	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user,write:gpg_key --git-protocol=https
 	log_end
 fi
 log_end
@@ -34,24 +34,29 @@ gh config set pager less
 log_end
 
 log_start 'setting aliases'
+gh_alias_set() {
+	# "alias set" exits 1 if the alias already exists, so swallow the error
+	gh alias set "$@" || true
+}
+
 # Create a pull request
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh alias set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(gh pull-request-body-commit-log "$1")" --title="$2" "${@:3}"'
+gh_alias_set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(gh pull-request-body-commit-log "$1")" --title="$2" "${@:3}"'
 
 # Create a draft pull request
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh alias set prcd --shell 'gh prc "$1" "$2" --draft'
+gh_alias_set prcd --shell 'gh prc "$1" "$2" --draft'
 
 # Get the base branch for the current branch's pull request
 # shellcheck disable=SC2016
-gh alias set prbase "pr view --json baseRefName --jq '.baseRefName'"
+gh_alias_set prbase "pr view --json baseRefName --jq '.baseRefName'"
 
 # Convenience shortcut for checking out a pull request
-gh alias set co 'pr checkout'
+gh_alias_set co 'pr checkout'
 
 log_end
 

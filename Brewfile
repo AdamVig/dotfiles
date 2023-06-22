@@ -37,6 +37,8 @@ brew "python"
 
 # programming language tools
 brew "nodenv" # Node environment manager
+brew "node-build" # Plugin for installing Node versions with Nodenv
+tap "nodenv/nodenv"
 brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
 brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
 brew "shellcheck" # Shell script linter
@@ -52,6 +54,7 @@ brew "gnu-time" if OS.mac? # Better than BSD time
 brew "grep" if OS.mac?
 
 # applications
+cask "google-chrome" # Browser
 cask "emacs"
 cask "figma"
 cask "gpg-suite"

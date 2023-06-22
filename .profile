@@ -14,6 +14,14 @@ append_path() {
   fi
 }
 
+# Synchronized with .zshenv
+if [[ "$OSTYPE" == darwin* ]]; then
+  # https://stackoverflow.com/a/5084892/1850656
+  export XDG_CONFIG_HOME="$HOME"/Library/Preferences
+  export XDG_DATA_HOME="$HOME"/Library
+  export XDG_CACHE_HOME="$HOME"/Library/Caches
+fi
+
 # Default editor
 export VISUAL='emacsclient --create-frame'
 export EDITOR='emacsclient --tty'

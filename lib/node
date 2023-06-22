@@ -82,7 +82,9 @@ fi
 log_start 'setting Python path'
 # Must initialize Nodenv in order for npm to be available in PATH
 eval "$(nodenv init -)"
-npm config set python "$(command -v python3)"
+if ! npm config set python "$(command -v python3)"; then
+	warn 'failed to set npm Python configuration option'
+fi
 log_end
 
 if is_macos && [ -f "$NPM_CONFIG_USERCONFIG" ] && ! [ -h "$HOME"/.npmrc ]; then
