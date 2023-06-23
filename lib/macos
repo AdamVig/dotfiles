@@ -20,6 +20,18 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # Disable natural scrolling
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
+# Don't animate opening applications from the Dock
+defaults write com.apple.dock launchanim -bool false
+
+# Remove the auto-hiding Dock delay
+defaults write com.apple.dock autohide-delay -float 0
+
+# Remove the animation when hiding/showing the Dock
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
 # Remove all default dock icons
 if defaults read com.apple.dock persistent-apps | grep --quiet 'com.apple.Photos'; then
 	defaults write com.apple.dock persistent-apps -array
