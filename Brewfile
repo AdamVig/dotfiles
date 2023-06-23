@@ -1,3 +1,5 @@
+brew "mas" # Mac app store
+
 # default utilities
 brew "curl"
 brew "git"
@@ -54,6 +56,7 @@ brew "gnu-time" if OS.mac? # Better than BSD time
 brew "grep" if OS.mac?
 
 # applications
+mas "amphetamine", id: 937984704 # Keep display awake
 cask "google-chrome" # Browser
 cask "emacs"
 cask "figma"
