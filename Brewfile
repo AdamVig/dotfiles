@@ -67,8 +67,10 @@ cask "kitty" # GPU-accelerated terminal emulator
 cask "meld" # Comparison tool for version control, files, and directories
 cask "nextcloud"
 cask "rectangle"
+cask "slack" # Messaging
 cask "spotify"
 cask "visual-studio-code"
+cask "zoom" # Video conferencing
 
 # fonts
 tap "homebrew/cask-fonts"
