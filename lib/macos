@@ -71,6 +71,11 @@ request_sudo pmset -c sleep 180
 request_sudo pmset -b displaysleep 20
 request_sudo pmset -b sleep 20
 
+# Install Rosetta 2
+if ! pgrep oahd &>/dev/null; then
+	softwareupdate --install-rosetta --agree-to-license
+fi
+
 # Restart Dock and Finder
 killall Dock
 killall Finder
