@@ -30,10 +30,11 @@ if is_ubuntu || is_debian; then
 fi
 
 log_start 'setting up Emacs configuration'
-emacs_config_path="$(xdg_config)"/emacs/init.el
+emacs_config_dir="$(xdg_config)"/emacs
+emacs_config_path="$emacs_config_dir"/init.el
 if ! [ -f "$emacs_config_path" ]; then
 	log_start 'installing Emacs configuration'
-	mkdir -p "$(dirname "$emacs_config_path")"
+	mkdir -p "$emacs_config_dir"
 	_ln "$_dir"/../config/emacs.el "$emacs_config_path"
 	log_end
 fi
@@ -42,8 +43,8 @@ if is_macos; then
 	log_start 'linking Emacs configuration to home directory for macOS Emacs'
 	mkdir -p "$HOME"/.emacs.d/lisp
 	_ln "$emacs_config_path" "$HOME"/.emacs.d
-	if [ -f "$emacs_config_path"/lisp/init-local.el ]; then
-		_ln "$emacs_config_path"/lisp/init-local.el "$HOME"/.emacs.d/lisp
+	if [ -f "$emacs_config_dir"/lisp/init-local.el ]; then
+		_ln "$emacs_config_dir"/lisp/init-local.el "$HOME"/.emacs.d/lisp
 	fi
 	log_end
 fi
