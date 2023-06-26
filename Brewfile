@@ -70,6 +70,7 @@ cask "rectangle"
 cask "slack" # Messaging
 cask "spotify"
 cask "visual-studio-code"
+cask "wacom-tablet" # Driver for Wacom drawing tablets
 cask "zoom" # Video conferencing
 
 # fonts
