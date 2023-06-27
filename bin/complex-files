@@ -22,6 +22,10 @@ if [ -z "$path" ]; then
 	echo 'error: must pass a path'
 	exit 1
 fi
+if ! [ -d "$path" ]; then
+	echo 'error: path must exist and be a directory'
+	exit 1
+fi
 shift
 
 scc --by-file --sort complexity --format json "$@" "$path" |
