@@ -12,6 +12,10 @@
 --glob
 !node_modules/
 
+# Always ignore .yarn
+--glob
+!.yarn/
+
 # Always ignore package-lock.json
 --glob
 !package-lock.json
