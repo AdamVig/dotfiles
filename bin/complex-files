@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly usage="Usage: $(basename "$0") [-h|--help] <path> [scc args]
+usage="Usage: $(basename "$0") [-h|--help] <path> [scc args]
 Find the ten most complex code files in the given path.
 
 Arguments:
@@ -24,5 +24,5 @@ if [ -z "$path" ]; then
 fi
 shift
 
-scc --sort complexity --format json "$@" "$path" |
+scc --by-file --sort complexity --format json "$@" "$path" |
 	jq --raw-output 'map(.Files) | flatten | sort_by(.Complexity) | map(.Location) | reverse | limit(10;.[])'
