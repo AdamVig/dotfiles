@@ -66,6 +66,7 @@ cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
 cask "meld" # Comparison tool for version control, files, and directories
+cask "motu-m-series" # Driver for Motu audio interface
 cask "nextcloud"
 cask "rectangle"
 cask "slack" # Messaging
