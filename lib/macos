@@ -72,8 +72,10 @@ request_sudo pmset -b displaysleep 20
 request_sudo pmset -b sleep 20
 
 # Prevent Apple Music from launching when media keys are pressed
-launchctl bootout "gui/$(id -u "$USER")/com.apple.rcd"
-launchctl disable "gui/$(id -u "$USER")/com.apple.rcd"
+if ! launchctl print-disabled "gui/$(id -u "$USER")/com.apple.rcd" | grep --quiet 'com.apple.rcd'; then
+	launchctl bootout "gui/$(id -u "$USER")/com.apple.rcd"
+	launchctl disable "gui/$(id -u "$USER")/com.apple.rcd"
+fi
 
 # Install Rosetta 2
 if ! pgrep oahd &>/dev/null; then
