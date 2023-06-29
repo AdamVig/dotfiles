@@ -51,7 +51,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-level-1 ((t (:inherit default :extend nil :foreground "#DCDCCC" :weight bold))))
- '(org-level-2 ((t (:foreground "#DCDCCC" :weight medium)))))
+ '(org-level-2 ((t (:foreground "#DCDCCC" :weight medium))))
+ '(variable-pitch ((t (:family "Input Sans")))))
 
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
 (use-package auto-package-update
@@ -79,10 +80,9 @@
 
 ;; Set the font and font size (in 1/10pt), custom for macOS
 (if (eq system-type 'darwin)
-	(set-face-attribute 'default nil :font "Input Sans" :height 160)
-	(set-face-attribute 'default nil :font "Input Sans" :height 120)
+	(set-face-attribute 'default nil :font "Input Mono" :height 160)
+	(set-face-attribute 'default nil :font "Input Mono" :height 120)
 )
-
 
 ;; Customize the mode line
 (setq-default mode-line-format
@@ -203,8 +203,6 @@
   :config (add-hook 'js-mode-hook 'prettier-js-mode))
 
 ;;; Org mode
-;; Enable visual line wrapping in Org mode
-(add-hook 'org-mode-hook 'visual-line-mode)
 ;; Disable "Validate" link in Org HTML exports
 (setq org-html-validation-link nil)
 ;; Set global key binding for org-agenda
@@ -215,8 +213,6 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 ;; Open Org files folded
 (setq org-startup-folded t)
-;; Automatically revert Org buffer when file changes on disk
-(add-hook 'org-mode-hook 'auto-revert-mode)
 
 (use-package writegood-mode
 	:ensure t
@@ -241,6 +237,12 @@
 		(local-set-key (kbd "C-c s") 'org-archive-done-tasks)
 		(require 'ox-md nil t)
 		(require 'ox-gfm nil t)
+		;; Automatically revert buffer when file changes on disk
+		(auto-revert-mode)
+		;; Enable visual line wrapping
+		(visual-line-mode)
+		;; Enable non-monospaced font
+		(variable-pitch-mode)
 		))
 
 ;; Https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
