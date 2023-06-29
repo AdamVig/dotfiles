@@ -5,6 +5,8 @@ alias bat='LESS="--ignore-case" bat'
 
 # Shorter version of bat -p
 alias batp='bat --plain'
+alias b='bat'
+alias bp='bat --plain'
 
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
