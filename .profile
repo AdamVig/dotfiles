@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # For login shells and graphical applications. Intended to be sourced. Must be compatible with Bash.
 
 prepend_path() {
@@ -27,8 +28,10 @@ export VISUAL='emacsclient --create-frame'
 export EDITOR='emacsclient --tty'
 
 # Allow GPG to make prompts
-export GPG_TTY
-GPG_TTY=$(tty)
+if [ -t 0 ]; then
+	export GPG_TTY
+	GPG_TTY=$(tty)
+fi
 
 # Make word-related macros observe special characters
 export WORDCHARS=''
