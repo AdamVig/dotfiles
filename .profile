@@ -26,6 +26,10 @@ fi
 # Default editor
 export VISUAL='emacsclient --create-frame'
 export EDITOR='emacsclient --tty'
+# Do not use a command-line editor on macOS
+if [[ "$OSTYPE" == darwin* ]]; then
+	EDITOR="$VISUAL"
+fi
 
 # Allow GPG to make prompts
 if [ -t 0 ]; then
