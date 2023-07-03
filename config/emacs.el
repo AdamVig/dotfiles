@@ -73,6 +73,10 @@
 	(server-start)
 )
 
+;; On macOS, set PATH (used by shells) to include Homebrew's binary directory
+;; It would be better to launch Emacs.app in a shell context that already has the correct environment variables set
+(if (eq system-type 'darwin) (setenv "PATH" (concat (getenv "PATH") ":/opt/homebrew/bin:/opt/homebrew/sbin")))
+
 ;; Add exec-path-from-shell (https://github.com/purcell/exec-path-from-shell)
 (use-package exec-path-from-shell
 	:ensure t
