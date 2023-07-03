@@ -59,7 +59,6 @@ brew "grep" if OS.mac?
 # applications
 mas "amphetamine", id: 937984704 # Keep display awake
 cask "google-chrome" # Browser
-cask "emacs"
 cask "figma"
 cask "gpg-suite"
 cask "karabiner-elements" # Keyboard customizer
@@ -81,3 +80,7 @@ cask "font-input"
 cask "font-noto-sans"
 cask "font-open-sans"
 cask "font-roboto"
+
+# from Cask versions
+tap "homebrew/cask-versions"
+cask "emacs-pretest"
