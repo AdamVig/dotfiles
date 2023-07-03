@@ -256,6 +256,9 @@
 		;; Enable non-monospaced font
 		(variable-pitch-mode)
 		))
+(add-hook 'org-agenda-mode-hook
+	;; Enable non-monospaced font
+	'variable-pitch-mode)
 
 ;; Https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
 (defun move-line-up ()
