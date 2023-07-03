@@ -51,7 +51,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-level-1 ((t (:inherit default :extend nil :foreground "#DCDCCC" :weight bold))))
- '(org-level-2 ((t (:foreground "#DCDCCC" :weight medium))))
+ '(org-level-2 ((t (:foreground "#DCDCCC" :weight light))))
  '(variable-pitch ((t (:family "Input Sans")))))
 
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
