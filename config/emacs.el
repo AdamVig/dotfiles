@@ -139,6 +139,9 @@
 (require 'ibuf-ext)
 (add-to-list 'ibuffer-never-show-predicates "^\\*")
 
+;; Hide commands that do not apply to the current buffer's mode
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+
 ;; Install and enable undo-tree (https://elpa.gnu.org/packages/undo-tree.html)
 (use-package undo-tree
 	:ensure t
@@ -147,13 +150,18 @@
 	;; Do not save history to a file
 	(setq undo-tree-auto-save-history nil))
 
-;; Install and enable Counsel, Ivy, and Swiper (https://github.com/abo-abo/swiper)
-(use-package counsel
+;; Install and enable vertico (https://github.com/emacs-straight/vertico)
+(use-package vertico
 	:ensure t
-	:config
-	(ivy-mode 1)
-	;; Show both the current number of matches and the total number of candidates
-	(setq ivy-count-format "(%d/%d) "))
+  :init
+  (vertico-mode))
+
+;; Install and enable Orderless completion style (https://github.com/oantolin/orderless)
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
 (use-package zenburn-theme
