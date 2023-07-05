@@ -39,13 +39,36 @@ if ! [ -f "$emacs_config_path" ]; then
 	log_end
 fi
 
+emacs_local_config_path="$emacs_config_dir"/lisp/init-local.el
+if ! [ -f "$emacs_local_config_path" ]; then
+	log_start 'installing template for local Emacs configuration'
+	cat >"$emacs_local_config_path" <<-EOF
+		;;; init-local.el --- Local configuration overrides for Emacs.
+		;;; Commentary:
+
+		;;; Local, machine-specific configuration for Emacs.
+
+		;;; Code:
+
+		; (setq initial-buffer-choice "~/<path to file to open at launch>")
+		; (setq org-directory "~/<path to org directory>")
+		; (setq org-agenda-files '("~/<path to file to use for org agenda>"))
+
+		(provide 'init-local)
+
+		;; Local Variables:
+		;; byte-compile-warnings: (not free-vars unresolved)
+		;; End:
+		;;; init-local.el ends here
+	EOF
+	log_end
+fi
+
 if is_macos; then
 	log_start 'linking Emacs configuration to home directory for macOS Emacs'
 	mkdir -p "$HOME"/.emacs.d/lisp
 	_ln "$emacs_config_path" "$HOME"/.emacs.d
-	if [ -f "$emacs_config_dir"/lisp/init-local.el ]; then
-		_ln "$emacs_config_dir"/lisp/init-local.el "$HOME"/.emacs.d/lisp
-	fi
+	_ln "$emacs_local_config_path" "$HOME"/.emacs.d/lisp
 	log_end
 fi
 log_end
