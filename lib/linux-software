@@ -113,7 +113,7 @@ fi
 log_end
 
 log_start 'installing NextCloud'
-if ! install_binary_from_github_release 'nextcloud' 'nextcloud/desktop' 'x86_64.AppImage'; then
+if ! install_binary_from_github_release 'nextcloud' 'nextcloud-releases/desktop' 'x86_64.AppImage'; then
 	fatal 'failed to install NextCloud'
 fi
 log_end
