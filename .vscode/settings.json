@@ -94,6 +94,8 @@
   // Extensions
   // ------------------------------
   "extensions.ignoreRecommendations": true,
+  // Do not auto-fetch from Git remotes
+  "git.autofetch": false,
   // Git Lens
   "gitlens.showWelcomeOnInstall": false,
   "gitlens.statusBar.enabled": false,
