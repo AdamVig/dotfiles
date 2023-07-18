@@ -239,6 +239,7 @@ declare -a packages=(
 
 	# programming languages
 	golang
+	nodejs
 	php
 	python3
 	ruby

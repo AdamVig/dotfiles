@@ -56,28 +56,17 @@ fi
 log 'copying default packages file'
 cp "$_dir"/../config/npm-default-packages "$(nodenv root)"/default-packages &>/dev/null || true
 
-log_start 'getting latest Node version'
-# 1. Get list of Node versions
-# 2. Filter to only get normal Node versions, like "  9.5.0"
-# 3. Take last line of output which will be latest version
-# 4. Remove the leading spaces
-latest_node_version="$(nodenv install --list | grep -E '^[0-9\.]+$' | tail -1 | xargs)"
-log_end
-
-if [ -n "$latest_node_version" ]; then
-	log_start "installing Node $latest_node_version and default npm packages"
-	if ! nodenv install --skip-existing "$latest_node_version" &>/dev/null; then
-		fatal 'failed to install Node'
-	fi
-
-	if ! nodenv global "$latest_node_version"; then
-		fatal 'failed to set gloabl Node version'
-	fi
-
+nodenv_global_version_path="$(nodenv root)"/version
+if [ -f "$nodenv_global_version_path" ]; then
+	log_start 'removing legacy global version'
+	rm -f "$nodenv_global_version_path"
 	log_end
-else
-	warn "could not get latest Node version; installation failed"
 fi
+
+log_start 'installing default packages'
+nodenv default-packages install system
+nodenv default-packages install --all
+log_end
 
 log_start 'setting Python path'
 # Must initialize Nodenv in order for npm to be available in PATH

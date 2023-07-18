@@ -35,6 +35,7 @@ brew "zsh"
 
 # programming languages
 brew "go"
+brew "nodejs"
 brew "python"
 
 # programming language tools
