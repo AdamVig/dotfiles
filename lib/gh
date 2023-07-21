@@ -43,7 +43,7 @@ gh_alias_set() {
 # $1: base branch
 # $2: title
 # shellcheck disable=SC2016
-gh_alias_set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(gh pull-request-body-commit-log "$1")" --title="$2" "${@:3}"'
+gh_alias_set prc --shell 'gh pr create --assignee=@me --base="$1" --body="$(gh pull-request-body-commit-log "$1")" --title="$2" "${@:3}" && gh pr view --web'
 
 # Create a draft pull request
 # $1: base branch
