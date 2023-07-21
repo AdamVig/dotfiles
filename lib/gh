@@ -58,6 +58,11 @@ gh_alias_set prbase "pr view --json baseRefName --jq '.baseRefName'"
 # Convenience shortcut for checking out a pull request
 gh_alias_set co 'pr checkout'
 
+# Set a pull request to auto-merge
+# $1: commit to get merge commit body from, defaults to "HEAD"
+# shellcheck disable=SC2016
+gh_alias_set automerge --shell 'gh pr merge --squash --subject="$(gh pr view --json=title,number --template="{{ .title }} (#{{ .number }})")" --body="$(git show --no-patch --pretty="%b" "${1:-HEAD}")" --auto && gh pr view --json=autoMergeRequest --template="Merge commit message:{{ \"\n\" }}{{ .autoMergeRequest.commitHeadline }}{{ \"\n\" }}{{ .autoMergeRequest.commitBody }}"'
+
 log_end
 
 log_start 'installing extensions'
