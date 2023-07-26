@@ -62,6 +62,7 @@ mas "amphetamine", id: 937984704 # Keep display awake
 cask "google-chrome" # Browser
 cask "figma"
 cask "gpg-suite"
+cask "inkscape" # Vector image editor and command-line conversion tool
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
