@@ -30,6 +30,9 @@ _ln "$_dir"/../config/ripgrep "$config_dir"/ripgrep/config
 mkdir -p "$config_dir"/bat
 _ln "$_dir"/../config/bat "$config_dir"/bat/config
 
+mkdir -p "$config_dir"/glow
+_ln "$_dir"/../config/glow.yml "$config_dir"/glow/glow.yml
+
 if ! [ -d "$config_dir"/docker ]; then
 	log 'creating Docker configuration directory'
 	mkdir -p "$config_dir"/docker
