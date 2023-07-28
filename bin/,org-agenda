@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help]
+Query the Org Agenda.
+
+Flags:
+    -h, --help  show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+script='(org-batch-agenda "a"
+	;; Four days
+	org-agenda-span 4
+	;; Show the prior four days
+	org-agenda-start-day "-4d"
+	;; Suppress header
+	org-agenda-overriding-header ""
+	;; Suppress TODO
+	org-agenda-todo-keyword-format ""
+	;; Override day subheading to a) be a list item and b) show only the day of the week
+	org-agenda-format-date "- %A"
+	;; Override item prefix to be an indented (under the day subheading) list item
+	org-agenda-prefix-format "  - "
+)'
+
+remove_todo_statistics() {
+	sed --regexp-extended 's/\[[0-9%/]+\]//'
+}
+
+convert_to_markdown() {
+	pandoc --from=org --to=commonmark --wrap=none
+}
+
+render_markdown() {
+	# Force color output when piped (https://github.com/charmbracelet/glow/issues/474)
+	glow -s dark
+}
+
+remove_empty_lines() {
+	sed '/^$/d'
+}
+
+# Suppress stderr because it prints an empty line
+emacs 2>/dev/null \
+	--batch \
+	--load="$XDG_CONFIG_HOME"/emacs/init.el \
+	--execute="$script" |
+	remove_todo_statistics |
+	convert_to_markdown |
+	render_markdown |
+	remove_empty_lines
