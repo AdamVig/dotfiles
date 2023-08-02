@@ -47,7 +47,7 @@ convert_to_markdown() {
 }
 
 render_markdown() {
-	# Force color output when piped (https://github.com/charmbracelet/glow/issues/474)
+	# Use -s to force color output when piped (https://github.com/charmbracelet/glow/issues/474)
 	glow -s dark
 }
 
@@ -55,6 +55,12 @@ remove_empty_lines() {
 	sed '/^$/d'
 }
 
+# Removes the control character-filled empty lines from Glow's output
+remove_first_and_last_lines() {
+	sed '1d; $d'
+}
+
+echo " Agenda entries from the past $days_to_review days:"
 # Suppress stderr because it prints an empty line
 emacs 2>/dev/null \
 	--batch \
@@ -63,4 +69,5 @@ emacs 2>/dev/null \
 	remove_todo_statistics |
 	convert_to_markdown |
 	render_markdown |
-	remove_empty_lines
+	remove_empty_lines |
+	remove_first_and_last_lines
