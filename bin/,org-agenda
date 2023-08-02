@@ -15,11 +15,17 @@ if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
 	exit 0
 fi
 
-script='(org-batch-agenda "a"
-	;; Four days
-	org-agenda-span 4
-	;; Show the prior four days
-	org-agenda-start-day "-4d"
+days_to_review=6
+
+script="$(
+	cat <<EOF
+(org-batch-agenda "a"
+	;; Time span in days
+	org-agenda-span $days_to_review
+	;; Start the agenda org-agenda-span days ago
+	org-agenda-start-day "-${days_to_review}d"
+	;; Hide dates with no tasks
+	org-agenda-show-all-dates nil
 	;; Suppress header
 	org-agenda-overriding-header ""
 	;; Suppress TODO
@@ -28,7 +34,9 @@ script='(org-batch-agenda "a"
 	org-agenda-format-date "- %A"
 	;; Override item prefix to be an indented (under the day subheading) list item
 	org-agenda-prefix-format "  - "
-)'
+)
+EOF
+)"
 
 remove_todo_statistics() {
 	sed --regexp-extended 's/\[[0-9%/]+\]//'
