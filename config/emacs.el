@@ -34,6 +34,7 @@
 			 (tags priority-down category-keep)
 			 (search category-keep)))
  '(org-agenda-span 'day)
+ '(org-agenda-window-setup 'only-window)
  '(org-archive-location "%s-archive::")
  '(org-babel-load-languages '((emacs-lisp . t) (shell . t)))
  '(org-confirm-babel-evaluate nil)
