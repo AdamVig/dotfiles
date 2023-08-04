@@ -38,6 +38,9 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Remove all default dock icons
 if defaults read com.apple.dock persistent-apps | grep --quiet 'com.apple.Photos'; then
 	defaults write com.apple.dock persistent-apps -array
