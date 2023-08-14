@@ -40,7 +40,6 @@ if is_linux; then
 		node-build
 		nodenv-update
 		nodenv-default-packages
-		nodenv-package-json-engine
 	)
 
 	for nodenv_plugin in "${nodenv_plugins[@]}"; do
