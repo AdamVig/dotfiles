@@ -1,6 +1,7 @@
 # Create a pull request
 # $1: base branch
 # $2: title
+# $3+: other parameters for `gh pr create`
 prc: >-
   !gh pr create
   --assignee=@me
@@ -13,8 +14,9 @@ prc: >-
 # Create a draft pull request
 # $1: base branch
 # $2: title
+# $3+: other parameters for `gh pr create`
 prcd: >-
-  !gh prc "$1" "$2" --draft
+  !gh prc "$1" "$2" "${@:3}" --draft
 
 # Get the base branch for the current branch's pull request
 # shellcheck disable=SC2016
@@ -29,14 +31,25 @@ co: >-
 unco: >-
   !git switch - && git branch --delete @{-1} 
 
-# Set a pull request to auto-merge
+# Merge a pull request (squash)
 # $1: commit to get merge commit body from, defaults to "HEAD"
-automerge: >-
+# $2+: other parameters for `gh pr merge`
+merge: >-
   !gh pr merge
   --squash
   --subject="$(gh pr view --json=title,number --template="{{ .title }} (#{{ .number }})")"
   --body="$(git show --no-patch --pretty="%b" "${1:-HEAD}")"
+  --delete-branch
+  "${@:2}"
+
+# Set a pull request to auto-merge (squash)
+# $1: commit to get merge commit body from, defaults to "HEAD"
+# $2+: other parameters for `gh pr merge`
+automerge: >-
+  !gh merge
+  "$1"
   --auto
+  "${@:2}"
   && gh pr view
   --json=autoMergeRequest
   --template="Merge commit message:{{ \"\n\" }}{{ .autoMergeRequest.commitHeadline }}{{ \"\n\" }}{{ .autoMergeRequest.commitBody }}"
