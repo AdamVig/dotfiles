@@ -35,10 +35,19 @@ unco: >-
 # $1: commit to get merge commit body from, defaults to "HEAD"
 # $2+: other parameters for `gh pr merge`
 merge: >-
-  !gh pr merge
+  !subject="$(gh pr view --json=title,number --template="{{ .title }} (#{{ .number }})")" &&
+  body="$(git show --no-patch --pretty="%b" "${1:-HEAD}")" &&
+  read -r -p "${subject}
+
+
+  ${body}
+
+
+  → Press enter to proceed with this commit message " &&
+  gh pr merge
   --squash
-  --subject="$(gh pr view --json=title,number --template="{{ .title }} (#{{ .number }})")"
-  --body="$(git show --no-patch --pretty="%b" "${1:-HEAD}")"
+  --subject="$subject"
+  --body="$body"
   --delete-branch
   "${@:2}"
 
