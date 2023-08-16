@@ -22,8 +22,8 @@ script="$(
 (org-batch-agenda "a"
 	;; Time span in days
 	org-agenda-span $days_to_review
-	;; Start the agenda org-agenda-span days ago
-	org-agenda-start-day "-${days_to_review}d"
+	;; Start the agenda org-agenda-span days ago but include today
+	org-agenda-start-day "-$((days_to_review + 1))d"
 	;; Hide dates with no tasks
 	org-agenda-show-all-dates nil
 	;; Suppress header
