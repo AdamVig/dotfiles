@@ -15,6 +15,12 @@ if [ -z "${HOME_ASSISTANT_TOKEN-}" ]; then
 	exit 1
 fi
 
+# Ensure that ~/.local/bin is in PATH when running from a Systemd unit
+if [[ $PATH != *"$HOME/.local/bin"* ]]; then
+	# https://unix.stackexchange.com/a/415028/288259
+	PATH="$HOME/.local/bin${PATH:+:${PATH}}"
+fi
+
 if ! command -v websocat >/dev/null; then
 	echo >&2 'error: websocat must be installed'
 	exit 1
