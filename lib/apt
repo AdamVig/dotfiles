@@ -246,9 +246,10 @@ declare -a packages=(
 	rustc
 
 	# programming language tools
-	composer # PHP
-	python3-pip
-	shellcheck # Shell script linter
+	composer    # PHP
+	npm         # Node
+	python3-pip # Python
+	shellcheck  # Shell script linter
 
 	# applications
 	brave-browser # Web browser
