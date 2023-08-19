@@ -13,6 +13,14 @@ log() {
 
 log_start 'setting up Node'
 
+if is_linux && command -v npm >/dev/null; then
+	log_start 'setting npm prefix'
+	if ! npm config set prefix "$HOME"/.npm; then
+		warn 'failed to set npm prefix'
+	fi
+	log_end
+fi
+
 if is_linux; then
 	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
 	log_start "installing Nodenv to '$nodenv_root'"
