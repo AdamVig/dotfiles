@@ -205,6 +205,12 @@
 (use-package git-commit
   :ensure t)
 
+;; Add and configure with-editor mode (https://github.com/magit/with-editor)
+(use-package with-editor
+  :ensure t
+  ;; Allow commit-like behavior when editing Graphite pull request descriptions
+  :config (add-to-list 'auto-mode-alist '("GRAPHITE_PR_DESCRIPTION\\.md\\'" . with-editor-mode)))
+
 ;; Allow usage of project-local npm packages
 (use-package add-node-modules-path
   :ensure t
