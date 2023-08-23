@@ -107,7 +107,7 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	fi
 
 	# Map right meta key to the "compose" key for special characters
-	setxkbmap -option compose:ralt
+	setxkbmap -option compose:RIGHT_ALT
 
 	# Disable emoji in Minikube
 	export MINIKUBE_IN_STYLE=false
