@@ -20,6 +20,9 @@ days_to_review=6
 script="$(
 	cat <<EOF
 (org-batch-agenda "a"
+	;; Include archive files using default/user-configured location pattern
+	;; Does not support absolute path org-archive-location or file-level ARCHIVE property
+	org-agenda-files (list (apply 'format (replace-regexp-in-string "::.*" "" org-archive-location) org-agenda-files))
 	;; Time span in days
 	org-agenda-span $days_to_review
 	;; Start the agenda org-agenda-span days ago but include today
