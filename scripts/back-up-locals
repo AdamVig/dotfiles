@@ -70,7 +70,7 @@ for f in "${files[@]}"; do
 		echo "  adding new file..."
 		gh gist edit "$gist_to_update" --add="$f"
 	else
-		if ! diff -w <(echo "$existing_content") "$f"; then
+		if ! diff -w <(echo "$existing_content") "$f" >/dev/null; then
 			echo "  updating existing file..."
 			gh gist edit "$gist_to_update" --filename="$f_basename" "$f"
 		else
