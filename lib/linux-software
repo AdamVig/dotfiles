@@ -101,7 +101,7 @@ chmod +x "$scc_path"
 log_end
 
 log_start 'installing GoldenCheetah'
-if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenCheetah' '_amd64_Linux.AppImage'; then
+if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenCheetah' '_x64.AppImage'; then
 	fatal 'failed to install GoldenCheetah'
 fi
 log_end
