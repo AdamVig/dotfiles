@@ -95,12 +95,10 @@ update_brew() {
 }
 
 update_npm() {
-	# Disabled until npm v7 is commonplace
-	# echo 'npm'
-	# npm i -g npm
-
-	echo 'npm packages'
-	npm update -g
+	for version in $(nodenv versions --skip-aliases --bare); do
+		echo "npm packages in node $version"
+		NODENV_VERSION="$version" nodenv exec npm update -g
+	done
 }
 
 update_pip() {
