@@ -79,6 +79,11 @@ if [[ "$OSTYPE" == darwin* ]]; then
   if [ -d "$brew_prefix"/opt/libpq/bin ]; then
     prepend_path "$brew_prefix"/opt/libpq/bin
   fi
+
+	# Override system Ruby
+  if [ -d "$brew_prefix"/opt/ruby ]; then
+    prepend_path "$brew_prefix"/opt/ruby/bin
+  fi
 fi
 
 # Prevent Golang from storing data in ~/go

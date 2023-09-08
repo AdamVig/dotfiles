@@ -37,6 +37,7 @@ brew "zsh"
 brew "go"
 brew "nodejs"
 brew "python"
+brew "ruby"
 
 # programming language tools
 brew "nodenv" # Node environment manager
