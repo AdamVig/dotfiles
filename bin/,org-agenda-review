@@ -41,8 +41,6 @@ script="$(
 	org-agenda-format-date "- %A"
 	;; Override item prefix to be an indented (under the day subheading) list item
 	org-agenda-prefix-format "  - "
-	;; Omit code review tasks
-	org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":codereview:"))
 )
 EOF
 )"
