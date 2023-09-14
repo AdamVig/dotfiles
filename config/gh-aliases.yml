@@ -62,3 +62,29 @@ automerge: >-
   && gh pr view
   --json=autoMergeRequest
   --template="Merge commit message:{{ \"\n\" }}{{ .autoMergeRequest.commitHeadline }}{{ \"\n\" }}{{ .autoMergeRequest.commitBody }}"
+
+# Search for pull requests
+# - `gh` will not implement hyperlinks; here the pull request numbers are hyperlinks
+# - The default output of  gh pr list  does not include the author's name; here the author name is included instead of
+#   the base branch
+# $1: search, see `gh pr list`'s `--search` flag
+pr-search: >-
+  !gh pr list
+  --search="$1"
+  --json author,number,title,updatedAt,url
+  --template='
+  {{- range . -}}
+    {{tablerow (hyperlink .url (printf "#%v" .number | autocolor "green")) .title .author.name (timeago .updatedAt) }}
+  {{- else -}}
+    {{ "No pull requests" }}
+    {{- "\n"}}
+  {{- end -}}
+  {{tablerender}}'
+
+# List pull requests in a repository that you may want to review
+# - Created in the past four days.
+# - Not reviewed by you.
+# - Not authored by you.
+# - Not a draft
+prs-to-review: >-
+  !gh pr-search "is:open -reviewed-by:@me -author:@me draft:false created:>=$(gdate --iso-8601 --date='4 days ago')"
