@@ -1,4 +1,4 @@
-# Copied from https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh
+# Copied from https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 
 #
 # Functions
