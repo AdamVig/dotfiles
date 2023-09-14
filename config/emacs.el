@@ -313,6 +313,10 @@
   :hook ((typescript-mode . tide-setup)
 					(typescript-mode . tide-hl-identifier-mode)))
 
+;; Use sh-mode for local shell files
+(add-to-list 'auto-mode-alist '(".locals" . sh-mode))
+(add-to-list 'auto-mode-alist '(".profile-local" . sh-mode))
+
 ;; Load all Lisp files in the `lisp/` subdirectory of the user's Emacs directory
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Libraries.html
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
