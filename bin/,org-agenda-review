@@ -67,7 +67,7 @@ remove_first_and_last_lines() {
 	sed '1d; $d'
 }
 
-echo " Agenda entries from the past $days_to_review days:"
+echo "Agenda entries from the past $days_to_review days:"
 # Suppress stderr because it prints an empty line
 emacs 2>/dev/null \
 	--batch \
