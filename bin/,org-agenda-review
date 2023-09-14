@@ -4,8 +4,11 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 set -euo pipefail
 
-usage="Usage: $(basename "$0") [-h|--help]
+usage="Usage: $(basename "$0") [-h|--help] [days to review]
 Review recently completed items in your Org Agenda.
+
+Arguments:
+    days to review       Number of days to review.
 
 Flags:
     -h, --help  show this help text"
@@ -15,7 +18,8 @@ if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
 	exit 0
 fi
 
-days_to_review=6
+# Default to two days
+days_to_review="${1:-2}"
 
 script="$(
 	cat <<EOF
