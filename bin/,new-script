@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help] <path>
+Create a new script, make it executable, add a basic script template, and open it in an editor.
+
+Arguments:
+  path          path for the script
+
+Flags:
+	-h, --help		show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+path="${1-}"
+if [ -z "$path" ]; then
+	echo 'error: must provide a path'
+	exit 1
+fi
+
+touch "$path"
+chmod +x "$path"
+# shellcheck disable=SC2016
+echo '#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help] <arg>
+(Description)
+
+Arguments:
+  arg           description of argument
+
+Flags:
+	-h, --help		show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+' >"$path"
+
+exec $EDITOR "$path"
