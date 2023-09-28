@@ -1,9 +1,12 @@
 # Create a pull request
+# Pushes before creating the pull request to skip the `gh` prompt for where to push
+# Opens the pull request in the browser after creation
 # $1: base branch
 # $2: title
 # $3+: other parameters for `gh pr create`
 prc: >-
-  !gh pr create
+  !git push --set-upstream &&
+  gh pr create
   --assignee=@me
   --base="$1"
   --body="$(gh pr-body-commits "$1")"
@@ -11,7 +14,7 @@ prc: >-
   "${@:3}"
   && gh pr view --web
 
-# Create a draft pull request
+# Create a draft pull request (see `prc` for more details)
 # $1: base branch
 # $2: title
 # $3+: other parameters for `gh pr create`
