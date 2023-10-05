@@ -54,18 +54,6 @@ merge: >-
   --delete-branch
   "${@:2}"
 
-# Set a pull request to auto-merge (squash)
-# $1: commit to get merge commit body from, defaults to "HEAD"
-# $2+: other parameters for `gh pr merge`
-automerge: >-
-  !gh merge
-  "$1"
-  --auto
-  "${@:2}"
-  && gh pr view
-  --json=autoMergeRequest
-  --template="Merge commit message:{{ \"\n\" }}{{ .autoMergeRequest.commitHeadline }}{{ \"\n\" }}{{ .autoMergeRequest.commitBody }}"
-
 # Search for pull requests
 # - `gh` will not implement hyperlinks; here the pull request numbers are hyperlinks
 # - The default output of  gh pr list  does not include the author's name; here the author name is included instead of
