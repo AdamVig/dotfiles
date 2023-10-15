@@ -42,7 +42,10 @@ log_end
 log_start 'running programming language setup scripts'
 "$_dir"/golang
 "$_dir"/node
-"$_dir"/pip
+# Pip packages are managed by apt on Ubuntu now, so skip for now
+if ! is_ubuntu; then
+	"$_dir"/pip
+fi
 log_end
 
 log_start 'running application setup scripts'
