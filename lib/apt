@@ -272,6 +272,7 @@ declare -a packages=(
 	qemu-system-x86 # Virtual machine tool
 	redshift        # Screen color temperature adjustment tool
 	rofi            # Application launcher
+	rpi-imager      # Raspberry Pi imager
 	signal-desktop
 	slack-desktop
 	spotify-client
