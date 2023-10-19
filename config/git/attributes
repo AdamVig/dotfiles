@@ -1,7 +1,3 @@
-# use npm-merge-driver for merging
-npm-shrinkwrap.json merge=npm-merge-driver
-package-lock.json merge=npm-merge-driver
-
 # handle line endings correctly on Windows
 * text=auto eol=lf
 *.{cmd,[cC][mM][dD]} text eol=crlf

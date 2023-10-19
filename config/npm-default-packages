@@ -1,9 +1,6 @@
 # https://github.com/nodenv/nodenv-default-packages
 # List of npm packages to install by default in any new version of Node installed by Nodenv
 
-# Automatic merge resolution for package-lock.json
-npm-merge-driver
-
 # Command-line help
 tldr
 
