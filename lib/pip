@@ -15,6 +15,7 @@ log_start 'installing packages'
 pip_packages=(
 	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
+	esphome           # ESPHome CLI
 	homeassistant-cli # Home Assistant management tool
 	yq                # jq for YAML/XML
 	yt-dlp            # Media downloader
