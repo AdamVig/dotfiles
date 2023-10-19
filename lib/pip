@@ -13,9 +13,6 @@ log_start 'installing pip tools'
 
 log_start 'installing packages'
 pip_packages=(
-	# Update pip first to suppress warnings about it being outdated
-	pip # Package manager
-
 	b2                # Backblaze B2 CLI
 	csvkit            # CSV processing tools
 	homeassistant-cli # Home Assistant management tool
@@ -23,8 +20,9 @@ pip_packages=(
 	yt-dlp            # Media downloader
 )
 
-# Disable keyring to prevent interactive prompts (https://github.com/pypa/pip/issues/8090#issuecomment-803363268)
-PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring python3 -m pip install --upgrade --user "${pip_packages[@]}" >/dev/null
+for package in "${pip_packages[@]}"; do
+	pipx install "$package" >/dev/null
+done
 log_end
 
 log_start 'removing no-longer-needed packages'
@@ -36,24 +34,14 @@ no_longer_needed_pip_packages=(
 	youtube-dl           # Inactive media downloader
 )
 
-python3 -m pip uninstall --yes "${no_longer_needed_pip_packages[@]}" &>/dev/null
+for package in "${no_longer_needed_pip_packages[@]}"; do
+	pipx uninstall "$package" >/dev/null || true
+done
 log_end
 
 if is_linux; then
 	log_start 'installing rofimoji'
-	if ! rofimoji_url="$(get_release_url 'fdw/rofimoji' '.whl')"; then
-		fatal 'failed to get rofimoji release URL'
-	fi
-	rofimoji_wheel="$(basename "$rofimoji_url")"
-	if ! _curl "$rofimoji_url" --output "$rofimoji_wheel"; then
-		fatal 'failed to download rofimoji'
-	fi
-	if ! pip install --user "$rofimoji_wheel" >/dev/null; then
-		fatal 'failed to install rofimoji'
-	fi
-	rm -f "$rofimoji_wheel"
-
-	_ln "$_dir"/../config/rofimoji.rc "$(xdg_config)"/rofimoji.rc
+	pipx install rofimoji >/dev/null
 	log_end
 fi
 

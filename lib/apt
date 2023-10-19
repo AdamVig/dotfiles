@@ -248,6 +248,7 @@ declare -a packages=(
 	# programming language tools
 	composer    # PHP
 	npm         # Node
+	pipx        # Run Python CLI tools
 	python3-pip # Python
 	shellcheck  # Shell script linter
 
