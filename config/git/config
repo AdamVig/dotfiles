@@ -31,6 +31,7 @@
   rebase = true
 [rebase]
 	abbreviateCommands = true
+	autoSquash = true
 	instructionFormat = %an (%cr) %s
 [rerere]
 	enabled = true
