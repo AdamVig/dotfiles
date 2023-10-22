@@ -47,6 +47,31 @@ if ! install_binary_from_url 'DigiKam' "$digikam_url"; then
 fi
 log_end
 
+log_start 'installing kitty'
+if ! kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"; then
+	fatal 'failed to get Kitty release URL'
+fi
+kitty_tmp="$(mktemp --suffix .txz)"
+if ! _curl "$kitty_url" --output "$kitty_tmp"; then
+	fatal 'failed to download Kitty'
+fi
+kitty_extracted_tmp="$(mktemp -d)"
+if ! tar xvf "$kitty_tmp" -C "$kitty_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract Kitty'
+fi
+rm -f "$kitty_tmp"
+kitty_path="$HOME"/.local/share/kitty
+rm -rf "$kitty_path"
+mv "$kitty_extracted_tmp" "$kitty_path"
+_ln "$kitty_path"/bin/* "$HOME"/.local/bin
+mkdir -p "$HOME"/.local/share/man/{man1,man5}
+_ln "$kitty_path"/lib/kitty/shell-integration/zsh/completions/* "$(xdg_data)"/zsh-site-functions
+_ln "$kitty_path"/share/man/man1/* "$HOME"/.local/share/man/man1
+_ln "$kitty_path"/share/man/man5/* "$HOME"/.local/share/man/man5
+_ln "$kitty_path"/share/applications/* "$HOME"/.local/share/applications
+rm -rf "$kitty_extracted_tmp"
+log_end
+
 fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/input ]; then
 	mkdir -p "$fonts_dir"

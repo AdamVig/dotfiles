@@ -265,7 +265,6 @@ declare -a packages=(
 	i3blocks      # Status bar generatorn
 	inkscape
 	kdiff3 # Merge tool
-	kitty  # GPU-accelerated terminal emulator
 	libreoffice
 	lxpolkit        # Polkit authentication agent
 	meld            # Comparison tool for version control, files, and directories
@@ -301,6 +300,7 @@ declare -a unwanted_packages=(
 	emacs-snapshot
 	figma-linux
 	google-chrome-stable
+	kitty # Now installed in ./linux-software
 	lutris
 	mosquitto         # MQTT broker and password tool
 	mosquitto-clients # MQTT client
