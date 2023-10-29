@@ -11,24 +11,6 @@ log() {
 
 log_start 'setting up Emacs'
 
-if is_ubuntu || is_debian; then
-	user_emacs_unit_path="$(xdg_config)"/systemd/user/emacs.service
-	if ! [ -f "$user_emacs_unit_path" ]; then
-		log_start 'linking Emacs service into place'
-		package_emacs_unit_path=/usr/lib/systemd/user/emacs.service
-		systemctl --user link "$package_emacs_unit_path"
-		systemctl --user daemon-reload
-		log_end 'done linking Emacs service into place.'
-	fi
-
-	if ! systemctl --user is-enabled --quiet emacs.service; then
-		log_start 'setting up Emacs daemon'
-		systemctl --user enable --now emacs.service
-		log_end
-	fi
-
-fi
-
 log_start 'setting up Emacs configuration'
 emacs_config_dir="$(xdg_config)"/emacs
 emacs_config_path="$emacs_config_dir"/init.el
