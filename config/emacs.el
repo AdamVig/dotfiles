@@ -147,14 +147,6 @@
 ;; Hide commands that do not apply to the current buffer's mode
 (setq read-extended-command-predicate #'command-completion-default-include-p)
 
-;; Install and enable undo-tree (https://elpa.gnu.org/packages/undo-tree.html)
-(use-package undo-tree
-	:ensure t
-	:config
-	(global-undo-tree-mode)
-	;; Do not save history to a file
-	(setq undo-tree-auto-save-history nil))
-
 ;; Install and enable vertico (https://github.com/emacs-straight/vertico)
 (use-package vertico
 	:ensure t
