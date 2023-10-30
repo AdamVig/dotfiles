@@ -22,7 +22,9 @@ pip_packages=(
 )
 
 for package in "${pip_packages[@]}"; do
-	pipx install "$package" >/dev/null
+	if ! pipx install "$package" >/dev/null; then
+		warn "failed to install package \"$package\""
+	fi
 done
 log_end
 
