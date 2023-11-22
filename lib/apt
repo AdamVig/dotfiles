@@ -114,9 +114,9 @@ if ! is_repository_configured 'mozillateam'; then
 	log_end
 fi
 
-if ! is_repository_configured 'brave'; then
-	log_start 'adding Brave repository'
-	add_repository 'brave' 'https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg' 'https://brave-browser-apt-release.s3.brave.com/ stable main'
+if is_repository_configured 'brave'; then
+	log_start 'removing Brave repository'
+	request_sudo rm -f /etc/apt/sources.list.d/brave.list* /usr/share/keyrings/brave-archive-keyring.gpg
 	log_end
 fi
 
@@ -253,7 +253,6 @@ declare -a packages=(
 	shellcheck  # Shell script linter
 
 	# applications
-	brave-browser # Web browser
 	code
 	d-feet # D-Bus debugger
 	docker.io
@@ -294,6 +293,7 @@ fi
 log_end
 
 declare -a unwanted_packages=(
+	brave-browser # Web browser
 	chromium
 	copyq
 	digikam # Now installed as AppImage in ./linux-software
@@ -326,6 +326,18 @@ log_start 'installing balenaEtcher'
 if ! install_deb_from_github_release 'balena-io/etcher' '_amd64.deb'; then
 	fatal 'failed to install balenaEtcher'
 fi
+log_end
+
+log_start 'installing Google Chrome'
+chrome_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+chrome_tmp="$(mktemp --suffix .deb)"
+if ! _curl "$chrome_url" --output "$chrome_tmp"; then
+	fatal 'failed to download Google Chrome'
+fi
+if ! request_sudo apt-get install "$chrome_tmp"; then
+	fatal 'failed to install Google Chrome'
+fi
+rm -f "$chrome_tmp"
 log_end
 
 log_start 'installing Hugo'
