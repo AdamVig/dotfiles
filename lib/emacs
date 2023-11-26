@@ -33,6 +33,7 @@ fi
 emacs_local_config_path="$emacs_config_dir"/lisp/init-local.el
 if ! [ -f "$emacs_local_config_path" ]; then
 	log_start 'installing template for local Emacs configuration'
+	mkdir -p "$emacs_config_dir"/lisp
 	cat >"$emacs_local_config_path" <<-EOF
 		;;; init-local.el --- Local configuration overrides for Emacs.
 		;;; Commentary:
