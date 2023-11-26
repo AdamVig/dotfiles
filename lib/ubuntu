@@ -16,7 +16,7 @@ log_start 'setting up Ubuntu'
 
 if command -v snap >/dev/null; then
 	log_start 'disabling snaps'
-	request_sudo apt autoremove --purge snapd
+	request_sudo apt autoremove --purge --yes snapd
 	request_sudo apt-mark hold snapd
 	rm -rf "$HOME"/snap
 	log_end
