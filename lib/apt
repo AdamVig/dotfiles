@@ -212,6 +212,7 @@ declare -a packages=(
 	ripgrep # Better grep
 
 	# command line tools
+	brightnessctl # Control screen brightness
 	fzf      # Fuzzy finder
 	gh       # GitHub CLI
 	gnuplot  # Command-line plotting

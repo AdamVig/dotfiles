@@ -210,4 +210,9 @@ log_start 'removing legacy desktop files'
 rm -f "$HOME"/.local/share/applications/ncspot.desktop
 log_end
 
+log_start 'adding user to the video group'
+# For brightnessctl
+request_sudo usermod --append --groups input,video "$USER"
+log_end
+
 log_end
