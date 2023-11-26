@@ -23,45 +23,52 @@ if ssh_key_exists; then
 	exit
 fi
 
+unlock_bitwarden_vault
+
 if ! hostname="$(hostname -s)"; then
 	fatal 'failed to get system hostname'
 fi
 
-log_start 'checking for SSH key in Bitwarden vault'
 log "using hostname \"$hostname\""
 
-if ! command -v bw >/dev/null; then
-	warn_and_bail 'cannot set up SSH key: Bitwarden CLI is not available'
-fi
-# shellcheck disable=SC2034
-export BW_SESSION
-
-if ! bw login --check &>/dev/null; then
-	log_start 'logging in to Bitwarden'
-	BW_SESSION="$(bw login --raw)"
-	log_end
-fi
-
-if ! bw unlock --check &>/dev/null; then
-	log_start 'unlocking Bitwarden vault'
-	BW_SESSION="$(bw unlock --raw)"
-	log_end
-fi
-
-if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
-	fatal 'failed to get ID of Bitwarden folder "ssh"'
-fi
-
-log_end
-
-if bw list items --folderid="$ssh_folder_id" --search="$(hostname -s)" |
-	jq --exit-status 'length > 0' >/dev/null; then
-	log_start 'prompting user to install key'
-	read -r -p "$(make_prompt 'waiting for user to manually install key (press enter when done)')"
+if item="$(bw get item "$(hostname -s)")"; then
+	log_start 'installing key'
+	tmp_dir="$(mktemp -d)"
+	item_id="$(echo "$item" | jq --raw-output '.id')"
+	bw get attachment id_rsa --itemid="$item_id" --output="$tmp_dir"
+	bw get attachment id_rsa.pub --itemid="$item_id" --output="$tmp_dir"
+	mv "$tmp_dir"/* "$HOME"/.ssh
+	rm -rf "$tmp_dir"
 	log_end
 else
-	log_start 'prompting user to create key'
-	read -r -p "$(make_prompt 'waiting for user to manually create a key (press enter when done)')"
+	log_start 'creating key'
+	if ! passphrase="$(bw generate --uppercase --lowercase --number --special --length=25)"; then
+		warn 'failed to generate password, generate one manually'
+	fi
+
+	ssh-keygen ${passphrase:+"-N $passphrase"} -f "$HOME"/.ssh/id_rsa
+
+	if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
+		fatal 'failed to get ID of Bitwarden folder "ssh"'
+	fi
+
+	if ! item="$(bw get template item | \
+		jq \
+			--arg hostname "$(hostname -s)" \
+			--argjson passphrase "$(bw get template item.field | jq --arg passphrase "${passphrase-}" '.name="Passphrase" | .value=$passphrase | .type=1')" \
+			--argjson created "$(bw get template item.field | jq --arg date "$(date '+%B %-d, %Y')" '.name="Created" | .value=$date | .type=0')" \
+			--argjson public "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa.pub '.name="Public" | .value=$key | .type=0')" \
+			--argjson private "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa '.name="Private" | .value=$key | .type=1')" \
+			--arg ssh_folder_id "$ssh_folder_id" \
+			'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' | \
+		bw encode | \
+		bw create item)"; then
+		warn 'failed to create item, create manually'
+	else
+		bw create attachment --file "$HOME"/.ssh/id_rsa --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
+		bw create attachment --file "$HOME"/.ssh/id_rsa.pub --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
+	fi
+ 	bw sync
 	log_end
 fi
 
