@@ -117,6 +117,17 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	# Map right meta key to the "compose" key for special characters
 	setxkbmap -option compose:RIGHT_ALT
 
+	# Detect type of device
+	if [ -e /sys/devices/virtual/dmi/id/chassis_type ]; then
+    chassis_type="$(< /sys/devices/virtual/dmi/id/chassis_type)"
+
+		# Laptop or other portable device (https://gitlab.com/debiants/laptop-detect)
+		if [ "$chassis_type" = 8 ] || [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ] || [ "$chassis_type" = 11 ]; then
+			# Make caps lock work as escape
+			setxkbmap -option caps:escape
+		fi
+	fi
+
 	# Disable emoji in Minikube
 	export MINIKUBE_IN_STYLE=false
 fi
