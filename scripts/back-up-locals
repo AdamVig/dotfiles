@@ -27,7 +27,7 @@ fi
 if ! gist_to_update="$(echo "$all_gists" | jq \
 	--arg gist_name "$gist_name" \
 	--join-output \
-	'map(select(.description	| contains($gist_name))) | .[] | .id')"; then
+	'map(select(.description == $gist_name)) | .[] | .id')"; then
 	echo 'error: failed to extract gist to update from all gists'
 	exit 1
 fi
