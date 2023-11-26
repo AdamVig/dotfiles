@@ -96,12 +96,6 @@ if ! is_repository_configured 'git-core'; then
 	log_end
 fi
 
-if ! is_repository_configured 'azlux'; then
-	log_start 'adding broot repository'
-	add_repository 'broot' 'https://azlux.fr/repo.gpg.key' 'http://packages.azlux.fr/debian/ buster main'
-	log_end
-fi
-
 if ! is_repository_configured 'cli.github.com'; then
 	log_start 'adding GitHub CLI repository'
 	add_repository 'githubcli' 'https://cli.github.com/packages/githubcli-archive-keyring.gpg' 'https://cli.github.com/packages stable main'
@@ -111,6 +105,12 @@ fi
 if ! is_repository_configured 'mozillateam'; then
 	log_start 'adding Mozilla Team repository'
 	add_ppa 'mozillateam' '0AB215679C571D1C8325275B9BDB3D89CE49EC21' 'mozillateam/ppa'
+	log_end
+fi
+
+if is_repository_configured 'azlux'; then
+	log_start 'removing broot repository'
+	request_sudo rm -f /etc/apt/sources.list.d/azlux.list* /usr/share/keyrings/azlux-archive-keyring.gpg
 	log_end
 fi
 
@@ -198,7 +198,6 @@ declare -a packages=(
 
 	# replacements of default utilities
 	bat     # Better cat
-	broot   # Better tree
 	exa     # Better ls
 	fd-find # Better find
 	htop    # Better top
@@ -294,6 +293,7 @@ log_end
 
 declare -a unwanted_packages=(
 	brave-browser # Web browser
+	broot   # Better tree
 	chromium
 	copyq
 	digikam # Now installed as AppImage in ./linux-software

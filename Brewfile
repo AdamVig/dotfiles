@@ -8,7 +8,6 @@ brew "wget"
 
 # replacements of default utilities
 brew "bat" # Better cat
-brew "broot" # Better tree
 brew "exa" # Better ls
 brew "fd" # Better find
 brew "git-delta" # Better Git diff viewer
