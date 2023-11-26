@@ -108,6 +108,12 @@ if ! is_repository_configured 'mozillateam'; then
 	log_end
 fi
 
+if ! is_repository_configured 'chrome'; then
+	log_start 'adding Chrome repository'
+	add_repository 'chrome' 'https://dl.google.com/linux/linux_signing_key.pub' 'https://dl.google.com/linux/chrome/deb/ stable main'
+	log_end
+fi
+
 if is_repository_configured 'azlux'; then
 	log_start 'removing broot repository'
 	request_sudo rm -f /etc/apt/sources.list.d/azlux.list* /usr/share/keyrings/azlux-archive-keyring.gpg
