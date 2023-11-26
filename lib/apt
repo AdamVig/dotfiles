@@ -304,6 +304,7 @@ declare -a unwanted_packages=(
 	digikam # Now installed as AppImage in ./linux-software
 	emacs-snapshot
 	figma-linux
+	firefox
 	google-chrome-stable
 	kitty # Now installed in ./linux-software
 	lutris
