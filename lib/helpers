@@ -299,3 +299,23 @@ xdg_data() {
 xdg_cache() {
 	echo "${XDG_CACHE_HOME:-$HOME/.cache}"
 }
+
+unlock_bitwarden_vault() {
+	if ! command -v bw >/dev/null; then
+		warn_and_bail 'Bitwarden CLI is not available'
+	fi
+	# shellcheck disable=SC2034
+	export BW_SESSION
+
+	if ! bw login --check &>/dev/null; then
+		log_start 'logging in to Bitwarden'
+		BW_SESSION="$(bw login --raw)"
+		log_end
+	fi
+
+	if ! bw unlock --check &>/dev/null; then
+		log_start 'unlocking Bitwarden vault'
+		BW_SESSION="$(bw unlock --raw)"
+		log_end
+	fi
+}

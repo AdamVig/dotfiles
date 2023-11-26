@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component gpg-keys "$@"
+}
+
+log_start 'setting up GPG keys'
+
+gpg_keys_exist() {
+	[ -n "$(gpg --list-keys)" ]
+}
+
+if gpg_keys_exist; then
+	log 'found existing GPG keys, exiting'
+	log_end
+	exit
+fi
+
+unlock_bitwarden_vault
+
+if ! gpg_folder_id="$(bw get folder gpg | jq --raw-output '.id')"; then
+  fatal 'failed to get ID of Bitwarden folder "gpg"'
+fi
+
+if ! items="$(bw list items --folderid="$gpg_folder_id")"; then
+	fatal 'failed to list items in GPG folder'
+fi
+
+while read -r item; do
+	item_name="$(echo "$item" | jq --raw-output '.name')"
+	log_start "installing key \"$item_name\""
+	tmp_dir="$(mktemp -d)"
+	item_id="$(echo "$item" | jq --raw-output '.id')"
+	bw get attachment --itemid="$item_id" --output="$tmp_dir/" -- '-public.asc'
+	bw get attachment --itemid="$item_id" --output="$tmp_dir/" -- '-private.asc'
+
+	short_id="$(gpg --show-keys --with-colons "$tmp_dir"/*-public.asc | awk -F':' '$1=="pub"{print $5}')"
+
+	if ! passphrase="$(echo "$item" | jq --raw-output '.fields | map(select(.name == "Passphrase")) | .[0].value')"; then
+		warn 'failed to get passphrase from item field "Passphrase", skipping'
+		continue
+	fi
+
+	log_start 'importing key'
+	gpg --import --batch "$tmp_dir"/*-public.asc
+	echo "$passphrase" | gpg --import --batch --passphrase-fd=0 "$tmp_dir"/*-private.asc
+	log_end
+
+	log_start 'setting key trust to "ultimate"'
+	echo -e "5\ny\n" | gpg --command-fd 0 --edit-key "$short_id" trust;
+	log_end
+
+	if [[ "$item_name" == *"$(git config --global user.email)"* ]]; then
+		log_start 'configuring Git to use key'
+		git config --global commit.gpgsign true
+		git config --global user.signingkey "$short_id"
+		log_end
+	fi
+	log_end
+done < <(echo "$items" | jq --compact-output '.[]')
+log_end
