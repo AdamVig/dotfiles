@@ -47,10 +47,6 @@ if ! install_binary_from_url 'DigiKam' "$digikam_url"; then
 fi
 log_end
 
-log_end 'installing Discord'
-flatpak install com.discordapp.Discord
-log_end
-
 log_start 'installing kitty'
 if ! kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"; then
 	fatal 'failed to get Kitty release URL'
