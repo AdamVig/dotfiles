@@ -101,6 +101,9 @@ if [[ "$OSTYPE" == *linux* ]]; then
 
 	append_path "$NODENV_ROOT"/bin
 
+	# Add npm directory to PATH
+	prepend_path "$HOME"/.npm/bin
+
 	# When in a graphical environment, initialize the already-running GNOME Keyring daemon
 	if [ -n "$DESKTOP_SESSION" ] && [ -z "$SSH_AUTH_SOCK" ]; then
 		# From `man gpg-agent`
