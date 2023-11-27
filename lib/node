@@ -71,8 +71,12 @@ if [ -f "$nodenv_global_version_path" ]; then
 fi
 
 log_start 'installing default packages'
-nodenv default-packages install system
-nodenv default-packages install --all
+if ! nodenv default-packages install system; then
+	warn 'failed to install one or more default packages'
+fi
+if ! nodenv default-packages install --all; then
+	warn 'failed to install one or more default packages'
+fi
 log_end
 
 log_start 'setting Python path'
