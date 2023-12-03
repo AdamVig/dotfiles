@@ -122,7 +122,7 @@ fi
 
 if is_repository_configured 'azlux'; then
 	log_start 'removing broot repository'
-	request_sudo rm -f /etc/apt/sources.list.d/azlux.list* /usr/share/keyrings/azlux-archive-keyring.gpg
+	request_sudo rm -f /etc/apt/sources.list.d/{azlux,broot}.list* /usr/share/keyrings/{azlux,broot}-archive-keyring.gpg
 	log_end
 fi
 
