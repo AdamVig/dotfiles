@@ -114,6 +114,12 @@ if ! is_repository_configured 'chrome'; then
 	log_end
 fi
 
+if ! is_repository_configured 'eza'; then
+	log_start 'adding Eza repository'
+	add_repository 'eza' 'https://raw.githubusercontent.com/eza-community/eza/main/deb.asc' 'http://deb.gierens.de stable main'
+	log_end
+fi
+
 if is_repository_configured 'azlux'; then
 	log_start 'removing broot repository'
 	request_sudo rm -f /etc/apt/sources.list.d/azlux.list* /usr/share/keyrings/azlux-archive-keyring.gpg
@@ -204,7 +210,7 @@ declare -a packages=(
 
 	# replacements of default utilities
 	bat     # Better cat
-	exa     # Better ls
+	eza     # Better ls
 	fd-find # Better find
 	htop    # Better top
 	httpie  # Better curl
@@ -305,6 +311,7 @@ declare -a unwanted_packages=(
 	copyq
 	digikam # Now installed as AppImage in ./linux-software
 	emacs-snapshot
+	exa # Replaced by eza
 	figma-linux
 	firefox
 	google-chrome-stable

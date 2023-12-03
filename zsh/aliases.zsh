@@ -25,8 +25,8 @@ alias units='units --history="${XDG_CACHE_HOME:-$HOME/.cache}"/units_history'
 alias et='emacsclient --tty'
 alias e='emacsclient --create-frame --no-wait'
 
-if command -v exa > /dev/null; then
-  alias ls='exa'
+if command -v eza > /dev/null; then
+  alias ls='eza --hyperlink'
 fi
 
 if [[ "$OSTYPE" = *linux* ]]; then
