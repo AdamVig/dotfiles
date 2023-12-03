@@ -219,10 +219,10 @@ declare -a packages=(
 
 	# command line tools
 	brightnessctl # Control screen brightness
-	fzf      # Fuzzy finder
-	gh       # GitHub CLI
-	gnuplot  # Command-line plotting
-	graphviz # Graph visualization tool
+	fzf           # Fuzzy finder
+	gh            # GitHub CLI
+	gnuplot       # Command-line plotting
+	graphviz      # Graph visualization tool
 	imagemagick
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
@@ -235,14 +235,14 @@ declare -a packages=(
 	tree
 	units # Unit conversion calculator
 	unzip
-	v4l-utils  # Webcam control tools
-	wine       # Support for Windows applications
-	winetricks # Tools for working with Wine
+	v4l-utils   # Webcam control tools
+	wine        # Support for Windows applications
+	winetricks  # Tools for working with Wine
 	wireplumber # PipeWire tools, including wpctl
-	wmctrl     # X window manager control CLI
-	xclip      # Clipboard CLI
-	xsel       # Clipboard CLI
-	xdotool    # X input event generator
+	wmctrl      # X window manager control CLI
+	xclip       # Clipboard CLI
+	xsel        # Clipboard CLI
+	xdotool     # X input event generator
 	xdg-utils
 
 	# shell
@@ -306,7 +306,7 @@ log_end
 
 declare -a unwanted_packages=(
 	brave-browser # Web browser
-	broot   # Better tree
+	broot         # Better tree
 	chromium
 	copyq
 	digikam # Now installed as AppImage in ./linux-software
