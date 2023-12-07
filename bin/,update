@@ -147,7 +147,11 @@ update_emacs_packages() {
 
 update_macos() {
 	echo 'macos'
-	softwareupdate --install --recommended
+	if [ -n "$user_password" ]; then
+		echo "$user_password" | softwareupdate --install --recommended --user="$USER" --stdinpass
+	else
+		softwareupdate --download
+	fi
 }
 
 # Reset terminal to ensure log_output's overwriting logic works correctly
@@ -155,7 +159,8 @@ reset
 
 log_operation sudo
 tput sc
-if sudo --validate --prompt="${background_blue} password: ${reset} " 2>/dev/null; then
+if read -r -s -p "${background_blue} password: ${reset} " user_password &&
+	echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
 	tput rc
 	log_success
 else
