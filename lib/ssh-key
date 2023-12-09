@@ -35,8 +35,8 @@ if item="$(bw get item "$(hostname -s)")"; then
 	log_start 'installing key'
 	tmp_dir="$(mktemp -d)"
 	item_id="$(echo "$item" | jq --raw-output '.id')"
-	bw get attachment id_rsa --itemid="$item_id" --output="$tmp_dir"
-	bw get attachment id_rsa.pub --itemid="$item_id" --output="$tmp_dir"
+	bw get attachment id_rsa --itemid="$item_id" --output="${tmp_dir}/"
+	bw get attachment id_rsa.pub --itemid="$item_id" --output="${tmp_dir}/"
 	mv "$tmp_dir"/* "$HOME"/.ssh
 	rm -rf "$tmp_dir"
 	log_end
