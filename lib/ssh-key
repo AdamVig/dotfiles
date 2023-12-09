@@ -31,7 +31,7 @@ fi
 
 log "using hostname \"$hostname\""
 
-if item="$(bw get item "$(hostname -s)")"; then
+if item="$(bw get item "$(hostname -s)" 2>/dev/null)"; then
 	log_start 'installing key'
 	tmp_dir="$(mktemp -d)"
 	item_id="$(echo "$item" | jq --raw-output '.id')"
@@ -42,11 +42,11 @@ if item="$(bw get item "$(hostname -s)")"; then
 	log_end
 else
 	log_start 'creating key'
-	if ! passphrase="$(bw generate --uppercase --lowercase --number --special --length=25)"; then
+	if ! passphrase="$(bw generate --uppercase --lowercase --number --length=45)"; then
 		warn 'failed to generate password, generate one manually'
 	fi
 
-	ssh-keygen ${passphrase:+"-N $passphrase"} -f "$HOME"/.ssh/id_rsa
+	ssh-keygen ${passphrase:+-N $passphrase} -f "$HOME"/.ssh/id_rsa
 
 	if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
 		fatal 'failed to get ID of Bitwarden folder "ssh"'
