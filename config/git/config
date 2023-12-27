@@ -1,6 +1,8 @@
 # $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
 
 [core]
+	# Use a less-common character to allow lines to start with `#` (the default)
+	commentChar = %
 	fsmonitor = true
 	pager = delta
 	untrackedCache = true
