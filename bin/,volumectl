@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help] <command>
+Control volume on Linux with pactl or pwctl, depending on which is available.
+
+Arguments:
+  command           up, down, or mute
+
+Flags:
+	-h, --help		show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+if command -v pactl >/dev/null; then
+	case "${1-}" in
+	up) exec pactl set-sink-volume @DEFAULT_SINK@ +3% ;;
+	down) exec pactl set-sink-volume @DEFAULT_SINK@ -3% ;;
+	mute) exec pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+	esac
+else
+	case "${1-}" in
+	up) exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ ;;
+	down) exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- ;;
+	mute) exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+	esac
+fi
