@@ -31,6 +31,11 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	EDITOR="$VISUAL"
 fi
 
+# Default terminal
+if command -v kitty >/dev/null; then
+	export TERMINAL='kitty'
+fi
+
 # Allow GPG to make prompts
 if [ -t 0 ]; then
 	export GPG_TTY
