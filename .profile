@@ -45,6 +45,8 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 export PAGER='bat'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# Avoid formatting issues with manpages
+export MANROFFOPT="-c"
 
 if [[ "$OSTYPE" == darwin* ]]; then
 	# Disable Homebrew usage hints
