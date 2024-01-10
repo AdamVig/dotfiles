@@ -23,6 +23,9 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export XDG_CACHE_HOME="$HOME"/Library/Caches
 fi
 
+# Add user bin directories to PATH
+prepend_path "$HOME"/.local/bin
+
 # Default editor
 export VISUAL='emacsclient --create-frame'
 export EDITOR='emacsclient --tty'
@@ -146,9 +149,6 @@ if command -v python3 > /dev/null; then
   # Add Python package executable directory to PATH
   prepend_path "$(python3 -m site --user-base)"/bin
 fi
-
-# Add user bin directories to PATH
-prepend_path "$HOME"/.local/bin
 
 # Tell ripgrep where to load config from
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"/ripgrep/config
