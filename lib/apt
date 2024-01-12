@@ -65,6 +65,12 @@ add_ppa() {
 		"http://ppa.launchpad.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
+if ! is_repository_configured 'docker'; then
+	log_start 'adding Docker repository'
+	add_repository 'docker' 'https://download.docker.com/linux/ubuntu/gpg' "https://download.docker.com/linux/ubuntu ${codename} stable"
+	log_end
+fi
+
 if ! is_repository_configured 'microsoft.com/repos/code'; then
 	log_start 'adding Visual Studio Code repository'
 	add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
@@ -265,10 +271,16 @@ declare -a packages=(
 	python3-pip # Python
 	shellcheck  # Shell script linter
 
+	# Docker
+	docker-ce
+	docker-ce-cli
+	containerd.io
+	docker-buildx-plugin
+	docker-compose-plugin
+
 	# applications
 	code
 	d-feet # D-Bus debugger
-	docker.io
 	emacs         # Text editor
 	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
@@ -311,6 +323,7 @@ declare -a unwanted_packages=(
 	chromium
 	copyq
 	digikam # Now installed as AppImage in ./linux-software
+	docker.io # Replaced with official Docker package
 	emacs-snapshot
 	exa # Replaced by eza
 	figma-linux
