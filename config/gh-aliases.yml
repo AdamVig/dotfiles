@@ -30,6 +30,10 @@ prbase: >-
 co: >-
   pr checkout
 
+# Convenience shortcut for gh-pr-body-commits extension
+pbc: >-
+  pr-body-commits
+
 # Inverse of "co": switch back to the previous branch and delete the current branch
 unco: >-
   !git switch - && git branch --delete @{-1} 
