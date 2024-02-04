@@ -80,7 +80,7 @@ fi
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
 	# https://www.spotify.com/us/download/linux/
-	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg' 'http://repository.spotify.com stable non-free'
+	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg' 'http://repository.spotify.com stable non-free'
 	log_end
 fi
 
@@ -280,7 +280,7 @@ declare -a packages=(
 
 	# applications
 	code
-	d-feet # D-Bus debugger
+	d-feet        # D-Bus debugger
 	emacs         # Text editor
 	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
@@ -322,7 +322,7 @@ declare -a unwanted_packages=(
 	broot         # Better tree
 	chromium
 	copyq
-	digikam # Now installed as AppImage in ./linux-software
+	digikam   # Now installed as AppImage in ./linux-software
 	docker.io # Replaced with official Docker package
 	emacs-snapshot
 	exa # Replaced by eza
