@@ -245,6 +245,7 @@ declare -a packages=(
 	v4l-utils   # Webcam control tools
 	wine        # Support for Windows applications
 	winetricks  # Tools for working with Wine
+	wireguard   # VPN
 	wireplumber # PipeWire tools, including wpctl
 	wmctrl      # X window manager control CLI
 	xclip       # Clipboard CLI
