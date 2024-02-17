@@ -359,15 +359,9 @@ fi
 log_end
 
 log_start 'installing Google Chrome'
-chrome_url='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-chrome_tmp="$(mktemp --suffix .deb)"
-if ! _curl "$chrome_url" --output "$chrome_tmp"; then
-	fatal 'failed to download Google Chrome'
-fi
-if ! request_sudo apt-get install "$chrome_tmp"; then
+if ! install_deb_from_url 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'; then
 	fatal 'failed to install Google Chrome'
 fi
-rm -f "$chrome_tmp"
 log_end
 
 log_start 'installing Hugo'
