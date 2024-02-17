@@ -42,6 +42,8 @@
 [diff]
   tool = meld
   colorMoved = default
+  conflictStyle = zdiff3
+  algorithm = histogram
 [delta]
 	hyperlinks = true
 	navigate = true
@@ -59,6 +61,9 @@
   gpgSign = true
 [tag]
 	gpgSign = true
+[branch]
+  # Sort `git branch` by most recently used
+  sort = -committerdate
 
 # To include a separate configuration file conditionally, uncomment the following.
 # Ensure that this block comes at the end of the file, otherwise it will not override correctly.
