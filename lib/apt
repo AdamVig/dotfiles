@@ -304,6 +304,7 @@ declare -a packages=(
 	steam
 	thunderbird  # Email client
 	virt-manager # Virtual machine manager
+	xournalpp    # PDF editor
 
 	# fonts
 	fonts-noto
