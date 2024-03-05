@@ -34,26 +34,25 @@ if is_macos && [ -d "$VSCODE_EXTENSIONS" ] && ! [ -h "$HOME"/.vscode/extensions 
 fi
 
 declare -a extensions=(
-	dbaeumer.vscode-eslint                     # JavaScript linter
-	eamodio.gitlens                            # Advanced Git integration
-	EditorConfig.editorconfig                  # Editor text style configuration
-	esbenp.prettier-vscode                     # Code formatting with Prettier
-	emroussel.atom-icons                       # Atom-inspired icons
-	emroussel.atomize-atom-one-dark-theme      # Atom-inspired theme
-	figma.figma-vscode-extension               # Figma integration
-	GitHub.codespaces                          # Support for Codespaces
-	GitHub.vscode-pull-request-github          # built-in GitHub pull request support
-	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
-	mrmlnc.vscode-scss                         # SCSS IntelliSense and autocomplete
-	ms-vscode-remote.remote-ssh                # Remote development via SSH
-	ms-vsliveshare.vsliveshare                 # Live code sharing
-	ryanluker.vscode-coverage-gutters          # Code coverage visualizer
-	stkb.rewrap                                # Reformats code comments and other text to a given line length
-	streetsidesoftware.code-spell-checker      # Spell checker
-	tamasfe.even-better-toml                   # TOML support
-	timonwong.shellcheck                       # Shell script linting
-	unifiedjs.vscode-mdx                       # MDX support
-	vue.volar                                  # Vue support
+	dbaeumer.vscode-eslint                # JavaScript linter
+	eamodio.gitlens                       # Advanced Git integration
+	EditorConfig.editorconfig             # Editor text style configuration
+	esbenp.prettier-vscode                # Code formatting with Prettier
+	emroussel.atom-icons                  # Atom-inspired icons
+	emroussel.atomize-atom-one-dark-theme # Atom-inspired theme
+	figma.figma-vscode-extension          # Figma integration
+	GitHub.codespaces                     # Support for Codespaces
+	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
+	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
+	ms-vscode-remote.remote-ssh           # Remote development via SSH
+	ms-vsliveshare.vsliveshare            # Live code sharing
+	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
+	stkb.rewrap                           # Reformats code comments and other text to a given line length
+	streetsidesoftware.code-spell-checker # Spell checker
+	tamasfe.even-better-toml              # TOML support
+	timonwong.shellcheck                  # Shell script linting
+	unifiedjs.vscode-mdx                  # MDX support
+	vue.volar                             # Vue support
 )
 
 declare -a no_longer_needed_extensions=(
@@ -63,6 +62,7 @@ declare -a no_longer_needed_extensions=(
 	rafamel.subtle-brackets          # Better bracket matching
 	runem.lit-plugin
 	silvenon.mdx
+	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
 	yzhang.markdown-all-in-one
 )
 
