@@ -23,7 +23,7 @@
   // Workbench
   // ------------------------------
   // Hide activity bar (vertical left bar)
-  "workbench.activityBar.visible": false,
+  "workbench.activityBar.location": "hidden",
   "workbench.startupEditor": "none",
   // Change theme
   "workbench.colorTheme": "Atomize",
@@ -165,5 +165,5 @@
   "go.toolsManagement.autoUpdate": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
 }
