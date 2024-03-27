@@ -20,6 +20,7 @@ brew "fzf" # Fuzzy finder
 brew "glow" # Markdown viewer
 brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
+brew "ispell" # Spell checker used by Emacs
 brew "jq" # JSON processor
 brew "p7zip"
 brew "pandoc"
