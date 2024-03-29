@@ -9,3 +9,6 @@ svgo
 
 # Bitwarden CLI
 @bitwarden/cli
+
+# Interactive package updater
+npm-check-updates
