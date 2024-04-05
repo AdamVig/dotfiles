@@ -195,7 +195,8 @@
 
 ;; Add git-commit mode
 (use-package git-commit
-  :ensure t)
+  :ensure t
+  :config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 ;; Add and configure with-editor mode (https://github.com/magit/with-editor)
 (use-package with-editor
