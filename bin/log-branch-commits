@@ -3,11 +3,19 @@
 set -euo pipefail
 
 remote='origin'
-if ! default_branch="$(get-default-branch)"; then
-	echo 'error: could not get default branch'
-	exit 1
+branch=
+args=()
+
+# If first argument is empty or looks like a flag, use the default branch
+if [ -z "${1-}" ] || [[ ${1-} == -* ]]; then
+	if ! branch="$(get-default-branch)"; then
+		echo 'error: could not get default branch'
+		exit 1
+	fi
+	args+=("${@:1}")
+else
+	branch="${1-}"
+	args+=("${@:2}")
 fi
 
-branch="${1:-$default_branch}"
-
-git log "$remote"/"$branch".. --oneline --pretty=who-when-what --
+git log "$remote"/"$branch".. --oneline --pretty=who-when-what "${args[@]}" --
