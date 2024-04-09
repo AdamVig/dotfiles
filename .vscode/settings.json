@@ -57,7 +57,7 @@
   "explorer.fileNesting.enabled": true,
   // Nest common file groups together to reduce file explorer clutter
   "explorer.fileNesting.patterns": {
-    "*.ts": "${capture}.js",
+    "*.ts": "${capture}.js, ${capture}.test.ts, ${capture}.spec.ts",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
     "*.jsx": "${capture}.js",
     "*.tsx": "${capture}.ts",
