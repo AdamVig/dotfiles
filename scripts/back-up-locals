@@ -69,7 +69,7 @@ echo
 for f in "${files[@]}"; do
 	echo "→ $f"
 	f_basename="$(basename "$f")"
-	if ! existing_content="$(gh gist view "$gist_to_update" --filename="$f_basename")"; then
+	if [ -s "$f" ] && ! existing_content="$(gh gist view "$gist_to_update" --filename="$f_basename")"; then
 		echo "  adding new file..."
 		gh gist edit "$gist_to_update" --add="$f"
 	else
