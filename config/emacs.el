@@ -226,6 +226,10 @@
 ;; Open Org files folded
 (setq org-startup-folded t)
 
+;; Add org-modern (https://github.com/minad/org-modern)
+(use-package org-modern-mode
+	:ensure t)
+
 (use-package writegood-mode
 	:ensure t
 	:config (global-set-key "\C-cg" 'writegood-mode))
