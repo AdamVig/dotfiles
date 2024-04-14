@@ -71,7 +71,9 @@ for f in "${files[@]}"; do
 	f_basename="$(basename "$f")"
 	if [ -s "$f" ] && ! existing_content="$(gh gist view "$gist_to_update" --filename="$f_basename")"; then
 		echo "  adding new file..."
-		gh gist edit "$gist_to_update" --add="$f"
+		if ! gh gist edit "$gist_to_update" --add="$f"; then
+			echo '  failed to add new file, skipping'
+		fi
 	else
 		if ! diff -w <(echo "$existing_content") "$f" >/dev/null; then
 			echo "  updating existing file..."
