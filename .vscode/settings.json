@@ -124,6 +124,8 @@
   },
   // Do not prompt to pull the branch when changes are detected on the remote
   "githubPullRequests.pullBranch": "never",
+  // Do not auto-run tests and wait until first on-demand test run to initialize extension
+  "jest.runMode": "deferred",
   "shellcheck.customArgs": [
     // Allow 'source' outside of input files
     "-external-sources"

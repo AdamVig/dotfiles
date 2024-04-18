@@ -46,6 +46,7 @@ declare -a extensions=(
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-vscode-remote.remote-ssh           # Remote development via SSH
 	ms-vsliveshare.vsliveshare            # Live code sharing
+	orta.vscode-jest                      # Test Explorer and more for Jest
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	stkb.rewrap                           # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker # Spell checker
