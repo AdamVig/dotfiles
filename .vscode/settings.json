@@ -168,5 +168,4 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "turbo.useLocalTurbo": true
 }
