@@ -38,13 +38,12 @@ declare -a extensions=(
 	eamodio.gitlens                       # Advanced Git integration
 	EditorConfig.editorconfig             # Editor text style configuration
 	esbenp.prettier-vscode                # Code formatting with Prettier
-	emroussel.atom-icons                  # Atom-inspired icons
-	emroussel.atomize-atom-one-dark-theme # Atom-inspired theme
 	figma.figma-vscode-extension          # Figma integration
 	GitHub.codespaces                     # Support for Codespaces
 	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-vscode-remote.remote-ssh           # Remote development via SSH
+	ms-vscode.theme-tomorrowkit           # Tomorrow color themes
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	orta.vscode-jest                      # Test Explorer and more for Jest
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer

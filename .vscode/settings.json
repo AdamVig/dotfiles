@@ -26,12 +26,10 @@
   "workbench.activityBar.location": "hidden",
   "workbench.startupEditor": "none",
   // Change theme
-  "workbench.colorTheme": "Atomize",
-  "workbench.colorCustomizations": {
-    "statusBar.debuggingBackground": "#511f1f",
-    "editor.background": "#222429"
-  },
-  "workbench.iconTheme": "atom-icons",
+  "workbench.colorTheme": "Tomorrow",
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "Tomorrow Night",
+  "workbench.preferredLightColorTheme": "Tomorrow",
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
   "workbench.editor.enablePreview": false,
