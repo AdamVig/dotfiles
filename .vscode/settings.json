@@ -47,7 +47,7 @@
   // Render diffs inline
   "diffEditor.renderSideBySide": false,
   // Hide panes in Explorer
-  "explorer.openEditors.visible": 0,
+  "explorer.openEditors.visible": 1,
   // Disable file delete confirmation
   "explorer.confirmDelete": false,
   // Disable confirmation window on drag and drop in file explorer
@@ -71,8 +71,6 @@
   // ------------------------------
   // Wrap lines so they're shorter than 120 chars
   "html.format.wrapLineLength": 110,
-  // Maintain EOF newline
-  "html.format.endWithNewline": true,
   // Do not add extra lines around `head`, `body`, `/html`
   "html.format.extraLiners": "",
   // Add a ruler at 50 characters (for commit subjects)
@@ -162,8 +160,7 @@
     // Keep the activity bar enabled
     "workbench.activityBar.visible"
   ],
-  "go.toolsManagement.autoUpdate": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  }
 }
