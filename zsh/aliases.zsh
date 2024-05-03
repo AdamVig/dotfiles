@@ -36,4 +36,4 @@ if [[ "$OSTYPE" = *linux* ]]; then
 fi
 
 # Default to Kitty's hyperlinked ripgrep
-alias rg='hg'
+alias rg=',hyperlinked-ripgrep'
