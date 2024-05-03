@@ -2,6 +2,10 @@
 
 alias b='bat'
 
+# Highlight help messages with bat
+alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
 # Run an npm script without excessive npm output
 alias npr='npm run --silent'
 
