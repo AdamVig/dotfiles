@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component config "$@"
+}
+
+log_start 'setting up bat'
+bat_config_dir="$(bat --config-dir)"
+theme_dir="$bat_config_dir"/themes
+mkdir -p "$theme_dir"
+
+# https://github.com/chriskempson/tomorrow-theme
+theme_url='https://raw.githubusercontent.com/chriskempson/tomorrow-theme/master/textmate2/Tomorrow%20Theme.tmbundle/Themes/Tomorrow-Night.tmTheme'
+if ! _curl "$theme_url" --output "$theme_dir"/Tomorrow-Night.tmTheme; then
+	fatal 'failed to download theme'
+fi
+
+# Update the binary cache
+bat cache --build
+log_end

@@ -50,7 +50,7 @@
 	# Use less instead of bat to improve performance and simplify output
 	pager = less
   side-by-side = false
-	syntax-theme = OneHalfDark
+	syntax-theme = Tomorrow-Night
 [merge]
   tool = kdiff3
 [mergetool]

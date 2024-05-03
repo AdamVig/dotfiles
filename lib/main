@@ -47,6 +47,7 @@ log_start 'running programming language setup scripts'
 log_end
 
 log_start 'running application setup scripts'
+"$_dir"/bat
 "$_dir"/emacs
 "$_dir"/git
 "$_dir"/gh
