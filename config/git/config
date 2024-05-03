@@ -46,6 +46,7 @@
   algorithm = histogram
 [delta]
 	hyperlinks = true
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
 	navigate = true
 	# Use less instead of bat to improve performance and simplify output
 	pager = less
