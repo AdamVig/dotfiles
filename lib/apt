@@ -216,7 +216,6 @@ declare -a packages=(
 	wget
 
 	# replacements of default utilities
-	bat     # Better cat
 	eza     # Better ls
 	fd-find # Better find
 	htop    # Better top
@@ -320,6 +319,7 @@ fi
 log_end
 
 declare -a unwanted_packages=(
+	bat # Better cat
 	brave-browser # Web browser
 	broot         # Better tree
 	chromium
@@ -356,6 +356,12 @@ log_start 'installing packages from non-repository sources'
 log_start 'installing balenaEtcher'
 if ! install_deb_from_github_release 'balena-io/etcher' '_amd64.deb'; then
 	fatal 'failed to install balenaEtcher'
+fi
+log_end
+
+log_start 'installing bat'
+if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
+	fatal 'failed to install bat'
 fi
 log_end
 
