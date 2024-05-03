@@ -21,6 +21,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(sanityinc-tomorrow-day))
+ '(custom-safe-themes
+		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" default))
  '(git-commit-summary-max-length 72)
  '(org-agenda-prefix-format
 		'((agenda . "")
@@ -43,7 +46,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+		'(auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -51,8 +54,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit default :extend nil :foreground "#DCDCCC" :weight bold))))
- '(org-level-2 ((t (:foreground "#DCDCCC" :weight light))))
+ '(org-level-1 ((t (:inherit default :extend nil :weight bold))))
+ '(org-level-2 ((t (:weight light))))
  '(variable-pitch ((t (:family "Input Sans")))))
 
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
@@ -160,11 +163,18 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-;; Install and use Zenburn Theme (https://github.com/bbatsov/zenburn-emacs)
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
+;; Install and use Tomorrow theme (https://github.com/purcell/color-theme-sanityinc-tomorrow)
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t)
+
+;; Install and use Auto-Dark (https://github.com/LionyxML/auto-dark-emacs)
+(use-package auto-dark
+	:ensure t
+	:config
+	(setq auto-dark-allow-osascript t)
+	(setq auto-dark-dark-theme 'sanityinc-tomorrow-night)
+  (setq auto-dark-light-theme 'sanityinc-tomorrow-day)
+	(auto-dark-mode t))
 
 ;; Install Olivetti (https://github.com/rnkn/olivetti/)
 (use-package olivetti
