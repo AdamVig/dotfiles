@@ -145,6 +145,11 @@ update_emacs_packages() {
 	emacsclient --eval '(auto-package-update-now)'
 }
 
+update_tldr() {
+	echo 'tldr cache'
+	tldr --update
+}
+
 update_macos() {
 	echo 'macos'
 	if [ -n "$user_password" ]; then
@@ -188,6 +193,7 @@ fi
 
 run_operation 'gh extensions' update_gh_extensions
 run_operation 'emacs packages' update_emacs_packages
+run_operation 'tldr' update_tldr
 
 if [[ $OSTYPE == darwin* ]]; then
 	run_operation 'macos' update_macos
