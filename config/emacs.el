@@ -46,7 +46,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+		'(orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
