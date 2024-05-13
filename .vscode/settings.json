@@ -79,7 +79,7 @@
     // Wrap at 72 characters instead of 50
     "rewrap.wrappingColumn": 72
   },
-  "[md]": {
+  "[markdown]": {
     // Disable automatic line wrapping for Markdown
     "rewrap.autoWrap.enabled": false
   },
