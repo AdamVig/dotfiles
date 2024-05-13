@@ -140,9 +140,8 @@
   // Enable automatic line wrapping
   "rewrap.autoWrap.enabled": true,
   // Spell checker configuration
+  "cSpell.enabled": true,
   "cSpell.language": "en",
-  // Only enable for text-centric language types
-  "cSpell.enabledLanguageIds": ["markdown", "git-commit", "latex"],
   // Remove ".git" from the default list of ignored paths
   "cSpell.ignorePaths": [
     "node_modules", // this will ignore anything the node_modules directory
