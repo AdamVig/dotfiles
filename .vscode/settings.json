@@ -12,7 +12,7 @@
   // Disable minimap
   "editor.minimap.enabled": false,
   // Disable code folding
-  "editor.folding": false,
+  "editor.folding": true,
   "editor.find.seedSearchStringFromSelection": "selection",
   "editor.snippetSuggestions": "none",
   "editor.fontSize": 12,
