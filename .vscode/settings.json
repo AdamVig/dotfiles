@@ -142,16 +142,14 @@
   // Spell checker configuration
   "cSpell.enabled": true,
   "cSpell.language": "en",
-  // Remove ".git" from the default list of ignored paths
-  "cSpell.ignorePaths": [
-    "node_modules", // this will ignore anything the node_modules directory
-    "**/node_modules", // the same for this one
-    "**/node_modules/**", // the same for this one
-    "node_modules/**", // Doesn't currently work due to how the current working directory is determined.
-    "vscode-extension", //
-    "*.dll", // Ignore all .dll files.
-    "**/*.dll" // Ignore all .dll files
-  ],
+  "cSpell.customDictionaries": {
+    "custom-dictionary-user": {
+      "name": "custom-dictionary-user",
+      "path": "~/.cspell/custom-dictionary-user.txt",
+      "addWords": true,
+      "scope": "user"
+    }
+  },
   // Hide spell check indicator in status bar
   "cSpell.showStatus": false,
   // Settings sync is used instead of dotfiles in cloud environments
