@@ -80,6 +80,23 @@ run_operation() {
 	rm -f "$log"
 }
 
+update_dotfiles() {
+	branch_ahead_behind_pattern="# branch.ab \+[0-9]+ -([0-9]+)"
+	echo 'fetching...'
+	git fetch &>/dev/null
+	echo 'getting status...'
+	status="$(git status --porcelain=v2 --branch)"
+	echo 'extracting branch ahead/behind data...'
+	[[ $status =~ $branch_ahead_behind_pattern ]]
+	echo 'checking if branch is behind...'
+	if [ "${BASH_REMATCH[1]}" != 0 ]; then
+		echo 'pulling...'
+		git pull
+		echo 'restarting script...'
+		exec "$0" updated
+	fi
+}
+
 update_brew() {
 	echo 'brew cleanup'
 	brew cleanup
@@ -160,6 +177,15 @@ update_macos() {
 }
 
 main() {
+	if [ "${0-}" != 'updated' ]; then
+		# Reset terminal to ensure log_output's overwriting logic works correctly
+		reset
+		run_operation 'dotfiles' update_dotfiles
+	else
+		# When we restart the script after an update, it doesn't log success, so we have to do it in the restarted script
+		log_success
+	fi
+
 	log_operation sudo
 	tput sc
 	if read -r -s -p "${background_blue} password: ${reset} " user_password &&
@@ -211,20 +237,4 @@ main() {
 	fi
 }
 
-update_dotfiles() {
-	branch_ahead_behind_pattern="# branch.ab \+[0-9]+ -([0-9]+)"
-  git fetch &>/dev/null
-	status="$(git status --porcelain=v2 --branch)"
-	[[ "$status" =~ $branch_ahead_behind_pattern ]]
-	[ "${BASH_REMATCH[1]}" != 0 ]
-	git pull
-	exec "$0" updated
-}
-
-if [ "${1-}" != 'updated' ]; then
-	# Reset terminal to ensure log_output's overwriting logic works correctly
-	reset
-	run_operation 'dotfiles' update_dotfiles
-fi
-
-main
+main "$@"
