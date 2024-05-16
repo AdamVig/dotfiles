@@ -159,55 +159,72 @@ update_macos() {
 	fi
 }
 
-# Reset terminal to ensure log_output's overwriting logic works correctly
-reset
+main() {
+	log_operation sudo
+	tput sc
+	if read -r -s -p "${background_blue} password: ${reset} " user_password &&
+		echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
+		tput rc
+		log_success
+	else
+		tput rc
+		echo "${dim} proceeding without sudo${reset}"
+	fi
 
-log_operation sudo
-tput sc
-if read -r -s -p "${background_blue} password: ${reset} " user_password &&
-	echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
-	tput rc
-	log_success
-else
-	tput rc
-	echo "${dim} proceeding without sudo${reset}"
+	if command -v brew >/dev/null; then
+		run_operation 'brew' update_brew
+	fi
+
+	run_operation 'npm' update_npm
+
+	run_operation 'pip' update_pip
+
+	if command -v apt-get >/dev/null; then
+		run_operation 'apt' update_apt
+	fi
+
+	if [[ $OSTYPE == *linux* ]]; then
+		run_operation 'linux software' update_linux_software
+
+		run_operation 'nodenv' update_nodenv
+	fi
+
+	run_operation 'gh extensions' update_gh_extensions
+	run_operation 'emacs packages' update_emacs_packages
+	run_operation 'tldr' update_tldr
+
+	if [[ $OSTYPE == darwin* ]]; then
+		run_operation 'macos' update_macos
+	fi
+
+	# To add user-specific or device-specific updates, create a file at the following path containing something like this:
+	# update_foo() {
+	#   echo 'bar'
+	#   foo bar
+	# }
+	# run_operation 'foo' update_foo
+
+	update_local_path="${XDG_DATA_HOME:-$HOME/.local/share}"/dotfiles/,update-local
+	if [ -f "$update_local_path" ]; then
+		# shellcheck source=/dev/null
+		source "$update_local_path"
+	fi
+}
+
+update_dotfiles() {
+	branch_ahead_behind_pattern="# branch.ab \+[0-9]+ -([0-9]+)"
+  git fetch &>/dev/null
+	status="$(git status --porcelain=v2 --branch)"
+	[[ "$status" =~ $branch_ahead_behind_pattern ]]
+	[ "${BASH_REMATCH[1]}" != 0 ]
+	git pull
+	exec "$0" updated
+}
+
+if [ "${1-}" != 'updated' ]; then
+	# Reset terminal to ensure log_output's overwriting logic works correctly
+	reset
+	run_operation 'dotfiles' update_dotfiles
 fi
 
-if command -v brew >/dev/null; then
-	run_operation 'brew' update_brew
-fi
-
-run_operation 'npm' update_npm
-
-run_operation 'pip' update_pip
-
-if command -v apt-get >/dev/null; then
-	run_operation 'apt' update_apt
-fi
-
-if [[ $OSTYPE == *linux* ]]; then
-	run_operation 'linux software' update_linux_software
-
-	run_operation 'nodenv' update_nodenv
-fi
-
-run_operation 'gh extensions' update_gh_extensions
-run_operation 'emacs packages' update_emacs_packages
-run_operation 'tldr' update_tldr
-
-if [[ $OSTYPE == darwin* ]]; then
-	run_operation 'macos' update_macos
-fi
-
-# To add user-specific or device-specific updates, create a file at the following path containing something like this:
-# update_foo() {
-#   echo 'bar'
-#   foo bar
-# }
-# run_operation 'foo' update_foo
-
-update_local_path="${XDG_DATA_HOME:-$HOME/.local/share}"/dotfiles/,update-local
-if [ -f "$update_local_path" ]; then
-	# shellcheck source=/dev/null
-	source "$update_local_path"
-fi
+main
