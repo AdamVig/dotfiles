@@ -83,15 +83,19 @@ run_operation() {
 update_dotfiles() {
 	branch_ahead_behind_pattern="# branch.ab \+[0-9]+ -([0-9]+)"
 	echo 'fetching...'
-	git fetch &>/dev/null
+	git -C "$_dir" fetch &>/dev/null
 	echo 'getting status...'
-	status="$(git status --porcelain=v2 --branch)"
+	status="$(git -C "$_dir" status --porcelain=v2 --branch)"
 	echo 'extracting branch ahead/behind data...'
-	[[ $status =~ $branch_ahead_behind_pattern ]]
+	if ! [[ $status =~ $branch_ahead_behind_pattern ]]; then
+		echo 'status does not match pattern:'
+		echo "$status"
+		return 1
+	fi
 	echo 'checking if branch is behind...'
 	if [ "${BASH_REMATCH[1]}" != 0 ]; then
 		echo 'pulling...'
-		git pull
+		git -C "$_dir" pull
 		echo 'restarting script...'
 		exec "$0" updated
 	fi
