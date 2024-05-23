@@ -181,7 +181,7 @@ update_macos() {
 }
 
 main() {
-	if [ "${0-}" != 'updated' ]; then
+	if [ "${1-}" != 'updated' ]; then
 		# Reset terminal to ensure log_output's overwriting logic works correctly
 		reset
 		run_operation 'dotfiles' update_dotfiles
