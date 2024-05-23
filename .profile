@@ -135,9 +135,6 @@ if [[ "$OSTYPE" == *linux* ]]; then
 		if [ "$chassis_type" = 8 ] || [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ] || [ "$chassis_type" = 11 ]; then
 			# Make caps lock work as escape
 			setxkbmap -option caps:escape
-
-			# Swap left alt with super (Windows) key
-			setxkbmap -option altwin:swap_lalt
 		fi
 	fi
 
