@@ -227,8 +227,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Ensure Spotify is always assigned to the correct workspace
+# Force workspace assignment for applications that are incompatible with saved workspace layouts
 for_window [class="Spotify"] move --no-auto-back-and-forth container to workspace $ws4
+for_window [class="discord"] move --no-auto-back-and-forth container to workspace $ws4
 
 assign [class="Signal"] 4
 
