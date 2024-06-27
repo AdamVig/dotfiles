@@ -120,6 +120,12 @@ if ! is_repository_configured 'eza'; then
 	log_end
 fi
 
+if ! is_repository_configured 'nextdns'; then
+	log_start 'adding NextDNS repository'
+	add_repository 'nextdns' 'https://repo.nextdns.io/nextdns.gpg' 'https://repo.nextdns.io/deb stable main'
+	log_end
+fi
+
 if is_repository_configured 'azlux'; then
 	log_start 'removing broot repository'
 	request_sudo rm -f /etc/apt/sources.list.d/{azlux,broot}.list* /usr/share/keyrings/{azlux,broot}-archive-keyring.gpg
@@ -233,6 +239,7 @@ declare -a packages=(
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	magic-wormhole     # Point-to-point file sharing
+	nextdns            # DNS client
 	p7zip
 	pandoc
 	playerctl         # Media player controller
