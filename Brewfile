@@ -28,6 +28,7 @@ brew "scc" # Lines of code counter
 brew "tig" # Visual Git client
 brew "unzip"
 brew "switchaudio-osx" # Audio output switcher
+brew "yt-dlp" # Media downloader
 
 # shell
 brew "bash"

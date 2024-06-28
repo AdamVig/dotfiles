@@ -167,6 +167,12 @@ if ! install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown
 fi
 log_end
 
+log_start 'installing yt-dlp'
+if ! install_binary_from_github_release 'yt-dlp' 'yt-dlp/yt-dlp' '_linux'; then
+	fatal 'failed to install yt-dlp'
+fi
+log_end
+
 log_start 'installing YubiKey Manager'
 install_binary_from_url 'yubikey-manager' 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage'
 log_end
