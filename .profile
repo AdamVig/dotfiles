@@ -115,7 +115,7 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	prepend_path "$HOME"/.npm/bin
 
 	# When in a graphical environment, initialize the already-running GNOME Keyring daemon
-	if [ -n "$DESKTOP_SESSION" ] && [ -z "$SSH_AUTH_SOCK" ]; then
+	if [ -n "${DESKTOP_SESSION-}" ] && [ -z "${SSH_AUTH_SOCK-}" ]; then
 		# From `man gpg-agent`
 		unset SSH_AGENT_PID
 		if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
