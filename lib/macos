@@ -55,7 +55,7 @@ request_sudo nvram SystemAudioVolume=" "
 # Set hostname if the current hostname has capital letters (heuristic for detecting default value)
 if echo "$HOSTNAME" | grep --quiet -E '[A-Z]+'; then
 	log_start 'configuring hostname'
-	read -r -p "  Hostname: " hostname
+	read -r -p "$(make_prompt 'Hostname') " hostname
 	request_sudo scutil --set ComputerName "$hostname"
 	request_sudo scutil --set HostName "$hostname"
 	request_sudo scutil --set LocalHostName "$hostname"

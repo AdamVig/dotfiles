@@ -26,9 +26,9 @@ if ! [ -e "$config_path"/config ]; then
 	cp "$_dir"/../config/git/config "$config_path"/config
 
 	log_start 'configuring Git user'
-	read -r -p "  Full name: " name
-	read -r -p "  Email address: " email
-	read -r -p "  GitHub username: " github
+	read -r -p "$(make_prompt 'Full name') " name
+	read -r -p "$(make_prompt 'Email address') " email
+	read -r -p "$(make_prompt 'GitHub username') " github
 
 	# Only set values if they are non-empty
 	[ -n "$name" ] && git config --global user.name "$name"
