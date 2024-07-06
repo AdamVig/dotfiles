@@ -360,6 +360,12 @@ if ! install_deb_from_github_release 'sharkdp/pastel' '_amd64.deb'; then
 fi
 log_end
 
+log_start 'installing Obsidian'
+if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '-amd64.deb'; then
+	fatal 'failed to install Obsidian'
+fi
+log_end
+
 log_start 'installing Standard Notes'
 if ! install_deb_from_github_release 'standardnotes/app' '-linux-amd64.deb'; then
 	fatal 'failed to install Standard Notes'
