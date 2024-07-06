@@ -11,6 +11,12 @@ log() {
 
 log_start 'installing Linux distribution-agnostic software'
 
+log_start 'installing b2'
+if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'; then
+	fatal 'failed to install b2'
+fi
+log_end
+
 log_start 'installing Calibre'
 if ! calibre_url="$(get_release_url 'kovidgoyal/calibre' 'x86_64.txz')"; then
 	fatal 'failed to get Calibre release URL'
@@ -91,7 +97,7 @@ if ! [ -d "$fonts_dir"/input ]; then
 	fi
 	rm -rf "$input_tmp" "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
-		warn 'failed to generate font caches, font will not be available until next login'
+		warppn 'failed to generate font caches, font will not be available until next login'
 	fi
 	log_end
 fi
