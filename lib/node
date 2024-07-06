@@ -63,13 +63,6 @@ fi
 log 'copying default packages file'
 cp "$_dir"/../config/npm-default-packages "$(nodenv root)"/default-packages &>/dev/null || true
 
-nodenv_global_version_path="$(nodenv root)"/version
-if [ -f "$nodenv_global_version_path" ]; then
-	log_start 'removing legacy global version'
-	rm -f "$nodenv_global_version_path"
-	log_end
-fi
-
 log_start 'installing default packages'
 if ! nodenv default-packages install system; then
 	warn 'failed to install one or more default packages'

@@ -79,12 +79,6 @@ if ! [ -f "$config_dir"/redshift.conf ]; then
 	log_end
 fi
 
-if [ -d "$config_dir"/pulse ]; then
-	log_start 'removing legacy PulseAudio configuration'
-	rm -rf "$config_dir"/pulse
-	log_end
-fi
-
 mkdir -p "$config_dir"/i3/workspaces
 if ! [ -x "$config_dir"/i3/workspaces/init ]; then
 	log_start 'initializing workspace initialization script'
@@ -205,10 +199,6 @@ X-GNOME-UsesNotifications=true
 " >"$calibre_desktop_path"
 	log_end
 fi
-
-log_start 'removing legacy desktop files'
-rm -f "$HOME"/.local/share/applications/ncspot.desktop
-log_end
 
 log_start 'adding user to the video group'
 # For brightnessctl

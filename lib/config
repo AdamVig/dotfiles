@@ -43,10 +43,6 @@ cp "$_dir"/../config/kdiff3rc "$config_dir"/kdiff3rc
 mkdir -p "$config_dir"/kitty
 _ln "$_dir"/../config/kitty/* "$config_dir"/kitty
 
-log_start 'removing legacy configuration files'
-rm -rf "$config_dir"/ncspot
-log_end
-
 log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig

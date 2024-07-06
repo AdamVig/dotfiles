@@ -126,76 +126,6 @@ if ! is_repository_configured 'nextdns'; then
 	log_end
 fi
 
-if is_repository_configured 'azlux'; then
-	log_start 'removing broot repository'
-	request_sudo rm -f /etc/apt/sources.list.d/{azlux,broot}.list* /usr/share/keyrings/{azlux,broot}-archive-keyring.gpg
-	log_end
-fi
-
-if is_repository_configured 'brave'; then
-	log_start 'removing Brave repository'
-	request_sudo rm -f /etc/apt/sources.list.d/brave.list* /usr/share/keyrings/brave-archive-keyring.gpg
-	log_end
-fi
-
-# Chrome's .deb installs an invalid repository
-if is_repository_configured 'chrome'; then
-	log_start 'removing Chrome repository'
-	request_sudo rm -f /etc/apt/sources.list.d/chrome.list*
-	log_end
-fi
-
-# Remove previous workaround for installing Chromium
-if is_repository_configured 'deb.debian.org/debian stable'; then
-	log_start 'removing Debian Stable repository'
-	log_start 'removing sources file'
-	request_sudo rm -f /etc/apt/sources.list.d/debian-stable.list*
-	log_end
-	log_start 'removing apt policy'
-	request_sudo rm -f /etc/apt/preferences.d/debian-chromium >/dev/null
-	log_end
-	log_end
-fi
-
-if is_repository_configured 'digikam'; then
-	log_start 'removing digiKam repository'
-	request_sudo rm -f /etc/apt/sources.list.d/digikam.list* /usr/share/keyrings/digikam-archive-keyring.gpg
-	log_end
-fi
-
-if is_repository_configured 'yubico'; then
-	log_start 'removing Yubico repository'
-	request_sudo rm -f /etc/apt/sources.list.d/yubico.list* /usr/share/keyrings/yubico-archive-keyring.gpg
-	log_end
-fi
-
-if is_repository_configured 'vivaldi'; then
-	log_start 'removing Vivaldi repository'
-	request_sudo rm -f /etc/apt/sources.list.d/vivaldi.list* /usr/share/keyrings/vivaldi-archive-keyring.gpg
-	log_end
-fi
-
-if is_repository_configured 'ubuntu-elisp'; then
-	log_start 'removing Ubuntu Emacs snapshot repository'
-	request_sudo rm -f /etc/apt/sources.list.d/emacs.list* /usr/share/keyrings/emacs-archive-keyring.gpg
-	log_end
-fi
-
-if is_repository_configured 'balena'; then
-	log_start 'removing Balena Etcher repository'
-	request_sudo rm -f /etc/apt/sources.list.d/balena.list* /usr/share/keyrings/balena-archive-keyring.gpg
-	log_end
-fi
-
-log_end
-
-if [ -f /etc/apt/preferences.d/firefox ] || [ -f /etc/apt/apt.conf.d/51unattended-upgrades-firefox ] || command -v firefox >/dev/null; then
-	log_start 'removing Firefox'
-	request_sudo rm -f /etc/apt/preferences.d/firefox /etc/apt/apt.conf.d/51unattended-upgrades-firefox
-	request_sudo apt-get remove --yes firefox
-	log_end
-fi
-
 log_start 'updating lists'
 if request_sudo apt-get update >/dev/null; then
 	log_end
@@ -326,7 +256,7 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	bat # Better cat
+	bat           # Better cat
 	brave-browser # Web browser
 	broot         # Better tree
 	chromium
