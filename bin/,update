@@ -97,7 +97,7 @@ update_dotfiles() {
 		echo 'pulling...'
 		git -C "$_dir" pull
 		echo 'restarting script...'
-		exec "$0" updated
+		exec "$0" updated </dev/tty
 	fi
 }
 
