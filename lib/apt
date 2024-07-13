@@ -366,9 +366,9 @@ if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '-amd64.deb'
 fi
 log_end
 
-log_start 'installing Standard Notes'
-if ! install_deb_from_github_release 'standardnotes/app' '-linux-amd64.deb'; then
-	fatal 'failed to install Standard Notes'
+log_start 'removing Standard Notes'
+if ! sudo apt-get remove --yes standard-notes; then
+	fatal 'failed to remove Standard Notes'
 fi
 log_end
 

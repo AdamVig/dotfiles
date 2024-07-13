@@ -55,7 +55,6 @@ bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
     bindsym b exec google-chrome, mode "default"
     bindsym e exec thunderbird, mode "default"
-    bindsym n exec standard-notes, mode "default"
 		bindsym t exec emacsclient --create-frame --no-wait, mode "default"
 
     bindsym Escape mode "default"
