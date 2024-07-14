@@ -236,6 +236,7 @@ declare -a packages=(
 	lxpolkit        # Polkit authentication agent
 	meld            # Comparison tool for version control, files, and directories
 	mpv             # Media player
+	obs-studio      # Screen recording
 	qemu-system-x86 # Virtual machine tool
 	redshift        # Screen color temperature adjustment tool
 	rofi            # Application launcher
