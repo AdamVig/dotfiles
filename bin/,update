@@ -124,7 +124,7 @@ update_npm() {
 
 update_pip() {
 	echo 'pip'
-	"$_dir"/../lib/pip
+	pipx upgrade-all
 }
 
 update_apt() {

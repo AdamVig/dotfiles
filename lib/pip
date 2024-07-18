@@ -20,7 +20,7 @@ pip_packages=(
 )
 
 for package in "${pip_packages[@]}"; do
-	if ! pipx install "$package" >/dev/null; then
+	if ! pipx install "$package"; then
 		warn "failed to install package \"$package\""
 	fi
 done
@@ -44,7 +44,7 @@ log_end
 
 if is_linux; then
 	log_start 'installing rofimoji'
-	pipx install rofimoji >/dev/null
+	pipx install rofimoji
 	log_end
 fi
 
