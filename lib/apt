@@ -246,6 +246,7 @@ declare -a packages=(
 	spotify-client
 	steam
 	thunderbird  # Email client
+	viewnior     # Image viewer
 	virt-manager # Virtual machine manager
 	xournalpp    # PDF editor
 
