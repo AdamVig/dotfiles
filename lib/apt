@@ -363,7 +363,7 @@ fi
 log_end
 
 log_start 'installing Obsidian'
-if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '-amd64.deb'; then
+if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'; then
 	fatal 'failed to install Obsidian'
 fi
 log_end
