@@ -47,9 +47,9 @@ if ! digikam_version="$(_curl 'https://invent.kde.org/api/v4/projects/graphics%2
 	fatal 'failed to get DigiKam version'
 fi
 
-digikam_url="https://download.kde.org/stable/digikam/${digikam_version}/digiKam-${digikam_version}-x86-64.appimage"
+digikam_url="https://download.kde.org/stable/digikam/${digikam_version}/digiKam-${digikam_version}-Qt6-x86-64.appimage"
 if ! install_binary_from_url 'DigiKam' "$digikam_url"; then
-	fatal 'failed to install DigiKam'
+	fatal 'failed to install DigiKam, see https://download.kde.org/stable/digikam/8.4.0/ to check if file name structure changed'
 fi
 log_end
 
