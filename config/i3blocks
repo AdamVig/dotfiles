@@ -19,3 +19,7 @@ interval=1
 command=status-pulseaudio
 interval=persist
 markup=pango
+
+[battery]
+command=[ -e /sys/class/power_supply/BAT1 ] && printf '%s%% battery\n' "$(cat /sys/class/power_supply/BAT1/capacity)" || exit
+interval=10
