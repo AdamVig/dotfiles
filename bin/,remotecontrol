@@ -9,7 +9,6 @@ Commands:
 	off									Turn off the computer.
 	reboot  	 					Reboot the computer.
 	suspend	 						Put the computer to sleep.
-	hibernate						Hibernate the computer.
 	switch-to-windows		Reboot into the first Grub menuentry that mentions Windows.
 
 Flags:
@@ -33,8 +32,6 @@ elif [ "$command" = 'reboot' ]; then
 	sudo systemctl reboot
 elif [ "$command" = 'suspend' ]; then
 	sudo systemctl suspend
-elif [ "$command" = 'hibernate' ]; then
-	sudo systemctl hibernate
 elif [ "$command" = 'switch-to-windows' ]; then
 	# awk program inspired by Grub's Bash completion script
 	if ! grub_menuentry_windows="$(
