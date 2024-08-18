@@ -114,13 +114,16 @@ if [[ "$OSTYPE" == *linux* ]]; then
 	# Add npm directory to PATH
 	prepend_path "$HOME"/.npm/bin
 
-	# When in a graphical environment, initialize the already-running GNOME Keyring daemon
-	if [ -n "${DESKTOP_SESSION-}" ] && [ -z "${SSH_AUTH_SOCK-}" ]; then
-		# From `man gpg-agent`
-		unset SSH_AGENT_PID
-		if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-			SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-			export SSH_AUTH_SOCK
+	# When in a graphical environment
+	if [ -n "${DESKTOP_SESSION-}" ]; then
+		# Initialize the already-running GNOME Keyring daemon
+		if [ -z "${SSH_AUTH_SOCK-}" ]; then
+			# From `man gpg-agent`
+			unset SSH_AGENT_PID
+			if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+				SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+				export SSH_AUTH_SOCK
+			fi
 		fi
 
 		# Map right meta key to the "compose" key for special characters
