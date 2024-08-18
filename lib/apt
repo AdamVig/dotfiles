@@ -208,6 +208,7 @@ declare -a packages=(
 	rustc
 
 	# programming language tools
+	cargo       # Rust
 	composer    # PHP
 	npm         # Node
 	pipx        # Run Python CLI tools
