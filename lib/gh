@@ -42,6 +42,7 @@ declare -a gh_extensions=(
 	AdamVig/gh-pr-body-commits
 	AdamVig/gh-watch
 	davidraviv/gh-clean-branches
+	github/gh-copilot
 )
 
 for gh_extension in "${gh_extensions[@]}"; do

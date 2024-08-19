@@ -40,6 +40,7 @@ declare -a extensions=(
 	esbenp.prettier-vscode                # Code formatting with Prettier
 	figma.figma-vscode-extension          # Figma integration
 	GitHub.codespaces                     # Support for Codespaces
+	GitHub.copilot                        # Support for Copilot
 	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-vscode-remote.remote-ssh           # Remote development via SSH
