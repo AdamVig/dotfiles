@@ -304,6 +304,12 @@ unlock_bitwarden_vault() {
 	if ! command -v bw >/dev/null; then
 		warn_and_bail 'Bitwarden CLI is not available'
 	fi
+
+	if [ -v BW_SESSION ]; then
+		log 'using existing Bitwarden CLI session'
+		return
+	fi
+
 	# shellcheck disable=SC2034
 	export BW_SESSION
 
