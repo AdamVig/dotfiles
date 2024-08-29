@@ -167,6 +167,29 @@ install "$restic_extracted_tmp" "$restic_path"
 rm -rf "$restic_extracted_tmp"
 log_end
 
+log_start 'installing resticprofile'
+if ! resticprofile_url="$(get_release_url 'creativeprojects/resticprofile' 'linux_386.tar.gz')"; then
+	fatal 'failed to get resticprofile release URL'
+fi
+
+resticprofile_tmp="$(mktemp)"
+if ! _curl "$resticprofile_url" --output "$resticprofile_tmp"; then
+	fatal 'failed to download resticprofile'
+fi
+
+resticprofile_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$resticprofile_tmp" -C "$resticprofile_extracted_tmp" >/dev/null; then
+	fatal 'failed to unzip resticprofile'
+fi
+rm -f "$resticprofile_tmp"
+
+resticprofile_path="$HOME"/.local/bin/resticprofile
+mv "$resticprofile_extracted_tmp"/resticprofile "$resticprofile_path"
+rm -rf "$resticprofile_extracted_tmp"
+
+chmod +x "$resticprofile_path"
+log_end
+
 log_start 'installing websocat'
 if ! install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'; then
 	fatal 'failed to install websocat'
