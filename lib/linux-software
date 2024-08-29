@@ -143,6 +143,25 @@ if ! install_binary_from_url 'Bitwarden' 'https://vault.bitwarden.com/download/?
 fi
 log_end
 
+log_start 'installing Bitwarden CLI'
+bw_tmp="$(mktemp)"
+if ! _curl 'https://vault.bitwarden.com/download/?app=cli&platform=linux' --output "$bw_tmp"; then
+	fatal 'failed to download Bitwarden CLI'
+fi
+
+bw_extracted_tmp="$(mktemp -d)"
+if ! unzip "$bw_tmp" -d "$bw_extracted_tmp" >/dev/null; then
+	fatal 'failed to unzip Bitwarden CLI'
+fi
+rm -f "$bw_tmp"
+
+bw_path="$HOME"/.local/bin/bw
+mv "$bw_extracted_tmp"/bw "$bw_path"
+rm -rf "$bw_extracted_tmp"
+
+chmod +x "$bw_path"
+log_end
+
 log_start 'installing NextCloud'
 if ! install_binary_from_github_release 'nextcloud' 'nextcloud-releases/desktop' 'x86_64.AppImage'; then
 	fatal 'failed to install NextCloud'
