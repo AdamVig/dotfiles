@@ -22,14 +22,14 @@ fi
 log "using hostname \"$hostname\""
 
 log_start 'getting devices folder'
-if ! devices_folder_id="$(bw get folder devices | jq --raw-output '.id')"; then
+if ! devices_folder_id="$(2>/dev/null bw get folder devices | jq --raw-output '.id')"; then
 	fatal 'failed to get ID of Bitwarden folder "devices"'
 fi
 log_end
 
 log_start 'getting device entry'
-if ! item="$(bw list --folderid "$devices_folder_id" items |
-	jq --exit-status --arg hostname "$hostname" '.[] | select(.name | test("\($hostname)$"))')"; then
+if ! item="$(2>/dev/null bw list --folderid "$devices_folder_id" items |
+	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | test("\($hostname)$")))')"; then
 	warn_and_bail "failed to find Bitwarden item in folder \"devices\" for \"$hostname\", skipping backup setup"
 fi
 log_end
