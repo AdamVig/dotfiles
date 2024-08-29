@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component backup "$@"
+}
+
+log_start 'setting up backup'
+
+unlock_bitwarden_vault
+
+if ! hostname="$(hostname -s)"; then
+	fatal 'failed to get system hostname'
+fi
+
+log "using hostname \"$hostname\""
+
+log_start 'getting devices folder'
+if ! devices_folder_id="$(bw get folder devices | jq --raw-output '.id')"; then
+	fatal 'failed to get ID of Bitwarden folder "devices"'
+fi
+log_end
+
+log_start 'getting device entry'
+if ! item="$(bw list --folderid "$devices_folder_id" items |
+	jq --exit-status --arg hostname "$hostname" '.[] | select(.name | test("\($hostname)$"))')"; then
+	warn_and_bail "failed to find Bitwarden item in folder \"devices\" for \"$hostname\", skipping backup setup"
+fi
+log_end
+
+log_start 'getting Restic profile from attachments'
+item_id="$(echo "$item" | jq --raw-output '.id')"
+if ! bw get attachment resticprofile --itemid="$item_id" --output="$(xdg_config)/resticprofile/profiles.toml"; then
+	warn_and_bail 'failed to download attachment "resticprofile" from device entry; skipping backup setup'
+fi
+log_end
+
+log_start 'getting Restic password from fields'
+if ! password="$(echo "$item" | jq --raw-output '.fields | map(select(.name == "Restic vault password")) | .[0].value')"; then
+	warn_and_bail 'failed to get field "Restic vault password" from device entry; backups will not run'
+fi
+echo "$password" >"$(xdg_config)"/resticprofile/restic-vault-password.txt
+log_end
+
+log_start 'starting resticprofile schedule'
+if ! resticprofile schedule --all; then
+	warn_and_bail 'failed to start resticprofile schedule; backups will not run automatically'
+fi
+log_end
+
+log_end
