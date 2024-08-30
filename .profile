@@ -177,6 +177,9 @@ export RUSH_GLOBAL_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}"/rush
 # Disable prompts to update the GitHub CLI (gh)
 export GH_NO_UPDATE_NOTIFIER="true"
 
+# Disable Turborepo telemetry message
+export TURBO_TELEMETRY_MESSAGE_DISABLED="true"
+
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
 if [ -f "$local_profile_path" ]; then
