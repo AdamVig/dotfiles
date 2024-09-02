@@ -46,7 +46,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js git-commit yaml-mode go-mode editorconfig use-package))
+		'(with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -203,11 +203,6 @@
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
-;; Add git-commit mode
-(use-package git-commit
-  :ensure t
-  :config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
-
 ;; Add and configure with-editor mode (https://github.com/magit/with-editor)
 (use-package with-editor
   :ensure t
@@ -293,7 +288,8 @@
 
 ;; Add Magit (https://magit.vc/)
 (use-package magit
-	:ensure t)
+	:ensure t
+	:config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 ;; Add Magit Forge (https://magit.vc/manual/forge/)
 (use-package forge
