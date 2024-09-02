@@ -11,6 +11,10 @@ log() {
 
 log_start 'installing Linux distribution-agnostic software'
 
+log_start 'removing no-longer-needed software'
+rm -vf "$HOME"/.local/bin/{restic,resticprofile}
+log_end
+
 log_start 'installing b2'
 if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'; then
 	fatal 'failed to install b2'
@@ -181,8 +185,9 @@ if ! bunzip2 "$restic_tmp" >/dev/null; then
 	fatal 'failed to extract restic'
 fi
 rm -f "$restic_tmp"
-restic_path="$HOME"/.local/bin/restic
-install "$restic_extracted_tmp" "$restic_path"
+# Install in `root`'s `PATH` so `resticprofile` can use it when running under `root`
+restic_path=/usr/local/bin/restic
+request_sudo install "$restic_extracted_tmp" "$restic_path"
 rm -rf "$restic_extracted_tmp"
 log_end
 
@@ -202,11 +207,10 @@ if ! tar zxvf "$resticprofile_tmp" -C "$resticprofile_extracted_tmp" >/dev/null;
 fi
 rm -f "$resticprofile_tmp"
 
-resticprofile_path="$HOME"/.local/bin/resticprofile
-mv "$resticprofile_extracted_tmp"/resticprofile "$resticprofile_path"
+# Install in `root`'s `PATH` so it can be executed with `sudo` for system backup schedules
+resticprofile_path=/usr/local/bin/resticprofile
+request_sudo install --mode +x "$resticprofile_extracted_tmp"/resticprofile "$resticprofile_path"
 rm -rf "$resticprofile_extracted_tmp"
-
-chmod +x "$resticprofile_path"
 log_end
 
 log_start 'installing websocat'

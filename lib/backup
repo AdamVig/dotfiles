@@ -11,6 +11,9 @@ log() {
 	log_with_component backup "$@"
 }
 
+config_file_attachment_name='resticprofile-profiles.toml'
+config_path=/etc/resticprofile
+
 log_start 'setting up backup'
 
 unlock_bitwarden_vault
@@ -34,22 +37,34 @@ if ! item="$(2>/dev/null bw list --folderid "$devices_folder_id" items |
 fi
 log_end
 
-log_start 'getting Restic profile from attachments'
-item_id="$(echo "$item" | jq --raw-output '.id')"
-if ! bw get attachment resticprofile --itemid="$item_id" --output="$(xdg_config)/resticprofile/profiles.toml"; then
-	warn_and_bail 'failed to download attachment "resticprofile" from device entry; skipping backup setup'
+log_start 'finding config file in device entry attachments'
+if ! attachment_id="$(echo "$item" |
+	jq --exit-status --raw-output --arg fileName "$config_file_attachment_name" '.attachments[] | select(.fileName != null and (.fileName | test("\($fileName)$"))) | .id')"; then
+	warn_and_bail "failed to find config file attachment with name \"$config_file_attachment_name\" in device entry, skipping backup setup
+all attachments:
+$(echo "$item" | jq '.attachments')"
 fi
+log_end
+
+log_start 'downloading config file attachment'
+request_sudo mkdir -p "$config_path"
+item_id="$(echo "$item" | jq --raw-output '.id')"
+config_file_tmp="$(mktemp)"
+if ! bw get attachment "$attachment_id" --itemid="$item_id" --output="$config_file_tmp"; then
+	warn_and_bail "failed to download attachment \"$attachment_id\" from device entry, skipping backup setup"
+fi
+request_sudo install "$config_file_tmp" "$config_path"/profiles.toml
 log_end
 
 log_start 'getting Restic password from fields'
 if ! password="$(echo "$item" | jq --raw-output '.fields | map(select(.name == "Restic vault password")) | .[0].value')"; then
 	warn_and_bail 'failed to get field "Restic vault password" from device entry; backups will not run'
 fi
-echo "$password" >"$(xdg_config)"/resticprofile/restic-vault-password.txt
+echo "$password" | request_sudo tee "$config_path"/restic-vault-password.txt >/dev/null
 log_end
 
 log_start 'starting resticprofile schedule'
-if ! resticprofile schedule --all; then
+if ! request_sudo resticprofile schedule --all; then
 	warn_and_bail 'failed to start resticprofile schedule; backups will not run automatically'
 fi
 log_end
