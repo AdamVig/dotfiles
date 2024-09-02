@@ -154,9 +154,9 @@ _ln() {
 			"$@"
 	else
 		ln \
-                        -s \
-                        -f \
-                        "$@"
+			-s \
+			-f \
+			"$@"
 	fi
 }
 
@@ -210,9 +210,7 @@ install_binary_from_url() {
 	fi
 
 	# Use mv because cURL's --output flag can't replace a running binary
-	mv "$output_path" "$path"
-
-	chmod +x "$path"
+	install "$output_path" "$path"
 }
 
 # Install a binary from the latest GitHub release

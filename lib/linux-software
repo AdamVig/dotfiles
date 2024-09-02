@@ -129,10 +129,8 @@ fi
 rm -f "$scc_tmp"
 
 scc_path="$HOME"/.local/bin/scc
-mv "$scc_extracted_tmp"/scc "$scc_path"
+install "$scc_extracted_tmp"/scc "$scc_path"
 rm -rf "$scc_extracted_tmp"
-
-chmod +x "$scc_path"
 log_end
 
 log_start 'installing GoldenCheetah'
@@ -160,10 +158,8 @@ fi
 rm -f "$bw_tmp"
 
 bw_path="$HOME"/.local/bin/bw
-mv "$bw_extracted_tmp"/bw "$bw_path"
+install "$bw_extracted_tmp"/bw "$bw_path"
 rm -rf "$bw_extracted_tmp"
-
-chmod +x "$bw_path"
 log_end
 
 log_start 'installing NextCloud'
