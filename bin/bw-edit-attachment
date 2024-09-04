@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help] <item> <attachment>
+Download, edit, and re-upload an attachment on a Bitwarden item.
+
+Arguments:
+  item           Unique name of the item (can be partial)
+	attachment		 Unique file name of the attachment (can be partial)
+
+Flags:
+	-h, --help		show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+item="${1-}"
+attachment="${2-}"
+if [ -z "$item" ] || [ -z "$attachment" ]; then
+	echo 'error: must provide item and attachment'
+	exit 1
+fi
+
+if ! [ -v BW_SESSION ]; then
+	BW_SESSION="$(bw unlock --raw)"
+	export BW_SESSION
+fi
+
+echo 'syncing vault...'
+bw sync
+
+echo 'getting item...'
+if ! item="$(bw list items --search "$item" | jq 'first')"; then
+	echo "failed to find item"
+	exit 1
+fi
+
+echo 'finding attachment...'
+if ! attachment_id="$(echo "$item" |
+	jq --exit-status --raw-output --arg fileName "$attachment" '.attachments[] | select(.fileName != null and (.fileName | test("\($fileName)$"))) | .id')"; then
+	echo "failed to find attachment with name \"$attachment\" in item
+all attachments:
+$(echo "$item" | jq '.attachments')"
+	exit 1
+fi
+
+echo 'downloading attachment...'
+item_id="$(echo "$item" | jq --raw-output '.id')"
+tmp_dir="$(mktemp -d)"
+cleanup() {
+	rm -rf "$tmp_dir"
+}
+trap cleanup EXIT
+file_tmp="$tmp_dir"/"$attachment"
+if ! bw get attachment "$attachment_id" --itemid="$item_id" --output="$file_tmp"; then
+	echo "failed to download attachment \"$attachment_id\""
+	exit 1
+fi
+
+echo 'opening editor...'
+if ! $VISUAL "$file_tmp"; then
+	echo 'cancelled'
+	exit 1
+fi
+
+echo 'uploading attachment...'
+if ! bw create attachment --file "$file_tmp" --itemid "$item_id"; then
+	echo 'failed to upload attachment'
+	exit 1
+fi
+
+echo 'deleting previous version of attachment...'
+if ! bw delete attachment "$attachment_id" --itemid "$item_id"; then
+	echo 'failed to delete previous version of attachment'
+	exit 1
+fi
