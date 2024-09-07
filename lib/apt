@@ -180,6 +180,7 @@ declare -a packages=(
 	pandoc
 	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
+	smartmontools     # SMART hard drive health
 	tig               # Visual Git client
 	tree
 	units # Unit conversion calculator
