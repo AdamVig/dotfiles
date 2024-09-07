@@ -13,6 +13,8 @@ log() {
 
 config_file_attachment_name='resticprofile-profiles.toml'
 config_path=/etc/resticprofile
+password_file_name=restic-vault-password.txt
+password_field_name='Restic backup vault'
 
 log_start 'setting up backup'
 
@@ -57,10 +59,14 @@ request_sudo install "$config_file_tmp" "$config_path"/profiles.toml
 log_end
 
 log_start 'getting Restic password from fields'
-if ! password="$(echo "$item" | jq --raw-output '.fields | map(select(.name == "Restic vault password")) | .[0].value')"; then
-	warn_and_bail 'failed to get field "Restic vault password" from device entry; backups will not run'
+if ! password="$(echo "$item" |
+	jq --exit-status --raw-output --arg name "$password_field_name" \
+		'.fields | map(select(.name == $name)) | .[0].value')"; then
+	warn_and_bail "failed to get field \"$password_field_name\" from device entry; backups will not run
+all fields:
+$(echo "$item" | jq '.fields')"
 fi
-echo "$password" | request_sudo tee "$config_path"/restic-vault-password.txt >/dev/null
+echo "$password" | request_sudo tee "$config_path"/"$password_file_name" >/dev/null
 log_end
 
 log_start 'starting resticprofile schedule'
