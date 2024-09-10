@@ -9,3 +9,6 @@ svgo
 
 # Interactive package updater
 npm-check-updates
+
+# Turborepo
+turbo
