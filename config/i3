@@ -7,7 +7,6 @@ font pango: Noto Sans Display 12
 
 exec --no-startup-id flameshot
 exec --no-startup-id lxpolkit
-exec --no-startup-id nextcloud
 exec --no-startup-id redshift
 exec_always --no-startup-id xsetroot -solid "$(random-flat-ui-color)"
 
