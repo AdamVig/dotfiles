@@ -131,11 +131,6 @@ if request_sudo [ -f "$x11vnc_unit_path" ]; then
 	log_end
 fi
 
-log_start 'removing GNOME Keyring autostart files'
-# GNOME Keyring now ships with systemd user units, so the autostart approach is redundant
-rm -f "$config_dir"/autostart/gnome-keyring-secrets.desktop "$config_dir"/autostart/gnome-keyring-ssh.desktop
-log_end
-
 log_start 'disabling input language icon in system tray'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
 log_end
