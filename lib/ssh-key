@@ -31,7 +31,7 @@ fi
 
 log "using hostname \"$hostname\""
 
-if item="$(bw get item "$(hostname -s)" 2>/dev/null)"; then
+if item="$(bw get item "SSH Key: ${hostname}" 2>/dev/null)"; then
 	log_start 'installing key'
 	tmp_dir="$(mktemp -d)"
 	item_id="$(echo "$item" | jq --raw-output '.id')"
@@ -52,7 +52,7 @@ else
 		fatal 'failed to get ID of Bitwarden folder "ssh"'
 	fi
 
-	if ! item="$(bw get template item | \
+	if ! item="$(bw get template item |
 		jq \
 			--arg hostname "$(hostname -s)" \
 			--argjson passphrase "$(bw get template item.field | jq --arg passphrase "${passphrase-}" '.name="Passphrase" | .value=$passphrase | .type=1')" \
@@ -60,15 +60,15 @@ else
 			--argjson public "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa.pub '.name="Public" | .value=$key | .type=0')" \
 			--argjson private "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa '.name="Private" | .value=$key | .type=1')" \
 			--arg ssh_folder_id "$ssh_folder_id" \
-			'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' | \
-		bw encode | \
+			'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' |
+		bw encode |
 		bw create item)"; then
 		warn 'failed to create item, create manually'
 	else
 		bw create attachment --file "$HOME"/.ssh/id_rsa --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
 		bw create attachment --file "$HOME"/.ssh/id_rsa.pub --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
 	fi
- 	bw sync
+	bw sync
 	log_end
 fi
 
