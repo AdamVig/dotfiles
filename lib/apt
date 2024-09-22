@@ -246,7 +246,6 @@ declare -a packages=(
 	signal-desktop
 	slack-desktop
 	spotify-client
-	steam
 	thunderbird  # Email client
 	viewnior     # Image viewer
 	virt-manager # Virtual machine manager
