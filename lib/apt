@@ -364,12 +364,6 @@ if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'
 fi
 log_end
 
-log_start 'removing Standard Notes'
-if ! sudo apt-get remove --yes standard-notes; then
-	fatal 'failed to remove Standard Notes'
-fi
-log_end
-
 log_end
 
 log_end
