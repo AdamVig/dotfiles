@@ -21,6 +21,12 @@ if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'l
 fi
 log_end
 
+log_start 'installing balenaEtcher'
+if ! install_binary_from_github_release 'balenaEtcher' 'balena-io/etcher' '-x64.AppImage'; then
+	fatal 'failed to install balenaEtcher'
+fi
+log_end
+
 log_start 'installing Calibre'
 if ! calibre_url="$(get_release_url 'kovidgoyal/calibre' 'x86_64.txz')"; then
 	fatal 'failed to get Calibre release URL'
