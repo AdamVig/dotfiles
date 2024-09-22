@@ -22,7 +22,7 @@ if [ "$(uname)" = 'Darwin' ] && ! [ -f /opt/homebrew/bin/brew ]; then
 fi
 
 # If running on a fresh boot of a Linux system that uses apt
-if command -v apt-get >/dev/null && ! command -v jq >/dev/null; then
+if command -v apt-get >/dev/null && ! command -v curl >/dev/null; then
 	echo 'detected fresh Linux system, running pre-bootstrap steps...'
 	echo 'updating apt lists...'
 	sudo apt-get update >/dev/null
@@ -37,5 +37,6 @@ fi
 
 echo 'running lib/main...'
 _dir="$(dirname "$(realpath "$0")")"
+# shellcheck disable=SC1091
 source "$_dir"/../.profile
 exec "$_dir"/../lib/main
