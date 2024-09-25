@@ -25,14 +25,25 @@ fi
 
 unlock_bitwarden_vault
 
+if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
+	fatal 'failed to get ID of Bitwarden folder "ssh"'
+fi
+
+if ! items="$(bw list items --folderid="$ssh_folder_id")"; then
+	fatal 'failed to list items in SSH folder'
+fi
+
 if ! hostname="$(hostname -s)"; then
 	fatal 'failed to get system hostname'
 fi
 
 log "using hostname \"$hostname\""
 
-if item="$(bw get item "SSH Key: ${hostname}" 2>/dev/null)"; then
-	log_start 'installing key'
+log_start 'checking for existing SSH key'
+if item="$(2>/dev/null bw list --folderid "$ssh_folder_id" items |
+	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
+	log_end
+	log_start 'existing key found, installing key'
 	tmp_dir="$(mktemp -d)"
 	item_id="$(echo "$item" | jq --raw-output '.id')"
 	bw get attachment id_rsa --itemid="$item_id" --output="${tmp_dir}/"
@@ -41,7 +52,8 @@ if item="$(bw get item "SSH Key: ${hostname}" 2>/dev/null)"; then
 	rm -rf "$tmp_dir"
 	log_end
 else
-	log_start 'creating key'
+	log_end
+	log_start 'no existing key found, creating key'
 	if ! passphrase="$(bw generate --uppercase --lowercase --number --length=45)"; then
 		warn 'failed to generate password, generate one manually'
 	fi

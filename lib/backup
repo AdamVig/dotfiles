@@ -34,7 +34,7 @@ log_end
 
 log_start 'getting device entry'
 if ! item="$(2>/dev/null bw list --folderid "$devices_folder_id" items |
-	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | test("\($hostname)$")))')"; then
+	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
 	warn_and_bail "failed to find Bitwarden item in folder \"devices\" for \"$hostname\", skipping backup setup"
 fi
 log_end
