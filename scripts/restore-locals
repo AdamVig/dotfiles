@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Restore computer-local files known to this repository.
+
+if ! command -v gh >/dev/null; then
+	echo 'gh must be installed'
+	exit 1
+fi
+
+if ! gh auth status &>/dev/null; then
+	echo 'gh must be authenticated'
+	exit 1
+fi
+
+echo "using hostname \"${HOSTNAME}\""
+echo
+
+gist_name="dotfiles-locals-backup-${HOSTNAME}"
+
+if ! all_gists="$(gh api 'gists')"; then
+	echo 'error: failed to get all gists'
+	exit 1
+fi
+
+if ! gist_to_restore="$(echo "$all_gists" | jq \
+	--arg gist_name "$gist_name" \
+	--join-output \
+	'map(select(.description == $gist_name)) | .[] | .id')"; then
+	echo 'error: failed to extract gist to restore from all gists'
+	exit 1
+fi
+
+emacs_local_config_dir="${XDG_CONFIG_HOME:-"$HOME"/.config}"/emacs
+candidate_files=(
+	"$HOME"/.locals
+	"$HOME"/.profile-local
+	"$emacs_local_config_dir"/lisp/init-local.el
+	"${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/,update-local"
+	"${XDG_CONFIG_HOME:-$HOME/.config}"/i3/login-local
+)
+
+files=()
+
+for f in "${candidate_files[@]}"; do
+	if ! [ -f "$f" ]; then
+		files+=("$f")
+	fi
+done
+
+echo "will attempt to restore the following because they were not found:"
+printf -- ' - %s\n' "${files[@]}"
+echo
+
+# Ensure all file paths are relative to home directory
+cd "$HOME"
+
+if [ -z "$gist_to_restore" ]; then
+	echo 'no existing gist to restore, exiting'
+	exit
+fi
+
+echo 'restoring...'
+echo
+
+for f in "${files[@]}"; do
+	echo "→ $f"
+	f_basename="$(basename "$f")"
+	if content="$(gh gist view --raw "$gist_to_restore" --filename="$f_basename")"; then
+		echo "  restoring file..."
+		echo "$content" >"$f"
+	fi
+done
