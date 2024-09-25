@@ -18,4 +18,45 @@ if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path
 	echo "$ssh_config" >>"$ssh_config_path"
 fi
 
+ssh_authorized_keys_exist() {
+	[ -f "$HOME"/.ssh/authorized_keys ]
+}
+
+if ssh_authorized_keys_exist; then
+	log 'found existing SSH authorized keys, exiting'
+	log_end
+	exit
+fi
+
+unlock_bitwarden_vault
+
+if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
+	fatal 'failed to get ID of Bitwarden folder "ssh"'
+fi
+
+if ! items="$(bw list items --folderid="$ssh_folder_id")"; then
+	fatal 'failed to list items in SSH folder'
+fi
+
+if ! hostname="$(hostname -s)"; then
+	fatal 'failed to get system hostname'
+fi
+
+log "using hostname \"$hostname\""
+
+while read -r item; do
+	item_name="$(echo "$item" | jq --raw-output '.name')"
+	if [[ $item_name == *$hostname ]]; then
+		continue
+	fi
+	log_start "installing key \"$item_name\""
+	tmp="$(mktemp)"
+	item_id="$(echo "$item" | jq --raw-output '.id')"
+	bw get attachment --itemid="$item_id" --output="$tmp" -- '.pub'
+	cat "$tmp" >>"$HOME"/.ssh/authorized_keys
+
+	rm -f "$tmp"
+	log_end
+done < <(echo "$items" | jq --compact-output '.[]')
+
 log_end
