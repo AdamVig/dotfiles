@@ -25,6 +25,12 @@ _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 
 log_end
 
+if is_ubuntu && ! [ -f "$HOME"/.vscode/argv.json ]; then
+	log_start 'configuring credential store'
+	jq --null-input '{"password-store": "gnome-libsecret"}' >"$HOME"/.vscode/argv.json
+	log_end
+fi
+
 declare -a extensions=(
 	dbaeumer.vscode-eslint                # JavaScript linter
 	eamodio.gitlens                       # Advanced Git integration
