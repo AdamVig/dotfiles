@@ -11,15 +11,6 @@ log() {
 
 log_start 'setting up Emacs'
 
-if is_ubuntu || is_debian; then
-        if ! systemctl --user is-enabled --quiet emacs.service; then
-                log_start 'setting up Emacs daemon'
-                systemctl --user enable --now emacs.service
-                log_end
-        fi
-
-fi
-
 log_start 'setting up Emacs configuration'
 emacs_config_dir="$(xdg_config)"/emacs
 emacs_config_path="$emacs_config_dir"/init.el
@@ -64,5 +55,19 @@ if is_macos; then
 	log_end
 fi
 log_end
+
+if [ -f "$HOME"/.emacs.d ]; then
+	log 'removing config directory at default location to avoid conflicts'
+	rm -f "$HOME"/.emacs.d
+fi
+
+if is_ubuntu || is_debian; then
+	if ! systemctl --user is-enabled --quiet emacs.service; then
+		log_start 'setting up Emacs daemon'
+		systemctl --user enable --now emacs.service
+		log_end
+	fi
+
+fi
 
 log_end
