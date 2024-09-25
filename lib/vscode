@@ -25,14 +25,6 @@ _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 
 log_end
 
-# Applications don't have access to the environment variables in `.profile`, so we symlink to the default location
-if is_macos && [ -d "$VSCODE_EXTENSIONS" ] && ! [ -h "$HOME"/.vscode/extensions ]; then
-	log_start 'linking extensions directory to home directory'
-	mkdir -p "$HOME"/.vscode
-	_ln "$VSCODE_EXTENSIONS" "$HOME"/.vscode/extensions
-	log_end
-fi
-
 declare -a extensions=(
 	dbaeumer.vscode-eslint                # JavaScript linter
 	eamodio.gitlens                       # Advanced Git integration

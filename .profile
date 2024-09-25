@@ -168,9 +168,6 @@ export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/node_repl_history
 # Prevent Backblaze B2 from storing account info in home directory
 export B2_ACCOUNT_INFO="${XDG_CONFIG_HOME:-$HOME/.config}"/b2_account_info
 
-# Prevent VS Code from storing extensions in home directory (https://github.com/microsoft/vscode/issues/3884)
-export VSCODE_EXTENSIONS="${XDG_DATA_HOME:-$HOME/.local/share}"/vscode/extensions
-
 # Prevent Rush from storing data in home directory
 export RUSH_GLOBAL_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}"/rush
 
