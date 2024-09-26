@@ -22,6 +22,8 @@ brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
 brew "ispell" # Spell checker used by Emacs
 brew "jq" # JSON processor
+tap "lucapette/tap"
+brew "fakedata" # Fake data generator
 brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
