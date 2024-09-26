@@ -200,4 +200,13 @@ log_start 'adding user to the video group'
 request_sudo usermod --append --groups input,video "$USER"
 log_end
 
+if ! [ -f /etc/sudoers.d/disable-sudo-as-admin-successful ]; then
+	log_start 'preventing creation of ~/.sudo_as_admin_successful'
+	rm -f "$HOME"/.sudo_as_admin_successful
+	echo '# Disable creation of ~/.sudo_as_admin_successful
+Defaults !admin_flag' |
+		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/disable-sudo-as-admin-successful' >/dev/null)
+	log_end
+fi
+
 log_end
