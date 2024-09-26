@@ -37,7 +37,7 @@ candidate_files=(
 	"$HOME"/.locals
 	"$HOME"/.profile-local
 	"$emacs_local_config_dir"/lisp/*
-	"${XDG_DATA_HOME:-$HOME/.local/share}"/dotfiles/,update-local
+	"${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/,update-local"
 	"${XDG_CONFIG_HOME:-$HOME/.config}"/i3/login-local
 	"${XDG_CONFIG_HOME:-$HOME/.config}"/i3/workspaces/*
 )
@@ -67,9 +67,12 @@ echo 'found existing gist, updating...'
 echo
 
 for f in "${files[@]}"; do
+	if ! [ -s "$f" ]; then
+		continue
+	fi
 	echo "→ $f"
 	f_basename="$(basename "$f")"
-	if [ -s "$f" ] && ! existing_content="$(gh gist view "$gist_to_update" --filename="$f_basename")"; then
+	if ! existing_content="$(gh gist view "$gist_to_update" --filename="$f_basename")"; then
 		echo "  adding new file..."
 		if ! gh gist edit "$gist_to_update" --add="$f"; then
 			echo '  failed to add new file, skipping'
@@ -77,7 +80,9 @@ for f in "${files[@]}"; do
 	else
 		if ! diff -w <(echo "$existing_content") "$f" >/dev/null; then
 			echo "  updating existing file..."
-			gh gist edit "$gist_to_update" --filename="$f_basename" "$f"
+			if ! gh gist edit "$gist_to_update" --filename="$f_basename" "$f"; then
+				echo 'failed to update file, skipping'
+			fi
 		else
 			echo "  file is unchanged, skipping"
 		fi
