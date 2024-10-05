@@ -175,6 +175,7 @@ declare -a packages=(
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	magic-wormhole     # Point-to-point file sharing
+	mdadm              # Software RAID
 	nextdns            # DNS client
 	p7zip
 	pandoc
