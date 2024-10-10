@@ -11,6 +11,11 @@ log() {
 
 log_start 'setting up macOS'
 
+log_start 'symlinking Hammerspoon config'
+mkdir -p "$HOME"/.hammerspoon
+_ln "$_dir"/../config/hammerspoon.lua "$HOME"/.hammerspoon/init.lua
+log_end
+
 # Enable tap to click
 defaults write com.apple.driver.AppleMultitouchTrackpad Clicking -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
