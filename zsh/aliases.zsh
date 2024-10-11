@@ -37,5 +37,4 @@ if [[ "$OSTYPE" = *linux* ]]; then
 	alias sysu='systemctl --user'
 fi
 
-# Default to Kitty's hyperlinked ripgrep
-alias rg=',hyperlinked-ripgrep'
+alias rg="rg --hyperlink-format=kitty"
