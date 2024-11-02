@@ -115,6 +115,10 @@ if ! is_repository_configured 'mozillateam'; then
 		echo 'Package: thunderbird*
 Pin: release o=LP-PPA-mozillateam
 Pin-Priority: 1001
+
+Package: thunderbird*
+Pin: release o=Ubuntu
+Pin-Priority: -1
 ' | request_sudo tee /etc/apt/preferences.d/mozillateamppa >/dev/null
 	fi
 	log_end
