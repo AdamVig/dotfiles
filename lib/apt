@@ -98,7 +98,7 @@ fi
 
 if ! is_repository_configured 'git-core'; then
 	log_start 'adding git repository'
-	add_ppa 'git' 'E1DD270288B4E6030699E45FA1715D88E1DF1F24' 'git-core/ppa'
+	add_ppa 'git' 'F911AB184317630C59970973E363C90F8F1B6217' 'git-core/ppa'
 	log_end
 fi
 
