@@ -187,6 +187,10 @@
   add-hook 'before-save-hook 'gofmt-before-save)
  (setq gofmt-command "goimports")))
 
+;; Add mode for lua scripts (https://github.com/immerrr/lua-mode)
+(use-package lua-mode
+	:ensure t)
+
 ;; Add mode for i3 config files (https://github.com/Alexander-Miller/i3wm-Config-Mode)
 (use-package i3wm-config-mode
 	:ensure t)
