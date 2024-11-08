@@ -16,6 +16,7 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
+brew "ffmpeg" # Video file converter
 brew "fzf" # Fuzzy finder
 brew "glow" # Markdown viewer
 brew "hyperfine" # Command-line benchmarking tool
