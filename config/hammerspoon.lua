@@ -6,7 +6,7 @@ spoon.URLDispatcher.url_patterns = {
   { "https://.+%.slack%.com/archives/[^%?]+$", "com.tinyspeck.slackmacgap" },
   { "https://linear%.app", "com.linear" },
   { "https://www%.notion%.so", "notion.id" },
-  { "https://www%.figma%.com", "com.figma.Desktop" },
+  { "https://www%.figma%.com/design", "com.figma.Desktop" },
 }
 
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
