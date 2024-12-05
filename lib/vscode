@@ -37,14 +37,10 @@ declare -a extensions=(
 	EditorConfig.editorconfig             # Editor text style configuration
 	esbenp.prettier-vscode                # Code formatting with Prettier
 	figma.figma-vscode-extension          # Figma integration
-	GitHub.codespaces                     # Support for Codespaces
 	GitHub.copilot                        # Support for Copilot
-	GitHub.vscode-pull-request-github     # built-in GitHub pull request support
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
-	ms-vscode-remote.remote-ssh           # Remote development via SSH
 	ms-vscode.theme-tomorrowkit           # Tomorrow color themes
 	ms-vsliveshare.vsliveshare            # Live code sharing
-	orta.vscode-jest                      # Test Explorer and more for Jest
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	stkb.rewrap                           # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker # Spell checker
@@ -56,9 +52,13 @@ declare -a extensions=(
 
 declare -a no_longer_needed_extensions=(
 	Compulim.vscode-clock
-	eg2.vscode-npm-script            # package.json linting and npm script detection
-	QassimFarid.ejs-language-support # EJS (Embedded JS) template language support
-	rafamel.subtle-brackets          # Better bracket matching
+	eg2.vscode-npm-script             # package.json linting and npm script detection
+	GitHub.codespaces                 # Support for Codespaces
+	GitHub.vscode-pull-request-github # built-in GitHub pull request support
+	ms-vscode-remote.remote-ssh       # Remote development via SSH
+	orta.vscode-jest                  # Test Explorer and more for Jest
+	QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
+	rafamel.subtle-brackets           # Better bracket matching
 	runem.lit-plugin
 	silvenon.mdx
 	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
