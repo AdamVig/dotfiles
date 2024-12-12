@@ -51,6 +51,27 @@ done
 rm -rf "$calibre_extracted_tmp"
 log_end
 
+log_start 'installing difftastic'
+if ! difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"; then
+	fatal 'failed to get difftastic release URL'
+fi
+
+difftastic_tmp="$(mktemp)"
+if ! _curl "$difftastic_url" --output "$difftastic_tmp"; then
+	fatal 'failed to download difftastic'
+fi
+
+difftastic_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$difftastic_tmp" -C "$difftastic_extracted_tmp" >/dev/null; then
+	fatal 'failed to unzip difftastic'
+fi
+rm -f "$difftastic_tmp"
+
+difftastic_path="$HOME"/.local/bin/difft
+install "$difftastic_extracted_tmp"/difft "$difftastic_path"
+rm -rf "$difftastic_extracted_tmp"
+log_end
+
 log_start 'installing DigiKam'
 if ! digikam_version="$(_curl 'https://invent.kde.org/api/v4/projects/graphics%2Fdigikam/repository/tags' |
 	jq --exit-status --raw-output 'map(select(.name | test("^v[0-9]+.[0-9]+.[0-9]+$"))) | first | .name | ltrimstr("v")')"; then
