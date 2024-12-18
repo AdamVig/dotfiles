@@ -8,8 +8,7 @@ if ! command -v gt >/dev/null; then
 	alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 fi
 
-# Run an npm script without excessive npm output
-alias npr='npm run --silent'
+alias nr='node --run'
 
 alias glb="log-branch-commits"
 
