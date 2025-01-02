@@ -1,0 +1,71 @@
+// https://zed.dev/docs/configuring-zed
+// To see defaults, run `zed: open default settings` from the command palette
+{
+	"assistant": {
+		"default_model": {
+			"provider": "copilot_chat",
+			"model": "gpt-4o"
+		},
+		"version": "2"
+	},
+	"theme": {
+		"mode": "system",
+		"light": "One Light",
+		"dark": "One Dark"
+	},
+	// Features that can be globally enabled or disabled
+	"features": {
+		// Which inline completion provider to use.
+		"inline_completion_provider": "none"
+	},
+	"buffer_font_family": "Input Mono",
+	"buffer_font_features": {
+		// Disable ligatures
+		"calt": false
+	},
+	"buffer_font_size": 14,
+	"ui_font_family": "Input Sans",
+	"ui_font_size": 15,
+	"hover_popover_delay": 150,
+	"use_system_path_prompts": false,
+	"auto_signature_help": true,
+	"show_whitespaces": "none",
+	"seed_search_query_from_cursor": "never",
+	"use_smartcase_search": true,
+	"slash_commands": {
+		"docs": {
+			"enabled": true
+		},
+		"project": {
+			"enabled": true
+		}
+	},
+	"tab_bar": {
+		"show_nav_history_buttons": false
+	},
+	"tabs": {
+		"git_status": true,
+		"file_icons": true,
+		"show_diagnostics": "all"
+	},
+	"hard_tabs": true,
+	"tab_size": 2,
+	"git": {
+		"inline_blame": {
+			"show_commit_summary": true
+		}
+	},
+	"inline_completions": {
+		"disabled_globs": [".env*"]
+	},
+	"auto_install_extensions": {
+		"html": true
+	},
+	"prettier": {
+		"allowed": true,
+		"useTabs": true,
+		"semi": false,
+		"singleQuote": true
+	},
+	"show_user_picture": false
+}
