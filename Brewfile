@@ -79,6 +79,7 @@ cask "slack" # Messaging
 cask "spotify"
 cask "visual-studio-code"
 cask "wacom-tablet" # Driver for Wacom drawing tablets
+cask "zed" # Code editor
 cask "zoom" # Video conferencing
 
 # fonts
