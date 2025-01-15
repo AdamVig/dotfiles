@@ -13,11 +13,6 @@
 		"light": "One Light",
 		"dark": "One Dark"
 	},
-	// Features that can be globally enabled or disabled
-	"features": {
-		// Which inline completion provider to use.
-		"inline_completion_provider": "none"
-	},
 	"buffer_font_family": "Input Mono",
 	"buffer_font_features": {
 		// Disable ligatures
