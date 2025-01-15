@@ -27,7 +27,7 @@ git-wip() {
     #  <red>[WIP]<end red>
     echo ' %F{red}[WIP]%f'
   fi
-}   
+}
 
 git-info() {
   local ref
