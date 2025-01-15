@@ -62,5 +62,17 @@
 		"semi": false,
 		"singleQuote": true
 	},
-	"show_user_picture": false
+	"show_user_picture": false,
+	"languages": {
+		"JavaScript": {
+			"code_actions_on_format": {
+				"source.fixAll.eslint": true
+			}
+		},
+		"TypeScript": {
+			"code_actions_on_format": {
+				"source.fixAll.eslint": true
+			}
+		}
+	}
 }
