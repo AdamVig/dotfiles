@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help]
+Benchmark shell startup time.
+
+Flags:
+	-h, --help		show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+hyperfine --shell=none 'zsh -i -c exit'
