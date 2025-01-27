@@ -74,5 +74,13 @@
 				"source.fixAll.eslint": true
 			}
 		}
+	},
+	"lsp": {
+		"vtsls": {
+			"settings": {
+				"typescript": { "tsserver": { "maxTsServerMemory": 16184 } },
+				"javascript": { "tsserver": { "maxTsServerMemory": 16184 } }
+			}
+		}
 	}
 }
