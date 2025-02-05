@@ -34,9 +34,13 @@ co: >-
 pbc: >-
   pr-body-commits
 
+# Convenience shortcut for gh-pr-body-commits extension in "overwrite" mode
+pbcr: >-
+  pr-body-commits --no-markers
+
 # Inverse of "co": switch back to the previous branch and delete the current branch
 unco: >-
-  !git switch - && git branch --delete @{-1} 
+  !git switch - && git branch --delete @{-1}
 
 # Merge a pull request (squash)
 # $1: commit to get merge commit body from, defaults to "HEAD"
