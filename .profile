@@ -84,7 +84,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	if [ -d "$brew_prefix"/opt/python ]; then
 		prepend_path "$brew_prefix"/opt/python/libexec/bin
 	fi
-  
+
   # Add libpq's psql CLI to PATH
   if [ -d "$brew_prefix"/opt/libpq/bin ]; then
     prepend_path "$brew_prefix"/opt/libpq/bin
@@ -124,7 +124,7 @@ if [[ "$OSTYPE" == *linux* ]]; then
 		fi
 
 		# Map right meta key to the "compose" key for special characters
-		setxkbmap -option compose:RIGHT_ALT
+		setxkbmap -option compose:ralt
 
 		# Detect type of device
 		if [ -e /sys/devices/virtual/dmi/id/chassis_type ]; then
