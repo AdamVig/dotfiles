@@ -12,6 +12,7 @@ log() {
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'removing no-longer-needed software'
+rm -vf "$HOME"/.local/bin/DigiKam
 request_sudo rm -vf /usr/local/bin/{restic,resticprofile}
 log_end
 
@@ -70,18 +71,6 @@ rm -f "$difftastic_tmp"
 difftastic_path="$HOME"/.local/bin/difft
 install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
-log_end
-
-log_start 'installing DigiKam'
-if ! digikam_version="$(_curl 'https://invent.kde.org/api/v4/projects/graphics%2Fdigikam/repository/tags' |
-	jq --exit-status --raw-output 'map(select(.name | test("^v[0-9]+.[0-9]+.[0-9]+$"))) | first | .name | ltrimstr("v")')"; then
-	fatal 'failed to get DigiKam version'
-fi
-
-digikam_url="https://download.kde.org/stable/digikam/${digikam_version}/digiKam-${digikam_version}-Qt6-x86-64.appimage"
-if ! install_binary_from_url 'DigiKam' "$digikam_url"; then
-	fatal 'failed to install DigiKam, see https://download.kde.org/stable/digikam/8.4.0/ to check if file name structure changed'
-fi
 log_end
 
 log_start 'installing kitty'
