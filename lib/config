@@ -47,11 +47,4 @@ log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig
 
-zed_config_dir="$config_dir"/zed
-if is_macos; then
-	zed_config_dir="$HOME"/.config/zed
-fi
-mkdir -p "$zed_config_dir"
-_ln "$_dir"/../config/zed.jsonc "$zed_config_dir"/settings.json
-
 log_end
