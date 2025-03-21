@@ -8,7 +8,9 @@ if ! command -v gt >/dev/null; then
 	alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 fi
 
-alias nr='node --run'
+nr() {
+	node --run "${1-listing all scripts}" -- "${@:2}"
+}
 
 alias glb="log-branch-commits"
 
