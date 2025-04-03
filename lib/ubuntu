@@ -209,4 +209,15 @@ Defaults !admin_flag' |
 	log_end
 fi
 
+if ! systemctl --user is-enabled --quiet appimaged.service; then
+	log_start 'setting up AppImage support'
+	mkdir -p "$HOME"/applications
+	# From https://github.com/probonopd/go-appimage/blob/master/src/appimaged/README.md
+	wget -c https://github.com/"$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimaged-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)" -P "$HOME"/applications
+	chmod +x "$HOME"/applications/appimaged-*.AppImage
+	# shellcheck disable=SC2211
+	"$HOME"/applications/appimaged-*.AppImage
+	log_end
+fi
+
 log_end
