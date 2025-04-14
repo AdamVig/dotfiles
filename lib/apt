@@ -171,6 +171,7 @@ declare -a packages=(
 
 	# command line tools
 	brightnessctl # Control screen brightness
+	firejail      # Sandbox used by appimaged
 	fzf           # Fuzzy finder
 	gh            # GitHub CLI
 	gnuplot       # Command-line plotting
