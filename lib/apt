@@ -110,7 +110,7 @@ fi
 
 if ! is_repository_configured 'mozillateam'; then
 	log_start 'adding Mozilla Team repository'
-	add_ppa 'mozillateam' '0AB215679C571D1C8325275B9BDB3D89CE49EC21' 'mozillateam/ppa'
+	add_ppa 'mozillateam' '738BEB9321D1AAEC13EA9391AEBDF4819BE21867' 'mozillateam/ppa'
 	if ! [ -f /etc/apt/preferences.d/mozillateamppa ]; then
 		echo 'Package: thunderbird*
 Pin: release o=LP-PPA-mozillateam
