@@ -64,13 +64,34 @@ fi
 
 difftastic_extracted_tmp="$(mktemp -d)"
 if ! tar zxvf "$difftastic_tmp" -C "$difftastic_extracted_tmp" >/dev/null; then
-	fatal 'failed to unzip difftastic'
+	fatal 'failed to extract difftastic'
 fi
 rm -f "$difftastic_tmp"
 
 difftastic_path="$HOME"/.local/bin/difft
 install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
+log_end
+
+log_start 'installing git-who'
+if ! git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"; then
+	fatal 'failed to get git-who release URL'
+fi
+
+git_who_tmp="$(mktemp)"
+if ! _curl "$git_who_url" --output "$git_who_tmp"; then
+	fatal 'failed to download git-who'
+fi
+
+git_who_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$git_who_tmp" -C "$git_who_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract git-who'
+fi
+rm -f "$git_who_tmp"
+
+git_who_path="$HOME"/.local/bin/git-who
+install "$git_who_extracted_tmp"/linux_amd64/git-who "$git_who_path"
+rm -rf "$git_who_extracted_tmp"
 log_end
 
 log_start 'installing kitty'
