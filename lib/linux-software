@@ -12,7 +12,7 @@ log() {
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam}
+rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam,GoldenCheetah}
 request_sudo rm -vf /usr/local/bin/{restic,resticprofile}
 log_end
 
@@ -162,12 +162,6 @@ rm -f "$scc_tmp"
 scc_path="$HOME"/.local/bin/scc
 install "$scc_extracted_tmp"/scc "$scc_path"
 rm -rf "$scc_extracted_tmp"
-log_end
-
-log_start 'installing GoldenCheetah'
-if ! install_binary_from_github_release 'GoldenCheetah' 'GoldenCheetah/GoldenCheetah' '_x64.AppImage'; then
-	fatal 'failed to install GoldenCheetah'
-fi
 log_end
 
 log_start 'installing Bitwarden'
