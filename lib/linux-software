@@ -12,19 +12,13 @@ log() {
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/DigiKam
+rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam}
 request_sudo rm -vf /usr/local/bin/{restic,resticprofile}
 log_end
 
 log_start 'installing b2'
 if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'; then
 	fatal 'failed to install b2'
-fi
-log_end
-
-log_start 'installing balenaEtcher'
-if ! install_binary_from_github_release 'balenaEtcher' 'balena-io/etcher' '-x64.AppImage'; then
-	fatal 'failed to install balenaEtcher'
 fi
 log_end
 
