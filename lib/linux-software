@@ -211,6 +211,12 @@ install "$restic_extracted_tmp" "$restic_path"
 rm -rf "$restic_extracted_tmp"
 log_end
 
+log_start 'installing UndercutF1'
+if ! install_binary_from_github_release 'undercutf1' 'JustAman62/undercut-f1' 'linux-x64'; then
+	fatal 'failed to install UndercutF1'
+fi
+log_end
+
 log_start 'installing websocat'
 if ! install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'; then
 	fatal 'failed to install websocat'
