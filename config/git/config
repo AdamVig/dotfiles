@@ -35,7 +35,6 @@
   dft = -c diff.external=difft diff
 [fetch]
 	prune = true
-	pruneTags = true
 	all = true
 [pull]
   # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
