@@ -19,6 +19,9 @@
   "editor.hideCursorInOverviewRuler": true,
   "editor.guides.indentation": false,
   "editor.bracketPairColorization.enabled": true,
+  // Do not auto-fetch from Git remotes
+  "git.autofetch": false,
+  "git.blame.editorDecoration.enabled": true,
   // ------------------------------
   // Workbench
   // ------------------------------
@@ -104,20 +107,6 @@
   // Extensions
   // ------------------------------
   "extensions.ignoreRecommendations": true,
-  // Do not auto-fetch from Git remotes
-  "git.autofetch": false,
-  // Git Lens
-  "gitlens.showWelcomeOnInstall": false,
-  "gitlens.statusBar.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.keymap": "chorded",
-  "gitlens.menus": {
-    "editorGroup": {
-      "blame": false,
-      "compare": false
-    }
-  },
   // Do not prompt to pull the branch when changes are detected on the remote
   "githubPullRequests.pullBranch": "never",
   // Do not auto-run tests and wait until first on-demand test run to initialize extension
