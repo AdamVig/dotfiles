@@ -200,6 +200,10 @@ log_start 'adding user to the video group'
 request_sudo usermod --append --groups input,video "$USER"
 log_end
 
+log_start 'adding user to the Docker group'
+request_sudo usermod --append --groups docker "$USER"
+log_end
+
 if ! [ -f /etc/sudoers.d/disable-sudo-as-admin-successful ]; then
 	log_start 'preventing creation of ~/.sudo_as_admin_successful'
 	rm -f "$HOME"/.sudo_as_admin_successful
