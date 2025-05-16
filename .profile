@@ -174,6 +174,9 @@ export GH_NO_UPDATE_NOTIFIER="true"
 # Disable Turborepo telemetry message
 export TURBO_TELEMETRY_MESSAGE_DISABLED="true"
 
+# Disable Next.js telemetry (mainly to disable the message)
+export NEXT_TELEMETRY_DISABLED=1
+
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
 if [ -f "$local_profile_path" ]; then
