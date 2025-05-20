@@ -186,6 +186,7 @@ declare -a packages=(
 	pandoc
 	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
+	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
 	smartmontools     # SMART hard drive health
 	tig               # Visual Git client
 	tree
