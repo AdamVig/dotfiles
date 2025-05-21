@@ -18,6 +18,10 @@ log_start 'disabling generation of recovery options'
 request_sudo sed -i 's|#GRUB_DISABLE_RECOVERY="true"|GRUB_DISABLE_RECOVERY="true"|' /etc/default/grub
 log_end
 
+log_start 'enabling os-prober to detect other operating systems'
+request_sudo sed -i 's|#GRUB_DISABLE_OS_PROBER=false|GRUB_DISABLE_OS_PROBER=false|' /etc/default/grub
+log_end
+
 grub_theme_dir=/boot/grub/themes/adamvig
 if ! [ -f "$grub_theme_dir"/theme.txt ]; then
 	log_start 'linking theme'
