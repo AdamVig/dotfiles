@@ -7,9 +7,8 @@
 # This system is designed with security in mind, but undoubtedly has vulnerabilities anyways.
 # - Separate user with no password, no group membership, and an isolated home directory to limit access to the system.
 # - SSH authorized_keys entry is configured to restrict access to many features of SSH, including allocating a TTY.
-# - SSH authorized_keys entry limits user to executing a single command.
-# - Even if the user is able to allocate a TTY, they are limited to rbash, which is a restricted version of bash.
-# - The user is prevented from editing the SSH authorized_keys file.
+# - Login shell limits user to executing a single command.
+# - The user is prevented from editing the SSH authorized_keys file, login shell, and ,remotecontrol script.
 #
 # The remote host must have an SSH key without a passphrase. The remote host's public key must be inserted in
 # /usr/local/share/remote-management/.ssh/authorized_keys in place of "<insert key here>".
@@ -29,11 +28,12 @@ log_start 'initializing remote management user'
 
 readonly remote_management_username='remote-management'
 readonly remote_management_user_home_path=/usr/local/share/"$remote_management_username"
+readonly remote_management_shell_path="$remote_management_user_home_path"/remote-management-shell
 
 # To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
 if ! id "$remote_management_username" &>/dev/null; then
 	log_start 'creating remote management user'
-	request_sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell /bin/rbash "$remote_management_username"
+	request_sudo adduser --system --disabled-password --home "$remote_management_user_home_path" --shell "$remote_management_shell_path" "$remote_management_username"
 	request_sudo passwd --lock "$remote_management_username"
 	log_end
 
@@ -41,7 +41,7 @@ if ! id "$remote_management_username" &>/dev/null; then
 	request_sudo mkdir -p "$remote_management_user_home_path"/.ssh
 	# Apply restrictions except for TTY access
 	# shellcheck disable=SC2016
-	echo 'restrict,command=",remotecontrol $SSH_ORIGINAL_COMMAND" <insert key here>' |
+	echo 'restrict <insert key here>' |
 		request_sudo tee "$remote_management_user_home_path"/.ssh/authorized_keys >/dev/null
 	request_sudo chown --recursive "$remote_management_username" "$remote_management_user_home_path"/.ssh
 	# Set permissions to r-x------
@@ -60,10 +60,21 @@ $remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/s
 	log_end
 fi
 
-log_start 'setting up remote control script'
-# Create a symbolic link in the user's default PATH so they can invoke it in rbash (no slashes allowed in command names)
-# Cannot use _ln with sudo
-request_sudo ln -sfr "$_dir"/../bin/,remotecontrol /usr/local/bin
+log_start 'setting up remote management shell'
+echo "#!/bin/bash
+if [[ \"\$1\" != '-c' || -z \"\$2\" ]]; then
+    echo >&2 \"Expected: '-c <remotecontrol argument>', received: '\$@'\"
+    exit 1
+fi
+
+exec ./,remotecontrol \"\$2\"
+" | request_sudo tee "$remote_management_shell_path" >/dev/null
+request_sudo chmod +x "$remote_management_shell_path"
+# Copy instead of symlinking because symlink yields "cannot execute: Permission denied"
+request_sudo cp "$_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
+request_sudo chown "$remote_management_username" "$remote_management_user_home_path"/,remotecontrol
+# Set permissions to r-x------
+request_sudo chmod 500 "$remote_management_user_home_path"/,remotecontrol
 log_end
 
 log_end
