@@ -50,6 +50,15 @@ if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
 	log_end
 fi
 
+grub_memtest_variable="GRUB_DISABLE_MEMTEST=true"
+if ! grep --quiet "$grub_memtest_variable" /etc/default/grub; then
+	log_start 'disabling generation of memtest options'
+	if ! echo "$grub_memtest_variable" | request_sudo tee --append /etc/default/grub >/dev/null; then
+		fatal 'failed to disable generation of memtest options'
+	fi
+	log_end
+fi
+
 log_start 're-generating Grub configuration'
 request_sudo update-grub
 log_end
