@@ -31,8 +31,8 @@ log_start 'installing Discord'
 flatpak install --assumeyes --noninteractive --or-update com.discordapp.Discord
 log_end
 
-log_start 'installing Bitwarden'
-flatpak install --assumeyes --noninteractive --or-update com.bitwarden.desktop
+log_start 'removing no-longer-needed packages'
+flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop
 log_end
 
 log_end
