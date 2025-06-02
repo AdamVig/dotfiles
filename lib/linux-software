@@ -12,7 +12,7 @@ log() {
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam,GoldenCheetah}
+rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam,GoldenCheetah,Bitwarden}
 request_sudo rm -vf /usr/local/bin/{restic,resticprofile}
 log_end
 
@@ -162,12 +162,6 @@ rm -f "$scc_tmp"
 scc_path="$HOME"/.local/bin/scc
 install "$scc_extracted_tmp"/scc "$scc_path"
 rm -rf "$scc_extracted_tmp"
-log_end
-
-log_start 'installing Bitwarden'
-if ! install_binary_from_url 'Bitwarden' 'https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage'; then
-	fatal 'failed to install Bitwarden'
-fi
 log_end
 
 log_start 'installing Bitwarden CLI'
