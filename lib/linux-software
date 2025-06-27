@@ -229,12 +229,6 @@ log_end
 
 # TODO test on a fresh system; will this work before running lib/apt and lib/ubuntu?
 if is_ubuntu; then
-	log_start 'installing balenaEtcher'
-	if ! install_deb_from_github_release 'balena-io/etcher' '_amd64.deb'; then
-		fatal 'failed to install balenaEtcher'
-	fi
-	log_end
-
 	log_start 'installing bat'
 	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
 		fatal 'failed to install bat'
