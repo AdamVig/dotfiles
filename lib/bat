@@ -10,7 +10,7 @@ log() {
 }
 
 log_start 'setting up bat'
-bat_config_dir="$(bat --config-dir)"
+bat_config_dir="$(batcat --config-dir)"
 theme_dir="$bat_config_dir"/themes
 mkdir -p "$theme_dir"
 
@@ -21,5 +21,5 @@ if ! _curl "$theme_url" --output "$theme_dir"/Tomorrow-Night.tmTheme; then
 fi
 
 # Update the binary cache
-bat cache --build
+batcat cache --build
 log_end
