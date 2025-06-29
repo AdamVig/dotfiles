@@ -36,7 +36,7 @@ flatpak install --assumeyes --noninteractive --or-update org.kde.isoimagewriter
 log_end
 
 log_start 'removing no-longer-needed packages'
-flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop
+flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop >/dev/null || true
 log_end
 
 log_end
