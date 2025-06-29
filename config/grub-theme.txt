@@ -6,14 +6,13 @@ desktop-color: "#263238"
   top = 30%
   width = 28%
   height = 60%
-  item_font = "Open Sans Regular 36"
+  item_font = "opensans-regular"
   item_color = "#ABB2BF"
   selected_item_color = "#61AFEF"
   icon_width = 72
   icon_height = 72
   item_height = 72
   item_spacing = 36
-#  selected_item_pixmap_style = "select_*.png"
 }
 
 # Show a countdown message using the label component
@@ -25,5 +24,5 @@ desktop-color: "#263238"
   id = "__timeout__"
   text = "Booting in %d seconds"
   color = "#ABB2BF"
-  font = "Open Sans Regular 36"
+  font = "opensans-regular"
 }
