@@ -9,17 +9,19 @@ log() {
 	log_with_component 'dns' "$@"
 }
 
-log_start 'setting up NextDNS CLI'
-read -r -p "$(make_prompt 'NextDNS profile:') " profile
-if [ -n "$profile" ]; then
-	 request_sudo nextdns install \
-	 											-auto-activate \
-	 -cache-size 10MB \
-	 -detect-captive-portals \
-	 -max-ttl 5s \
-	 -profile "$profile" \
-	 -report-client-info
-else
-	 warn 'must provide a NextDNS profile ID, skipping setup'
+if ! nextdns config list | grep --quiet 'profile'; then
+	log_start 'setting up NextDNS CLI'
+	read -r -p "$(make_prompt 'NextDNS profile:') " profile
+	if [ -n "$profile" ]; then
+		request_sudo nextdns install \
+			-auto-activate \
+			-cache-size 10MB \
+			-detect-captive-portals \
+			-max-ttl 5s \
+			-profile "$profile" \
+			-report-client-info
+	else
+		warn 'must provide a NextDNS profile ID, skipping setup'
+	fi
+	log_end
 fi
-log_end
