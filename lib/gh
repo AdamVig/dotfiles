@@ -33,10 +33,6 @@ gh config set git_protocol https
 gh config set pager less
 log_end
 
-log_start 'setting aliases'
-gh alias import --clobber "$_dir"/../config/gh-aliases.yml
-log_end
-
 log_start 'installing extensions'
 declare -a gh_extensions=(
 	AdamVig/gh-pr-body-commits
@@ -49,6 +45,10 @@ for gh_extension in "${gh_extensions[@]}"; do
 	log "$gh_extension"
 	gh extension install "$gh_extension" &>/dev/null || true
 done
+log_end
+
+log_start 'setting aliases'
+gh alias import --clobber "$_dir"/../config/gh-aliases.yml
 log_end
 
 log_end
