@@ -269,7 +269,6 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	bat           # Better cat
 	brave-browser # Web browser
 	broot         # Better tree
 	chromium
