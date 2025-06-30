@@ -241,13 +241,12 @@ declare -a packages=(
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
-	lxpolkit        # Polkit authentication agent
-	meld            # Comparison tool for version control, files, and directories
-	mpv             # Media player
-	obs-studio      # Screen recording
-	qemu-system-x86 # Virtual machine tool
-	redshift        # Screen color temperature adjustment tool
-	rofi            # Application launcher
+	lxpolkit   # Polkit authentication agent
+	meld       # Comparison tool for version control, files, and directories
+	mpv        # Media player
+	obs-studio # Screen recording
+	redshift   # Screen color temperature adjustment tool
+	rofi       # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
@@ -286,6 +285,7 @@ declare -a unwanted_packages=(
 	minikube
 	mosquitto         # MQTT broker and password tool
 	mosquitto-clients # MQTT client
+	qemu-system-x86   # Virtual machine tool
 	rpi-imager        # Raspberry Pi imager
 	vivaldi-stable
 
