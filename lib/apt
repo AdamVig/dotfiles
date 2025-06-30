@@ -283,6 +283,7 @@ declare -a unwanted_packages=(
 	google-chrome-stable
 	kitty # Now installed in ./linux-software
 	lutris
+	minikube
 	mosquitto         # MQTT broker and password tool
 	mosquitto-clients # MQTT client
 	rpi-imager        # Raspberry Pi imager
@@ -310,21 +311,6 @@ if ! install_deb_from_url 'https://dl.google.com/linux/direct/google-chrome-stab
 fi
 log_end
 
-log_start 'installing Minikube'
-# https://minikube.sigs.k8s.io/docs/start/
-minikube_url='https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb'
-minikube_tmp="$(mktemp --suffix='.deb')"
-if ! _curl "$minikube_url" --output "$minikube_tmp"; then
-	fatal 'failed to download Minikube'
-fi
-# Avoid "Download is performed unsandboxed as root" warning
-request_sudo chown -R _apt:root "$minikube_tmp"
-# Ignore recommends because they include VirtualBox
-if ! request_sudo apt-get install --yes --no-install-recommends "$minikube_tmp"; then
-	fatal 'failed to install Minikube'
-fi
-request_sudo rm -f "$minikube_tmp"
-log_end
 log_end
 
 log_end
