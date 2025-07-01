@@ -25,12 +25,6 @@ _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 
 log_end
 
-if is_ubuntu && ! [ -f "$HOME"/.vscode/argv.json ]; then
-	log_start 'configuring credential store'
-	jq --null-input '{"password-store": "gnome-libsecret"}' >"$HOME"/.vscode/argv.json
-	log_end
-fi
-
 declare -a extensions=(
 	dbaeumer.vscode-eslint                # JavaScript linter
 	EditorConfig.editorconfig             # Editor text style configuration
@@ -90,5 +84,11 @@ for extension in "${no_longer_needed_extensions[@]}"; do
 	set -e
 done
 log_end
+
+if is_ubuntu && ! [ -f "$HOME"/.vscode/argv.json ]; then
+	log_start 'configuring credential store'
+	jq --null-input '{"password-store": "gnome-libsecret"}' >"$HOME"/.vscode/argv.json
+	log_end
+fi
 
 log_end
