@@ -135,6 +135,19 @@ log_start 'disabling input language icon in system tray'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
 log_end
 
+log_start 'configuring keyboard'
+# Laptop or other portable device (https://gitlab.com/debiants/laptop-detect)
+if [[ -e /sys/devices/virtual/dmi/id/chassis_type ]] && chassis_type="$(</sys/devices/virtual/dmi/id/chassis_type)" &&
+	[[ $chassis_type == 8 || $chassis_type == 9 || $chassis_type == 10 || $chassis_type == 11 ]]; then
+	# 1. Map right alt key to the "compose" key for special characters
+	# 2. Make caps lock work as escape
+	gsettings set org.gnome.desktop.input-sources xkb-options "['compose:ralt', 'caps:escape']"
+else
+	# Map right alt key to the "compose" key for special characters
+	gsettings set org.gnome.desktop.input-sources xkb-options "['compose:ralt']"
+fi
+log_end
+
 home_assistant_daemon_unit_path="$(xdg_config)"/systemd/user/home-assistant-daemon.service
 if ! [ -f "$home_assistant_daemon_unit_path" ]; then
 	home_assistant_daemon_environment_file_path="$(xdg_config)"/home-assistant-daemon.env

@@ -123,15 +123,17 @@ if [[ "$OSTYPE" == *linux* ]]; then
 			fi
 		fi
 
-		# Map right meta key to the "compose" key for special characters
-		setxkbmap -option compose:ralt
+		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+			# Map right meta key to the "compose" key for special characters
+			setxkbmap -option compose:ralt
+		fi
 
 		# Detect type of device
 		if [ -e /sys/devices/virtual/dmi/id/chassis_type ]; then
 			chassis_type="$(< /sys/devices/virtual/dmi/id/chassis_type)"
 
 			# Laptop or other portable device (https://gitlab.com/debiants/laptop-detect)
-			if [ "$chassis_type" = 8 ] || [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ] || [ "$chassis_type" = 11 ]; then
+			if [ "$chassis_type" = 8 ] || [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ] || [ "$chassis_type" = 11 ] && [ "$XDG_SESSION_TYPE" = "x11" ]; then
 				# Make caps lock work as escape
 				setxkbmap -option caps:escape
 			fi
