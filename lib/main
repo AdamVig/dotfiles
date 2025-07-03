@@ -62,7 +62,6 @@ log_start 'running system setup scripts'
 "$_dir"/profile-picture
 "$_dir"/ssh-key
 "$_dir"/gpg-keys
-"$_dir"/backup
 log_end
 
 log "done. start a new login shell or run 'source zsh/.zshrc'."
