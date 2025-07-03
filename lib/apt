@@ -174,13 +174,10 @@ declare -a packages=(
 	firejail      # Sandbox used by appimaged
 	fzf           # Fuzzy finder
 	gh            # GitHub CLI
-	gnuplot       # Command-line plotting
 	graphviz      # Graph visualization tool
 	imagemagick
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
-	magic-wormhole     # Point-to-point file sharing
-	mdadm              # Software RAID
 	nextdns            # DNS client
 	p7zip
 	pandoc
@@ -190,7 +187,6 @@ declare -a packages=(
 	smartmontools     # SMART hard drive health
 	tig               # Visual Git client
 	tree
-	units # Unit conversion calculator
 	unzip
 	v4l-utils   # Webcam control tools
 	wine        # Support for Windows applications
@@ -216,7 +212,6 @@ declare -a packages=(
 
 	# programming language tools
 	cargo       # Rust
-	composer    # PHP
 	npm         # Node
 	pipx        # Run Python CLI tools
 	python3-pip # Python
@@ -231,11 +226,9 @@ declare -a packages=(
 
 	# applications
 	code
-	d-feet        # D-Bus debugger
 	emacs         # Text editor
 	flameshot     # Screenshot tool
 	gnome-keyring # Secret manager
-	gpsbabel      # GPS file conversion tool
 	i3            # Window manager
 	i3blocks      # Status bar generator
 	inkscape
@@ -245,15 +238,13 @@ declare -a packages=(
 	meld       # Comparison tool for version control, files, and directories
 	mpv        # Media player
 	obs-studio # Screen recording
-	redshift   # Screen color temperature adjustment tool
 	rofi       # Application launcher
 	signal-desktop
 	slack-desktop
 	spotify-client
-	thunderbird  # Email client
-	viewnior     # Image viewer
-	virt-manager # Virtual machine manager
-	xournalpp    # PDF editor
+	thunderbird # Email client
+	viewnior    # Image viewer
+	xournalpp   # PDF editor
 
 	# fonts
 	fonts-noto
@@ -270,10 +261,19 @@ log_end
 
 declare -a unwanted_packages=(
 	chromium
+	composer # PHP
+	d-feet   # D-Bus debugger
 	firefox
 	google-chrome-stable
+	gnuplot         # Command-line plotting
+	gpsbabel        # GPS file conversion tool
+	magic-wormhole  # Point-to-point file sharing
+	mdadm           # Software RAID
 	qemu-system-x86 # Virtual machine tool
+	redshift        # Screen color temperature adjustment tool
 	rpi-imager      # Raspberry Pi imager
+	units           # Unit conversion calculator
+	virt-manager    # Virtual machine manager
 )
 
 log_start 'removing unwanted packages'
