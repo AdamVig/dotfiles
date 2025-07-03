@@ -226,7 +226,6 @@ log_start 'installing YubiKey Manager'
 install_binary_from_url 'yubikey-manager' 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage'
 log_end
 
-# TODO test on a fresh system; will this work before running lib/apt and lib/ubuntu?
 if is_ubuntu; then
 	log_start 'installing bat'
 	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
