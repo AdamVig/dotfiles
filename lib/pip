@@ -28,13 +28,7 @@ log_end
 
 log_start 'removing no-longer-needed packages'
 no_longer_needed_pip_packages=(
-	b2                   # Switched to binary
-	khal                 # Calendar CLI
-	visidata             # Data set visualizer
-	vdirsyncer           # Synchronize calendars and contacts
-	'vdirsyncer[google]' # Extension for Google support
-	youtube-dl           # Inactive media downloader
-	yt-dlp               # Switched to binary
+	b2 # Switched to binary
 )
 
 for package in "${no_longer_needed_pip_packages[@]}"; do

@@ -44,19 +44,7 @@ declare -a extensions=(
 )
 
 declare -a no_longer_needed_extensions=(
-	Compulim.vscode-clock
-	eamodio.gitlens                   # Advanced Git integration
-	eg2.vscode-npm-script             # package.json linting and npm script detection
-	GitHub.codespaces                 # Support for Codespaces
-	GitHub.vscode-pull-request-github # built-in GitHub pull request support
-	ms-vscode-remote.remote-ssh       # Remote development via SSH
-	orta.vscode-jest                  # Test Explorer and more for Jest
-	QassimFarid.ejs-language-support  # EJS (Embedded JS) template language support
-	rafamel.subtle-brackets           # Better bracket matching
-	runem.lit-plugin
-	silvenon.mdx
-	styled-components.vscode-styled-components # CSS IntelliSense for Emotion and Styled Components
-	yzhang.markdown-all-in-one
+	eamodio.gitlens # Advanced Git integration
 )
 
 log_start 'installing Visual Studio Code extensions'

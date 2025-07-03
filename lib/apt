@@ -269,32 +269,11 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	brave-browser # Web browser
-	broot         # Better tree
 	chromium
-	copyq
-	docker.io # Replaced with official Docker package
-	emacs-snapshot
-	exa # Replaced by eza
-	figma-linux
 	firefox
 	google-chrome-stable
-	kitty # Now installed in ./linux-software
-	lutris
-	minikube
-	mosquitto         # MQTT broker and password tool
-	mosquitto-clients # MQTT client
-	qemu-system-x86   # Virtual machine tool
-	rpi-imager        # Raspberry Pi imager
-	vivaldi-stable
-
-	# Used to be installed via .deb, now installed as a binary
-	websocat
-
-	x11vnc # X server VNC
-
-	# Had been installed both via Apt and in ./linux-software
-	yubikey-manager
+	qemu-system-x86 # Virtual machine tool
+	rpi-imager      # Raspberry Pi imager
 )
 
 log_start 'removing unwanted packages'

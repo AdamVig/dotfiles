@@ -12,8 +12,7 @@ log() {
 log_start 'installing Linux distribution-agnostic software'
 
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/{balenaEtcher,DigiKam,GoldenCheetah,Bitwarden}
-request_sudo rm -vf /usr/local/bin/{restic,resticprofile}
+rm -vf "$HOME"/.local/bin/balenaEtcher
 log_end
 
 log_start 'installing b2'
