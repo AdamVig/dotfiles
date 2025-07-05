@@ -110,6 +110,7 @@ _ln "$kitty_path"/share/man/man1/* "$HOME"/.local/share/man/man1
 _ln "$kitty_path"/share/man/man5/* "$HOME"/.local/share/man/man5
 _ln "$kitty_path"/share/applications/* "$HOME"/.local/share/applications
 rm -rf "$kitty_extracted_tmp"
+echo 'kitty.desktop' >"$HOME"/.config/xdg-terminals.list
 log_end
 
 fonts_dir="$(xdg_data)"/fonts
