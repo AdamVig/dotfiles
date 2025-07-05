@@ -170,33 +170,30 @@ declare -a packages=(
 	ripgrep # Better grep
 
 	# command line tools
-	brightnessctl # Control screen brightness
-	firejail      # Sandbox used by appimaged
-	fzf           # Fuzzy finder
-	gh            # GitHub CLI
-	graphviz      # Graph visualization tool
+	firejail # Sandbox used by appimaged
+	fzf      # Fuzzy finder
+	gh       # GitHub CLI
+	graphviz # Graph visualization tool
 	imagemagick
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	nextdns            # DNS client
 	p7zip
 	pandoc
-	playerctl         # Media player controller
 	postgresql-client # PostgreSQL CLI
 	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
 	smartmontools     # SMART hard drive health
 	tig               # Visual Git client
 	tree
 	unzip
-	v4l-utils   # Webcam control tools
-	wine        # Support for Windows applications
-	winetricks  # Tools for working with Wine
-	wireguard   # VPN
-	wireplumber # PipeWire tools, including wpctl
-	wmctrl      # X window manager control CLI
-	xclip       # Clipboard CLI
-	xsel        # Clipboard CLI
-	xdotool     # X input event generator
+	v4l-utils  # Webcam control tools
+	wine       # Support for Windows applications
+	winetricks # Tools for working with Wine
+	wireguard  # VPN
+	wmctrl     # X window manager control CLI
+	xclip      # Clipboard CLI
+	xsel       # Clipboard CLI
+	xdotool    # X input event generator
 	xdg-utils
 
 	# shell
@@ -226,19 +223,13 @@ declare -a packages=(
 
 	# applications
 	code
-	emacs         # Text editor
-	flameshot     # Screenshot tool
-	gnome-keyring # Secret manager
-	i3            # Window manager
-	i3blocks      # Status bar generator
+	emacs # Text editor
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
-	lxpolkit   # Polkit authentication agent
-	meld       # Comparison tool for version control, files, and directories
-	mpv        # Media player
-	obs-studio # Screen recording
-	rofi       # Application launcher
+	lxpolkit # Polkit authentication agent
+	meld     # Comparison tool for version control, files, and directories
+	mpv      # Media player
 	signal-desktop
 	slack-desktop
 	spotify-client
@@ -274,6 +265,14 @@ declare -a unwanted_packages=(
 	rpi-imager      # Raspberry Pi imager
 	units           # Unit conversion calculator
 	virt-manager    # Virtual machine manager
+
+	# i3
+	brightnessctl # Control screen brightness
+	flameshot     # Screenshot tool
+	i3            # Window manager
+	i3blocks      # Status bar generator
+	obs-studio    # Screen recording
+	rofi          # Application launcher
 )
 
 log_start 'removing unwanted packages'

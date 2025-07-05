@@ -38,7 +38,6 @@ candidate_files=(
 	"$HOME"/.profile-local
 	"$emacs_local_config_dir"/lisp/init-local.el
 	"${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/,update-local"
-	"${XDG_CONFIG_HOME:-$HOME/.config}"/i3/login-local
 )
 
 files=()

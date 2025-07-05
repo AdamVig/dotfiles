@@ -1,2 +1,0 @@
-action = clipboard
-files = [emojis, dingbats, emoticons, box_drawing, enclosed_alphanumerics, enclosed_alphanumeric_supplement, math, supplemental_symbols_and_pictographs, symbols_and_pictographs_extended-a, transport_and_map_symbols]

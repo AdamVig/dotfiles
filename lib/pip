@@ -29,17 +29,12 @@ log_end
 log_start 'removing no-longer-needed packages'
 no_longer_needed_pip_packages=(
 	b2 # Switched to binary
+	rofimoji
 )
 
 for package in "${no_longer_needed_pip_packages[@]}"; do
 	pipx uninstall "$package" >/dev/null || true
 done
 log_end
-
-if is_linux; then
-	log_start 'installing rofimoji'
-	pipx install rofimoji
-	log_end
-fi
 
 log_end

@@ -47,7 +47,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm i3wm-config-mode writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
+		'(with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm  writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -190,10 +190,6 @@
 
 ;; Add mode for lua scripts (https://github.com/immerrr/lua-mode)
 (use-package lua-mode
-	:ensure t)
-
-;; Add mode for i3 config files (https://github.com/Alexander-Miller/i3wm-Config-Mode)
-(use-package i3wm-config-mode
 	:ensure t)
 
 ;; Add and configure Markdown mode (https://github.com/jrblevin/markdown-mode)
