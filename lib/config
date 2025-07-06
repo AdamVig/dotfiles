@@ -42,6 +42,9 @@ cp "$_dir"/../config/kdiff3rc "$config_dir"/kdiff3rc
 
 mkdir -p "$config_dir"/kitty
 _ln "$_dir"/../config/kitty/* "$config_dir"/kitty
+kitten themes --dump-theme Catppuccin-Macchiato >"$config_dir"/kitty/dark-theme.auto.conf
+kitten themes --dump-theme Catppuccin-Latte >"$config_dir"/kitty/light-theme.auto.conf
+kitten themes --dump-theme Catppuccin-Latte >"$config_dir"/kitty/no-preference-theme.auto.conf
 
 log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
