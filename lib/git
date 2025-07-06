@@ -54,4 +54,11 @@ else
 	log_end
 fi
 
+log_start 'configuring Delta themes'
+if ! _curl https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig --output "$config_path"/delta-themes.gitconfig; then
+	fatal 'failed to download Delta themes'
+fi
+git config --global 'include.path' "$config_path"/delta-themes.gitconfig
+log_end
+
 log_end
