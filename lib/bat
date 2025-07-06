@@ -14,9 +14,11 @@ bat_config_dir="$(bat --config-dir)"
 theme_dir="$bat_config_dir"/themes
 mkdir -p "$theme_dir"
 
-# https://github.com/chriskempson/tomorrow-theme
-theme_url='https://raw.githubusercontent.com/chriskempson/tomorrow-theme/master/textmate2/Tomorrow%20Theme.tmbundle/Themes/Tomorrow-Night.tmTheme'
-if ! _curl "$theme_url" --output "$theme_dir"/Tomorrow-Night.tmTheme; then
+# https://github.com/catppuccin/bat
+if ! _curl https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Latte.tmTheme --output "$theme_dir/Catppuccin Latte.tmTheme"; then
+	fatal 'failed to download theme'
+fi
+if ! _curl https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Macchiato.tmTheme --output "$theme_dir/Catppuccin Macchiato.tmTheme"; then
 	fatal 'failed to download theme'
 fi
 

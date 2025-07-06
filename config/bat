@@ -1,6 +1,7 @@
 # Documentation: https://github.com/sharkdp/bat#configuration-file
 
---theme='Tomorrow-Night'
+--theme-dark='Catppuccin Macchiato'
+--theme-light='Catppuccin Latte'
 
 # Override default pager settings to use case-insensitive search
 --pager "less --RAW-CONTROL-CHARS --quit-if-one-screen --ignore-case"
