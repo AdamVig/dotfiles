@@ -182,6 +182,7 @@ declare -a packages=(
 	pandoc
 	postgresql-client # PostgreSQL CLI
 	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
+	scdoc             # For building darkman
 	smartmontools     # SMART hard drive health
 	tig               # Visual Git client
 	tree

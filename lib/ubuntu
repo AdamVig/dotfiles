@@ -200,4 +200,32 @@ if ! systemctl --user is-enabled --quiet appimaged.service; then
 	log_end
 fi
 
+if ! [ -f "$(xdg_config)"/darkman/config.yaml ]; then
+	log_start 'creating darkman configuration'
+	mkdir -p "$(xdg_config)"/darkman
+	echo 'lat: 52.3
+lng: 4.8
+' >"$(xdg_config)"/darkman/config.yaml
+	warn "created darkman configuration at $(xdg_config)/darkman/config.yaml"
+	warn 'you must manually configure the lat/lng for automatic transitions!'
+	log_end
+fi
+
+log_start 'writing darkman hook scripts'
+mkdir -p "$(xdg_data)"/{light,dark}-mode.d/
+echo '#!/usr/bin/env bash
+gsettings set org.gnome.desktop.interface color-scheme prefer-light
+' >"$(xdg_data)"/light-mode.d/gnome
+echo '#!/usr/bin/env bash
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+' >"$(xdg_data)"/dark-mode.d/gnome
+echo '#!/usr/bin/env bash
+git config --global delta.features catppuccin-latte
+' >"$(xdg_data)"/light-mode.d/delta
+echo '#!/usr/bin/env bash
+git config --global delta.features catppuccin-macchiato
+' >"$(xdg_data)"/dark-mode.d/delta
+chmod +x "$(xdg_data)"/{light,dark}-mode.d/*
+log_end
+
 log_end

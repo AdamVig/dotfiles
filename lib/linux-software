@@ -242,6 +242,17 @@ if is_ubuntu; then
 	fi
 	log_end
 
+	log_start 'installing darkman'
+	darkman_tmp="$(mktemp -d)"
+	if ! git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp" || ! cd "$darkman_tmp"; then
+		fatal 'failed to clone darkman repository'
+	fi
+	if ! make || ! request_sudo make install; then
+		fatal 'failed to install darkman'
+	fi
+	rm -rf "$darkman_tmp"
+	log_end
+
 	log_start 'installing git-delta'
 	if ! install_deb_from_github_release 'dandavison/delta' '_amd64.deb'; then
 		fatal 'failed to install git-delta'
