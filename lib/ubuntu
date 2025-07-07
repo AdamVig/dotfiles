@@ -26,10 +26,6 @@ log_start 'installing GitHub CLI completions'
 install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
 log_end
 
-log_start 'linking batcat to bat'
-_ln /usr/bin/batcat "$HOME"/.local/bin/bat
-log_end
-
 log_start 'linking fdfind to fd'
 _ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 log_end
