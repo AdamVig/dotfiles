@@ -195,9 +195,17 @@ log_start 'writing darkman hook scripts'
 mkdir -p "$(xdg_data)"/{light,dark}-mode.d/
 echo '#!/usr/bin/env bash
 gsettings set org.gnome.desktop.interface color-scheme prefer-light
+# Catppuccin Latte Crust
+gsettings set org.gnome.desktop.background primary-color "#dce0e8"
+# Catppuccin Latte Mantle
+gsettings set org.gnome.desktop.background secondary-color "#e6e9ef"
 ' >"$(xdg_data)"/light-mode.d/gnome
 echo '#!/usr/bin/env bash
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+# Catppuccin Macchiato Crust
+gsettings set org.gnome.desktop.background primary-color "#181926"
+# Catppuccin Macchiato Mantle
+gsettings set org.gnome.desktop.background secondary-color "#1e2030"
 ' >"$(xdg_data)"/dark-mode.d/gnome
 echo '#!/usr/bin/env bash
 git config --global delta.features catppuccin-latte
