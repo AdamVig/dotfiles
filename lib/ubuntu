@@ -74,22 +74,6 @@ if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
 	log_end
 fi
 
-x11vnc_password_file_path=/etc/x11vnc-password
-if request_sudo [ -f "$x11vnc_password_file_path" ]; then
-	log_start 'removing x11vnc password file'
-	request_sudo rm -f "$x11vnc_password_file_path"
-	log_end
-fi
-
-x11vnc_unit_path=/etc/systemd/system/x11vnc.service
-if request_sudo [ -f "$x11vnc_unit_path" ]; then
-	log_start 'removing x11vnc Systemd unit'
-	request_sudo systemctl disable x11vnc
-	request_sudo rm -f "$x11vnc_unit_path"
-	request_sudo systemctl daemon-reload
-	log_end
-fi
-
 log_start 'disabling input language icon in system tray'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
 log_end
