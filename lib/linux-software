@@ -243,14 +243,18 @@ if is_ubuntu; then
 	log_end
 
 	log_start 'installing darkman'
-	darkman_tmp="$(mktemp -d)"
-	if ! git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp" || ! cd "$darkman_tmp"; then
-		fatal 'failed to clone darkman repository'
+	if command -v scdoc >/dev/null; then
+		darkman_tmp="$(mktemp -d)"
+		if ! git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp" || ! cd "$darkman_tmp"; then
+			fatal 'failed to clone darkman repository'
+		fi
+		if ! make || ! request_sudo make install; then
+			fatal 'failed to install darkman'
+		fi
+		rm -rf "$darkman_tmp"
+	else
+		warn 'skipping darkman installation because scdoc is not installed'
 	fi
-	if ! make || ! request_sudo make install; then
-		fatal 'failed to install darkman'
-	fi
-	rm -rf "$darkman_tmp"
 	log_end
 
 	log_start 'installing git-delta'
