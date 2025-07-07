@@ -153,7 +153,8 @@ fi
 declare -a packages=(
 	# system dependencies
 	apt-transport-https
-	libfuse2t64 # FUSE for AppImage
+	kitty-terminfo # System-wide terminfo for Kitty terminal emulator
+	libfuse2t64    # FUSE for AppImage
 	software-properties-common
 
 	# default utilities
