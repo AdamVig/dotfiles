@@ -152,6 +152,7 @@ fi
 
 declare -a packages=(
 	# system dependencies
+	apt-listchanges # Part of automatic update system
 	apt-transport-https
 	kitty-terminfo # System-wide terminfo for Kitty terminal emulator
 	libfuse2t64    # FUSE for AppImage
@@ -289,6 +290,40 @@ log_start 'installing Google Chrome'
 if ! install_deb_from_url 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'; then
 	fatal 'failed to install Google Chrome'
 fi
+log_end
+
+log_start 'configuring automatic upgrades'
+if ! [ -f /etc/apt/apt.conf.d/20auto-upgrades ]; then
+	log_start 'enabling automatic upgrades'
+	echo 'APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+' | request_sudo tee /etc/apt/apt.conf.d/20auto-upgrades >/dev/null
+	log_end
+fi
+
+log_start 'enabling updates from the updates and backports origins'
+# shellcheck disable=SC2016
+request_sudo sed -E -i 's|//([[:space:]]+)"\$\{distro_id\}:\$\{distro_codename\}-updates";|  \1"${distro_id}:${distro_codename}-updates";|' /etc/apt/apt.conf.d/50unattended-upgrades
+# shellcheck disable=SC2016
+request_sudo sed -E -i 's|//([[:space:]]+)"\$\{distro_id\}:\$\{distro_codename\}-backports";|  \1"${distro_id}:${distro_codename}-backports";|' /etc/apt/apt.conf.d/50unattended-upgrades
+log_end
+
+log_start 'enabling automatic reboot'
+request_sudo sed -i 's|//Unattended-Upgrade::Automatic-Reboot "false";|Unattended-Upgrade::Automatic-Reboot "true";|' /etc/apt/apt.conf.d/50unattended-upgrades
+log_end
+
+log_start 'setting automatic reboot time'
+request_sudo sed -i 's|//Unattended-Upgrade::Automatic-Reboot-Time "02:00";|Unattended-Upgrade::Automatic-Reboot-Time "02:00";|' /etc/apt/apt.conf.d/50unattended-upgrades
+log_end
+
+log_start 'setting automatic reboot time'
+request_sudo sed -i 's|// Unattended-Upgrade::OnlyOnACPower "true";|Unattended-Upgrade::OnlyOnACPower "false";|' /etc/apt/apt.conf.d/50unattended-upgrades
+log_end
+
+log_start 'enabling verbose logging'
+request_sudo sed -i 's|// Unattended-Upgrade::Verbose "false";|Unattended-Upgrade::Verbose "true";|' /etc/apt/apt.conf.d/50unattended-upgrades
+log_end
+
 log_end
 
 log_end
