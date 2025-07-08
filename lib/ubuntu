@@ -61,10 +61,9 @@ for user_directory_name in "${!user_directories[@]}"; do
 done
 log_end
 
-log_start 'overriding default GNOME scaling factor for GDM3'
-echo \
-	'[org.gnome.desktop.interface]
-scaling-factor=2' | request_sudo tee /usr/share/glib-2.0/schemas/30_scaling-factor.gschema.override >/dev/null
+# TODO remove once executed on all computers
+log_start 'removing GNOME scaling factor override'
+request_sudo rm -f /usr/share/glib-2.0/schemas/30_scaling-factor.gschema.override
 request_sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 log_end
 
