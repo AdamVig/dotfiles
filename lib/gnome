@@ -28,5 +28,7 @@ gsettings set org.gnome.desktop.background color-shading-type 'vertical'
 gsettings set org.gnome.desktop.background primary-color "#dce0e8"
 # Catppuccin Latte Mantle
 gsettings set org.gnome.desktop.background secondary-color "#e6e9ef"
+gsettings set com.ubuntu.update-notifier no-show-notifications true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 
 log_end
