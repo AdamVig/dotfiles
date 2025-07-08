@@ -215,4 +215,20 @@ git config --global delta.features catppuccin-macchiato
 chmod +x "$(xdg_data)"/{light,dark}-mode.d/*
 log_end
 
+log_start 'configuring autostart applications'
+autostart_dir="$HOME"/.config/autostart
+mkdir -p "$autostart_dir"
+echo "[Desktop Entry]
+Name=Nextcloud
+GenericName=File Synchronizer
+Exec=$HOME/.local/bin/nextcloud --background
+Terminal=false
+Icon=Nextcloud
+Categories=Network
+Type=Application
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=5" >"$autostart_dir"/Nextcloud.desktop
+log_end
+
 log_end
