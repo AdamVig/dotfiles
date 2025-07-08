@@ -31,34 +31,17 @@ _ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 log_end
 
 log_start 'updating user directories'
-declare -A user_directories=(
-	[DESKTOP]="$HOME"/desktop
-	[DOWNLOAD]="$HOME"/downloads
-	[TEMPLATES]="$HOME"/templates
-	[PUBLICSHARE]="$HOME"/public
-	[DOCUMENTS]="$HOME"/documents
-	[MUSIC]="$HOME"/music
-	[PICTURES]="$HOME"/pictures
-	[VIDEOS]="$HOME"/videos
-)
-for user_directory_name in "${!user_directories[@]}"; do
-	user_directory_path="${user_directories[$user_directory_name]}"
-
-	if ! [ -d "$user_directory_path" ]; then
-		user_directory_basename="$(basename "$user_directory_path")"
-		user_directory_path_capitalized="$HOME"/"${user_directory_basename^}"
-		if [ -d "$user_directory_path_capitalized" ]; then
-			log "moving '$user_directory_path_capitalized' to '$user_directory_path'"
-			mv "$user_directory_path_capitalized" "$user_directory_path"
-		else
-			log "creating '$user_directory_path'"
-			mkdir -p "$user_directory_path"
-		fi
-	fi
-
-	log "setting '$user_directory_name' to '$user_directory_path'"
-	xdg-user-dirs-update --set "$user_directory_name" "$user_directory_path"
-done
+# shellcheck disable=SC2016
+echo 'XDG_DESKTOP_DIR="$HOME/desktop"
+XDG_DOWNLOAD_DIR="$HOME/downloads"
+# XDG_TEMPLATES_DIR="$HOME/templates"
+# XDG_PUBLICSHARE_DIR="$HOME/public"
+# XDG_DOCUMENTS_DIR="$HOME/documents"
+# XDG_MUSIC_DIR="$HOME/music"
+XDG_PICTURES_DIR="$HOME/pictures"
+# XDG_VIDEOS_DIR="$HOME/videos"' >"$HOME"/.config/user-dirs.dirs
+# Prevent xdg-user-dirs-update from changing ~/.config/user-dirs.conf
+echo 'enabled=false' >~/.config/user-dirs.conf
 log_end
 
 # TODO remove once executed on all computers

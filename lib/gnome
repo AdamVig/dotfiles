@@ -30,5 +30,12 @@ gsettings set org.gnome.desktop.background primary-color "#dce0e8"
 gsettings set org.gnome.desktop.background secondary-color "#e6e9ef"
 gsettings set com.ubuntu.update-notifier no-show-notifications true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.desktop.privacy remember-recent-files false
+
+log_start 'setting Files bookmarks'
+echo "file://$HOME/files
+file://$HOME/src
+" > "$HOME"/.config/gtk-3.0/bookmarks
+log_end
 
 log_end
