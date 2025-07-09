@@ -30,6 +30,11 @@ log_start 'linking fdfind to fd'
 _ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 log_end
 
+log_start 'putting WirePlumber device disabling configuration in place'
+mkdir -p "$(xdg_config)"/wireplumber/main.lua.d
+_ln "$_dir"/../config/wireplumber-disable-devices.lua "$(xdg_config)"/wireplumber/main.lua.d/99-disable-devices.lua
+log_end
+
 log_start 'updating user directories'
 # shellcheck disable=SC2016
 echo 'XDG_DESKTOP_DIR="$HOME/desktop"
