@@ -225,4 +225,14 @@ X-GNOME-Autostart-enabled=true
 X-GNOME-Autostart-Delay=5" >"$autostart_dir"/Nextcloud.desktop
 log_end
 
+log_start 'setting up Flatpak installer'
+echo '[Desktop Entry]
+MimeType=application/vnd.flatpak.ref;
+Name=Flatpak Installer
+Exec=flatpak install %U
+Type=Application
+Terminal=true
+NoDisplay=true' > "$HOME"/.local/share/applications/flatpak-installer.desktop
+log_end
+
 log_end
