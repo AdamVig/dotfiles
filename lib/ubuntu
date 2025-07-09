@@ -60,6 +60,12 @@ if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
 	request_sudo sed -i "s|#.*logo=.*|logo=''|" /etc/gdm3/greeter.dconf-defaults
 	log_end
 fi
+if ! grep --quiet "clock-format=''" /etc/gdm3/greeter.dconf-defaults; then
+	log_start 'setting login screen to 12-hour time'
+	echo "[org/gnome/desktop/interface]
+clock-format='12h'" | request_sudo tee /etc/gdm3/greeter.dconf-defaults >/dev/null
+	log_end
+fi
 
 log_start 'disabling input language icon in system tray'
 gsettings set org.freedesktop.ibus.panel show-icon-on-systray false
