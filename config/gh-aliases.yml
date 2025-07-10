@@ -3,7 +3,6 @@
 # Opens the pull request in the browser after creation
 # $1: base branch
 # $2: title
-# $3+: other parameters for `gh pr create`
 prc: >-
   !git push --set-upstream &&
   gh pr create
@@ -11,15 +10,20 @@ prc: >-
   --base="$1"
   --body="$(gh pr-body-commits "$1")"
   --title="$2"
-  "${@:3}"
   && gh pr view --web
 
 # Create a draft pull request (see `prc` for more details)
 # $1: base branch
 # $2: title
-# $3+: other parameters for `gh pr create`
 prcd: >-
-  !gh prc "$1" "$2" "${@:3}" --draft
+  !git push --set-upstream &&
+  gh pr create
+  --assignee=@me
+  --base="$1"
+  --body="$(gh pr-body-commits "$1")"
+  --title="$2"
+  --draft
+  && gh pr view --web
 
 # Get the base branch for the current branch's pull request
 # shellcheck disable=SC2016
