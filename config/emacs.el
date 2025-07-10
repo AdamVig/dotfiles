@@ -47,7 +47,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm  writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
+		'(catppuccin-theme with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -164,18 +164,31 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-;; Install and use Tomorrow theme (https://github.com/purcell/color-theme-sanityinc-tomorrow)
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t)
+;; Install and use Catppuccin theme (https://github.com/catppuccin/emacs)
+(use-package catppuccin-theme
+  :ensure t
+	:config
+	(load-theme 'catppuccin :no-confirm)
+	(setq catppuccin-flavor 'latte)
+  (catppuccin-reload))
 
 ;; Install and use Auto-Dark (https://github.com/LionyxML/auto-dark-emacs)
 (use-package auto-dark
 	:ensure t
 	:config
 	(setq auto-dark-allow-osascript t)
-	(setq auto-dark-dark-theme 'sanityinc-tomorrow-night)
-  (setq auto-dark-light-theme 'sanityinc-tomorrow-day)
-	(auto-dark-mode t))
+	(auto-dark-mode t)
+	:hook
+  (auto-dark-dark-mode
+   . (lambda ()
+        (setq catppuccin-flavor 'macchiato)
+        (catppuccin-reload)
+        ))
+  (auto-dark-light-mode
+		. (lambda ()
+				(setq catppuccin-flavor 'latte)
+        (catppuccin-reload)
+        )))
 
 ;; Install Olivetti (https://github.com/rnkn/olivetti/)
 (use-package olivetti
