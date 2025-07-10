@@ -5,10 +5,13 @@
   "window.zoomLevel": 1,
   "editor.fontFamily": "Input Sans",
   "terminal.integrated.fontFamily": "Input Mono",
+	// Prevent VS Code from modifying terminal colors
+  "terminal.integrated.minimumContrastRatio": 1,
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
   "editor.rulers": [120],
   "editor.wordWrap": "on",
+	"editor.semanticHighlighting.enabled": true,
   // Disable minimap
   "editor.minimap.enabled": false,
   // Disable code folding
@@ -29,10 +32,12 @@
   "workbench.activityBar.location": "hidden",
   "workbench.startupEditor": "none",
   // Change theme
-  "workbench.colorTheme": "Tomorrow",
+  "workbench.colorTheme": "Catppuccin Latte",
   "window.autoDetectColorScheme": true,
-  "workbench.preferredDarkColorTheme": "Tomorrow Night",
-  "workbench.preferredLightColorTheme": "Tomorrow",
+  // Make the window's titlebar use the workbench colors
+  "window.titleBarStyle": "custom",
+	"workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
+  "workbench.preferredLightColorTheme": "Catppuccin Latte",
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
   "workbench.editor.enablePreview": false,
@@ -88,7 +93,7 @@
   },
   "[mdx]": {
     // Disable automatic line wrapping for MDX
-    "rewrap.autoWrap.enabled": false
+    "rewrap.autoWrap.enabled": false,
   },
   // Update TypeScript imports when file is moved
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -148,5 +153,9 @@
   ],
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+	"gopls": {
+		// Enable semantic highlighting for Golang
+    "ui.semanticTokens": true,
+  },
 }

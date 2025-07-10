@@ -26,25 +26,28 @@ _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
 log_end
 
 declare -a extensions=(
+	Catppuccin.catppuccin-vsc             # Theme
+	Catppuccin.catppuccin-vsc-icons       # Icons
 	dbaeumer.vscode-eslint                # JavaScript linter
+	dnut.rewrap-revived                   # Reformats code comments and other text to a given line length
 	EditorConfig.editorconfig             # Editor text style configuration
 	esbenp.prettier-vscode                # Code formatting with Prettier
 	figma.figma-vscode-extension          # Figma integration
 	GitHub.copilot                        # Support for Copilot
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
-	ms-vscode.theme-tomorrowkit           # Tomorrow color themes
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
-	stkb.rewrap                           # Reformats code comments and other text to a given line length
 	streetsidesoftware.code-spell-checker # Spell checker
 	tamasfe.even-better-toml              # TOML support
 	timonwong.shellcheck                  # Shell script linting
 	unifiedjs.vscode-mdx                  # MDX support
-	vue.volar                             # Vue support
 )
 
 declare -a no_longer_needed_extensions=(
-	eamodio.gitlens # Advanced Git integration
+	eamodio.gitlens             # Advanced Git integration
+	ms-vscode.theme-tomorrowkit # Tomorrow color themes
+	dnut.rewrap-revived
+	vue.volar # Vue support
 )
 
 log_start 'installing Visual Studio Code extensions'
