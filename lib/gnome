@@ -41,10 +41,12 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "bash -c 'source /home/${USER}/.profile; next-default-sink'"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Next default sink'
 
-log_start 'setting Files bookmarks'
-echo "file://$HOME/files
+if ! [[ -f "$HOME"/.config/gtk-3.0/bookmarks ]]; then
+	log_start 'setting Files bookmarks'
+	echo "file://$HOME/files
 file://$HOME/src
 " >"$HOME"/.config/gtk-3.0/bookmarks
-log_end
+	log_end
+fi
 
 log_end
