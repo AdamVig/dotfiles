@@ -45,6 +45,7 @@ gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
 # Disable "Enhanced Tiling"
 gnome-extensions disable tiling-assistant@ubuntu.com
+gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
 
 if ! [[ -f "$HOME"/.config/gtk-3.0/bookmarks ]]; then
 	log_start 'setting Files bookmarks'
