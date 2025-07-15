@@ -35,12 +35,9 @@ log_start 'installing KDE ISO Image Writer'
 flatpak install --assumeyes --noninteractive --or-update org.kde.isoimagewriter
 log_end
 
-log_start 'installing EasyEffects'
-flatpak install --assumeyes --noninteractive --or-update com.github.wwmm.easyeffects
-log_end
-
 log_start 'removing no-longer-needed packages'
 flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop >/dev/null || true
+flatpak uninstall --assumeyes --noninteractive com.github.wwmm.easyeffects >/dev/null || true
 log_end
 
 log_end
