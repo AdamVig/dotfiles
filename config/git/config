@@ -70,6 +70,20 @@
 [branch]
   # Sort `git branch` by most recently used
   sort = -committerdate
+# https://abhinav.github.io/git-spice/cli/config/
+[spice "branchCreate"]
+  commit = false
+[spice "log"]
+  pushStatusFormat = aheadBehind
+[spice "rebaseContinue"]
+  edit = false
+[spice "submit"]
+  draft = true
+	navigationComment = multiple
+	navigationCommentSync = downstack
+# 0.8.0:
+#	web = created
+
 
 # To include a separate configuration file conditionally, uncomment the following.
 # Ensure that this block comes at the end of the file, otherwise it will not override correctly.

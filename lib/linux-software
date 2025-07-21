@@ -66,6 +66,27 @@ install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
 log_end
 
+log_start 'installing git-spice'
+if ! git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"; then
+	fatal 'failed to get git-spice release URL'
+fi
+
+git_spice_tmp="$(mktemp)"
+if ! _curl "$git_spice_url" --output "$git_spice_tmp"; then
+	fatal 'failed to download git-spice'
+fi
+
+git_spice_extracted_tmp="$(mktemp -d)"
+if ! tar zxvf "$git_spice_tmp" -C "$git_spice_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract git-spice'
+fi
+rm -f "$git_spice_tmp"
+
+git_spice_path="$HOME"/.local/bin/gs
+install "$git_spice_extracted_tmp"/gs "$git_spice_path"
+rm -rf "$git_spice_extracted_tmp"
+log_end
+
 log_start 'installing git-who'
 if ! git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"; then
 	fatal 'failed to get git-who release URL'

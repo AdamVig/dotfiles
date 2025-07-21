@@ -55,3 +55,9 @@ compdef _git log-branch-commits=git-branch
 compdef _git merge-latest=git-branch
 
 compdef _rg ,hyperlinked-ripgrep
+
+if [[ -x "$HOME"/.local/bin/gs ]]; then
+	autoload -U +X bashcompinit && bashcompinit
+	complete -C "$HOME"/.local/bin/gs gs
+fi
+
