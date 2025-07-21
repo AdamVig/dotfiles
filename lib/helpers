@@ -9,15 +9,21 @@ _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./.profile
 source "$_dir"/../.profile
 
-black="$(tput setaf 0)"
-blue="$(tput setaf 4)"
-bold="$(tput bold)"
+_tput() {
+	if [ -n "$TERM" ] && [ "$TERM" != "dumb" ]; then
+		tput "$@"
+	fi
+}
+
+black="$(_tput setaf 0)"
+blue="$(_tput setaf 4)"
+bold="$(_tput bold)"
 # Not all terminal emulators support "dim", so fall back to an empty string
-dim="$(tput dim || echo '')"
-red_background="$(tput setab 1)"
-reset="$(tput sgr0)"
-standout="$(tput smso)"
-yellow_background="$(tput setab 3)"
+dim="$(_tput dim || echo '')"
+red_background="$(_tput setab 1)"
+reset="$(_tput sgr0)"
+standout="$(_tput smso)"
+yellow_background="$(_tput setab 3)"
 
 is_linux() {
 	[[ $OSTYPE == *linux* ]]
@@ -25,6 +31,10 @@ is_linux() {
 
 is_macos() {
 	[[ $OSTYPE == darwin* ]]
+}
+
+is_devcontainer() {
+	[[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]]
 }
 
 is_ubuntu() {

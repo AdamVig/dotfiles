@@ -21,8 +21,8 @@ if [ "$(uname)" = 'Darwin' ] && ! [ -f /opt/homebrew/bin/brew ]; then
 	exit
 fi
 
-# If running on a fresh boot of a Linux system that uses apt
-if command -v apt-get >/dev/null && ! command -v curl >/dev/null; then
+# If running on a fresh boot of a Linux system that uses apt, including devcontainers
+if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [ -v VSCODE_REMOTE_CONTAINERS_SESSION ]); then
 	echo 'detected fresh Linux system, running pre-bootstrap steps...'
 	echo 'updating apt lists...'
 	sudo apt-get update >/dev/null

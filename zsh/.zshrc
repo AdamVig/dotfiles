@@ -53,7 +53,7 @@ source "$ZDOTDIR"/aliases.zsh
 source ~/.locals &> /dev/null || true
 
 # Initialize Nodenv if not already initialized
-if [[ "$PATH" != *"nodenv/shims"* ]]; then
+if command -v nodenv >/dev/null && [[ "$PATH" != *"nodenv/shims"* ]]; then
   eval "$(nodenv init - --no-rehash)"
 
 	# For Linux

@@ -13,11 +13,13 @@ log_start 'setting up Zsh'
 
 if [[ $SHELL != *zsh ]]; then
 	log_start 'changing default shell to Zsh'
-
 	# shellcheck disable=SC2119
 	request_sudo
 
 	zsh_path="$(command -v zsh)"
+
+	# Ensure USER is set in devcontainer
+	export USER="${USER:-$(whoami)}"
 
 	if is_macos; then
 		request_sudo chsh -s "$zsh_path" "$USER"

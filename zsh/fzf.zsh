@@ -10,7 +10,7 @@ else
 	fzf_shell_root='/usr/share/doc/fzf/examples'
 fi
 
-if [ -d "$fzf_shell_root" ]; then
+if [ -f "$fzf_shell_root"/completions.zsh ]; then
 	source "$fzf_shell_root"/key-bindings.zsh
 	source "$fzf_shell_root"/completion.zsh
 fi

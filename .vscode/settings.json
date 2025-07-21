@@ -156,4 +156,9 @@
 		// Enable semantic highlighting for Golang
     "ui.semanticTokens": true,
   },
+  "dotfiles.repository": "AdamVig/dotfiles",
+  "dotfiles.targetPath": "~/dotfiles",
+  "dotfiles.installCommand": "bin/,bootstrap",
+  "dev.containers.githubCLILoginWithToken": true,
+  "terminal.integrated.defaultProfile.linux": "zsh"
 }

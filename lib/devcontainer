@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component devcontainer "$@"
+}
+
+log_start 'setting up devcontainer'
+if command -v apt-get >/dev/null; then
+	log_start 'installing bat'
+	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
+		fatal 'failed to install bat'
+	fi
+	log_end
+
+	log_start 'installing git-delta'
+	if ! install_deb_from_github_release 'dandavison/delta' '_amd64.deb'; then
+		fatal 'failed to install git-delta'
+	fi
+	log_end
+
+	log_start 'installing glow'
+	if ! install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'; then
+		fatal 'failed to install glow'
+	fi
+	log_end
+
+	declare -a packages=(
+		# replacements of default utilities
+		eza     # Better ls
+		fd-find # Better find
+		htop    # Better top
+		httpie  # Better curl
+		mosh    # Better ssh
+		ripgrep # Better grep
+
+		# command line tools
+		fzf # Fuzzy finder
+
+		zsh
+	)
+
+	log_start 'installing packages'
+	if ! request_sudo apt-get install --yes "${packages[@]}"; then
+		warn 'failed to install apt packages; this may require manual resolution'
+	fi
+	log_end
+
+	log_start 'linking fdfind to fd'
+	mkdir -p "$HOME"/.local/bin
+	_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
+	log_end
+fi
+log_end

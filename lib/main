@@ -19,7 +19,11 @@ request_sudo
 
 log_start 'running OS-specific scripts'
 
-if is_macos; then
+if is_devcontainer; then
+	"$_dir"/devcontainer
+	"$_dir"/zsh
+	exit
+elif is_macos; then
 	"$_dir"/macos
 	"$_dir"/brew
 elif is_linux; then
