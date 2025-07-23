@@ -5,13 +5,13 @@
   "window.zoomLevel": 1,
   "editor.fontFamily": "Input Sans",
   "terminal.integrated.fontFamily": "Input Mono",
-	// Prevent VS Code from modifying terminal colors
+  // Prevent VS Code from modifying terminal colors
   "terminal.integrated.minimumContrastRatio": 1,
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
   "editor.rulers": [120],
   "editor.wordWrap": "on",
-	"editor.semanticHighlighting.enabled": true,
+  "editor.semanticHighlighting.enabled": true,
   // Disable minimap
   "editor.minimap.enabled": false,
   // Disable code folding
@@ -34,7 +34,7 @@
   // Change theme
   "workbench.colorTheme": "Catppuccin Latte",
   "window.autoDetectColorScheme": true,
-	"workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
+  "workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
   "workbench.preferredLightColorTheme": "Catppuccin Latte",
   "workbench.statusBar.visible": false,
   // Disable tab preview mode (when opening a tab, keep it open until closed)
@@ -75,10 +75,6 @@
   // ------------------------------
   // Languages
   // ------------------------------
-  // Wrap lines so they're shorter than 120 chars
-  "html.format.wrapLineLength": 110,
-  // Do not add extra lines around `head`, `body`, `/html`
-  "html.format.extraLiners": "",
   // Add a ruler at 50 characters (for commit subjects)
   "[git-commit]": {
     "editor.rulers": [50, 72],
@@ -91,7 +87,7 @@
   },
   "[mdx]": {
     // Disable automatic line wrapping for MDX
-    "rewrap.autoWrap.enabled": false,
+    "rewrap.autoWrap.enabled": false
   },
   // Update TypeScript imports when file is moved
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -99,13 +95,6 @@
   "typescript.preferences.useAliasesForRenames": false,
   // Disable jarring scroll behavior
   "markdown.preview.scrollEditorWithPreview": false,
-  // Select a default formatter for JSON and JSONC
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   // ------------------------------
   // Extensions
   // ------------------------------
@@ -149,12 +138,9 @@
     // Keep the activity bar enabled
     "workbench.activityBar.visible"
   ],
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-	"gopls": {
-		// Enable semantic highlighting for Golang
-    "ui.semanticTokens": true,
+  "gopls": {
+    // Enable semantic highlighting for Golang
+    "ui.semanticTokens": true
   },
   "dotfiles.repository": "AdamVig/dotfiles",
   "dotfiles.targetPath": "~/dotfiles",
