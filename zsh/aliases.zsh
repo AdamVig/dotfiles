@@ -36,6 +36,9 @@ if [[ "$OSTYPE" = *linux* ]]; then
 
 	# Shorten command for systemd user units
 	alias sysu='systemctl --user'
+
+	# Silence "Opening in existing browser session." message
+	alias xdg-open="xdg-open >/dev/null"
 fi
 
 alias rg="rg --hyperlink-format=kitty"
