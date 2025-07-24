@@ -42,3 +42,5 @@ if [[ "$OSTYPE" = *linux* ]]; then
 fi
 
 alias rg="rg --hyperlink-format=kitty"
+
+alias fd="fd --hidden"
