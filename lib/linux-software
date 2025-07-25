@@ -11,38 +11,18 @@ log() {
 
 log_start 'installing Linux distribution-agnostic software'
 
+log_start 'removing broken binary symlinks'
+find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
+log_end
+
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/balenaEtcher
+rm -vf "$HOME"/.local/bin/{calibre*,ebook*,scc} "$HOME"/.local/share/calibre
 log_end
 
 log_start 'installing b2'
 if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'; then
 	fatal 'failed to install b2'
 fi
-log_end
-
-log_start 'installing Calibre'
-if ! calibre_url="$(get_release_url 'kovidgoyal/calibre' 'x86_64.txz')"; then
-	fatal 'failed to get Calibre release URL'
-fi
-calibre_tmp="$(mktemp --suffix .txz)"
-if ! _curl "$calibre_url" --output "$calibre_tmp"; then
-	fatal 'failed to download Calibre'
-fi
-calibre_extracted_tmp="$(mktemp -d)"
-if ! tar xvf "$calibre_tmp" -C "$calibre_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract Calibre'
-fi
-rm -f "$calibre_tmp"
-calibre_path="$HOME"/.local/share/calibre
-rm -rf "$calibre_path"
-mv "$calibre_extracted_tmp" "$calibre_path"
-for f in "$calibre_path"/*; do
-	if [ -x "$f" ]; then
-		_ln "$f" "$HOME"/.local/bin
-	fi
-done
-rm -rf "$calibre_extracted_tmp"
 log_end
 
 log_start 'installing difftastic'
@@ -167,27 +147,6 @@ if ! install_binary_from_github_release 'shfmt' 'mvdan/sh' 'linux_amd64'; then
 fi
 log_end
 
-log_start 'installing scc'
-if ! scc_url="$(get_release_url 'boyter/scc' 'Linux_x86_64.tar.gz')"; then
-	fatal 'failed to get scc release URL'
-fi
-
-scc_tmp="$(mktemp)"
-if ! _curl "$scc_url" --output "$scc_tmp"; then
-	fatal 'failed to download scc'
-fi
-
-scc_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$scc_tmp" -C "$scc_extracted_tmp" >/dev/null; then
-	fatal 'failed to unzip scc'
-fi
-rm -f "$scc_tmp"
-
-scc_path="$HOME"/.local/bin/scc
-install "$scc_extracted_tmp"/scc "$scc_path"
-rm -rf "$scc_extracted_tmp"
-log_end
-
 log_start 'installing Bitwarden CLI'
 bw_tmp="$(mktemp)"
 if ! _curl 'https://vault.bitwarden.com/download/?app=cli&platform=linux' --output "$bw_tmp"; then
@@ -309,10 +268,8 @@ if is_ubuntu; then
 	fi
 	log_end
 
-	log_start 'installing pastel'
-	if ! install_deb_from_github_release 'sharkdp/pastel' '_amd64.deb'; then
-		fatal 'failed to install pastel'
-	fi
+	log_start 'removing no-longer-needed software'
+	request_sudo apt-get remove --yes --autoremove pastel &>/dev/null || true
 	log_end
 fi
 
