@@ -34,7 +34,7 @@ is_macos() {
 }
 
 is_devcontainer() {
-	[[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]]
+	[[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]] || [[ -v REMOTE_CONTAINERS ]]
 }
 
 is_ubuntu() {
