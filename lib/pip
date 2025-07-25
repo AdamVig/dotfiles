@@ -16,6 +16,7 @@ pip_packages=(
 	csvkit            # CSV processing tools
 	esphome           # ESPHome CLI
 	homeassistant-cli # Home Assistant management tool
+	llm               # Large language model CLI
 	yq                # jq for YAML/XML
 )
 
