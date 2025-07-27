@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+# shellcheck source=./lib/helpers
+source "$_dir"/helpers
+
+log() {
+	log_with_component python-tools "$@"
+}
+
+log_start 'installing Python tools'
+
+log_start 'installing packages'
+uv_tools=(
+	csvkit # CSV processing tools
+	llm    # Large language model CLI
+	yq     # jq for YAML/XML
+)
+
+for package in "${uv_tools[@]}"; do
+	if ! uv tool install "$package"; then
+		warn "failed to install package \"$package\""
+	fi
+done
+log_end
+
+log_end

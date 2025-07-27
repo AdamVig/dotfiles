@@ -122,9 +122,9 @@ update_npm() {
 	done
 }
 
-update_pip() {
-	echo 'pip'
-	pipx upgrade-all
+update_python_tools() {
+	echo 'python tools'
+	uv tool upgrade --all
 }
 
 update_apt() {
@@ -202,7 +202,7 @@ main() {
 
 	run_operation 'npm' update_npm
 
-	run_operation 'pip' update_pip
+	run_operation 'python tools' update_python_tools
 
 	if command -v apt-get >/dev/null; then
 		run_operation 'apt' update_apt

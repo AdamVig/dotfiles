@@ -214,7 +214,6 @@ declare -a packages=(
 	# programming language tools
 	cargo       # Rust
 	npm         # Node
-	pipx        # Run Python CLI tools
 	python3-pip # Python
 	shellcheck  # Shell script linter
 
@@ -265,6 +264,7 @@ declare -a unwanted_packages=(
 	gpsbabel        # GPS file conversion tool
 	magic-wormhole  # Point-to-point file sharing
 	mdadm           # Software RAID
+	pipx            # Python tool installer
 	qemu-system-x86 # Virtual machine tool
 	redshift        # Screen color temperature adjustment tool
 	rpi-imager      # Raspberry Pi imager
