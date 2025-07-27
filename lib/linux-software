@@ -16,7 +16,7 @@ find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
 log_end
 
 log_start 'removing no-longer-needed software'
-rm -vf "$HOME"/.local/bin/{calibre*,ebook*,scc} "$HOME"/.local/share/calibre
+rm -vrf "$HOME"/.local/bin/{calibre*,ebook*,scc} "$HOME"/.local/share/calibre
 log_end
 
 log_start 'installing b2'
