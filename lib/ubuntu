@@ -22,12 +22,6 @@ if command -v snap >/dev/null; then
 	log_end
 fi
 
-if command -v pro >/dev/null; then
-	log_start 'removing Ubuntu Pro package'
-	request_sudo apt-get remove --yes --autoremove ubuntu-pro-client
-	log_end
-fi
-
 if [[ -f /etc/xdg/autostart/update-notifier.desktop ]]; then
 	log_start 'disabling Update Notifier autostart'
 	request_sudo rm -f /etc/xdg/autostart/update-notifier.desktop
