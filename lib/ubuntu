@@ -28,6 +28,12 @@ if command -v pro >/dev/null; then
 	log_end
 fi
 
+if [[ -f /etc/xdg/autostart/update-notifier.desktop ]]; then
+	log_start 'disabling Update Notifier autostart'
+	request_sudo rm -f /etc/xdg/autostart/update-notifier.desktop
+	log_end
+fi
+
 log_start 'installing GitHub CLI completions'
 install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
 log_end
