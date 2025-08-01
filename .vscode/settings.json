@@ -146,5 +146,8 @@
   "dotfiles.targetPath": "~/dotfiles",
   "dotfiles.installCommand": "bin/,bootstrap",
   "dev.containers.githubCLILoginWithToken": true,
-  "terminal.integrated.defaultProfile.linux": "zsh"
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "evenBetterToml.semanticTokens": true,
+  "evenBetterToml.schema.enabled": false,
+  "go.toolsManagement.autoUpdate": true
 }
