@@ -9,7 +9,9 @@
   "terminal.integrated.minimumContrastRatio": 1,
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
-  "editor.rulers": [120],
+  "editor.rulers": [
+    120
+  ],
   "editor.wordWrap": "on",
   "editor.semanticHighlighting.enabled": true,
   // Disable minimap
@@ -77,7 +79,10 @@
   // ------------------------------
   // Add a ruler at 50 characters (for commit subjects)
   "[git-commit]": {
-    "editor.rulers": [50, 72],
+    "editor.rulers": [
+      50,
+      72
+    ],
     // Wrap at 72 characters instead of 50
     "rewrap.wrappingColumn": 72
   },
@@ -149,5 +154,6 @@
   "terminal.integrated.defaultProfile.linux": "zsh",
   "evenBetterToml.semanticTokens": true,
   "evenBetterToml.schema.enabled": false,
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "terminal.integrated.scrollback": 10000
 }
