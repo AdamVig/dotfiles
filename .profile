@@ -157,6 +157,10 @@ export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/psql-history
 
 # Prevent npm from storing config in ~/.npmrc
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
+# Disable "packages are looking for funding" message
+export npm_config_fund=false
+# Disable "A new version of npm is available" message
+export npm_config_update_notifier=false
 
 # Prevent less from storing history in ~/.lesshst
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/lesshst
