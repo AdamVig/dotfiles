@@ -254,7 +254,7 @@ install_deb_from_url() {
 	# Avoid "Download is performed unsandboxed as root" warning
 	request_sudo chown -R _apt:root "$output_path"
 
-	if ! request_sudo apt-get install --yes "$output_path"; then
+	if ! request_sudo dpkg -i "$output_path"; then
 		fatal 'failed to install package'
 	fi
 
