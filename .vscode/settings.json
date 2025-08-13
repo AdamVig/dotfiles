@@ -155,5 +155,6 @@
   "evenBetterToml.semanticTokens": true,
   "evenBetterToml.schema.enabled": false,
   "go.toolsManagement.autoUpdate": true,
-  "terminal.integrated.scrollback": 10000
+  "terminal.integrated.scrollback": 10000,
+  "chat.mcp.autostart": "newAndOutdated"
 }
