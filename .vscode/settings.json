@@ -1,160 +1,171 @@
 {
-  // ------------------------------
-  // Editor
-  // ------------------------------
-  "window.zoomLevel": 1,
-  "editor.fontFamily": "Input Sans",
-  "terminal.integrated.fontFamily": "Input Mono",
-  // Prevent VS Code from modifying terminal colors
-  "terminal.integrated.minimumContrastRatio": 1,
-  "editor.fontWeight": "600",
-  "editor.fontLigatures": false,
-  "editor.rulers": [
-    120
-  ],
-  "editor.wordWrap": "on",
-  "editor.semanticHighlighting.enabled": true,
-  // Disable minimap
-  "editor.minimap.enabled": false,
-  // Disable code folding
-  "editor.folding": true,
-  "editor.find.seedSearchStringFromSelection": "selection",
-  "editor.snippetSuggestions": "none",
-  "editor.fontSize": 12,
-  "editor.hideCursorInOverviewRuler": true,
-  "editor.guides.indentation": false,
-  "editor.bracketPairColorization.enabled": true,
-  // Do not auto-fetch from Git remotes
-  "git.autofetch": false,
-  "git.blame.editorDecoration.enabled": true,
-  // ------------------------------
-  // Workbench
-  // ------------------------------
-  // Hide activity bar (vertical left bar)
-  "workbench.activityBar.location": "hidden",
-  "workbench.startupEditor": "none",
-  // Change theme
-  "workbench.colorTheme": "Catppuccin Latte",
-  "window.autoDetectColorScheme": true,
-  "workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
-  "workbench.preferredLightColorTheme": "Catppuccin Latte",
-  "workbench.statusBar.visible": false,
-  // Disable tab preview mode (when opening a tab, keep it open until closed)
-  "workbench.editor.enablePreview": false,
-  // Use JSON settings editor instead of UI
-  "workbench.settings.editor": "json",
-  // Hide release notes
-  "update.showReleaseNotes": false,
-  // ------------------------------
-  // Sidebar
-  // ------------------------------
-  // Keep the debug toolbar in its panel
-  "debug.toolBarLocation": "docked",
-  // Move sidebar to the right side
-  "workbench.sideBar.location": "right",
-  // Render diffs inline
-  "diffEditor.renderSideBySide": false,
-  // Hide panes in Explorer
-  "explorer.openEditors.visible": 1,
-  // Disable file delete confirmation
-  "explorer.confirmDelete": false,
-  // Disable confirmation window on drag and drop in file explorer
-  "explorer.confirmDragAndDrop": false,
-  "explorer.fileNesting.enabled": true,
-  // Nest common file groups together to reduce file explorer clutter
-  "explorer.fileNesting.patterns": {
-    "*.ts": "${capture}.js, ${capture}.test.ts, ${capture}.spec.ts",
-    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
-    "*.jsx": "${capture}.js",
-    "*.tsx": "${capture}.ts",
-    "tsconfig.json": "tsconfig.*.json",
-    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .yarnrc.yml",
-    ".env": ".env.*",
-    ".env.prod*": ".env.*",
-    ".gitignore": ".*ignore, .mailmap",
-    "README.md": "CONTRIBUTING.md, LICENSE"
-  },
-  // ------------------------------
-  // Languages
-  // ------------------------------
-  // Add a ruler at 50 characters (for commit subjects)
-  "[git-commit]": {
-    "editor.rulers": [
-      50,
-      72
-    ],
-    // Wrap at 72 characters instead of 50
-    "rewrap.wrappingColumn": 72
-  },
-  "[markdown]": {
-    // Disable automatic line wrapping for Markdown
-    "rewrap.autoWrap.enabled": false
-  },
-  "[mdx]": {
-    // Disable automatic line wrapping for MDX
-    "rewrap.autoWrap.enabled": false
-  },
-  // Update TypeScript imports when file is moved
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  // Rename properties everywhere instead of aliasing them to the previous name
-  "typescript.preferences.useAliasesForRenames": false,
-  // Disable jarring scroll behavior
-  "markdown.preview.scrollEditorWithPreview": false,
-  // ------------------------------
-  // Extensions
-  // ------------------------------
-  "extensions.ignoreRecommendations": true,
-  // Do not prompt to pull the branch when changes are detected on the remote
-  "githubPullRequests.pullBranch": "never",
-  // Do not auto-run tests and wait until first on-demand test run to initialize extension
-  "jest.runMode": "deferred",
-  "shellcheck.customArgs": [
-    // Allow 'source' outside of input files
-    "-external-sources"
-  ],
-  // Languages to validate with ESLint plugin
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "vue-html"
-  ],
-  // Hide persistent Live Share buttons in status bar
-  "liveshare.showInStatusBar": "whileCollaborating",
-  // Enable automatic line wrapping
-  "rewrap.autoWrap.enabled": true,
-  // Spell checker configuration
-  "cSpell.enabled": true,
-  "cSpell.language": "en",
-  "cSpell.customDictionaries": {
-    "custom-dictionary-user": {
-      "name": "custom-dictionary-user",
-      "path": "~/.cspell/custom-dictionary-user.txt",
-      "addWords": true,
-      "scope": "user"
-    }
-  },
-  // Hide spell check indicator in status bar
-  "cSpell.showStatus": false,
-  // Settings sync is used instead of dotfiles in cloud environments
-  "settingsSync.ignoredSettings": [
-    // Keep the activity bar enabled
-    "workbench.activityBar.visible"
-  ],
-  "gopls": {
-    // Enable semantic highlighting for Golang
-    "ui.semanticTokens": true
-  },
-  "dotfiles.repository": "AdamVig/dotfiles",
-  "dotfiles.targetPath": "~/dotfiles",
-  "dotfiles.installCommand": "bin/,bootstrap",
-  "dev.containers.githubCLILoginWithToken": true,
-  "terminal.integrated.defaultProfile.linux": "zsh",
-  "evenBetterToml.semanticTokens": true,
-  "evenBetterToml.schema.enabled": false,
-  "go.toolsManagement.autoUpdate": true,
-  "terminal.integrated.scrollback": 10000,
-  "chat.mcp.autostart": "newAndOutdated"
+	// ------------------------------
+	// Editor
+	// ------------------------------
+	"window.zoomLevel": 1,
+	"editor.fontFamily": "Input Sans",
+	"editor.fontWeight": "600",
+	"editor.fontLigatures": false,
+	"editor.rulers": [
+		120
+	],
+	"editor.wordWrap": "on",
+	"editor.semanticHighlighting.enabled": true,
+	// Disable minimap
+	"editor.minimap.enabled": false,
+	// Disable code folding
+	"editor.folding": true,
+	"editor.find.seedSearchStringFromSelection": "selection",
+	"editor.snippetSuggestions": "none",
+	"editor.fontSize": 12,
+	"editor.hideCursorInOverviewRuler": true,
+	"editor.guides.indentation": false,
+	"editor.bracketPairColorization.enabled": true,
+	// Do not auto-fetch from Git remotes
+	"git.autofetch": false,
+	"git.blame.editorDecoration.enabled": true,
+	// ------------------------------
+	// Workbench
+	// ------------------------------
+	// Hide activity bar (vertical left bar)
+	"workbench.activityBar.location": "hidden",
+	"workbench.startupEditor": "none",
+	// Change theme
+	"workbench.colorTheme": "Catppuccin Latte",
+	"window.autoDetectColorScheme": true,
+	"workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
+	"workbench.preferredLightColorTheme": "Catppuccin Latte",
+	"workbench.statusBar.visible": false,
+	// Disable tab preview mode (when opening a tab, keep it open until closed)
+	"workbench.editor.enablePreview": false,
+	// Use JSON settings editor instead of UI
+	"workbench.settings.editor": "json",
+	// Hide release notes
+	"update.showReleaseNotes": false,
+	// ------------------------------
+	// Terminal
+	// ------------------------------
+	"terminal.integrated.fontFamily": "Input Mono",
+	// Prevent VS Code from modifying terminal colors
+	"terminal.integrated.minimumContrastRatio": 1,
+	"terminal.integrated.scrollback": 10000,
+	// ------------------------------
+	// Sidebar
+	// ------------------------------
+	// Keep the debug toolbar in its panel
+	"debug.toolBarLocation": "docked",
+	// Move sidebar to the right side
+	"workbench.sideBar.location": "right",
+	// Render diffs inline
+	"diffEditor.renderSideBySide": false,
+	// Hide panes in Explorer
+	"explorer.openEditors.visible": 1,
+	// Disable file delete confirmation
+	"explorer.confirmDelete": false,
+	// Disable confirmation window on drag and drop in file explorer
+	"explorer.confirmDragAndDrop": false,
+	"explorer.fileNesting.enabled": true,
+	// Nest common file groups together to reduce file explorer clutter
+	"explorer.fileNesting.patterns": {
+		"*.ts": "${capture}.js, ${capture}.test.ts, ${capture}.spec.ts",
+		"*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+		"*.jsx": "${capture}.js",
+		"*.tsx": "${capture}.ts",
+		"tsconfig.json": "tsconfig.*.json",
+		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .yarnrc.yml",
+		".env": ".env.*",
+		".env.prod*": ".env.*",
+		".gitignore": ".*ignore, .mailmap",
+		"README.md": "CONTRIBUTING.md, LICENSE"
+	},
+	// ------------------------------
+	// Languages
+	// ------------------------------
+	// Add a ruler at 50 characters (for commit subjects)
+	"[git-commit]": {
+		"editor.rulers": [
+			50,
+			72
+		],
+		// Wrap at 72 characters instead of 50
+		"rewrap.wrappingColumn": 72
+	},
+	"[markdown]": {
+		// Disable automatic line wrapping for Markdown
+		"rewrap.autoWrap.enabled": false
+	},
+	"[mdx]": {
+		// Disable automatic line wrapping for MDX
+		"rewrap.autoWrap.enabled": false
+	},
+	// Update TypeScript imports when file is moved
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	// Rename properties everywhere instead of aliasing them to the previous name
+	"typescript.preferences.useAliasesForRenames": false,
+	// Disable jarring scroll behavior
+	"markdown.preview.scrollEditorWithPreview": false,
+	"go.toolsManagement.autoUpdate": true,
+	"gopls": {
+		// Enable semantic highlighting for Golang
+		"ui.semanticTokens": true
+	},
+	// ------------------------------
+	// Extensions
+	// ------------------------------
+	// Do not prompt to pull the branch when changes are detected on the remote
+	"githubPullRequests.pullBranch": "never",
+	"shellcheck.customArgs": [
+		// Allow 'source' outside of input files
+		"-external-sources"
+	],
+	// Languages to validate with ESLint plugin
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"vue-html"
+	],
+	// Hide persistent Live Share buttons in status bar
+	"liveshare.showInStatusBar": "whileCollaborating",
+	// Enable automatic line wrapping
+	"rewrap.autoWrap.enabled": true,
+	// Spell checker configuration
+	"cSpell.enabled": true,
+	"cSpell.language": "en",
+	"cSpell.customDictionaries": {
+		"custom-dictionary-user": {
+			"name": "custom-dictionary-user",
+			"path": "~/.cspell/custom-dictionary-user.txt",
+			"addWords": true,
+			"scope": "user"
+		}
+	},
+	// Hide spell check indicator in status bar
+	"cSpell.showStatus": false,
+	"dotfiles.repository": "AdamVig/dotfiles",
+	"dotfiles.targetPath": "~/dotfiles",
+	"dotfiles.installCommand": "bin/,bootstrap",
+	"dev.containers.githubCLILoginWithToken": true,
+	"evenBetterToml.semanticTokens": true,
+	"evenBetterToml.schema.enabled": false,
+	// ------------------------------
+	// GitHub Copilot
+	// ------------------------------
+	"github.copilot.chat.agent.thinkingTool": true,
+	"github.copilot.nextEditSuggestions.enabled": true,
+	"chat.mcp.autostart": "newAndOutdated",
+	"chat.tools.terminal.autoApprove": {
+		"cat": true,
+		"cd": true,
+		"chmod": false,
+		"chown": false,
+		"eval": false,
+		"go build": true,
+		"ls": true,
+		"pwd": true,
+		"rm": false,
+		"rmdir": false,
+	}
 }
