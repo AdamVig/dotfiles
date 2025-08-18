@@ -30,11 +30,14 @@ declare -a extensions=(
 	Catppuccin.catppuccin-vsc-icons       # Icons
 	dbaeumer.vscode-eslint                # JavaScript linter
 	dnut.rewrap-revived                   # Reformats code comments and other text to a given line length
+	docker.docker                         # Dockerfile linting/Docker Compose IntelliSense
 	EditorConfig.editorconfig             # Editor text style configuration
 	esbenp.prettier-vscode                # Code formatting with Prettier
 	figma.figma-vscode-extension          # Figma integration
 	GitHub.copilot                        # Support for Copilot
+	github.vscode-github-actions          # GitHub Actions IntelliSense (auto-recommended by VS Code)
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
+	ms-azuretools.vscode-containers       # Dockerfile language server (auto-recommended by VS Code)
 	ms-vsliveshare.vsliveshare            # Live code sharing
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	streetsidesoftware.code-spell-checker # Spell checker
