@@ -162,9 +162,12 @@
 		"chmod": false,
 		"chown": false,
 		"eval": false,
+		"fd": true,
+		"find": true,
 		"go build": true,
 		"ls": true,
 		"pwd": true,
+		"rg": true,
 		"rm": false,
 		"rmdir": false,
 	}

@@ -22,7 +22,7 @@ fi
 mkdir -p "$vscode_settings_dir"
 _ln "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
 _ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
-
+_ln "$_dir"/../.vscode/prompts "$vscode_settings_dir"/prompts
 log_end
 
 declare -a extensions=(
