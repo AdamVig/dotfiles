@@ -2,11 +2,8 @@
 
 alias b='bat'
 
-# Highlight help messages with bat (except when Graphite is not installed)
-if ! command -v gt >/dev/null; then
-	alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
-	alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-fi
+# Highlight help messages with bat
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 
 nr() {
 	node --run "${1-listing all scripts}" -- "${@:2}"
