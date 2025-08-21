@@ -47,10 +47,7 @@ declare -a extensions=(
 )
 
 declare -a no_longer_needed_extensions=(
-	eamodio.gitlens             # Advanced Git integration
-	ms-vscode.theme-tomorrowkit # Tomorrow color themes
-	dnut.rewrap-revived
-	vue.volar # Vue support
+	stkb.rewrap
 )
 
 log_start 'installing Visual Studio Code extensions'
