@@ -81,8 +81,8 @@
   draft = true
 	navigationComment = multiple
 	navigationCommentSync = downstack
-# 0.8.0:
-#	web = created
+	updateOnly = true
+	web = created
 
 
 # To include a separate configuration file conditionally, uncomment the following.
