@@ -50,5 +50,13 @@
         "key": "ctrl+h",
         "command": "editor.action.showHover",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+t",
+        "command": "-workbench.action.selectTheme"
+    },
+    {
+        "key": "ctrl+k ctrl+t",
+        "command": "workbench.action.closeOtherEditors"
     }
 ]
