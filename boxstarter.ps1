@@ -32,6 +32,7 @@ Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
 # Remove preinstalled applications
 Get-AppxPackage *Autodesk* | Remove-AppxPackage
 Get-AppxPackage *BubbleWitch* | Remove-AppxPackage
+Get-AppxPackage Clipchamp.Clipchamp | Remove-AppxPackage
 Get-AppxPackage *Dell* | Remove-AppxPackage
 Get-AppxPackage *Dropbox* | Remove-AppxPackage
 Get-AppxPackage *Facebook* | Remove-AppxPackage
@@ -48,8 +49,10 @@ Get-AppxPackage Microsoft.3DBuilder | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingFinance | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingNews | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingSports | Remove-AppxPackage
+Get-AppxPackage Microsoft.BingSearch | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingWeather | Remove-AppxPackage
 Get-AppxPackage Microsoft.CommsPhone | Remove-AppxPackage
+Get-AppxPackage Microsoft.Copilot | Remove-AppxPackage
 Get-AppxPackage Microsoft.Getstarted | Remove-AppxPackage
 Get-AppxPackage Microsoft.Messaging | Remove-AppxPackage
 Get-AppxPackage Microsoft.Microsoft3DViewer | Remove-AppxPackage
@@ -75,6 +78,7 @@ Get-AppxPackage Microsoft.WindowsSoundRecorder | Remove-AppxPackage
 # Get-AppxPackage Microsoft.XboxIdentityProvider | Remove-AppxPackage
 Get-AppxPackage Microsoft.YourPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.Zune* | Remove-AppxPackage
+Get-AppxPackage MSTeams | Remove-AppxPackage
 
 # Uninstall OneDrive
 if (Test-Path $env:SystemRoot\SysWOW64\) {
@@ -89,19 +93,19 @@ cinst procexp
 
 # Apps
 cinst battle.net --allow-empty-checksums
+cinst bitwarden
 cinst bluescreenview
+cinst discord
 cinst epicgameslauncher
-cinst etcher
 cinst foxitreader
 cinst GoogleChrome
+cinst hass-agent
 cinst hwmonitor
 cinst IrfanView
+cinst mpvio.install
 cinst signal
 cinst spotify
 cinst steam
-cinst thunderbird
-cinst vlc
-cinst vscode
 
 # Privacy: Let apps use my advertising ID: Disable
 If (-Not (Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo")) {
