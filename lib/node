@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script must run after the OS-specific scripts because it depends on Nodenv.
+# This script must run after the OS-specific scripts because it depends on fnm.
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
@@ -13,6 +13,22 @@ log() {
 
 log_start 'setting up Node'
 
+log_start 'installing latest Node version'
+if ! fnm install --latest; then
+	warn 'failed to install latest Node version'
+fi
+log_end
+
+log_start 'setting default Node version'
+if latest_node_version="$(fnm list-remote --latest)"; then
+	if ! fnm default "$latest_node_version"; then
+		warn 'failed to set default Node version'
+	fi
+else
+	warn 'failed to get latest Node version'
+fi
+log_end
+
 if is_linux && command -v npm >/dev/null; then
 	log_start 'setting npm prefix'
 	if ! npm config set prefix "$HOME"/.npm; then
@@ -21,75 +37,14 @@ if is_linux && command -v npm >/dev/null; then
 	log_end
 fi
 
-if is_linux; then
-	nodenv_root="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
-	log_start "installing Nodenv to '$nodenv_root'"
-	mkdir -p "$nodenv_root"
-	if ! [ -x "$nodenv_root"/bin/nodenv ]; then
-		if ! git clone --depth 1 https://github.com/nodenv/nodenv.git "$nodenv_root" >/dev/null; then
-			fatal 'failed to clone Nodenv'
-		fi
-	fi
-	log_end
-
-	log_start 'initializing Nodenv environment for this session'
-	# Without this, Nodenv can't find its plugins (e.g. `nodenv install`, which comes from `node-build`)
-	export NODENV_ROOT="$nodenv_root"
-	# Add `nodenv` to PATH so that it can call itself (e.g. `nodenv rehash`)
-	# https://unix.stackexchange.com/a/415028/288259
-	PATH="${PATH:+${PATH}:}$nodenv_root/bin"
-	eval "$("$nodenv_root"/bin/nodenv init -)"
-	log_end
-
-	log_start 'installing Nodenv plugins'
-	mkdir -p "$nodenv_root"/plugins
-
-	declare -a nodenv_plugins=(
-		node-build
-		nodenv-update
-		nodenv-default-packages
-	)
-
-	for nodenv_plugin in "${nodenv_plugins[@]}"; do
-		if ! [ -d "$nodenv_root"/plugins/"$nodenv_plugin" ]; then
-			if ! git clone --depth 1 https://github.com/nodenv/"$nodenv_plugin".git "$nodenv_root"/plugins/"$nodenv_plugin" >/dev/null; then
-				fatal "failed to install Nodenv plugin '$nodenv_plugin'"
-			fi
-		fi
-	done
-	log_end
-fi
-
-log 'copying default packages file'
-cp "$_dir"/../config/npm-default-packages "$(nodenv root)"/default-packages &>/dev/null || true
-
-log_start 'getting latest Node version'
-# 1. Get list of Node versions
-# 2. Filter to only get normal Node versions, like "  9.5.0"
-# 3. Take last line of output which will be latest version
-# 4. Remove the leading spaces
-latest_node_version="$(nodenv install --list | grep -E '^[0-9\.]+$' | tail -1 | xargs)"
-log_end
-
-if [ -n "$latest_node_version" ]; then
-	log_start "installing Node $latest_node_version and default npm packages"
-	if ! nodenv install --skip-existing "$latest_node_version" &>/dev/null; then
-		fatal 'failed to install Node'
-	fi
-
-	if ! nodenv global "$latest_node_version"; then
-		fatal 'failed to set gloabl Node version'
-	fi
-
-	log_end
-else
-	warn "could not get latest Node version; installation failed"
-fi
-
 if is_macos && [ -f "$NPM_CONFIG_USERCONFIG" ] && ! [ -h "$HOME"/.npmrc ]; then
 	log_start 'linking npmrc to home directory'
 	ln -sf "$NPM_CONFIG_USERCONFIG" "$HOME"/.npmrc
 	log_end
 fi
+
+log_start 'removing nodenv'
+rm -rf ~/.local/share/nodenv/ || true
+log_end
 
 log_end

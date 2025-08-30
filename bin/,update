@@ -116,10 +116,7 @@ update_brew() {
 }
 
 update_npm() {
-	for version in $(nodenv versions --skip-aliases --bare); do
-		echo "npm packages in node $version"
-		NODENV_VERSION="$version" nodenv exec npm update -g
-	done
+	npm update -g
 }
 
 update_python_tools() {
@@ -144,16 +141,6 @@ update_apt() {
 update_linux_software() {
 	echo 'linux software'
 	"$_dir"/../lib/linux-software
-}
-
-update_nodenv() {
-	echo 'nodenv'
-	git -C "$NODENV_ROOT" pull --no-rebase
-
-	echo 'nodenv plugins'
-	for plugin in "$NODENV_ROOT"/plugins/*; do
-		git -C "$plugin" pull --no-rebase
-	done
 }
 
 update_gh_extensions() {
@@ -210,8 +197,6 @@ main() {
 
 	if [[ $OSTYPE == *linux* ]]; then
 		run_operation 'linux software' update_linux_software
-
-		run_operation 'nodenv' update_nodenv
 	fi
 
 	run_operation 'gh extensions' update_gh_extensions

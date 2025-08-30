@@ -102,14 +102,9 @@ export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
 # Add golang directory to PATH
 append_path "$GOPATH/bin"
 
-# Prevent Nodenv from storing data in ~/.nodenv
-export NODENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/nodenv
-
 if [[ "$OSTYPE" == *linux* ]]; then
   # Prevent Docker from storing configuration in  ~/.docker
   export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
-
-	append_path "$NODENV_ROOT"/bin
 
 	# When in a graphical environment
 	if [ -n "${DESKTOP_SESSION-}" ]; then
@@ -182,6 +177,9 @@ export TURBO_TELEMETRY_MESSAGE_DISABLED="true"
 
 # Disable Next.js telemetry (mainly to disable the message)
 export NEXT_TELEMETRY_DISABLED=1
+
+# Prevent fnm from storing data in home directory
+export FNM_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"/fnm
 
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local

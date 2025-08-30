@@ -47,11 +47,7 @@ brew "python"
 brew "ruby"
 
 # programming language tools
-brew "nodenv" # Node environment manager
-brew "node-build" # Plugin for installing Node versions with Nodenv
-tap "nodenv/nodenv"
-brew "nodenv/nodenv/nodenv-default-packages" # Plugin for auto-installing list of npm packages
-brew "nodenv/nodenv/nodenv-package-rehash" # Plugin for auto-rehashing when a global package is installed or uninstalled
+brew "fnm" # Node version manager
 brew "shellcheck" # Shell script linter
 brew "shfmt" # Shell script formatter
 brew "uv" # Python package manager

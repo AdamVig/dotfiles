@@ -46,6 +46,25 @@ install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
 log_end
 
+log_start 'installing fnm'
+if ! fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"; then
+	fatal 'failed to get fnm release URL'
+fi
+fnm_tmp="$(mktemp --suffix .zip)"
+if ! _curl "$fnm_url" --output "$fnm_tmp"; then
+	fatal 'failed to download fnm'
+fi
+fnm_extracted_tmp="$(mktemp -d)"
+if ! unzip "$fnm_tmp" -d "$fnm_extracted_tmp" >/dev/null; then
+	fatal 'failed to extract fnm'
+fi
+rm -f "$fnm_tmp"
+fnm_path="$HOME"/.local/bin/fnm
+install "$fnm_extracted_tmp"/fnm "$fnm_path"
+rm -rf "$fnm_extracted_tmp"
+fnm completions --shell=zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions/_fnm
+log_end
+
 log_start 'installing git-spice'
 if ! git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"; then
 	fatal 'failed to get git-spice release URL'
@@ -106,7 +125,7 @@ rm -rf "$kitty_path"
 mv "$kitty_extracted_tmp" "$kitty_path"
 _ln "$kitty_path"/bin/* "$HOME"/.local/bin
 mkdir -p "$HOME"/.local/share/man/{man1,man5}
-_ln "$kitty_path"/lib/kitty/shell-integration/zsh/completions/* "$(xdg_data)"/zsh-site-functions
+_ln "$kitty_path"/lib/kitty/shell-integration/zsh/completions/* "$(xdg_data)"/zsh-site-functions/_kitty
 _ln "$kitty_path"/share/man/man1/* "$HOME"/.local/share/man/man1
 _ln "$kitty_path"/share/man/man5/* "$HOME"/.local/share/man/man5
 mkdir -p "$HOME"/.local/share/applications

@@ -48,20 +48,12 @@ PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
 source "$ZDOTDIR"/aliases.zsh
 
+# Initialize fnm
+eval "$(fnm env --shell=zsh --use-on-cd --version-file-strategy=recursive)"
+
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true
-
-# Initialize Nodenv if not already initialized
-if command -v nodenv >/dev/null && [[ "$PATH" != *"nodenv/shims"* ]]; then
-  eval "$(nodenv init - --no-rehash)"
-
-	# For Linux
-	nodenv_completions_path="$NODENV_ROOT"/completions/nodenv.zsh
-	if [ -f "$nodenv_completions_path" ]; then
-		source "$nodenv_completions_path"
-	fi
-fi
 
 # Initialize Kitty shell integration
 if [ -n "$KITTY_INSTALLATION_DIR" ]; then
