@@ -150,6 +150,8 @@ export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"/ripgrep/config
 # Prevent Postgres from storing history in ~/.psql_history
 export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/psql-history
 
+# Add npm global binary directory to PATH
+prepend_path "$HOME"/.npm/bin
 # Prevent npm from storing config in ~/.npmrc
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 # Disable "packages are looking for funding" message
