@@ -60,7 +60,7 @@ if ! grep --quiet "$grub_memtest_variable" /etc/default/grub; then
 fi
 
 log_start 're-generating Grub configuration'
-request_sudo update-grub
+request_sudo grub-mkconfig -o /boot/grub/grub.cfg
 log_end
 
 log_end
