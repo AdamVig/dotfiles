@@ -16,7 +16,7 @@ find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
 log_end
 
 log_start 'removing no-longer-needed software'
-rm -vrf "$HOME"/.local/bin/{calibre*,ebook*,scc} "$HOME"/.local/share/calibre
+rm -vrf "$HOME"/.local/bin/undercutf1
 log_end
 
 log_start 'installing b2'
@@ -205,12 +205,6 @@ rm -f "$restic_tmp"
 restic_path="$HOME"/.local/bin/restic
 install "$restic_extracted_tmp" "$restic_path"
 rm -rf "$restic_extracted_tmp"
-log_end
-
-log_start 'installing UndercutF1'
-if ! install_binary_from_github_release 'undercutf1' 'JustAman62/undercut-f1' 'linux-x64'; then
-	fatal 'failed to install UndercutF1'
-fi
 log_end
 
 log_start 'installing uv'
