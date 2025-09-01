@@ -48,8 +48,10 @@ PS1='$(remote-host-info)%B%2~%b$(git-info) '
 
 source "$ZDOTDIR"/aliases.zsh
 
-# Initialize fnm
-eval "$(fnm env --shell=zsh --use-on-cd --version-file-strategy=recursive)"
+# Initialize fnm if not already initialized
+if command -v fnm >/dev/null && [[ "$PATH" != *"fnm"* ]]; then
+	eval "$(fnm env --shell=zsh --use-on-cd --version-file-strategy=recursive)"
+fi
 
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
