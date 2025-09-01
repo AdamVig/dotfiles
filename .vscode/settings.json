@@ -42,6 +42,7 @@
 	"workbench.settings.editor": "json",
 	// Hide release notes
 	"update.showReleaseNotes": false,
+	"task.allowAutomaticTasks": "on",
 	// ------------------------------
 	// Terminal
 	// ------------------------------
