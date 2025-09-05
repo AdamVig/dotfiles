@@ -165,6 +165,7 @@
 		"fd": true,
 		"find": true,
 		"go build": true,
+		"go test": true,
 		"ls": true,
 		"pwd": true,
 		"rg": true,
