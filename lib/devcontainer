@@ -54,5 +54,9 @@ if command -v apt-get >/dev/null; then
 	mkdir -p "$HOME"/.local/bin
 	_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 	log_end
+
+	log 'copying Codex configuration'
+	mkdir -p "$CODEX_HOME"
+	cp "$_dir"/../config/codex.toml "$CODEX_HOME"/config.toml
 fi
 log_end
