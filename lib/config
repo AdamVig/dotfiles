@@ -52,8 +52,11 @@ log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig
 
-log 'copying Codex configuration'
-mkdir -p "$CODEX_HOME"
-cp "$_dir"/../config/codex.toml "$CODEX_HOME"/config.toml
+codex_home="${CODEX_HOME-$HOME/.codex}"
+if ! [ -d "$codex_home" ]; then
+	log 'copying Codex configuration'
+	mkdir -p "$codex_home"
+	cp "$_dir"/../config/codex.toml "$codex_home"/config.toml
+fi
 
 log_end

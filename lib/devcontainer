@@ -55,11 +55,6 @@ if command -v apt-get >/dev/null; then
 	_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 	log_end
 
-	log 'copying Codex configuration'
-	codex_home="${CODEX_HOME-$HOME/.codex}"
-	mkdir -p "$codex_home"
-	cp "$_dir"/../config/codex.toml "$codex_home"/config.toml
-
 	log 'installing Codex'
 	npm install --global @openai/codex@latest
 fi
