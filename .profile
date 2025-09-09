@@ -183,8 +183,10 @@ export NEXT_TELEMETRY_DISABLED=1
 # Prevent fnm from storing data in home directory
 export FNM_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"/fnm
 
-# Prevent Codex from storing data in home directory
-export CODEX_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/codex
+if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]] && ! [[ -v REMOTE_CONTAINERS ]]; then
+	# Prevent Codex from storing data in home directory (except in Dev Container, where we use the default path)
+	export CODEX_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/codex/
+fi
 
 # Load local overrides if the user has created the file
 local_profile_path="$HOME"/.profile-local
