@@ -1,10 +1,10 @@
 # https://github.com/openai/codex/blob/main/docs/config.md
 
 
-approval_policy = "untrusted"
+approval_policy = "on-request"
 preferred_auth_method = "chatgpt"
+sandbox_mode = "workspace-write"
 
 [mcp_servers.context7]
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
-
