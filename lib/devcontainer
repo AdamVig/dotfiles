@@ -58,5 +58,8 @@ if command -v apt-get >/dev/null; then
 	log 'copying Codex configuration'
 	mkdir -p "$CODEX_HOME"
 	cp "$_dir"/../config/codex.toml "$CODEX_HOME"/config.toml
+
+	log 'installing Codex'
+	npm install --global @openai/codex@latest
 fi
 log_end
