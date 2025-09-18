@@ -11,7 +11,6 @@ source "$ZDOTDIR"/key-bindings.zsh
 source "$ZDOTDIR"/completion.zsh
 source "$ZDOTDIR"/fzf.zsh # Depends on completion
 source "$ZDOTDIR"/git.zsh # Depends on completion
-source "$ZDOTDIR"/yarn.zsh
 source "$ZDOTDIR"/utils.zsh
 source "$ZDOTDIR"/history.zsh
 
