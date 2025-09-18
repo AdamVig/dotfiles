@@ -271,6 +271,12 @@ if is_ubuntu; then
 	fi
 	log_end
 
+	log_start 'installing DBeaver'
+	if ! install_deb_from_github_release 'dbeaver/dbeaver' '_amd64.deb'; then
+		fatal 'failed to install DBeaver'
+	fi
+	log_end
+
 	log_start 'installing git-delta'
 	if ! install_deb_from_github_release 'dandavison/delta' '_amd64.deb'; then
 		fatal 'failed to install git-delta'
