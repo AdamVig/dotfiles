@@ -289,6 +289,12 @@ if is_ubuntu; then
 	fi
 	log_end
 
+	log_start 'installing go-hass-agent'
+	if ! install_deb_from_github_release 'joshuar/go-hass-agent' '_amd64.deb'; then
+		fatal 'failed to install go-hass-agent'
+	fi
+	log_end
+
 	log_start 'installing Hugo'
 	if ! install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'; then
 		fatal 'failed to install Hugo'
