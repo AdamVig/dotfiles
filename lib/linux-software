@@ -301,12 +301,6 @@ if is_ubuntu; then
 	fi
 	log_end
 
-	log_start 'installing Jan'
-	if ! install_deb_from_github_release 'menloresearch/jan' '_amd64.deb'; then
-		fatal 'failed to install Jan'
-	fi
-	log_end
-
 	log_start 'installing Obsidian'
 	if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'; then
 		fatal 'failed to install Obsidian'
@@ -314,7 +308,7 @@ if is_ubuntu; then
 	log_end
 
 	log_start 'removing no-longer-needed software'
-	request_sudo apt-get remove --yes --autoremove pastel &>/dev/null || true
+	request_sudo apt-get remove --yes --autoremove jan &>/dev/null || true
 	log_end
 fi
 
