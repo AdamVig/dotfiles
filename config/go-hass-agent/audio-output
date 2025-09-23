@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# go-hass-agent script: binary sensor "Audio Output"
+# Emits JSON every run (unknown/sink ID).
+
+set -euo pipefail
+
+# `wpctl inspect` output includes quotes and `rg` preserves them (necessary for this to be a valid JSON string)
+if ! state="$(wpctl inspect @DEFAULT_AUDIO_SINK@ | rg 'node\.nick = (".+")' --only-matching --replace='$1')"; then
+	state='null'
+fi
+
+jq --null-input \
+	--arg schedule "@every 5s" \
+	--arg name "Audio Output" \
+	--arg icon "mdi:speaker" \
+	--argjson state "$state" \
+	'{
+  schedule: $schedule,
+  sensors: [{
+    sensor_name: $name,
+    sensor_icon: $icon,
+    sensor_state: $state
+  }]
+}'
