@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# go-hass-agent script: binary sensor "Webcam In Use"
+# Emits JSON every run (unknown/true/false).
+
+set -euo pipefail
+shopt -s nullglob
+
+plumbing_re='^(pipewire|wireplumber|xdg-desktop-portal.*)$'
+state='null'
+
+# Only attempt checks if camera nodes exist
+if compgen -G "/dev/video*" >/dev/null; then
+	# Get process IDs using any camera nodes
+	# -t to remove trailing newlines
+	# -w suppresses warnings
+	# -t for terse mode
+	# -Q to not fail if there are no processes using the files
+	mapfile -t pids < <(
+		lsof -wtQ /dev/video*
+	)
+	for pid in "${pids[@]}"; do
+		# Skip process IDs that have no comm file
+		if ! [[ -r "/proc/$pid/comm" ]]; then
+			continue
+		fi
+		read -r process_name <"/proc/$pid/comm"
+		# Filter out empty and plumbing process names
+		if [[ -n $process_name && ! $process_name =~ $plumbing_re ]]; then
+			state='true'
+			break
+		fi
+	done
+
+	# If nothing but plumbing held the device, it's off
+	if [[ $state == "null" ]]; then
+		state='false'
+	fi
+fi
+
+jq --null-input \
+	--arg schedule "@every 5s" \
+	--arg name "Webcam In Use" \
+	--arg icon "mdi:webcam" \
+	--argjson state "$state" '
+{
+  schedule: $schedule,
+  sensors: [{
+    sensor_name: $name,
+    sensor_icon: $icon,
+    sensor_type: "binary",
+    sensor_state: $state
+  }]
+}'
