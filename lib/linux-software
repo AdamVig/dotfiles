@@ -10,6 +10,10 @@ log() {
 }
 
 log_start 'installing Linux distribution-agnostic software'
+if is_ubuntu; then
+	# Get password upfront to ensure the script runs to completion without pausing
+	request_sudo
+fi
 
 log_start 'removing broken binary symlinks'
 find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
