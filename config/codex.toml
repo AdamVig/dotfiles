@@ -8,3 +8,6 @@ sandbox_mode = "workspace-write"
 [mcp_servers.context7]
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
+
+[tui]
+notifications = true
