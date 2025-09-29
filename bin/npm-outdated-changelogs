@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help]
+Gather changelogs from GitHub releases for packages in \`npm outdated\`.
+
+Flags:
+  -h, --help    show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+if ! check-installed npm https://nodejs.org/ || ! check-installed jq https://jqlang.github.io/jq/ || ! check-installed gh https://cli.github.com/ || ! check-installed pandoc https://pandoc.org/; then
+	exit 1
+fi
+
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT
+
+npm_outdated_output_path="$tmpdir/npm-outdated.json"
+# npm outdated exits 1 when packages are outdated, 0 when up-to-date
+npm outdated --json >"$npm_outdated_output_path" || [ $? -eq 1 ]
+
+out_dir="$HOME/downloads"
+mkdir -p "$out_dir"
+today="$(date +%F)" # e.g., 2025-09-29
+out_md="$out_dir/${today}-npm-outdated-changelogs.md"
+out_html="$out_dir/${today}-npm-outdated-changelogs.html"
+: >"$out_md" # truncate
+
+while IFS=$'\t' read -r name current latest; do
+	echo "Processing package: $name"
+	echo "## ${name}" >>"$out_md"
+	echo "Current: ${current} | Latest: ${latest}" >>"$out_md"
+
+	npm_repo_url=""
+	if npm_repo="$(npm repo --json "$name" --no-browser 2>/dev/null)"; then
+		npm_repo_url="$(echo "$npm_repo" | jq -r '.url')"
+	elif ! npm_repo_url="$(npm show "$name" homepage 2>/dev/null)"; then
+		echo "Warning: could not find repository URL for package $name"
+		printf ":warning: could not find repository URL for package %s\n\n" "$name" >>"$out_md"
+		continue
+	fi
+	echo "Repository URL: $npm_repo_url"
+
+	# Check if repository URL is a GitHub URL
+	if [[ ! $npm_repo_url =~ ^https://github\.com/ ]]; then
+		echo "Warning: package $name repository is not on GitHub ($npm_repo_url)"
+		printf ":warning: package %s repository is not on GitHub (%s)\n\n" "$name" "$npm_repo_url" >>"$out_md"
+		continue
+	fi
+
+	# Extract owner/repo from GitHub URL
+	if [[ $npm_repo_url =~ github\.com/([^/]+)/([^/.]+) ]]; then
+		owner="${BASH_REMATCH[1]}"
+		repo="${BASH_REMATCH[2]}"
+	else
+		echo "Warning: could not extract owner/repo from GitHub URL: $npm_repo_url"
+		printf ":warning: could not extract owner/repo from GitHub URL: %s\n\n" "$npm_repo_url" >>"$out_md"
+		continue
+	fi
+
+	# Fetch first page of releases
+	rel_json="$tmpdir/${owner}-${repo}-releases.json"
+	if ! gh api "/repos/${owner}/${repo}/releases?per_page=100" >"$rel_json" 2>"$tmpdir/gh.err"; then
+		echo "Warning: failed to fetch releases for $owner/$repo"
+		printf ":warning: failed to fetch releases for %s/%s\n\n" "$owner" "$repo" >>"$out_md"
+		read -r -p "Press any key to continue to next package…" _ || true
+		continue
+	fi
+
+	# Compute slice from npm 'latest' (or fallback to index 0) down to 'current' (inclusive)
+	# Accept tags with or without 'v' prefix for both latest and current.
+	notes_file="$tmpdir/${owner}-${repo}-notes.txt"
+	jq --arg latest "$latest" --arg current "$current" --arg owner "$owner" --arg repo "$repo" -r '
+    def match_ver($ver):
+      .tag_name == $ver or .tag_name == ("v"+$ver);
+
+    def nz(x): if x == null then "" else x end;
+
+    # Filter non-draft, non-prerelease and keep order as returned (newest -> oldest)
+    [ .[] | select((.draft|not) and (.prerelease|not)) ] as $r
+
+    # Find the index to START from: match npm latest, else 0 as guard if GH ordering differs
+		| ($r
+		   | to_entries
+		   | map(select(.value.tag_name == $latest or .value.tag_name == ("v"+$latest)))
+		   | (.[0].key // 0)
+    ) as $s
+
+    # Walk from start_idx downwards until we hit CURRENT (inclusive)
+    | reduce ($r[$s:][]) as $rel
+        ( {"out": [], "stop": false};
+          if .stop then .
+          else
+					  .out += [ {
+						  tag: nz($rel.tag_name),
+						  name: (if ($rel.name != null and $rel.name != "") then $rel.name else nz($rel.tag_name) end),
+							published: (if $rel.published_at != null and $rel.published_at != ""
+						              then ($rel.published_at | strptime("%Y-%m-%dT%H:%M:%SZ") | strftime("%b %-d, %Y"))
+							            else "" end),
+						  body: nz($rel.body),
+						  html_url: nz($rel.html_url)
+						} ]
+            | .stop = ( ($rel | match_ver($current)) )
+          end
+        )
+    | .out as $out
+    | (any($out[]?; (.tag == $current or .tag == ("v"+$current)))) as $hasCurrent
+    | (if $hasCurrent then $out else ($out | if length>0 then .[:1] else . end) end) as $slice
+    | if ($slice|length) == 0 then
+        "No applicable releases found."
+      else
+        $slice | reverse[]
+        | ( .body
+            | gsub("\\(#([0-9]+)\\)"; "([#\\1](https://github.com/\($owner)/\($repo)/issues/\\1))")
+            | gsub("(^|[[:space:](])#([0-9]+)";
+                   "\\1[#\\2](https://github.com/\($owner)/\($repo)/issues/\\2)")
+          ) as $linkedBody
+        | ( .name
+            | (if . == "" then "" else
+                 gsub("\\(#([0-9]+)\\)"; "([#\\1](https://github.com/\($owner)/\($repo)/issues/\\1))")
+                 | gsub("(^|[[:space:](])#([0-9]+)";
+                        "\\1[#\\2](https://github.com/\($owner)/\($repo)/issues/\\2)")
+              end)
+          ) as $linkedName
+       | "### [" + (if .name != "" then .name else .tag end) + "](" + (.html_url // "") + ")"
+          + (if .published != "" then " — " + .published else "" end)
+          + "\n\n"
+          + ($linkedBody // "")
+          + "\n"
+      end
+  ' "$rel_json" >>"$notes_file"
+
+	cat "$notes_file" >>"$out_md"
+	echo -e '\n---\n' >>"$out_md"
+done < <(jq --raw-output 'to_entries[] | [.key, .value.current, .value.latest] | @tsv' "$npm_outdated_output_path")
+
+before_body="$tmpdir/pandoc-before.html"
+after_body="$tmpdir/pandoc-after.html"
+cat >"$before_body" <<'HTML'
+<style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
+<article class="markdown-body">
+HTML
+echo '</article>' >"$after_body"
+
+package_name="$(jq --raw-output '.name' package.json || echo '')"
+pandoc \
+	--from=gfm \
+	--to=html5 \
+	--standalone \
+	--css='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css' \
+	--include-before-body="$before_body" \
+	--include-after-body="$after_body" \
+	--metadata title="$package_name npm outdated changelogs — $today" \
+	--output "$out_html" "$out_md"
+
+echo "Wrote: $out_html"
+open "$out_html" >/dev/null 2>&1 || true
