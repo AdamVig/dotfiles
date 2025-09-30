@@ -9,5 +9,8 @@ sandbox_mode = "workspace-write"
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
 
+[sandbox_workspace_write]
+network_access = true
+
 [tui]
 notifications = true
