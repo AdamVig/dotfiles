@@ -11,6 +11,11 @@ command = "npx"
 
 [sandbox_workspace_write]
 network_access = true
+writable_roots = [
+  "$GOPATH",
+  "$NPM_CONFIG_USERCONFIG",
+  "$XDG_CACHE_HOME"
+]
 
 [tui]
 notifications = true
