@@ -3,7 +3,7 @@
 	// Editor
 	// ------------------------------
 	"window.zoomLevel": 1,
-	"editor.fontFamily": "Input Sans",
+	"editor.fontFamily": "Input Mono",
 	"editor.fontWeight": "600",
 	"editor.fontLigatures": false,
 	"editor.rulers": [
@@ -17,7 +17,7 @@
 	"editor.folding": true,
 	"editor.find.seedSearchStringFromSelection": "selection",
 	"editor.snippetSuggestions": "none",
-	"editor.fontSize": 12,
+	"editor.fontSize": 13,
 	"editor.hideCursorInOverviewRuler": true,
 	"editor.guides.indentation": false,
 	"editor.bracketPairColorization.enabled": true,
@@ -45,7 +45,6 @@
 	// ------------------------------
 	// Terminal
 	// ------------------------------
-	"terminal.integrated.fontFamily": "Input Mono",
 	// Prevent VS Code from modifying terminal colors
 	"terminal.integrated.minimumContrastRatio": 1,
 	"terminal.integrated.scrollback": 10000,
