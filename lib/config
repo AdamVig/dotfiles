@@ -16,7 +16,7 @@ codex_home="${CODEX_HOME-$HOME/.codex}"
 
 if is_devcontainer; then
 	log_start 'ensuring correct ownership of config directories'
-	request_sudo chown --recursive "$config_dir" "$codex_home"
+	request_sudo chown --recursive "${USER:-$(id --name --user)}":"${GROUP:-$(id --name --group)}" "$config_dir" "$codex_home"
 	log_end
 fi
 
