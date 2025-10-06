@@ -54,8 +54,8 @@ if command -v apt-get >/dev/null; then
 	mkdir -p "$HOME"/.local/bin
 	_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 	log_end
-
-	log 'installing Codex'
-	npm install --global @openai/codex@latest
 fi
+
+log 'installing Codex'
+npm install --global @openai/codex@latest
 log_end
