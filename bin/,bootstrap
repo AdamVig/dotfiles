@@ -29,7 +29,7 @@ if command -v apt-get >/dev/null && (! command -v curl >/dev/null || { [ -v VSCO
 	echo 'done updating apt lists.'
 
 	echo 'installing dependencies...'
-	sudo apt-get install --yes build-essential curl file git jq unzip >/dev/null
+	sudo apt-get install --yes build-essential curl file gettext git jq unzip >/dev/null
 	echo 'done installing dependencies.'
 
 	echo 'done running pre-bootstrap steps'
