@@ -1,5 +1,7 @@
-# Disable redundant global compinit on Ubuntu
-skip_global_compinit=1
+if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]] && ! [[ -v REMOTE_CONTAINERS ]]; then
+	# Disable redundant global compinit on Ubuntu (when not in a Dev Container)
+	skip_global_compinit=1
+fi
 
 # Synchronized with .profile; needs to be set here as well so that ZDOTDIR can be set correctly
 if [[ "$OSTYPE" == darwin* ]]; then
