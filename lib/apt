@@ -227,7 +227,7 @@ declare -a packages=(
 	# applications
 	code
 	easyeffects # Audio effects
-	emacs       # Text editor
+	emacs-pgtk  # Text editor
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
