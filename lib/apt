@@ -213,7 +213,6 @@ declare -a packages=(
 
 	# programming language tools
 	cargo       # Rust
-	npm         # Node
 	python3-pip # Python
 	shellcheck  # Shell script linter
 
