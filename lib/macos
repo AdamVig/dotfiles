@@ -11,11 +11,6 @@ log() {
 
 log_start 'setting up macOS'
 
-log_start 'symlinking Hammerspoon config'
-mkdir -p "$HOME"/.hammerspoon
-_ln "$_dir"/../config/hammerspoon.lua "$HOME"/.hammerspoon/init.lua
-log_end
-
 # Make Finder quittable
 defaults write com.apple.finder QuitMenuItem -bool YES
 

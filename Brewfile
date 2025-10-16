@@ -66,7 +66,6 @@ cask "google-chrome" # Browser
 cask "figma"
 cask "gpg-suite"
 cask "inkscape" # Vector image editor and command-line conversion tool
-cask "hammerspoon" # Automation framework
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
