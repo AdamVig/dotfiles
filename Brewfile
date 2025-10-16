@@ -62,7 +62,7 @@ brew "gnu-time" if OS.mac? # Better than BSD time
 brew "grep" if OS.mac?
 
 # applications
-cask "google-chrome" # Browser
+cask "brave-browser"
 cask "figma"
 cask "gpg-suite"
 cask "inkscape" # Vector image editor and command-line conversion tool

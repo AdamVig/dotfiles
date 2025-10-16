@@ -14,7 +14,7 @@
 
 #---- TEMPORARY ---
 Disable-UAC
-  
+
 #--- Windows Settings ---
 Disable-BingSearch
 Disable-GameBarTips
@@ -95,10 +95,10 @@ cinst procexp
 cinst battle.net --allow-empty-checksums
 cinst bitwarden
 cinst bluescreenview
+cinst brave
 cinst discord
 cinst epicgameslauncher
 cinst foxitreader
-cinst GoogleChrome
 cinst hass-agent
 cinst hwmonitor
 cinst IrfanView

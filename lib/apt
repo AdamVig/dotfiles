@@ -136,6 +136,15 @@ if ! is_repository_configured 'nextdns'; then
 	log_end
 fi
 
+if ! is_repository_configured 'brave-browser-apt-release'; then
+	log_start 'adding Brave repository'
+	_curl https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg |
+		request_sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg >/dev/null
+	_curl https://brave-browser-apt-release.s3.brave.com/brave-browser.sources |
+		request_sudo tee /etc/apt/sources.list.d/brave-browser-release.sources >/dev/null
+	log_end
+fi
+
 log_start 'updating lists'
 if request_sudo apt-get update >/dev/null; then
 	log_end
@@ -224,6 +233,7 @@ declare -a packages=(
 	docker-compose-plugin
 
 	# applications
+	brave-browser
 	code
 	easyeffects # Audio effects
 	emacs-pgtk  # Text editor
@@ -254,19 +264,13 @@ fi
 log_end
 
 declare -a unwanted_packages=(
+	google-chrome-stable # Switched to Brave
 )
 
 log_start 'removing unwanted packages'
 for unwanted_package in "${unwanted_packages[@]}"; do
 	request_sudo apt-get remove --yes --autoremove "$unwanted_package" &>/dev/null || true
 done
-log_end
-
-log_start 'installing auto-updating packages from non-repository sources'
-log_start 'installing Google Chrome'
-if ! install_deb_from_url 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'; then
-	fatal 'failed to install Google Chrome'
-fi
 log_end
 
 log_start 'configuring automatic upgrades'
