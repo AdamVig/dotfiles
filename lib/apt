@@ -254,29 +254,6 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	chromium
-	composer # PHP
-	d-feet   # D-Bus debugger
-	firefox
-	google-chrome-stable
-	gnuplot         # Command-line plotting
-	gpsbabel        # GPS file conversion tool
-	magic-wormhole  # Point-to-point file sharing
-	mdadm           # Software RAID
-	pipx            # Python tool installer
-	qemu-system-x86 # Virtual machine tool
-	redshift        # Screen color temperature adjustment tool
-	rpi-imager      # Raspberry Pi imager
-	units           # Unit conversion calculator
-	virt-manager    # Virtual machine manager
-
-	# i3
-	brightnessctl # Control screen brightness
-	flameshot     # Screenshot tool
-	i3            # Window manager
-	i3blocks      # Status bar generator
-	obs-studio    # Screen recording
-	rofi          # Application launcher
 )
 
 log_start 'removing unwanted packages'
