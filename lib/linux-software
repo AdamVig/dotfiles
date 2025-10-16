@@ -159,7 +159,7 @@ if ! [ -d "$fonts_dir"/input ]; then
 	fi
 	rm -rf "$input_tmp" "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
-		warppn 'failed to generate font caches, font will not be available until next login'
+		warn 'failed to generate font caches, font will not be available until next login'
 	fi
 	log_end
 fi
@@ -251,6 +251,10 @@ if is_ubuntu; then
 	log_start 'installing bat'
 	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
 		fatal 'failed to install bat'
+	fi
+	# Tell apt to not upgrade bat using the repository version
+	if ! request_sudo apt-mark hold bat; then
+		warn 'failed to hold bat, apt upgrade may override its installation'
 	fi
 	log_end
 
