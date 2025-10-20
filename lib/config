@@ -15,6 +15,9 @@ config_dir="$(xdg_config)"
 codex_home="${CODEX_HOME-$HOME/.codex}"
 
 if is_devcontainer; then
+	log_start 'ensuring config directories exist'
+	mkdir -vp "$config_dir" "$codex_home"
+	log_end
 	log_start 'ensuring correct ownership of config directories'
 	request_sudo chown --recursive "${USER:-$(id --name --user)}":"${GROUP:-$(id --name --group)}" "$config_dir" "$codex_home"
 	log_end
