@@ -1,4 +1,4 @@
-if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]] && ! [[ -v REMOTE_CONTAINERS ]]; then
+if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION ]] && ! [[ -v REMOTE_CONTAINERS ]] && ! [[ -v IN_DEV_CONTAINER ]]; then
 	# Disable redundant global compinit on Ubuntu (when not in a Dev Container)
 	skip_global_compinit=1
 fi
