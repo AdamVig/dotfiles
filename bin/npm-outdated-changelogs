@@ -115,16 +115,15 @@ while IFS=$'\t' read -r name current latest; do
         "No applicable releases found."
       else
         $slice | reverse[]
-        | ( .body
-            | gsub("\\(#([0-9]+)\\)"; "([#\\1](https://github.com/\($owner)/\($repo)/issues/\\1))")
-            | gsub("(^|[[:space:](])#([0-9]+)";
-                   "\\1[#\\2](https://github.com/\($owner)/\($repo)/issues/\\2)")
+        | ( .body as $text
+            | $text
+            | gsub("\\(#(?<issue>[0-9]+)\\)"; "([#\(.issue)](https://github.com/\($owner)/\($repo)/issues/\(.issue)))")
+            | gsub("(?<prefix>^|[[:space:](])#(?<issue>[0-9]+)"; "\(.prefix)[#\(.issue)](https://github.com/\($owner)/\($repo)/issues/\(.issue))")
           ) as $linkedBody
         | ( .name
             | (if . == "" then "" else
-                 gsub("\\(#([0-9]+)\\)"; "([#\\1](https://github.com/\($owner)/\($repo)/issues/\\1))")
-                 | gsub("(^|[[:space:](])#([0-9]+)";
-                        "\\1[#\\2](https://github.com/\($owner)/\($repo)/issues/\\2)")
+                 gsub("\\(#(?<issue>[0-9]+)\\)"; "([#\(.issue)](https://github.com/\($owner)/\($repo)/issues/\(.issue)))")
+                 | gsub("(?<prefix>^|[[:space:](])#(?<issue>[0-9]+)"; "\(.prefix)[#\(.issue)](https://github.com/\($owner)/\($repo)/issues/\(.issue))")
               end)
           ) as $linkedName
        | "### [" + (if .name != "" then .name else .tag end) + "](" + (.html_url // "") + ")"
