@@ -13,8 +13,8 @@ command = "npx"
 network_access = true
 writable_roots = [
   "$GOPATH",
-  "$NPM_CONFIG_USERCONFIG",
-  "$XDG_CACHE_HOME"
+  "$XDG_CACHE_HOME",
+  "$XDG_CONFIG_HOME"
 ]
 
 [tui]

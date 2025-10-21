@@ -68,6 +68,8 @@ if ! [ -s "$codex_home"/config.toml ]; then
 	mkdir -p "$codex_home"
 	export XDG_CACHE_HOME
 	XDG_CACHE_HOME="$(xdg_cache)"
+	export XDG_CONFIG_HOME
+	XDG_CONFIG_HOME="$(xdg_config)"
 	envsubst <"$_dir"/../config/codex.toml >"$codex_home"/config.toml
 fi
 
