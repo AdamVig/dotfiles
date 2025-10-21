@@ -173,5 +173,6 @@
 		"rm": false,
 		"rmdir": false,
 		"sqlc": true
-	}
+	},
+	"redhat.telemetry.enabled": false
 }
