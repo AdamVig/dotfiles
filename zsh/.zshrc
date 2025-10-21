@@ -21,6 +21,13 @@ remote-host-info() {
   fi
 }
 
+in-dev-container() {
+  if [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV_CONTAINER ]]; then
+    # <yellow>[Dev Container]<end yellow>
+    echo '%F{yellow}[Dev Container]%f '
+  fi
+}
+
 git-wip() {
   if git log --max-count=1 2> /dev/null | grep --quiet "\-\-wip\-\-"; then
     #  <red>[WIP]<end red>
@@ -42,8 +49,8 @@ git-info() {
 # Enable substitution in PS1 (must be single-quoted)
 setopt prompt_subst
 
-# <remote host info> <bold><dir, max two levels deep><end bold> <git info>
-PS1='$(remote-host-info)%B%2~%b$(git-info) '
+# <in dev container><remote host info> <bold><dir, max two levels deep><end bold> <git info>
+PS1='$(in-dev-container)$(remote-host-info)%B%2~%b$(git-info) '
 
 source "$ZDOTDIR"/aliases.zsh
 
