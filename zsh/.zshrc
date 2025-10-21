@@ -15,7 +15,7 @@ source "$ZDOTDIR"/utils.zsh
 source "$ZDOTDIR"/history.zsh
 
 remote-host-info() {
-  if [ -v SSH_TTY ] || [ -v SSH_CONNECTION ] || [ -v SSH_CLIENT ]; then
+  if [[ -v SSH_TTY || -v SSH_CONNECTION || -v SSH_CLIENT ]]; then
     # <username>@<hostname>
     echo '%n@%M '
   fi
