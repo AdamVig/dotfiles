@@ -97,7 +97,9 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 # Prevent Golang from storing data in ~/go
-export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
+if ! [[ -v GOPATH ]]; then
+	export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
+fi
 
 # Add golang directory to PATH
 append_path "$GOPATH/bin"
