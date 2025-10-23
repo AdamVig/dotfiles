@@ -2,9 +2,6 @@
 
 alias b='bat'
 
-# Highlight help messages with bat
-alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-
 nr() {
 	node --run "${1-listing all scripts}" -- "${@:2}"
 }
