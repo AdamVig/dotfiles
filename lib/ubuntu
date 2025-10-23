@@ -29,7 +29,8 @@ if [[ -f /etc/xdg/autostart/update-notifier.desktop ]]; then
 fi
 
 log_start 'installing GitHub CLI completions'
-install -D <(gh completion --shell zsh) "$HOME"/.local/share/gh/_gh
+mkdir -p "$HOME"/.local/share/gh
+gh completion --shell zsh >"$HOME"/.local/share/gh/_gh
 log_end
 
 log_start 'linking fdfind to fd'
@@ -53,12 +54,6 @@ XDG_PICTURES_DIR="$HOME/pictures"
 # XDG_VIDEOS_DIR="$HOME/videos"' >"$HOME"/.config/user-dirs.dirs
 # Prevent xdg-user-dirs-update from changing ~/.config/user-dirs.conf
 echo 'enabled=false' >~/.config/user-dirs.conf
-log_end
-
-# TODO remove once executed on all computers
-log_start 'removing GNOME scaling factor override'
-request_sudo rm -f /usr/share/glib-2.0/schemas/30_scaling-factor.gschema.override
-request_sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 log_end
 
 if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
@@ -159,12 +154,16 @@ log_start 'adding user to the Docker group'
 request_sudo usermod --append --groups docker "$USER"
 log_end
 
-if ! [ -f /etc/sudoers.d/disable-sudo-as-admin-successful ]; then
+if sudo --version 2>&1 | grep --invert-match --quiet sudo-rs && ! [ -f /etc/sudoers.d/disable-sudo-as-admin-successful ]; then
 	log_start 'preventing creation of ~/.sudo_as_admin_successful'
 	rm -f "$HOME"/.sudo_as_admin_successful
 	echo '# Disable creation of ~/.sudo_as_admin_successful
 Defaults !admin_flag' |
 		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/disable-sudo-as-admin-successful' >/dev/null)
+	log_end
+elif sudo --version 2>&1 | grep --quiet sudo-rs; then
+	log_start 'removing left over ~/.sudo_as_admin_successful file'
+	request_sudo rm -f /etc/sudoers.d/disable-sudo-as-admin-successful
 	log_end
 fi
 

@@ -43,7 +43,7 @@ add_repository() {
 
 	local key_path=/usr/share/keyrings/"$friendly_name"-archive-keyring.gpg
 
-	if ! _curl "$key_url" | request_sudo gpg --dearmor -o "$key_path"; then
+	if ! _curl "$key_url" | request_sudo gpg --yes --dearmor -o "$key_path"; then
 		fatal 'failed to add key'
 	fi
 
