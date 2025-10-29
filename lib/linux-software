@@ -121,6 +121,8 @@ if ! _curl "https://go.dev/dl/$go_version.linux-amd64.tar.gz" --output "$golang_
 	fatal 'failed to download Golang'
 fi
 request_sudo tar --directory /usr/local --extract --gzip --file "$golang_tmp"
+# Avoid the need for `PATH` modification by symlinking binaries to /usr/bin (same way as the distribution packages do)
+request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
 log_end
 
 log_start 'installing kitty'

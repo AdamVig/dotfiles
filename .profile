@@ -102,7 +102,6 @@ if ! [[ -v GOPATH ]]; then
 fi
 
 # Add golang directories to PATH
-append_path "/usr/local/go/bin"
 append_path "$GOPATH/bin"
 
 if [[ "$OSTYPE" == *linux* ]]; then
