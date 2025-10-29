@@ -261,8 +261,12 @@ log_end
 
 if is_ubuntu; then
 	log_start 'installing bat'
-	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
-		fatal 'failed to install bat'
+	if ! request_sudo apt-mark unhold bat; then
+		warn 'failed to unhold bat, skipping installation'
+	else
+		if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
+			fatal 'failed to install bat'
+		fi
 	fi
 	# Tell apt to not upgrade bat using the repository version
 	if ! request_sudo apt-mark hold bat; then
