@@ -101,7 +101,8 @@ if ! [[ -v GOPATH ]]; then
 	export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
 fi
 
-# Add golang directory to PATH
+# Add golang directories to PATH
+append_path "/usr/local/go/bin"
 append_path "$GOPATH/bin"
 
 if [[ "$OSTYPE" == *linux* ]]; then

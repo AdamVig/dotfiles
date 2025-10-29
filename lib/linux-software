@@ -111,6 +111,18 @@ install "$git_who_extracted_tmp"/linux_amd64/git-who "$git_who_path"
 rm -rf "$git_who_extracted_tmp"
 log_end
 
+log_start 'installing Golang'
+request_sudo rm -rf /usr/local/go
+golang_tmp="$(mktemp --suffix .tar.gz)"
+if ! go_version="$(_curl https://go.dev/VERSION?m=text | head -n 1)"; then
+	fatal 'failed to get latest Golang version'
+fi
+if ! _curl "https://go.dev/dl/$go_version.linux-amd64.tar.gz" --output "$golang_tmp"; then
+	fatal 'failed to download Golang'
+fi
+request_sudo tar --directory /usr/local --extract --gzip --file "$golang_tmp"
+log_end
+
 log_start 'installing kitty'
 if ! kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"; then
 	fatal 'failed to get Kitty release URL'

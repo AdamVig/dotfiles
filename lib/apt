@@ -213,7 +213,6 @@ declare -a packages=(
 	zsh
 
 	# programming languages
-	golang
 	php
 	python3
 	ruby
