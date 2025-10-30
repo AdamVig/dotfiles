@@ -12,33 +12,36 @@ log() {
 log_start 'setting up devcontainer'
 if command -v apt-get >/dev/null; then
 	log_start 'installing bat'
-	if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
+	if ! bat_deb_path="$(download_deb_from_github_release 'sharkdp/bat' '_amd64.deb')"; then
 		fatal 'failed to install bat'
 	fi
 	log_end
 
 	log_start 'installing git-delta'
-	if ! install_deb_from_github_release 'dandavison/delta' '_amd64.deb'; then
+	if ! delta_deb_path="$(download_deb_from_github_release 'dandavison/delta' '_amd64.deb')"; then
 		fatal 'failed to install git-delta'
 	fi
 	log_end
 
 	log_start 'installing glow'
-	if ! install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'; then
+	if ! glow_deb_path="$(download_deb_from_github_release 'charmbracelet/glow' '_amd64.deb')"; then
 		fatal 'failed to install glow'
 	fi
 	log_end
 
 	declare -a packages=(
 		# replacements of default utilities
-		eza     # Better ls
-		fd-find # Better find
-		htop    # Better top
-		httpie  # Better curl
-		ripgrep # Better grep
+		"$bat_deb_path"   # Better cat
+		"$delta_deb_path" # Better git diff
+		eza               # Better ls
+		fd-find           # Better find
+		htop              # Better top
+		httpie            # Better curl
+		ripgrep           # Better grep
 
 		# command line tools
-		fzf # Fuzzy finder
+		fzf              # Fuzzy finder
+		"$glow_deb_path" # Markdown viewer
 
 		zsh
 	)
@@ -55,6 +58,8 @@ if command -v apt-get >/dev/null; then
 	log_end
 fi
 
-log 'installing Codex'
+log_start 'installing Codex'
 npm install --global @openai/codex@latest
+log_end
+
 log_end

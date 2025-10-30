@@ -241,9 +241,9 @@ install_binary_from_github_release() {
 	fi
 }
 
-# Install a .deb from a URL
+# Download a .deb and prepare for installation, returning the output path
 # $1: url
-install_deb_from_url() {
+download_deb() {
 	local url="${1-}"
 	output_path="$(mktemp --suffix='.deb')"
 
@@ -254,11 +254,36 @@ install_deb_from_url() {
 	# Avoid "Download is performed unsandboxed as root" warning
 	request_sudo chown -R _apt:root "$output_path"
 
+	echo "$output_path"
+}
+
+# Install a .deb from a URL
+# $1: url
+install_deb_from_url() {
+	local url="${1-}"
+	output_path="$(download_deb "$url")"
+
 	if ! request_sudo apt-get install --yes "$output_path"; then
 		fatal 'failed to install package'
 	fi
 
 	request_sudo rm -f "$output_path"
+}
+
+# Download a .deb from the latest GitHub release
+# $1: repository URL in format: [owner]/[repo name]
+# $2: pattern to match
+download_deb_from_github_release() {
+	local repository="${1-}"
+	local pattern="${2-}"
+
+	if ! url="$(get_release_url "$repository" "$pattern")"; then
+		fatal 'failed to get release URL'
+	fi
+
+	if ! download_deb "$url"; then
+		fatal 'failed to install package from URL'
+	fi
 }
 
 # Install a .deb from the latest GitHub release
