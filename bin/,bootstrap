@@ -24,9 +24,15 @@ fi
 # If running on a fresh boot of a Linux system that uses apt, including devcontainers
 if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV_CONTAINER ]]); then
 	echo 'detected fresh Linux system, running pre-bootstrap steps...'
-	echo 'updating apt lists...'
-	sudo apt-get update >/dev/null
-	echo 'done updating apt lists.'
+	# Update only if /var/lib/apt/lists is missing/empty or if no apt operation has run in >1 day
+	lock=/var/lib/dpkg/lock-frontend
+	if ! find /var/lib/apt/lists -type f ! -name lock -quit 2>/dev/null >/dev/null ||
+		[[ ! -e $lock ]] ||
+		(($(date +%s) - $(stat -c %Y "$lock" 2>/dev/null || echo 0) > 86400)); then
+		echo 'updating apt lists...'
+		sudo apt-get --option='Acquire::Languages=none' update --quiet=2
+		echo 'done updating apt lists'
+	fi
 
 	echo 'installing dependencies...'
 	sudo apt-get install --yes build-essential curl file gettext git jq unzip zstd >/dev/null
