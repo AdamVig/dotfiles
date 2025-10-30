@@ -11,21 +11,21 @@ log() {
 
 log_start 'setting up devcontainer'
 if command -v apt-get >/dev/null; then
-	log_start 'installing bat'
+	log_start 'downloading bat'
 	if ! bat_deb_path="$(download_deb_from_github_release 'sharkdp/bat' '_amd64.deb')"; then
-		fatal 'failed to install bat'
+		fatal 'failed to download bat'
 	fi
 	log_end
 
-	log_start 'installing git-delta'
+	log_start 'downloading git-delta'
 	if ! delta_deb_path="$(download_deb_from_github_release 'dandavison/delta' '_amd64.deb')"; then
-		fatal 'failed to install git-delta'
+		fatal 'failed to download git-delta'
 	fi
 	log_end
 
-	log_start 'installing glow'
+	log_start 'downloading glow'
 	if ! glow_deb_path="$(download_deb_from_github_release 'charmbracelet/glow' '_amd64.deb')"; then
-		fatal 'failed to install glow'
+		fatal 'failed to download glow'
 	fi
 	log_end
 
