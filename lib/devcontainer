@@ -59,7 +59,11 @@ if command -v apt-get >/dev/null; then
 fi
 
 log_start 'installing Codex'
-npm install --global @openai/codex@latest
+if ! _curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" |
+	unzstd --stdout |
+	install --mode='u=rwx,go=rx' /dev/stdin "$HOME"/.local/bin/codex; then
+	fatal 'failed to install codex'
+fi
 log_end
 
 log_end
