@@ -174,5 +174,6 @@
 		"rmdir": false,
 		"sqlc": true
 	},
-	"redhat.telemetry.enabled": false
+	"redhat.telemetry.enabled": false,
+	"remote.restoreForwardedPorts": false
 }
