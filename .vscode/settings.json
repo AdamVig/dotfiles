@@ -175,5 +175,6 @@
 		"sqlc": true
 	},
 	"redhat.telemetry.enabled": false,
-	"remote.restoreForwardedPorts": false
+	"remote.restoreForwardedPorts": false,
+	"git.openRepositoryInParentFolders": "always"
 }
