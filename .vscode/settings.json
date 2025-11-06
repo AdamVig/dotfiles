@@ -146,7 +146,6 @@
 	"dotfiles.repository": "AdamVig/dotfiles",
 	"dotfiles.targetPath": "~/dotfiles",
 	"dotfiles.installCommand": "bin/,bootstrap",
-	"dev.containers.githubCLILoginWithToken": true,
 	"evenBetterToml.semanticTokens": true,
 	"evenBetterToml.schema.enabled": false,
 	// ------------------------------
