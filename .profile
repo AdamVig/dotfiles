@@ -154,8 +154,6 @@ export PSQL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}"/psql-history
 
 # Add npm global binary directory to PATH
 prepend_path "$HOME"/.npm/bin
-# Prevent npm from storing config in ~/.npmrc
-export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 # Disable "packages are looking for funding" message
 export npm_config_fund=false
 # Disable "A new version of npm is available" message
@@ -191,6 +189,9 @@ export MAGEFILE_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/magefile
 if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV_CONTAINER ]]; then
 	# Prevent Codex from storing data in home directory (except in Dev Container, where we use the default path)
 	export CODEX_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/codex
+
+	# Prevent npm from storing config in ~/.npmrc (except in Dev Container, where we use the default path)
+	export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 fi
 
 # Load local overrides if the user has created the file
