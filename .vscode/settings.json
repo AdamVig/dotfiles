@@ -173,6 +173,7 @@
 		"rmdir": false,
 		"sqlc": true,
 		"node --run test": true,
+		"node --test": true
 	},
 	"redhat.telemetry.enabled": false,
 	"remote.restoreForwardedPorts": false,
