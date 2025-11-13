@@ -18,7 +18,11 @@ fi
 log_start 'checking authentication'
 if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
-	gh auth login --hostname=github.com --web --scopes=admin:public_key,codespace,user,write:gpg_key --git-protocol=https
+	gh auth login --hostname=github.com --clipboard --web --scopes=admin:public_key,user,write:gpg_key --git-protocol=https
+	log_end
+else
+	log_start 'ensuring scopes'
+	gh auth refresh --hostname=github.com --clipboard --scopes=admin:public_key,user,write:gpg_key
 	log_end
 fi
 log_end
