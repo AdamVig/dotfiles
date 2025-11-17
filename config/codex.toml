@@ -5,9 +5,15 @@ approval_policy = "on-request"
 preferred_auth_method = "chatgpt"
 sandbox_mode = "workspace-write"
 
+[features]
+rmcp_client = true
+
 [mcp_servers.context7]
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"
 
 [sandbox_workspace_write]
 network_access = true
@@ -19,3 +25,6 @@ writable_roots = [
 
 [tui]
 notifications = true
+
+[notice]
+hide_gpt5_1_migration_prompt = true
