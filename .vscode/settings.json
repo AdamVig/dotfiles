@@ -163,6 +163,7 @@
 		"eval": false,
 		"fd": true,
 		"find": true,
+		"git diff": true,
 		"go build": true,
 		"go test": true,
 		"jq": true,
