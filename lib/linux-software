@@ -24,44 +24,27 @@ rm -vrf "$HOME"/.local/bin/undercutf1
 log_end
 
 log_start 'installing b2'
-if ! install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'; then
-	fatal 'failed to install b2'
-fi
+install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'
 log_end
 
 log_start 'installing difftastic'
-if ! difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"; then
-	fatal 'failed to get difftastic release URL'
-fi
-
+difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(mktemp)"
-if ! _curl "$difftastic_url" --output "$difftastic_tmp"; then
-	fatal 'failed to download difftastic'
-fi
-
+_curl "$difftastic_url" --output "$difftastic_tmp"
 difftastic_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$difftastic_tmp" -C "$difftastic_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract difftastic'
-fi
+tar zxvf "$difftastic_tmp" -C "$difftastic_extracted_tmp" >/dev/null
 rm -f "$difftastic_tmp"
-
 difftastic_path="$HOME"/.local/bin/difft
 install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
 log_end
 
 log_start 'installing fnm'
-if ! fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"; then
-	fatal 'failed to get fnm release URL'
-fi
+fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"
 fnm_tmp="$(mktemp --suffix .zip)"
-if ! _curl "$fnm_url" --output "$fnm_tmp"; then
-	fatal 'failed to download fnm'
-fi
+_curl "$fnm_url" --output "$fnm_tmp"
 fnm_extracted_tmp="$(mktemp -d)"
-if ! unzip "$fnm_tmp" -d "$fnm_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract fnm'
-fi
+unzip "$fnm_tmp" -d "$fnm_extracted_tmp" >/dev/null
 rm -f "$fnm_tmp"
 fnm_path="$HOME"/.local/bin/fnm
 install "$fnm_extracted_tmp"/fnm "$fnm_path"
@@ -70,40 +53,23 @@ fnm completions --shell=zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-fun
 log_end
 
 log_start 'installing git-spice'
-if ! git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"; then
-	fatal 'failed to get git-spice release URL'
-fi
-
+git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
 git_spice_tmp="$(mktemp)"
-if ! _curl "$git_spice_url" --output "$git_spice_tmp"; then
-	fatal 'failed to download git-spice'
-fi
-
+_curl "$git_spice_url" --output "$git_spice_tmp"
 git_spice_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$git_spice_tmp" -C "$git_spice_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract git-spice'
-fi
+tar zxvf "$git_spice_tmp" -C "$git_spice_extracted_tmp" >/dev/null
 rm -f "$git_spice_tmp"
-
 git_spice_path="$HOME"/.local/bin/gs
 install "$git_spice_extracted_tmp"/gs "$git_spice_path"
 rm -rf "$git_spice_extracted_tmp"
 log_end
 
 log_start 'installing git-who'
-if ! git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"; then
-	fatal 'failed to get git-who release URL'
-fi
-
+git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"
 git_who_tmp="$(mktemp)"
-if ! _curl "$git_who_url" --output "$git_who_tmp"; then
-	fatal 'failed to download git-who'
-fi
-
+_curl "$git_who_url" --output "$git_who_tmp"
 git_who_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$git_who_tmp" -C "$git_who_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract git-who'
-fi
+tar zxvf "$git_who_tmp" -C "$git_who_extracted_tmp" >/dev/null
 rm -f "$git_who_tmp"
 
 git_who_path="$HOME"/.local/bin/git-who
@@ -114,29 +80,19 @@ log_end
 log_start 'installing Golang'
 request_sudo rm -rf /usr/local/go
 golang_tmp="$(mktemp --suffix .tar.gz)"
-if ! go_version="$(_curl https://go.dev/VERSION?m=text | head -n 1)"; then
-	fatal 'failed to get latest Golang version'
-fi
-if ! _curl "https://go.dev/dl/$go_version.linux-amd64.tar.gz" --output "$golang_tmp"; then
-	fatal 'failed to download Golang'
-fi
+go_version="$(_curl https://go.dev/VERSION?m=text | head -n 1)"
+_curl "https://go.dev/dl/$go_version.linux-amd64.tar.gz" --output "$golang_tmp"
 request_sudo tar --directory /usr/local --extract --gzip --file "$golang_tmp"
 # Avoid the need for `PATH` modification by symlinking binaries to /usr/bin (same way as the distribution packages do)
 request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
 log_end
 
 log_start 'installing kitty'
-if ! kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"; then
-	fatal 'failed to get Kitty release URL'
-fi
+kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
 kitty_tmp="$(mktemp --suffix .txz)"
-if ! _curl "$kitty_url" --output "$kitty_tmp"; then
-	fatal 'failed to download Kitty'
-fi
+_curl "$kitty_url" --output "$kitty_tmp"
 kitty_extracted_tmp="$(mktemp -d)"
-if ! tar xvf "$kitty_tmp" -C "$kitty_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract Kitty'
-fi
+tar xvf "$kitty_tmp" -C "$kitty_extracted_tmp" >/dev/null
 rm -f "$kitty_tmp"
 kitty_path="$HOME"/.local/share/kitty
 rm -rf "$kitty_path"
@@ -160,17 +116,11 @@ if ! [ -d "$fonts_dir"/input ]; then
 	log_start 'installing Input fonts'
 	input_tmp="$(mktemp)"
 	input_url='https://input.djr.com/build/?basic=1&fontSelection=whole&a=0&g=0&i=0&l=0&zero=0&asterisk=0&lineHeight=1.2&accept=I+do'
-	if ! _curl "$input_url" --output "$input_tmp"; then
-		fatal 'failed to download Input fonts'
-	fi
+	_curl "$input_url" --output "$input_tmp"
 	input_extracted_tmp="$(mktemp -d)"
-	if ! unzip "$input_tmp" -d "$input_extracted_tmp"; then
-		fatal 'failed to extract Input fonts'
-	fi
+	unzip "$input_tmp" -d "$input_extracted_tmp"
 	mkdir -p "$fonts_dir"/input
-	if ! mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input; then
-		fatal 'failed to move Input fonts into place'
-	fi
+	mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input
 	rm -rf "$input_tmp" "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
 		warn 'failed to generate font caches, font will not be available until next login'
@@ -179,46 +129,30 @@ if ! [ -d "$fonts_dir"/input ]; then
 fi
 
 log_start 'installing shfmt'
-if ! install_binary_from_github_release 'shfmt' 'mvdan/sh' 'linux_amd64'; then
-	fatal 'failed to install shfmt'
-fi
+install_binary_from_github_release 'shfmt' 'mvdan/sh' 'linux_amd64'
 log_end
 
 log_start 'installing Bitwarden CLI'
 bw_tmp="$(mktemp)"
-if ! _curl 'https://vault.bitwarden.com/download/?app=cli&platform=linux' --output "$bw_tmp"; then
-	fatal 'failed to download Bitwarden CLI'
-fi
-
+_curl 'https://vault.bitwarden.com/download/?app=cli&platform=linux' --output "$bw_tmp"
 bw_extracted_tmp="$(mktemp -d)"
-if ! unzip "$bw_tmp" -d "$bw_extracted_tmp" >/dev/null; then
-	fatal 'failed to unzip Bitwarden CLI'
-fi
+unzip "$bw_tmp" -d "$bw_extracted_tmp" >/dev/null
 rm -f "$bw_tmp"
-
 bw_path="$HOME"/.local/bin/bw
 install "$bw_extracted_tmp"/bw "$bw_path"
 rm -rf "$bw_extracted_tmp"
 log_end
 
 log_start 'installing NextCloud'
-if ! install_binary_from_github_release 'nextcloud' 'nextcloud-releases/desktop' 'x86_64.AppImage'; then
-	fatal 'failed to install NextCloud'
-fi
+install_binary_from_github_release 'nextcloud' 'nextcloud-releases/desktop' 'x86_64.AppImage'
 log_end
 
 log_start 'installing restic'
-if ! restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"; then
-	fatal 'failed to get restic release URL'
-fi
+restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"
 restic_tmp="$(mktemp --suffix .bz2)"
-if ! _curl "$restic_url" --output "$restic_tmp"; then
-	fatal 'failed to download restic'
-fi
+_curl "$restic_url" --output "$restic_tmp"
 restic_extracted_tmp="${restic_tmp%.bz2}"
-if ! bunzip2 "$restic_tmp" >/dev/null; then
-	fatal 'failed to extract restic'
-fi
+bunzip2 "$restic_tmp" >/dev/null
 rm -f "$restic_tmp"
 restic_path="$HOME"/.local/bin/restic
 install "$restic_extracted_tmp" "$restic_path"
@@ -226,35 +160,22 @@ rm -rf "$restic_extracted_tmp"
 log_end
 
 log_start 'installing uv'
-if ! uv_url="$(get_release_url 'astral-sh/uv' 'uv-x86_64-unknown-linux-gnu.tar.gz')"; then
-	fatal 'failed to get uv release URL'
-fi
-
+uv_url="$(get_release_url 'astral-sh/uv' 'uv-x86_64-unknown-linux-gnu.tar.gz')"
 uv_tmp="$(mktemp)"
-if ! _curl "$uv_url" --output "$uv_tmp"; then
-	fatal 'failed to download uv'
-fi
-
+_curl "$uv_url" --output "$uv_tmp"
 uv_extracted_tmp="$(mktemp -d)"
-if ! tar zxvf "$uv_tmp" --strip-components 1 -C "$uv_extracted_tmp" >/dev/null; then
-	fatal 'failed to extract uv'
-fi
+tar zxvf "$uv_tmp" --strip-components 1 -C "$uv_extracted_tmp" >/dev/null
 rm -f "$uv_tmp"
-
 install "$uv_extracted_tmp"/{uv,uvx} "$HOME"/.local/bin
 rm -rf "$uv_extracted_tmp"
 log_end
 
 log_start 'installing websocat'
-if ! install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'; then
-	fatal 'failed to install websocat'
-fi
+install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'
 log_end
 
 log_start 'installing yt-dlp'
-if ! install_binary_from_github_release 'yt-dlp' 'yt-dlp/yt-dlp' '_linux'; then
-	fatal 'failed to install yt-dlp'
-fi
+install_binary_from_github_release 'yt-dlp' 'yt-dlp/yt-dlp' '_linux'
 log_end
 
 log_start 'installing YubiKey Manager'
@@ -266,9 +187,7 @@ if is_ubuntu; then
 	if ! request_sudo apt-mark unhold bat; then
 		warn 'failed to unhold bat, skipping installation'
 	else
-		if ! install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'; then
-			fatal 'failed to install bat'
-		fi
+		install_deb_from_github_release 'sharkdp/bat' '_amd64.deb'
 	fi
 	# Tell apt to not upgrade bat using the repository version
 	if ! request_sudo apt-mark hold bat; then
@@ -277,20 +196,18 @@ if is_ubuntu; then
 	log_end
 
 	log_start 'installing Bitwarden'
-	if ! install_deb_from_url 'https://bitwarden.com/download/?app=desktop&platform=linux&variant=deb'; then
-		fatal 'failed to install Bitwarden'
-	fi
+	install_deb_from_url 'https://bitwarden.com/download/?app=desktop&platform=linux&variant=deb'
 	log_end
 
 	log_start 'installing darkman'
 	if command -v scdoc >/dev/null; then
 		darkman_tmp="$(mktemp -d)"
-		if ! git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp" || ! cd "$darkman_tmp"; then
-			fatal 'failed to clone darkman repository'
-		fi
-		if ! make || ! request_sudo make install; then
-			fatal 'failed to install darkman'
-		fi
+		git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp"
+		(
+			cd "$darkman_tmp"
+			make
+			request_sudo make install
+		)
 		rm -rf "$darkman_tmp"
 	else
 		warn 'skipping darkman installation because scdoc is not installed'
@@ -298,48 +215,34 @@ if is_ubuntu; then
 	log_end
 
 	log_start 'installing DBeaver'
-	if ! install_deb_from_github_release 'dbeaver/dbeaver' '_amd64.deb'; then
-		fatal 'failed to install DBeaver'
-	fi
+	install_deb_from_github_release 'dbeaver/dbeaver' '_amd64.deb'
 	log_end
 
 	log_start 'installing git-delta'
-	if ! install_deb_from_github_release 'dandavison/delta' '_amd64.deb'; then
-		fatal 'failed to install git-delta'
-	fi
+	install_deb_from_github_release 'dandavison/delta' '_amd64.deb'
 	log_end
 
 	log_start 'installing glow'
-	if ! install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'; then
-		fatal 'failed to install glow'
-	fi
+	install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'
 	log_end
 
 	log_start 'installing go-hass-agent'
-	if ! install_deb_from_github_release 'joshuar/go-hass-agent' '_amd64.deb'; then
-		fatal 'failed to install go-hass-agent'
-	fi
+	install_deb_from_github_release 'joshuar/go-hass-agent' '_amd64.deb'
 	mkdir -p "$HOME"/.config/go-hass-agent/scripts
 	_ln "$_dir"/../config/go-hass-agent/audio-output "$HOME"/.config/go-hass-agent/scripts
 	_ln "$_dir"/../config/go-hass-agent/webcam-in-use "$HOME"/.config/go-hass-agent/scripts
 	log_end
 
 	log_start 'installing Hugo'
-	if ! install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'; then
-		fatal 'failed to install Hugo'
-	fi
+	install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'
 	log_end
 
 	log_start 'installing hyperfine'
-	if ! install_deb_from_github_release 'sharkdp/hyperfine' '_amd64.deb'; then
-		fatal 'failed to install hyperfine'
-	fi
+	install_deb_from_github_release 'sharkdp/hyperfine' '_amd64.deb'
 	log_end
 
 	log_start 'installing Obsidian'
-	if ! install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'; then
-		fatal 'failed to install Obsidian'
-	fi
+	install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'
 	log_end
 
 	log_start 'removing no-longer-needed software'
