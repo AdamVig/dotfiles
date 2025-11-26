@@ -30,9 +30,7 @@ log_end
 log_start 'installing difftastic'
 difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"
-difftastic_extracted_tmp="$(mktemp -d)"
-tar zxvf "$difftastic_tmp" -C "$difftastic_extracted_tmp" >/dev/null
-rm -f "$difftastic_tmp"
+difftastic_extracted_tmp="$(extract_tarball_to_tmp "$difftastic_tmp")"
 difftastic_path="$HOME"/.local/bin/difft
 install "$difftastic_extracted_tmp"/difft "$difftastic_path"
 rm -rf "$difftastic_extracted_tmp"
@@ -53,9 +51,7 @@ log_end
 log_start 'installing git-spice'
 git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
 git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
-git_spice_extracted_tmp="$(mktemp -d)"
-tar zxvf "$git_spice_tmp" -C "$git_spice_extracted_tmp" >/dev/null
-rm -f "$git_spice_tmp"
+git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
 git_spice_path="$HOME"/.local/bin/gs
 install "$git_spice_extracted_tmp"/gs "$git_spice_path"
 rm -rf "$git_spice_extracted_tmp"
@@ -64,10 +60,7 @@ log_end
 log_start 'installing git-who'
 git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"
 git_who_tmp="$(download_to_tmp "$git_who_url" '.tar.gz')"
-git_who_extracted_tmp="$(mktemp -d)"
-tar zxvf "$git_who_tmp" -C "$git_who_extracted_tmp" >/dev/null
-rm -f "$git_who_tmp"
-
+git_who_extracted_tmp="$(extract_tarball_to_tmp "$git_who_tmp")"
 git_who_path="$HOME"/.local/bin/git-who
 install "$git_who_extracted_tmp"/linux_amd64/git-who "$git_who_path"
 rm -rf "$git_who_extracted_tmp"
@@ -86,9 +79,7 @@ log_end
 log_start 'installing kitty'
 kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
 kitty_tmp="$(download_to_tmp "$kitty_url" '.txz')"
-kitty_extracted_tmp="$(mktemp -d)"
-tar xvf "$kitty_tmp" -C "$kitty_extracted_tmp" >/dev/null
-rm -f "$kitty_tmp"
+kitty_extracted_tmp="$(extract_tarball_to_tmp "$kitty_tmp")"
 kitty_path="$HOME"/.local/share/kitty
 rm -rf "$kitty_path"
 mv "$kitty_extracted_tmp" "$kitty_path"
@@ -152,9 +143,7 @@ log_end
 log_start 'installing uv'
 uv_url="$(get_release_url 'astral-sh/uv' 'uv-x86_64-unknown-linux-gnu.tar.gz')"
 uv_tmp="$(download_to_tmp "$uv_url" '.tar.gz')"
-uv_extracted_tmp="$(mktemp -d)"
-tar zxvf "$uv_tmp" --strip-components 1 -C "$uv_extracted_tmp" >/dev/null
-rm -f "$uv_tmp"
+uv_extracted_tmp="$(extract_tarball_to_tmp "$uv_tmp" --strip-components 1)"
 install "$uv_extracted_tmp"/{uv,uvx} "$HOME"/.local/bin
 rm -rf "$uv_extracted_tmp"
 log_end
