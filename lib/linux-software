@@ -39,9 +39,7 @@ log_end
 log_start 'installing fnm'
 fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"
 fnm_tmp="$(download_to_tmp "$fnm_url" '.zip')"
-fnm_extracted_tmp="$(mktemp -d)"
-unzip "$fnm_tmp" -d "$fnm_extracted_tmp" >/dev/null
-rm -f "$fnm_tmp"
+fnm_extracted_tmp="$(extract_zip_to_tmp "$fnm_tmp")"
 fnm_path="$HOME"/.local/bin/fnm
 install "$fnm_extracted_tmp"/fnm "$fnm_path"
 rm -rf "$fnm_extracted_tmp"
@@ -102,11 +100,10 @@ if ! [ -d "$fonts_dir"/input ]; then
 	log_start 'installing Input fonts'
 	input_url='https://input.djr.com/build/?basic=1&fontSelection=whole&a=0&g=0&i=0&l=0&zero=0&asterisk=0&lineHeight=1.2&accept=I+do'
 	input_tmp="$(download_to_tmp "$input_url" '.zip')"
-	input_extracted_tmp="$(mktemp -d)"
-	unzip "$input_tmp" -d "$input_extracted_tmp"
+	input_extracted_tmp="$(extract_zip_to_tmp "$input_tmp")"
 	mkdir -p "$fonts_dir"/input
 	mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input
-	rm -rf "$input_tmp" "$input_extracted_tmp"
+	rm -rf "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
 		warn 'failed to generate font caches, font will not be available until next login'
 	fi
@@ -119,9 +116,7 @@ log_end
 
 log_start 'installing Bitwarden CLI'
 bw_tmp="$(download_to_tmp 'https://vault.bitwarden.com/download/?app=cli&platform=linux' '.zip')"
-bw_extracted_tmp="$(mktemp -d)"
-unzip "$bw_tmp" -d "$bw_extracted_tmp" >/dev/null
-rm -f "$bw_tmp"
+bw_extracted_tmp="$(extract_zip_to_tmp "$bw_tmp")"
 bw_path="$HOME"/.local/bin/bw
 install "$bw_extracted_tmp"/bw "$bw_path"
 rm -rf "$bw_extracted_tmp"

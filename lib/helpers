@@ -265,12 +265,30 @@ download_to_tmp() {
 # $@: optional tar flags (e.g., --strip-components 1)
 extract_tarball_to_tmp() {
 	local archive="${1?extract_tarball_to_tmp called without an archive}"
-	shift
 
 	local extracted_tmp
 	extracted_tmp="$(mktemp -d)"
 
-	if ! tar --auto-compress --extract --file "$archive" --directory "$extracted_tmp" "$@" >/dev/null; then
+	if ! tar --auto-compress --extract --file "$archive" --directory "$extracted_tmp" "${@:2}" >/dev/null; then
+		rm -rf "$extracted_tmp"
+		fatal "failed to extract '$archive'"
+	fi
+
+	rm -f "$archive"
+
+	echo "$extracted_tmp"
+}
+
+# Extract a zip archive into a temporary directory, then delete the archive and return the directory path
+# $1: archive path
+# $@: optional unzip flags
+extract_zip_to_tmp() {
+	local archive="${1?extract_zip_to_tmp called without an archive}"
+
+	local extracted_tmp
+	extracted_tmp="$(mktemp -d)"
+
+	if ! unzip "$archive" -d "$extracted_tmp" "${@:2}" >/dev/null; then
 		rm -rf "$extracted_tmp"
 		fatal "failed to extract '$archive'"
 	fi
