@@ -9,6 +9,16 @@ log() {
 	log_with_component 'linux software' "$@"
 }
 
+cleanup_paths=()
+cleanup() {
+	if [[ ${#cleanup_paths[@]} == 0 ]]; then
+		return
+	fi
+	rm -rf "${cleanup_paths[@]}" 2>/dev/null
+}
+
+trap cleanup EXIT
+
 log_start 'installing Linux distribution-agnostic software'
 if is_ubuntu; then
 	# Get password upfront to ensure the script runs to completion without pausing
@@ -31,18 +41,18 @@ log_start 'installing difftastic'
 difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"
 difftastic_extracted_tmp="$(extract_tarball_to_tmp "$difftastic_tmp")"
+cleanup_paths+=("$difftastic_extracted_tmp")
 difftastic_path="$HOME"/.local/bin/difft
 install "$difftastic_extracted_tmp"/difft "$difftastic_path"
-rm -rf "$difftastic_extracted_tmp"
 log_end
 
 log_start 'installing fnm'
 fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"
 fnm_tmp="$(download_to_tmp "$fnm_url" '.zip')"
 fnm_extracted_tmp="$(extract_zip_to_tmp "$fnm_tmp")"
+cleanup_paths+=("$fnm_extracted_tmp")
 fnm_path="$HOME"/.local/bin/fnm
 install "$fnm_extracted_tmp"/fnm "$fnm_path"
-rm -rf "$fnm_extracted_tmp"
 fnm completions --shell=zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions/_fnm
 log_end
 
@@ -50,34 +60,35 @@ log_start 'installing git-spice'
 git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
 git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
 git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
+cleanup_paths+=("$git_spice_extracted_tmp")
 git_spice_path="$HOME"/.local/bin/gs
 install "$git_spice_extracted_tmp"/gs "$git_spice_path"
-rm -rf "$git_spice_extracted_tmp"
 log_end
 
 log_start 'installing git-who'
 git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"
 git_who_tmp="$(download_to_tmp "$git_who_url" '.tar.gz')"
 git_who_extracted_tmp="$(extract_tarball_to_tmp "$git_who_tmp")"
+cleanup_paths+=("$git_who_extracted_tmp")
 git_who_path="$HOME"/.local/bin/git-who
 install "$git_who_extracted_tmp"/linux_amd64/git-who "$git_who_path"
-rm -rf "$git_who_extracted_tmp"
 log_end
 
 log_start 'installing Golang'
 request_sudo rm -rf /usr/local/go
 go_version="$(_curl https://go.dev/VERSION?m=text | head -n 1)"
 golang_tmp="$(download_to_tmp "https://go.dev/dl/$go_version.linux-amd64.tar.gz" '.tar.gz')"
+cleanup_paths+=("$golang_tmp")
 request_sudo tar --directory /usr/local --extract --gzip --file "$golang_tmp"
 # Avoid the need for `PATH` modification by symlinking binaries to /usr/bin (same way as the distribution packages do)
 request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
-rm -f "$golang_tmp"
 log_end
 
 log_start 'installing kitty'
 kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
 kitty_tmp="$(download_to_tmp "$kitty_url" '.txz')"
 kitty_extracted_tmp="$(extract_tarball_to_tmp "$kitty_tmp")"
+cleanup_paths+=("$kitty_extracted_tmp")
 kitty_path="$HOME"/.local/share/kitty
 rm -rf "$kitty_path"
 mv "$kitty_extracted_tmp" "$kitty_path"
@@ -90,7 +101,6 @@ mkdir -p "$HOME"/.local/share/applications
 cp "$kitty_path"/share/applications/kitty.desktop "$HOME"/.local/share/applications
 sed -i "s|Icon=kitty|Icon=$HOME/.local/share/kitty/share/icons/hicolor/256x256/apps/kitty.png|g" "$HOME"/.local/share/applications/kitty*.desktop
 sed -i "s|Exec=kitty|Exec=$HOME/.local/share/kitty/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-rm -rf "$kitty_extracted_tmp"
 echo 'kitty.desktop' >"$HOME"/.config/xdg-terminals.list
 log_end
 
@@ -101,9 +111,9 @@ if ! [ -d "$fonts_dir"/input ]; then
 	input_url='https://input.djr.com/build/?basic=1&fontSelection=whole&a=0&g=0&i=0&l=0&zero=0&asterisk=0&lineHeight=1.2&accept=I+do'
 	input_tmp="$(download_to_tmp "$input_url" '.zip')"
 	input_extracted_tmp="$(extract_zip_to_tmp "$input_tmp")"
+	cleanup_paths+=("$input_extracted_tmp")
 	mkdir -p "$fonts_dir"/input
 	mv "$input_extracted_tmp"/Input_Fonts/*/ "$fonts_dir"/input
-	rm -rf "$input_extracted_tmp"
 	if ! fc-cache "$fonts_dir"/input; then
 		warn 'failed to generate font caches, font will not be available until next login'
 	fi
@@ -117,9 +127,9 @@ log_end
 log_start 'installing Bitwarden CLI'
 bw_tmp="$(download_to_tmp 'https://vault.bitwarden.com/download/?app=cli&platform=linux' '.zip')"
 bw_extracted_tmp="$(extract_zip_to_tmp "$bw_tmp")"
+cleanup_paths+=("$bw_extracted_tmp")
 bw_path="$HOME"/.local/bin/bw
 install "$bw_extracted_tmp"/bw "$bw_path"
-rm -rf "$bw_extracted_tmp"
 log_end
 
 log_start 'installing NextCloud'
@@ -129,18 +139,19 @@ log_end
 log_start 'installing restic'
 restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"
 restic_archive="$(download_to_tmp "$restic_url" '.bz2')"
+cleanup_paths+=("$restic_archive")
 restic_binary_tmp="$(mktemp)"
+cleanup_paths+=("$restic_binary_tmp")
 bzip2 -dc "$restic_archive" >"$restic_binary_tmp"
 install "$restic_binary_tmp" "$HOME"/.local/bin/restic
-rm -f "$restic_archive" "$restic_binary_tmp"
 log_end
 
 log_start 'installing uv'
 uv_url="$(get_release_url 'astral-sh/uv' 'uv-x86_64-unknown-linux-gnu.tar.gz')"
 uv_tmp="$(download_to_tmp "$uv_url" '.tar.gz')"
 uv_extracted_tmp="$(extract_tarball_to_tmp "$uv_tmp" --strip-components 1)"
+cleanup_paths+=("$uv_extracted_tmp")
 install "$uv_extracted_tmp"/{uv,uvx} "$HOME"/.local/bin
-rm -rf "$uv_extracted_tmp"
 log_end
 
 log_start 'installing websocat'
@@ -175,13 +186,13 @@ if is_ubuntu; then
 	log_start 'installing darkman'
 	if command -v scdoc >/dev/null; then
 		darkman_tmp="$(mktemp -d)"
+		cleanup_paths+=("$darkman_tmp")
 		git clone https://gitlab.com/WhyNotHugo/darkman.git "$darkman_tmp"
 		(
 			cd "$darkman_tmp"
 			make
 			request_sudo make install
 		)
-		rm -rf "$darkman_tmp"
 	else
 		warn 'skipping darkman installation because scdoc is not installed'
 	fi
