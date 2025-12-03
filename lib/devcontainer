@@ -71,8 +71,7 @@ git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
 git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
 git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
 cleanup_paths+=("$git_spice_extracted_tmp")
-git_spice_path="$HOME"/.local/bin/gs
-install "$git_spice_extracted_tmp"/gs "$git_spice_path"
+install "$git_spice_extracted_tmp"/gs "$HOME"/.local/bin/gs
 log_end
 
 log_end

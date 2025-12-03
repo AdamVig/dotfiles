@@ -42,8 +42,7 @@ difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-lin
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"
 difftastic_extracted_tmp="$(extract_tarball_to_tmp "$difftastic_tmp")"
 cleanup_paths+=("$difftastic_extracted_tmp")
-difftastic_path="$HOME"/.local/bin/difft
-install "$difftastic_extracted_tmp"/difft "$difftastic_path"
+install "$difftastic_extracted_tmp"/difft "$HOME"/.local/bin/difft
 log_end
 
 log_start 'installing fnm'
@@ -51,8 +50,7 @@ fnm_url="$(get_release_url 'Schniz/fnm' 'fnm-linux.zip')"
 fnm_tmp="$(download_to_tmp "$fnm_url" '.zip')"
 fnm_extracted_tmp="$(extract_zip_to_tmp "$fnm_tmp")"
 cleanup_paths+=("$fnm_extracted_tmp")
-fnm_path="$HOME"/.local/bin/fnm
-install "$fnm_extracted_tmp"/fnm "$fnm_path"
+install "$fnm_extracted_tmp"/fnm "$HOME"/.local/bin/fnm
 fnm completions --shell=zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions/_fnm
 log_end
 
@@ -61,8 +59,7 @@ git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
 git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
 git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
 cleanup_paths+=("$git_spice_extracted_tmp")
-git_spice_path="$HOME"/.local/bin/gs
-install "$git_spice_extracted_tmp"/gs "$git_spice_path"
+install "$git_spice_extracted_tmp"/gs "$HOME"/.local/bin/gs
 log_end
 
 log_start 'installing git-who'
@@ -70,8 +67,7 @@ git_who_url="$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"
 git_who_tmp="$(download_to_tmp "$git_who_url" '.tar.gz')"
 git_who_extracted_tmp="$(extract_tarball_to_tmp "$git_who_tmp")"
 cleanup_paths+=("$git_who_extracted_tmp")
-git_who_path="$HOME"/.local/bin/git-who
-install "$git_who_extracted_tmp"/linux_amd64/git-who "$git_who_path"
+install "$git_who_extracted_tmp"/linux_amd64/git-who "$HOME"/.local/bin/git-who
 log_end
 
 log_start 'installing Golang'
@@ -128,8 +124,7 @@ log_start 'installing Bitwarden CLI'
 bw_tmp="$(download_to_tmp 'https://vault.bitwarden.com/download/?app=cli&platform=linux' '.zip')"
 bw_extracted_tmp="$(extract_zip_to_tmp "$bw_tmp")"
 cleanup_paths+=("$bw_extracted_tmp")
-bw_path="$HOME"/.local/bin/bw
-install "$bw_extracted_tmp"/bw "$bw_path"
+install "$bw_extracted_tmp"/bw "$HOME"/.local/bin/bw
 log_end
 
 log_start 'installing NextCloud'
