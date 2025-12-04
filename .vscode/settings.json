@@ -177,6 +177,7 @@
 		"rg": true,
 		"rm": false,
 		"rmdir": false,
+		"sed": true,
 		"sqlc": true,
 		"node --run test": true,
 		"node --test": true
