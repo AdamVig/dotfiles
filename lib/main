@@ -21,6 +21,7 @@ log_start 'running OS-specific scripts'
 
 if is_devcontainer; then
 	"$_dir"/devcontainer
+	"$_dir"/gh
 	"$_dir"/zsh
 	exit
 elif is_macos; then
