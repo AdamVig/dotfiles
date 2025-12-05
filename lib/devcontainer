@@ -43,6 +43,7 @@ if command -v apt-get >/dev/null; then
 		fzf              # Fuzzy finder
 		"$glow_deb_path" # Markdown viewer
 
+		emacs
 		zsh
 	)
 

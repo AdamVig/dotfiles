@@ -61,7 +61,7 @@ if [ -f "$HOME"/.emacs.d ]; then
 	rm -f "$HOME"/.emacs.d
 fi
 
-if is_ubuntu || is_debian; then
+if (is_ubuntu || is_debian) && ! is_devcontainer; then
 	if ! systemctl --user is-enabled --quiet emacs.service; then
 		log_start 'setting up Emacs daemon'
 		systemctl --user enable --now emacs.service

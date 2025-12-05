@@ -21,6 +21,7 @@ log_start 'running OS-specific scripts'
 
 if is_devcontainer; then
 	"$_dir"/devcontainer
+	"$_dir"/emacs
 	"$_dir"/gh
 	"$_dir"/zsh
 	exit
