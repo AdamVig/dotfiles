@@ -20,7 +20,7 @@ if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
 	gh auth login --hostname=github.com --clipboard --web --scopes=admin:public_key,user,write:gpg_key --git-protocol=https
 	log_end
-else
+elif ! is_devcontainer; then
 	log_start 'ensuring scopes'
 	gh auth refresh --hostname=github.com --clipboard --scopes=admin:public_key,user,write:gpg_key
 	log_end
