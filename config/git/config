@@ -11,6 +11,7 @@
 [init]
 	defaultBranch = main
 [commit]
+  gpgSign = true
   template = $XDG_CONFIG_HOME/git/template
 [push]
   # make `git push -u` default to `origin` and the current branch
@@ -63,8 +64,6 @@
 	# Do not generate `.orig` files after using mergetool
 	keepBackup = false
 	keepTemporaries = false
-[commit]
-  gpgSign = true
 [tag]
 	gpgSign = true
 [branch]
