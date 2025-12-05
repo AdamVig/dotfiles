@@ -192,6 +192,10 @@ if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV
 
 	# Prevent npm from storing config in ~/.npmrc (except in Dev Container, where we use the default path)
 	export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
+
+else
+	# Do not attempt to use GUI Emacs in Dev Container
+	VISUAL="$EDITOR"
 fi
 
 # Load local overrides if the user has created the file
