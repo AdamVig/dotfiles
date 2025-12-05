@@ -74,4 +74,10 @@ cleanup_paths+=("$git_spice_extracted_tmp")
 install "$git_spice_extracted_tmp"/gs "$HOME"/.local/bin/gs
 log_end
 
+log 'symlinking Git commit template and attributes'
+config_path="$(xdg_config)"/git
+mkdir -p "$config_path"
+_ln "$_dir"/../config/git/template "$config_path"/template
+_ln "$_dir"/../config/git/attributes "$config_path"/attributes
+
 log_end
