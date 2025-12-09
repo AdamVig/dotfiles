@@ -74,6 +74,8 @@
   commit = false
 [spice "log"]
   pushStatusFormat = aheadBehind
+[spice "logLong"]
+  crFormat = url
 [spice "rebaseContinue"]
   edit = false
 [spice "submit"]
