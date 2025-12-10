@@ -198,14 +198,15 @@ declare -a packages=(
 	tig               # Visual Git client
 	tree
 	unzip
-	v4l-utils  # Webcam control tools
-	wine       # Support for Windows applications
-	winetricks # Tools for working with Wine
-	wireguard  # VPN
-	wmctrl     # X window manager control CLI
-	xclip      # Clipboard CLI
-	xsel       # Clipboard CLI
-	xdotool    # X input event generator
+	v4l-utils    # Webcam control tools
+	wine         # Support for Windows applications
+	winetricks   # Tools for working with Wine
+	wireguard    # VPN
+	wl-clipboard # Wayland clipboard manager
+	wmctrl       # X window manager control CLI
+	xclip        # Clipboard CLI
+	xsel         # Clipboard CLI
+	xdotool      # X input event generator
 	xdg-utils
 
 	# shell

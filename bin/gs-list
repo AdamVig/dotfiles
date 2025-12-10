@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+log_json="$(gs log long --json)"
+
+branch_rows="$(
+	jq --raw-output --slurp '
+    def build_stack($name; $idx):
+      $idx[$name] as $n
+      | if $n.down.name? then build_stack($n.down.name; $idx) + [$n] else [$n] end;
+
+    INDEX(.name) as $idx
+    | build_stack((.[] | select(.current).name); $idx)
+    | map(select(has("change")))  # Only branches with pull requests
+    | to_entries[]
+    | [
+        (.key + 1),  # 1-based index for display
+        .value.name,
+        (.value.down.name // "main"),
+        .value.change.url
+      ]
+    | @tsv
+	' <<<"$log_json"
+)"
+
+selected_branches="$(
+	echo "$branch_rows" | fzf --multi --sync \
+		--header 'Select branches to include (Tab to toggle, Enter to confirm, Ctrl-A to select all, Ctrl-D to deselect all)' \
+		--bind 'start:select-all' \
+		--bind 'ctrl-a:select-all,ctrl-d:deselect-all' \
+		--exit-0
+)"
+
+while IFS=$'\t' read -r item_num branch down url; do
+	title="$(gh pr view "$url" --json title --jq '.title')"
+	diff_stats=($(git diff --numstat --no-renames "$down..$branch" |
+		awk 'BEGIN{a=0;d=0}{a+=$1;d+=$2}END{print a, d}'))
+	add=${diff_stats[1]:-0}
+	del=${diff_stats[2]:-0}
+
+	printf '%d. [%s](%s) (+%s, -%s)\n' "$item_num" "$title" "$url" "$add" "$del"
+done <<<"$selected_branches" | tee >(
+	# Copy both HTML and plain text for Slack formatting support
+	content="$(cat)"
+	echo "$content" | pandoc -f markdown -t html | wl-copy --type text/html
+	echo "$content" | wl-copy --primary
+)
