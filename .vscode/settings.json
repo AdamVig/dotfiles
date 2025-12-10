@@ -173,6 +173,7 @@
 		"gofmt": true,
 		"jq": true,
 		"ls": true,
+		"man": true,
 		"pwd": true,
 		"rg": true,
 		"rm": false,
