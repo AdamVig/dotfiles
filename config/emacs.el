@@ -22,7 +22,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-dabbrev-downcase nil)
- '(custom-enabled-themes '(sanityinc-tomorrow-day))
  '(custom-safe-themes
 		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" default))
  '(git-commit-summary-max-length 72)
@@ -47,7 +46,7 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(catppuccin-theme with-editor orderless vertico exec-path-from-shell auto-dark color-theme-sanityinc-tomorrow auto-package-update flycheck forge olivetti super-save company tide ox-gfm writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
+		'(catppuccin-theme with-editor orderless vertico exec-path-from-shell auto-dark auto-package-update flycheck forge olivetti super-save company tide ox-gfm writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
