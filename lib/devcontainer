@@ -44,7 +44,7 @@ if command -v apt-get >/dev/null; then
 		"$glow_deb_path" # Markdown viewer
 
 		ed # Needed by `gh-pr-body-commits`
-		emacs
+		emacs-nox
 		zsh
 	)
 
