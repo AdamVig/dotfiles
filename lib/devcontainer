@@ -49,7 +49,7 @@ if command -v apt-get >/dev/null; then
 	)
 
 	log_start 'installing packages'
-	if ! request_sudo apt-get install --yes "${packages[@]}"; then
+	if ! DEBIAN_FRONTEND=noninteractive request_sudo apt-get install --yes --no-install-recommends "${packages[@]}"; then
 		warn 'failed to install apt packages; this may require manual resolution'
 	fi
 	log_end
