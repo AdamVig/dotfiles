@@ -9,6 +9,16 @@ log() {
 	log_with_component devcontainer "$@"
 }
 
+cleanup_paths=()
+cleanup() {
+	if [[ ${#cleanup_paths[@]} == 0 ]]; then
+		return
+	fi
+	rm -rf "${cleanup_paths[@]}" 2>/dev/null
+}
+
+trap cleanup EXIT
+
 log_start 'setting up devcontainer'
 if command -v apt-get >/dev/null; then
 	log_start 'downloading bat'
@@ -87,6 +97,14 @@ echo '{
     }
   }
 }' >"$git_spice_config_path/secrets.json"
+log_end
+
+log_start 'installing kitty'
+kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
+kitty_tmp="$(download_to_tmp "$kitty_url" '.txz')"
+kitty_extracted_tmp="$(extract_tarball_to_tmp "$kitty_tmp")"
+cleanup_paths+=("$kitty_extracted_tmp")
+mv "$kitty_extracted_tmp"/bin/kitten "$HOME"/.local/bin
 log_end
 
 log 'symlinking Git commit template and attributes'
