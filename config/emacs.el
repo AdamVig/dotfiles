@@ -75,9 +75,9 @@
 	;; Show summary after updating
 	(setq auto-package-update-hide-results t))
 
-;; Start a server when in a graphical instance and the server is not already running
+;; On macOS, start a server when in a graphical instance and the server is not already running
 (require 'server) ;; Ensure server package is loaded so we can use functions from it
-(if (not (server-running-p))
+(if (and (eq system-type 'darwin) window-system (not (server-running-p)))
 	(server-start)
 )
 
