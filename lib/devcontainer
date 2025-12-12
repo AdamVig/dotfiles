@@ -74,6 +74,19 @@ git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
 git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
 cleanup_paths+=("$git_spice_extracted_tmp")
 install "$git_spice_extracted_tmp"/gs "$HOME"/.local/bin/gs
+git_spice_config_path="$(xdg_config)/git-spice"
+mkdir -p "$git_spice_config_path"
+echo '{
+  "services": {
+    "https://github.com": {
+      "secrets": {
+        "token": {
+          "value": "{\"AuthenticationToken\":null,\"github_cli\":true}"
+        }
+      }
+    }
+  }
+}' >"$git_spice_config_path/secrets.json"
 log_end
 
 log 'symlinking Git commit template and attributes'
