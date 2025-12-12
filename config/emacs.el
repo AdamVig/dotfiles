@@ -58,6 +58,10 @@
  '(org-level-2 ((t (:weight light))))
  '(variable-pitch ((t (:family "Input Sans")))))
 
+;; Override variable-pitch font only if Input Sans is available
+(when (font-available-p "Input Sans")
+  (set-face-attribute 'variable-pitch nil :family "Input Sans"))
+
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
 (use-package auto-package-update
   :ensure t
@@ -86,11 +90,17 @@
 	:ensure t
 	:config (exec-path-from-shell-initialize))
 
+;; Helper function to check if a font is available
+(defun font-available-p (font-name)
+  "Check if FONT-NAME is available on the system."
+  (and (display-graphic-p)
+       (find-font (font-spec :name font-name))))
+
 ;; Set the font and font size (in 1/10pt), custom for macOS
-(if (eq system-type 'darwin)
-	(set-face-attribute 'default nil :font "Input Mono" :height 160)
-	(set-face-attribute 'default nil :font "Input Mono" :height 120)
-)
+(when (font-available-p "Input Mono")
+  (if (eq system-type 'darwin)
+      (set-face-attribute 'default nil :font "Input Mono" :height 160)
+    (set-face-attribute 'default nil :font "Input Mono" :height 120)))
 
 ;; Customize the mode line
 (setq-default mode-line-format
@@ -172,8 +182,10 @@
   (catppuccin-reload))
 
 ;; Install and use Auto-Dark (https://github.com/LionyxML/auto-dark-emacs)
+;; Only enable in graphical environments
 (use-package auto-dark
 	:ensure t
+	:if (display-graphic-p)
 	:config
 	(setq auto-dark-allow-osascript t)
 	(auto-dark-mode t)
