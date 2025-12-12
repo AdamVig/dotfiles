@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+json="${1?usage: codex-notify '<notification-json>'}"
+
+notification=("${(@f)$(
+  jq --raw-output '
+    (.cwd // ""
+      | split("/")
+      | .[-1] // "unknown"
+    ) as $project |
+
+    (.["last-assistant-message"]
+      | if . != "" and . != null
+          then .
+          else "Turn complete."
+        end
+    ) as $message |
+
+    "Codex · \($project)",
+    $message
+  ' <<<"$json"
+)}")
+
+kitten notify --sound=complete "$notification[1]" "$notification[2]"

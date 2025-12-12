@@ -6,6 +6,7 @@ preferred_auth_method = "chatgpt"
 sandbox_mode = "workspace-write"
 model = "gpt-5.1-codex-max"
 model_reasoning_effort = "medium"
+notify = ["$HOME/.local/bin/codex-notify"]
 
 [features]
 rmcp_client = true
@@ -30,4 +31,4 @@ writable_roots = [
 ]
 
 [tui]
-notifications = true
+notifications = [ "approval-requested" ]
