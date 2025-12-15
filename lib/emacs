@@ -67,7 +67,9 @@ if (is_ubuntu || is_debian) && ! is_devcontainer; then
 		systemctl --user enable --now emacs.service
 		log_end
 	fi
-
+else
+	# Get Emacs' initial setup out of the way upfront
+	emacs --batch --eval '(message "Emacs warmed")' || true
 fi
 
 log_end
