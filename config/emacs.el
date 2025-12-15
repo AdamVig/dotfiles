@@ -5,6 +5,12 @@
 
 ;;; Code:
 
+;; Helper function to check if a font is available
+(defun font-available-p (font-name)
+  "Check if FONT-NAME is available on the system."
+  (and (display-graphic-p)
+       (find-font (font-spec :name font-name))))
+
 ;; Initialize package.el (http://melpa.org/#/getting-started)
 (require 'package)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
@@ -89,12 +95,6 @@
 (use-package exec-path-from-shell
 	:ensure t
 	:config (exec-path-from-shell-initialize))
-
-;; Helper function to check if a font is available
-(defun font-available-p (font-name)
-  "Check if FONT-NAME is available on the system."
-  (and (display-graphic-p)
-       (find-font (font-spec :name font-name))))
 
 ;; Set the font and font size (in 1/10pt), custom for macOS
 (when (font-available-p "Input Mono")
