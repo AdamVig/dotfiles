@@ -33,7 +33,7 @@ grub_font_output_path="$grub_theme_dir"/opensans-regular.pf2
 if ! [ -f "$grub_font_output_path" ]; then
 	log_start 'converting font'
 	opensans_path='/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf'
-	if ! request_sudo grub-mkfont --output "$grub_font_output_path" --size 48 "$opensans_path"; then
+	if ! request_sudo grub-mkfont --output "$grub_font_output_path" --size 24 "$opensans_path"; then
 		fatal 'failed to convert font'
 	fi
 	log_end
