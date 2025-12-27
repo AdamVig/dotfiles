@@ -164,6 +164,7 @@
 		"fd": true,
 		"find": true,
 		"git diff": true,
+		"git --no-pager diff": true,
 		"go build": true,
 		"go doc": true,
 		"go env": true,
