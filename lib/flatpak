@@ -39,6 +39,10 @@ log_start 'installing Fastmail'
 flatpak install --assumeyes --noninteractive --or-update com.fastmail.Fastmail
 log_end
 
+log_start 'installing KOReader'
+flatpak install --assumeyes --noninteractive --or-update rocks.koreader.KOReader
+log_end
+
 log_start 'removing no-longer-needed packages'
 flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop >/dev/null || true
 flatpak uninstall --assumeyes --noninteractive com.github.wwmm.easyeffects >/dev/null || true
