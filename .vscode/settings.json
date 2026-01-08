@@ -40,6 +40,7 @@
 	"workbench.editor.enablePreview": false,
 	// Use JSON settings editor instead of UI
 	"workbench.settings.editor": "json",
+	"update.mode": "manual",
 	// Hide release notes
 	"update.showReleaseNotes": false,
 	// ------------------------------
