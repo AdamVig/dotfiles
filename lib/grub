@@ -23,30 +23,14 @@ request_sudo sed -i 's|#GRUB_DISABLE_OS_PROBER=false|GRUB_DISABLE_OS_PROBER=fals
 log_end
 
 grub_theme_dir=/boot/grub/themes/adamvig
-log_start 'copying theme into place'
-request_sudo mkdir -p "$grub_theme_dir"
-# Copy because with a symlink `grub-mkconfig` puts the `/home/...` path in `grub.cfg`, which fails at boot
-request_sudo cp "$_dir"/../config/grub-theme.txt "$grub_theme_dir"/theme.txt
-log_end
-
 grub_font_output_path="$grub_theme_dir"/opensans-regular.pf2
-if ! [ -f "$grub_font_output_path" ]; then
-	log_start 'converting font'
-	opensans_path='/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf'
-	if ! request_sudo grub-mkfont --output "$grub_font_output_path" --size 24 "$opensans_path"; then
-		fatal 'failed to convert font'
-	fi
-	log_end
-fi
-
 grub_theme_variable="GRUB_THEME=$grub_theme_dir/theme.txt"
-if ! grep --quiet "$grub_theme_variable" /etc/default/grub; then
-	log_start 'enabling theme'
-	if ! echo "$grub_theme_variable" | request_sudo tee --append /etc/default/grub >/dev/null; then
-		fatal 'failed to enable theme'
-	fi
-	log_end
+log_start 'removing theme and font, disabling theme'
+request_sudo rm -rf "$grub_theme_dir" "$grub_font_output_path"
+if ! request_sudo sed -i "\|$grub_theme_variable|d" /etc/default/grub; then
+	fatal 'failed to disable theme'
 fi
+log_end
 
 grub_memtest_variable="GRUB_DISABLE_MEMTEST=true"
 if ! grep --quiet "$grub_memtest_variable" /etc/default/grub; then
