@@ -108,19 +108,9 @@ if ! is_repository_configured 'cli.github.com'; then
 	log_end
 fi
 
-if ! is_repository_configured 'mozillateam'; then
-	log_start 'adding Mozilla Team repository'
-	add_ppa 'mozillateam' '738BEB9321D1AAEC13EA9391AEBDF4819BE21867' 'mozillateam/ppa'
-	if ! [ -f /etc/apt/preferences.d/mozillateamppa ]; then
-		echo 'Package: thunderbird*
-Pin: release o=LP-PPA-mozillateam
-Pin-Priority: 1001
-
-Package: thunderbird*
-Pin: release o=Ubuntu
-Pin-Priority: -1
-' | request_sudo tee /etc/apt/preferences.d/mozillateamppa >/dev/null
-	fi
+if is_repository_configured 'mozillateam'; then
+	log_start 'removing Mozilla Team repository (Thunderbird)'
+	request_sudo rm -f /etc/apt/sources.list.d/mozillateam.list /usr/share/keyrings/mozillateam-archive-keyring.gpg /etc/apt/preferences.d/mozillateamppa
 	log_end
 fi
 
@@ -263,7 +253,7 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	google-chrome-stable # Switched to Brave
+	thunderbird # Switched to Fastmail desktop
 )
 
 log_start 'removing unwanted packages'
