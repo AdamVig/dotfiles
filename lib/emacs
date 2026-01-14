@@ -21,6 +21,14 @@ if ! [ -f "$emacs_config_path" ]; then
 	log_end
 fi
 
+log_start 'installing Emacs early init file'
+# https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html
+cat >"$emacs_config_dir"/early-init.el <<-EOF
+	;; Do not run "site files" from e.g. /etc/emacs/site-start.d/
+	(setq site-run-file nil)
+EOF
+log_end
+
 emacs_local_config_path="$emacs_config_dir"/lisp/init-local.el
 if ! [ -f "$emacs_local_config_path" ]; then
 	log_start 'installing template for local Emacs configuration'
