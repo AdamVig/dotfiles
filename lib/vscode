@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component vscode "$@"
@@ -19,9 +18,9 @@ elif is_linux; then
 fi
 
 mkdir -p "$vscode_settings_dir"
-_ln "$_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
-_ln "$_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
-_ln "$_dir"/../.vscode/prompts "$vscode_settings_dir"/prompts
+_ln "$script_dir"/../.vscode/settings.json "$vscode_settings_dir"/settings.json
+_ln "$script_dir"/../.vscode/keybindings.json "$vscode_settings_dir"/keybindings.json
+_ln "$script_dir"/../.vscode/prompts "$vscode_settings_dir"/prompts
 log_end
 
 declare -a extensions=(

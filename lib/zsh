@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component zsh "$@"
@@ -45,12 +44,12 @@ if ! [ -d "$data_dir" ]; then
 fi
 mkdir -p "$(xdg_data)"/zsh-site-functions
 
-_ln "$_dir"/../.zshenv "$HOME"
+_ln "$script_dir"/../.zshenv "$HOME"
 
 # Include dotfiles in glob
 shopt -s dotglob
 
-_ln "$_dir"/../zsh/* "$config_dir"
+_ln "$script_dir"/../zsh/* "$config_dir"
 
 shopt -u dotglob
 log_end

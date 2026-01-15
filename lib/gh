@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component gh "$@"
@@ -51,7 +50,7 @@ done
 log_end
 
 log_start 'setting aliases'
-gh alias import --clobber "$_dir"/../config/gh-aliases.yml
+gh alias import --clobber "$script_dir"/../config/gh-aliases.yml
 log_end
 
 log_end

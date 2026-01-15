@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component ubuntu "$@"
@@ -38,7 +37,7 @@ log_end
 
 log_start 'putting WirePlumber device disabling configuration in place'
 mkdir -p "$(xdg_config)"/wireplumber/main.lua.d
-_ln "$_dir"/../config/wireplumber-disable-devices.lua "$(xdg_config)"/wireplumber/main.lua.d/99-disable-devices.lua
+_ln "$script_dir"/../config/wireplumber-disable-devices.lua "$(xdg_config)"/wireplumber/main.lua.d/99-disable-devices.lua
 log_end
 
 log_start 'updating user directories'
@@ -106,7 +105,7 @@ Description=\"Home Assistant Daemon\"
 
 [Service]
 EnvironmentFile=$home_assistant_daemon_environment_file_path
-ExecStart=$(realpath "$_dir"/../bin/home-assistant-daemon)
+ExecStart=$(realpath "$script_dir"/../bin/home-assistant-daemon)
 Restart=on-failure
 # Wait two minutes before attempting to restart
 RestartSec=2min

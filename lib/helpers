@@ -3,11 +3,11 @@
 # Files that source this file get `set -euo pipefail` automatically, so they do not need it themselves
 
 set -euo pipefail
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+script_dir="$(cd -P -- "${BASH_SOURCE[0]%/*}" && pwd -P)"
 
 # .profile must be sourced in order to put binaries in PATH during bootstrap of a fresh system
 # shellcheck source=./.profile
-source "$_dir"/../.profile
+source "$script_dir"/../.profile
 
 _tput() {
 	if [ -n "$TERM" ] && [ "$TERM" != "dumb" ]; then

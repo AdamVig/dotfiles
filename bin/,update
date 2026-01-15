@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 set -euo pipefail
+script_dir="$(cd -P -- "$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")" && pwd -P)" || exit
 
 usage="Usage: $(basename "$0") [-h|--help]
 Update applications, packages, and tools.
@@ -83,9 +82,9 @@ run_operation() {
 update_dotfiles() {
 	branch_ahead_behind_pattern="# branch.ab \+[0-9]+ -([0-9]+)"
 	echo 'fetching...'
-	git -C "$_dir" fetch &>/dev/null
+	git -C "$script_dir" fetch &>/dev/null
 	echo 'getting status...'
-	status="$(git -C "$_dir" status --porcelain=v2 --branch)"
+	status="$(git -C "$script_dir" status --porcelain=v2 --branch)"
 	echo 'extracting branch ahead/behind data...'
 	if ! [[ $status =~ $branch_ahead_behind_pattern ]]; then
 		echo 'status does not match pattern:'
@@ -95,7 +94,7 @@ update_dotfiles() {
 	echo 'checking if branch is behind...'
 	if [ "${BASH_REMATCH[1]}" != 0 ]; then
 		echo 'pulling...'
-		git -C "$_dir" pull
+		git -C "$script_dir" pull
 		echo 'restarting script...'
 		exec "$0" updated </dev/tty
 	fi
@@ -140,7 +139,7 @@ update_apt() {
 
 update_linux_software() {
 	echo 'linux software'
-	"$_dir"/../lib/linux-software
+	"$script_dir"/../lib/linux-software
 }
 
 update_gh_extensions() {

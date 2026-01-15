@@ -13,9 +13,8 @@
 # The remote host must have an SSH key without a passphrase. The remote host's public key must be inserted in
 # /usr/local/share/remote-management/.ssh/authorized_keys in place of "<insert key here>".
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component remote-management "$@"
@@ -70,7 +69,7 @@ exec ./,remotecontrol \"\$2\"
 " | request_sudo tee "$remote_management_shell_path" >/dev/null
 request_sudo chmod +x "$remote_management_shell_path"
 # Copy instead of symlinking because symlink yields "cannot execute: Permission denied"
-request_sudo cp "$_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
+request_sudo cp "$script_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
 request_sudo chown "$remote_management_username" "$remote_management_user_home_path"/,remotecontrol
 # Set permissions to r-x------
 request_sudo chmod 500 "$remote_management_user_home_path"/,remotecontrol

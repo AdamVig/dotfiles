@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component main "$@"
@@ -12,60 +11,60 @@ log() {
 # shellcheck disable=SC2119
 request_sudo
 
-"$_dir"/config
+"$script_dir"/config
 
 log_start 'running OS-specific scripts'
 
 if is_devcontainer; then
-	"$_dir"/devcontainer
-	"$_dir"/emacs
-	"$_dir"/gh
-	"$_dir"/zsh
+	"$script_dir"/devcontainer
+	"$script_dir"/emacs
+	"$script_dir"/gh
+	"$script_dir"/zsh
 	exit
 elif is_macos; then
-	"$_dir"/macos
-	"$_dir"/brew
+	"$script_dir"/macos
+	"$script_dir"/brew
 elif is_linux; then
-	"$_dir"/linux-software
-	"$_dir"/flatpak
+	"$script_dir"/linux-software
+	"$script_dir"/flatpak
 	if command -v apt >/dev/null; then
-		"$_dir"/apt
+		"$script_dir"/apt
 	fi
-	"$_dir"/grub
+	"$script_dir"/grub
 	if is_ubuntu; then
-		"$_dir"/ubuntu
-		"$_dir"/gnome
-		"$_dir"/gnome-theme
+		"$script_dir"/ubuntu
+		"$script_dir"/gnome
+		"$script_dir"/gnome-theme
 	fi
-	"$_dir"/dns
+	"$script_dir"/dns
 	if is_ubuntu || is_debian; then
-		"$_dir"/remote-management
+		"$script_dir"/remote-management
 	fi
 fi
 
 log_end
 
 log_start 'running programming language setup scripts'
-"$_dir"/golang
-"$_dir"/node
-"$_dir"/python-tools
+"$script_dir"/golang
+"$script_dir"/node
+"$script_dir"/python-tools
 log_end
 
 log_start 'running application setup scripts'
-"$_dir"/bat
-"$_dir"/emacs
-"$_dir"/git
-"$_dir"/gh
-"$_dir"/gpg
-"$_dir"/ssh
-"$_dir"/vscode
-"$_dir"/zsh
+"$script_dir"/bat
+"$script_dir"/emacs
+"$script_dir"/git
+"$script_dir"/gh
+"$script_dir"/gpg
+"$script_dir"/ssh
+"$script_dir"/vscode
+"$script_dir"/zsh
 log_end
 
 log_start 'running system setup scripts'
-"$_dir"/profile-picture
-"$_dir"/ssh-key
-"$_dir"/gpg-keys
+"$script_dir"/profile-picture
+"$script_dir"/ssh-key
+"$script_dir"/gpg-keys
 log_end
 
 log "done. start a new login shell or run 'source zsh/.zshrc'."

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component devcontainer "$@"
@@ -110,7 +109,7 @@ log_end
 log 'symlinking Git commit template and attributes'
 config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
-_ln "$_dir"/../config/git/template "$config_path"/template
-_ln "$_dir"/../config/git/attributes "$config_path"/attributes
+_ln "$script_dir"/../config/git/template "$config_path"/template
+_ln "$script_dir"/../config/git/attributes "$config_path"/attributes
 
 log_end

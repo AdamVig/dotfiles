@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component emacs "$@"
@@ -16,7 +15,7 @@ emacs_config_path="$emacs_config_dir"/init.el
 if ! [ -f "$emacs_config_path" ]; then
 	log_start 'installing Emacs configuration'
 	mkdir -p "$emacs_config_dir"
-	_ln "$_dir"/../config/emacs.el "$emacs_config_path"
+	_ln "$script_dir"/../config/emacs.el "$emacs_config_path"
 	log_end
 fi
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # shellcheck source=./lib/helpers
-source "$_dir"/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
 
 log() {
 	log_with_component git "$@"
@@ -14,15 +13,15 @@ config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
 
 log 'symlinking commit template'
-_ln "$_dir"/../config/git/template "$config_path"/template
+_ln "$script_dir"/../config/git/template "$config_path"/template
 
 log 'symlinking attributes'
-_ln "$_dir"/../config/git/attributes "$config_path"/attributes
+_ln "$script_dir"/../config/git/attributes "$config_path"/attributes
 
 # If gitconfig does not exist already, create one
 if ! [ -e "$config_path"/config ]; then
 	log "copying gitconfig to \"$config_path/config\""
-	cp "$_dir"/../config/git/config "$config_path"/config
+	cp "$script_dir"/../config/git/config "$config_path"/config
 
 	log_start 'configuring Git user'
 	read -r -p "$(make_prompt 'Full name') " name
@@ -37,7 +36,7 @@ if ! [ -e "$config_path"/config ]; then
 else
 	log_start 'updating Git configuration'
 	# Read all values from current Git configuration
-	git config --list --file "$_dir"/../config/git/config | while read -r conf_line; do
+	git config --list --file "$script_dir"/../config/git/config | while read -r conf_line; do
 		# Split line into name and value at equals sign
 		IFS='=' read -r name value <<<"$conf_line"
 
