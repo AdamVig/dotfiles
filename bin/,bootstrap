@@ -2,6 +2,7 @@
 
 if ! command -v uname >/dev/null; then
 	echo 'error: uname is not available, cannot proceed'
+	exit 1
 fi
 
 # If running on a fresh boot of macOS
