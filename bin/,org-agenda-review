@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 set -euo pipefail
 
 usage="Usage: $(basename "$0") [-h|--help] [days to review]
