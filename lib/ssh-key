@@ -29,10 +29,6 @@ if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
 	fatal 'failed to get ID of Bitwarden folder "ssh"'
 fi
 
-if ! items="$(bw list items --folderid="$ssh_folder_id")"; then
-	fatal 'failed to list items in SSH folder'
-fi
-
 if ! hostname="$(hostname -s)"; then
 	fatal 'failed to get system hostname'
 fi
