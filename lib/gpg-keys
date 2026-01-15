@@ -26,7 +26,7 @@ fi
 unlock_bitwarden_vault
 
 if ! gpg_folder_id="$(bw get folder gpg | jq --raw-output '.id')"; then
-  fatal 'failed to get ID of Bitwarden folder "gpg"'
+	fatal 'failed to get ID of Bitwarden folder "gpg"'
 fi
 
 if ! items="$(bw list items --folderid="$gpg_folder_id")"; then
@@ -54,10 +54,10 @@ while read -r item; do
 	log_end
 
 	log_start 'setting key trust to "ultimate"'
-	echo -e "5\ny\n" | gpg --command-fd 0 --edit-key "$short_id" trust;
+	echo -e "5\ny\n" | gpg --command-fd 0 --edit-key "$short_id" trust
 	log_end
 
-	if [[ "$item_name" == *"$(git config --global user.email)"* ]]; then
+	if [[ $item_name == *"$(git config --global user.email)"* ]]; then
 		log_start 'configuring Git to use key'
 		git config --global commit.gpgsign true
 		git config --global user.signingkey "$short_id"
