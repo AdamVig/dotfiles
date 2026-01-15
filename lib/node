@@ -3,7 +3,6 @@
 # This script must run after the OS-specific scripts because it depends on fnm.
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 

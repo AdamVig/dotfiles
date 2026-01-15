@@ -14,7 +14,6 @@
 # /usr/local/share/remote-management/.ssh/authorized_keys in place of "<insert key here>".
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 

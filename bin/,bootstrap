@@ -43,7 +43,8 @@ if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [[ -v VSCOD
 fi
 
 echo 'running lib/main...'
-_dir="$(dirname "$(realpath "$0")")"
+# Non-standard script directory detection to support fresh systems
+script_dir="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 # shellcheck disable=SC1091
-source "$_dir"/../.profile
-exec "$_dir"/../lib/main
+source "$script_dir"/../.profile
+exec "$script_dir"/../lib/main

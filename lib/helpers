@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -euo pipefail
+# Files that source this file get `set -euo pipefail` automatically, so they do not need it themselves
 
+set -euo pipefail
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 # .profile must be sourced in order to put binaries in PATH during bootstrap of a fresh system

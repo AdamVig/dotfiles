@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 _dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-
 # shellcheck source=./lib/helpers
 source "$_dir"/helpers
 
