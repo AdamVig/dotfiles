@@ -7,6 +7,7 @@ sandbox_mode = "workspace-write"
 model = "gpt-5.2-codex"
 model_reasoning_effort = "medium"
 notify = ["$HOME/.local/bin/codex-notify"]
+file_opener = "vscode"
 
 [features]
 rmcp_client = true
