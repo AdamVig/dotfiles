@@ -55,8 +55,7 @@ _get_operation_indentation() {
 		return
 	fi
 
-	# Subtract one to avoid indenting when only one operation is in the array
-	num_spaces="$(((operation_depth - 1) * 2))"
+	num_spaces="$((operation_depth * 2))"
 	printf "%${num_spaces}s"
 }
 
@@ -70,7 +69,8 @@ _log_internal() {
 # Log a message
 # $@: passed to echo
 log() {
-	_log_internal "$@"
+	indent="$(_get_operation_indentation)"
+	_log_internal "$indent" "$@"
 }
 
 # Log the beginning of an operation
@@ -83,9 +83,9 @@ log_start() {
 		return 1
 	fi
 	shift
-	log_operation_names+=("$operation_name")
 
 	log "${bold}start${reset}" "$operation_name" "$@"
+	log_operation_names+=("$operation_name")
 }
 
 # Log the end of an operation
@@ -97,10 +97,10 @@ log_end() {
 		return 1
 	fi
 
-	log "${bold}end  ${reset}" "$operation_name"
-
 	# Remove the current operation from the list
 	unset -v 'log_operation_names[-1]'
+
+	log "${bold}end  ${reset}" "$operation_name"
 }
 
 # Log a message including the name of the component (usually the file where the log line is from)
