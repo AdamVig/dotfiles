@@ -83,10 +83,14 @@ log_end
 
 log_start 'installing Golang'
 request_sudo rm -rf /usr/local/go
+log 'getting version'
 go_version="$(_curl https://go.dev/VERSION?m=text | head -n 1)"
+log 'downloading'
 golang_tmp="$(download_to_tmp "https://go.dev/dl/$go_version.linux-amd64.tar.gz" '.tar.gz')"
 cleanup_paths+=("$golang_tmp")
+log 'extracting'
 request_sudo tar --directory /usr/local --extract --gzip --file "$golang_tmp"
+log 'linking'
 # Avoid the need for `PATH` modification by symlinking binaries to /usr/bin (same way as the distribution packages do)
 request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
 log_end
