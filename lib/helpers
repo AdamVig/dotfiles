@@ -148,7 +148,7 @@ fatal() {
 # cURL wrapper with common default options, use `CURL_ARGS` env var to add/override flags.
 _curl() {
 	# shellcheck disable=SC2086
-	curl --verbose --styled-output --no-progress-meter --fail --location --connect-timeout 0.5 --max-time 30 --retry 2 ${CURL_ARGS-} "$@"
+	curl --styled-output --no-progress-meter --fail --location --connect-timeout 0.5 --max-time 30 --retry 2 ${CURL_ARGS-} "$@"
 }
 
 # ln wrapper with common default options
