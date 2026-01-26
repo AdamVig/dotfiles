@@ -25,15 +25,19 @@ if [ -z "$headphones_sink" ]; then
 	exit 1
 fi
 
+echo 'getting default sink...'
 if ! default_sink="$(pactl get-default-sink)"; then
 	echo 'failed to get default sink'
 	exit 1
 fi
 
-echo "default sink: $default_sink"
+echo "current default sink: $default_sink"
 
+echo 'setting default sink...'
 if [ "$default_sink" = "$speakers_sink" ]; then
+	echo "new default sink: $headphones_sink"
 	pactl set-default-sink "$headphones_sink"
 else
+	echo "new default sink: $speakers_sink"
 	pactl set-default-sink "$speakers_sink"
 fi
