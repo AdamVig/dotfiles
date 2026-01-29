@@ -64,7 +64,7 @@ log_end
 
 if [ -f "$HOME"/.emacs.d ]; then
 	log 'removing config directory at default location to avoid conflicts'
-	rm -f "$HOME"/.emacs.d
+	rm -rf "$HOME"/.emacs.d
 fi
 
 if (is_ubuntu || is_debian) && ! is_devcontainer; then
@@ -74,8 +74,15 @@ if (is_ubuntu || is_debian) && ! is_devcontainer; then
 		log_end
 	fi
 else
-	# Get Emacs' initial setup out of the way upfront
-	emacs --batch --eval '(message "Emacs warmed")' || true
+	log_start 'initializing Emacs'
+	# Prevent slow first-time startup by running the Emacs config script upfront
+	emacs \
+		--batch \
+		--no-site-file \
+		--load "$emacs_config_path" \
+		--eval '(message "Emacs warmed")' ||
+		true
+	log_end
 fi
 
 log_end
