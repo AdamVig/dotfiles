@@ -18,38 +18,44 @@ cleanup() {
 trap cleanup EXIT
 
 log_start 'setting up devcontainer'
+
+log_start 'downloading all packages in parallel'
+codex_bin_file=$(mktemp)
+kitty_tarball_path_file=$(mktemp)
+git_spice_tarball_path_file=$(mktemp)
+cleanup_paths+=("$codex_bin_file" "$kitty_tarball_path_file" "$git_spice_tarball_path_file")
+_curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" | unzstd --stdout >"$codex_bin_file" &
+download_to_tmp "$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')" '.txz' >"$kitty_tarball_path_file" &
+download_to_tmp "$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')" '.tar.gz' >"$git_spice_tarball_path_file" &
+
 if command -v apt-get >/dev/null; then
-	log_start 'downloading bat'
-	if ! bat_deb_path="$(download_deb_from_github_release 'sharkdp/bat' '_amd64.deb')"; then
-		fatal 'failed to download bat'
-	fi
-	log_end
+	bat_deb_path_file=$(mktemp)
+	delta_deb_path_file=$(mktemp)
+	glow_deb_path_file=$(mktemp)
+	cleanup_paths+=("$bat_deb_path_file" "$delta_deb_path_file" "$glow_deb_path_file")
+	download_deb_from_github_release 'sharkdp/bat' '_amd64.deb' >"$bat_deb_path_file" &
+	download_deb_from_github_release 'dandavison/delta' '_amd64.deb' >"$delta_deb_path_file" &
+	download_deb_from_github_release 'charmbracelet/glow' '_amd64.deb' >"$glow_deb_path_file" &
+fi
 
-	log_start 'downloading git-delta'
-	if ! delta_deb_path="$(download_deb_from_github_release 'dandavison/delta' '_amd64.deb')"; then
-		fatal 'failed to download git-delta'
-	fi
-	log_end
+wait || fatal 'failed to download packages'
+log_end
 
-	log_start 'downloading glow'
-	if ! glow_deb_path="$(download_deb_from_github_release 'charmbracelet/glow' '_amd64.deb')"; then
-		fatal 'failed to download glow'
-	fi
-	log_end
+if command -v apt-get >/dev/null; then
 
 	declare -a packages=(
 		# replacements of default utilities
-		"$bat_deb_path"   # Better cat
-		"$delta_deb_path" # Better git diff
-		eza               # Better ls
-		fd-find           # Better find
-		htop              # Better top
-		httpie            # Better curl
-		ripgrep           # Better grep
+		"$(<"$bat_deb_path_file")"   # Better cat
+		"$(<"$delta_deb_path_file")" # Better git diff
+		eza                          # Better ls
+		fd-find                      # Better find
+		htop                         # Better top
+		httpie                       # Better curl
+		ripgrep                      # Better grep
 
 		# command line tools
-		fzf              # Fuzzy finder
-		"$glow_deb_path" # Markdown viewer
+		fzf                         # Fuzzy finder
+		"$(<"$glow_deb_path_file")" # Markdown viewer
 
 		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
@@ -70,17 +76,13 @@ if command -v apt-get >/dev/null; then
 fi
 
 log_start 'installing Codex'
-if ! _curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" |
-	unzstd --stdout |
-	install --mode='u=rwx,go=rx' /dev/stdin "$HOME"/.local/bin/codex; then
+if ! install --mode='u=rwx,go=rx' "$codex_bin_file" "$HOME"/.local/bin/codex; then
 	fatal 'failed to install codex'
 fi
 log_end
 
 log_start 'installing git-spice'
-git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
-git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
-git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
+git_spice_extracted_tmp="$(extract_tarball_to_tmp "$(<"$git_spice_tarball_path_file")")"
 cleanup_paths+=("$git_spice_extracted_tmp")
 install "$git_spice_extracted_tmp"/gs "$HOME"/.local/bin/gs
 git_spice_config_path="$(xdg_config)/git-spice"
@@ -99,9 +101,7 @@ echo '{
 log_end
 
 log_start 'installing kitty'
-kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
-kitty_tmp="$(download_to_tmp "$kitty_url" '.txz')"
-kitty_extracted_tmp="$(extract_tarball_to_tmp "$kitty_tmp")"
+kitty_extracted_tmp="$(extract_tarball_to_tmp "$(<"$kitty_tarball_path_file")")"
 cleanup_paths+=("$kitty_extracted_tmp")
 mv "$kitty_extracted_tmp"/bin/kitten "$HOME"/.local/bin
 log_end
