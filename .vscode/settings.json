@@ -148,7 +148,6 @@
 	"dotfiles.targetPath": "~/dotfiles",
 	"dotfiles.installCommand": "bin/,bootstrap",
 	"evenBetterToml.semanticTokens": true,
-	"evenBetterToml.schema.enabled": false,
 	// ------------------------------
 	// GitHub Copilot
 	// ------------------------------
