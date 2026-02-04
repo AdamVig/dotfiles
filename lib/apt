@@ -233,9 +233,8 @@ declare -a packages=(
 	signal-desktop
 	slack-desktop
 	spotify-client
-	thunderbird # Email client
-	viewnior    # Image viewer
-	xournalpp   # PDF editor
+	viewnior  # Image viewer
+	xournalpp # PDF editor
 
 	# fonts
 	fonts-noto
