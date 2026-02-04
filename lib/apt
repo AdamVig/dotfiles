@@ -162,11 +162,12 @@ declare -a packages=(
 	wget
 
 	# replacements of default utilities
-	eza     # Better ls
-	fd-find # Better find
-	htop    # Better top
-	httpie  # Better curl
-	ripgrep # Better grep
+	earlyoom # Better out-of-memory killer
+	eza      # Better ls
+	fd-find  # Better find
+	htop     # Better top
+	httpie   # Better curl
+	ripgrep  # Better grep
 
 	# command line tools
 	firejail # Sandbox used by appimaged
