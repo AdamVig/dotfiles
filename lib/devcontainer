@@ -59,7 +59,8 @@ if command -v apt-get >/dev/null; then
 
 		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
-		ispell # Needed by Emacs config
+		ispell    # Needed by Emacs config
+		wamerican # Needed by Emacs config (dictionary for ispell)
 		zsh
 	)
 
