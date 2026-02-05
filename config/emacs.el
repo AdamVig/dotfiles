@@ -79,11 +79,10 @@
 	;; Show summary after updating
 	(setq auto-package-update-hide-results t))
 
-;; On macOS, start a server when in a graphical instance and the server is not already running
-(require 'server) ;; Ensure server package is loaded so we can use functions from it
-(if (and (eq system-type 'darwin) window-system (not (server-running-p)))
-	(server-start)
-)
+;; Start a server for emacsclient when running interactively.
+(require 'server)
+(when (and (not noninteractive) (not (server-running-p)))
+  (server-start))
 
 ;; On macOS, set PATH (used by shells) to include Homebrew's binary directory
 ;; It would be better to launch Emacs.app in a shell context that already has the correct environment variables set
