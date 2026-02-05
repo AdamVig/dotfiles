@@ -197,6 +197,15 @@ else
 	# Do not attempt to use GUI Emacs or emacsclient in Dev Container
 	EDITOR='emacs'
 	VISUAL="$EDITOR"
+
+  # Some Dev Container entrypoints lose terminal identity and fall back to TERM=xterm (8 colors)
+  if [ "${TERM-}" = 'xterm' ]; then
+		# We install kitty-terminfo in this environment, so force Kitty's terminal profile
+    export TERM='xterm-kitty'
+  fi
+  if [ -z "${COLORTERM-}" ]; then
+    export COLORTERM='truecolor'
+  fi
 fi
 
 # Load local overrides if the user has created the file
