@@ -194,8 +194,8 @@ if ! [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV
 	export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npmrc
 
 else
-	# Do not attempt to use GUI Emacs or emacsclient in Dev Container
-	EDITOR='emacs'
+	# Use tty emacsclient in Dev Container and fall back to Emacs if no server is running.
+	EDITOR='emacsclient --tty --alternate-editor=""'
 	VISUAL="$EDITOR"
 
   # Some Dev Container entrypoints lose terminal identity and fall back to TERM=xterm (8 colors)
