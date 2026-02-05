@@ -31,6 +31,9 @@ selected_branches="$(
 		--exit-0
 )"
 
+# Sort by item number to maintain stack order (fzf returns in selection order)
+selected_branches="$(echo "$selected_branches" | sort -t$'\t' -k1 -n)"
+
 while IFS=$'\t' read -r item_num branch down url; do
 	title="$(gh pr view "$url" --json title --jq '.title')"
 	diff_stats=($(git diff --numstat --no-renames "$down..$branch" |
