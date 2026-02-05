@@ -309,15 +309,15 @@
 (global-set-key [(meta p)]  'move-line-up)
 (global-set-key [(meta n)]  'move-line-down)
 
-;; Add Magit (https://magit.vc/)
+;; Add Magit (https://magit.vc/) but prevent its initialization; we only use its libraries (see below)
 (use-package magit
 	:ensure t
+	:no-require t)
+(use-package git-rebase
+  :demand t)
+(use-package git-commit
+  :demand t
 	:config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
-
-;; Add Magit Forge (https://magit.vc/manual/forge/)
-(use-package forge
-	:ensure t
-	:after magit)
 
 ;; Add Company mode (https://company-mode.github.io/)
 (use-package company
