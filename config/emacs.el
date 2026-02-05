@@ -51,8 +51,6 @@
  '(org-html-checkbox-type 'html)
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
- '(package-selected-packages
-		'(catppuccin-theme with-editor orderless vertico exec-path-from-shell auto-dark auto-package-update flycheck forge olivetti super-save company tide ox-gfm writegood-mode markdown-mode magit add-node-modules-path prettier-js yaml-mode go-mode editorconfig use-package))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
