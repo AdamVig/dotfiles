@@ -36,7 +36,7 @@ selected_branches="$(echo "$selected_branches" | sort -t$'\t' -k1 -n)"
 
 while IFS=$'\t' read -r item_num branch down url; do
 	title="$(gh pr view "$url" --json title --jq '.title')"
-	diff_stats=($(git diff --numstat --no-renames "$down..$branch" |
+	diff_stats=($(git diff --numstat "$down..$branch" |
 		awk 'BEGIN{a=0;d=0}{a+=$1;d+=$2}END{print a, d}'))
 	add=${diff_stats[1]:-0}
 	del=${diff_stats[2]:-0}
