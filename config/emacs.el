@@ -30,7 +30,6 @@
  '(company-dabbrev-downcase nil)
  '(custom-safe-themes
 		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" default))
- '(git-commit-summary-max-length 72)
  '(org-agenda-prefix-format
 		'((agenda . "")
 			 (todo . " %i %-12:c")
@@ -316,6 +315,7 @@
   :demand t)
 (use-package git-commit
   :demand t
+	:custom (git-commit-summary-max-length 72)
 	:config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 ;; Add Company mode (https://company-mode.github.io/)
