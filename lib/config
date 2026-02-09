@@ -10,14 +10,13 @@ log() {
 log_start 'setting up configuration'
 
 config_dir="$(xdg_config)"
-codex_home="${CODEX_HOME-$HOME/.codex}"
 
 if is_devcontainer; then
-	log_start 'ensuring config directories exist'
-	mkdir -vp "$config_dir" "$codex_home"
+	log_start 'ensuring config directory exists'
+	mkdir -vp "$config_dir"
 	log_end
-	log_start 'ensuring correct ownership of config directories'
-	request_sudo chown --recursive "${USER:-$(id --name --user)}":"${GROUP:-$(id --name --group)}" "$config_dir" "$codex_home"
+	log_start 'ensuring correct ownership of config directory'
+	request_sudo chown --recursive "${USER:-$(id --name --user)}":"${GROUP:-$(id --name --group)}" "$config_dir"
 	log_end
 fi
 
@@ -61,6 +60,7 @@ log "creating tig directory"
 # Prevent tig from writing ~/.tig_history
 mkdir -p "$(xdg_data)"/tig
 
+codex_home="${CODEX_HOME-$HOME/.codex}"
 if ! [ -s "$codex_home"/config.toml ]; then
 	log 'copying Codex configuration'
 	mkdir -p "$codex_home"
