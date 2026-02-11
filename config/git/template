@@ -1,10 +1,11 @@
 
 
-% ------------------------------------------------| <- 50 characters   |
-% ---------------------------------------------------------------------| <- 72 characters
+% -------------------------------------summary---|
+% -------------------------------------summary (GitHub)--------------|
+% -------------------------------------body----------------------------|
 %
 % 1. Separate subject from body with a blank line
-% 2. Limit the subject line to 50 characters
+% 2. Limit the subject line to 50 characters (or 70 when pushing to GitHub)
 % 3. Capitalize the subject line
 % 4. Do not end the subject line with a period
 % 5. Use the imperative mood in the subject line
