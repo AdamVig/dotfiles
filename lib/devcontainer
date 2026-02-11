@@ -59,29 +59,15 @@ if command -v apt-get >/dev/null; then
 
 		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
-		dictionaries-common # Connects `ispell` to `wamerican`
-		ispell              # Needed by Emacs config
-		kitty-terminfo      # For terminal colors
-		wamerican           # Needed by Emacs config (dictionary for ispell)
+		hunspell       # Needed by Emacs config
+		hunspell-en-us # Needed by Emacs config (dictionary)
+		kitty-terminfo # For terminal colors
 		zsh
 	)
 
 	log_start 'installing packages'
 	if ! DEBIAN_FRONTEND=noninteractive request_sudo apt-get install --yes --no-install-recommends "${packages[@]}"; then
 		warn 'failed to install apt packages; this may require manual resolution'
-	fi
-	log_end
-
-	log_start 'configuring ispell default dictionary'
-	if [[ ! -e /usr/lib/ispell/default.hash ]]; then
-		if command -v debconf-set-selections >/dev/null; then
-			echo 'dictionaries-common dictionaries-common/default-ispell select american' | request_sudo debconf-set-selections
-			if ! request_sudo env DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dictionaries-common; then
-				warn 'failed to set default ispell dictionary (american); run dpkg-reconfigure dictionaries-common manually if needed'
-			fi
-		else
-			warn 'debconf-set-selections not found; cannot set default ispell dictionary non-interactively'
-		fi
 	fi
 	log_end
 

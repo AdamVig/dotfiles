@@ -25,7 +25,7 @@ brew "git-who" # Git contributor statistics
 brew "glow" # Markdown viewer
 brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
-brew "ispell" # Spell checker used by Emacs
+brew "hunspell" # Spell checker used by Emacs
 brew "jq" # JSON processor
 tap "lucapette/tap"
 brew "fakedata" # Fake data generator

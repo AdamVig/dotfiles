@@ -318,6 +318,10 @@
 	:custom (git-commit-summary-max-length 72)
 	:config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
+;; Use hunspell for spell checking instead of ispell
+(setq ispell-program-name "hunspell")
+(setq ispell-dictionary "en_US")
+
 ;; Add Company mode (https://company-mode.github.io/)
 (use-package company
   :ensure t

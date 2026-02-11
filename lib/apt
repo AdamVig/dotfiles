@@ -170,10 +170,12 @@ declare -a packages=(
 	ripgrep  # Better grep
 
 	# command line tools
-	firejail # Sandbox used by appimaged
-	fzf      # Fuzzy finder
-	gh       # GitHub CLI
-	graphviz # Graph visualization tool
+	firejail       # Sandbox used by appimaged
+	fzf            # Fuzzy finder
+	gh             # GitHub CLI
+	graphviz       # Graph visualization tool
+	hunspell       # Spell checker used by Emacs
+	hunspell-en-us # Dictionary for hunspell
 	imagemagick
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
