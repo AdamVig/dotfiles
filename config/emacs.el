@@ -315,8 +315,13 @@
   :demand t)
 (use-package git-commit
   :demand t
-	:custom (git-commit-summary-max-length 72)
-	:config (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
+	:custom
+	(git-commit-summary-max-length 72)
+	(git-commit-major-mode 'gfm-mode)
+	:config
+	(add-hook 'git-commit-setup-hook
+		(lambda ()
+			(setq-local fill-column 72))))
 
 ;; Use hunspell for spell checking instead of ispell
 (setq ispell-program-name "hunspell")
