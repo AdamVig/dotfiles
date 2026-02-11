@@ -78,7 +78,7 @@ fi
 if ! is_repository_configured 'spotify'; then
 	log_start 'adding Spotify repository'
 	# https://www.spotify.com/us/download/linux/
-	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg' 'https://repository.spotify.com stable non-free'
+	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg' 'https://repository.spotify.com stable non-free'
 	log_end
 fi
 
