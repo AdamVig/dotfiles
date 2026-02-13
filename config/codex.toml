@@ -17,13 +17,6 @@ unified_exec = true
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
 
-[mcp_servers.linear]
-url = "https://mcp.linear.app/mcp"
-
-[mcp_servers.playwright]
-command = "npx"
-args = ["@playwright/mcp@latest"]
-
 [sandbox_workspace_write]
 network_access = true
 writable_roots = [
