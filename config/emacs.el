@@ -92,6 +92,17 @@
 	:ensure t
 	:config (exec-path-from-shell-initialize))
 
+;; Always open URLs externally via the desktop default browser.
+;; This avoids falling back to EWW when daemon environment variables
+;; (DISPLAY/WAYLAND_DISPLAY) are incomplete.
+(with-eval-after-load 'browse-url
+  (setq browse-url-browser-function #'browse-url-generic
+        browse-url-generic-program "open"))
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq browse-url-browser-function #'browse-url-generic
+                  browse-url-generic-program "open")))
+
 ;; Set the font and font size (in 1/10pt), custom for macOS
 (when (font-available-p "Input Mono")
   (if (eq system-type 'darwin)
