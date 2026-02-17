@@ -23,10 +23,12 @@ log_start 'downloading all packages in parallel'
 codex_bin_file=$(mktemp)
 kitty_tarball_path_file=$(mktemp)
 git_spice_tarball_path_file=$(mktemp)
-cleanup_paths+=("$codex_bin_file" "$kitty_tarball_path_file" "$git_spice_tarball_path_file")
+yq_bin_file=$(mktemp)
+cleanup_paths+=("$codex_bin_file" "$kitty_tarball_path_file" "$git_spice_tarball_path_file" "$yq_bin_file")
 _curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" | unzstd --stdout >"$codex_bin_file" &
 download_to_tmp "$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')" '.txz' >"$kitty_tarball_path_file" &
 download_to_tmp "$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')" '.tar.gz' >"$git_spice_tarball_path_file" &
+_curl "$(get_release_url 'mikefarah/yq' 'linux_amd64')" >"$yq_bin_file" &
 
 if command -v apt-get >/dev/null; then
 	bat_deb_path_file=$(mktemp)
@@ -80,6 +82,12 @@ fi
 log_start 'installing Codex'
 if ! install --mode='u=rwx,go=rx' "$codex_bin_file" "$HOME"/.local/bin/codex; then
 	fatal 'failed to install codex'
+fi
+log_end
+
+log_start 'installing yq'
+if ! install --mode='u=rwx,go=rx' "$yq_bin_file" "$HOME"/.local/bin/yq; then
+	fatal 'failed to install yq'
 fi
 log_end
 

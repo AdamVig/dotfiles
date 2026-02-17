@@ -12,7 +12,6 @@ log_start 'installing Python tools'
 log_start 'installing packages'
 uv_tools=(
 	csvkit # CSV processing tools
-	yq     # jq for YAML/XML
 )
 
 for package in "${uv_tools[@]}"; do
@@ -24,6 +23,7 @@ log_end
 
 log_start 'removing no-longer-needed tools'
 uv tool uninstall llm &>/dev/null || true
+uv tool uninstall yq &>/dev/null || true
 log_end
 
 log_end
