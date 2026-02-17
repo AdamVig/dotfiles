@@ -12,7 +12,6 @@ log_start 'installing Python tools'
 log_start 'installing packages'
 uv_tools=(
 	csvkit # CSV processing tools
-	llm    # Large language model CLI
 	yq     # jq for YAML/XML
 )
 
@@ -21,6 +20,10 @@ for package in "${uv_tools[@]}"; do
 		warn "failed to install package \"$package\""
 	fi
 done
+log_end
+
+log_start 'removing no-longer-needed tools'
+uv tool uninstall llm &>/dev/null || true
 log_end
 
 log_end
