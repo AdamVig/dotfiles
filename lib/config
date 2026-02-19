@@ -68,7 +68,8 @@ if ! [ -s "$codex_home"/config.toml ]; then
 	XDG_CACHE_HOME="$(xdg_cache)"
 	export XDG_CONFIG_HOME
 	XDG_CONFIG_HOME="$(xdg_config)"
-	envsubst <"$script_dir"/../config/codex.toml >"$codex_home"/config.toml
+	envsubst <"$script_dir"/../config/codex/config.toml >"$codex_home"/config.toml
 fi
+_ln "$script_dir"/../config/codex/codex-agents.md "$codex_home"/AGENTS.md
 
 log_end
