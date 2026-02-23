@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 
-log_json="$(gs log long --json)"
+log_json="$(git-spice log long --json)"
 
 branch_rows="$(
 	jq --raw-output --slurp '
