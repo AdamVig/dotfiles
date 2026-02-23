@@ -213,7 +213,7 @@ if is_ubuntu; then
 	log_end
 
 	log_start 'installing DBeaver'
-	install_deb_from_github_release 'dbeaver/dbeaver' '_amd64.deb'
+	install_deb_from_github_release 'dbeaver/dbeaver' '-x86_64.deb'
 	log_end
 
 	log_start 'installing git-delta'
