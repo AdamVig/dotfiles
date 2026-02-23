@@ -1,6 +1,7 @@
 # Create command aliases.
 
 alias b='bat'
+alias gs='git-spice'
 
 nr() {
 	node --run "${1-listing all scripts}" -- "${@:2}"
