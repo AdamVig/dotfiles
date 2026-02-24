@@ -108,8 +108,6 @@
 	// ------------------------------
 	// Extensions
 	// ------------------------------
-	// Do not prompt to pull the branch when changes are detected on the remote
-	"githubPullRequests.pullBranch": "never",
 	"shellcheck.customArgs": [
 		// Allow 'source' outside of input files
 		"-external-sources"
@@ -148,7 +146,6 @@
 	// ------------------------------
 	// GitHub Copilot
 	// ------------------------------
-	"github.copilot.chat.agent.thinkingTool": true,
 	"chat.tools.urls.autoApprove": {
 		"https://*.githubusercontent.com": true
 	},
@@ -184,6 +181,9 @@
 		"node --run test": true,
 		"node --test": true
 	},
+	// ------------------------------
+	// Misc
+	// ------------------------------
 	"redhat.telemetry.enabled": false,
 	"remote.restoreForwardedPorts": false,
 }
