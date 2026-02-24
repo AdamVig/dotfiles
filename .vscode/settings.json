@@ -144,6 +144,7 @@
 	"dotfiles.targetPath": "~/dotfiles",
 	"dotfiles.installCommand": "bin/,bootstrap",
 	"evenBetterToml.semanticTokens": true,
+	"python.analysis.typeCheckingMode": "standard",
 	// ------------------------------
 	// GitHub Copilot
 	// ------------------------------
