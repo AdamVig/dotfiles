@@ -22,6 +22,7 @@
 	// Do not auto-fetch from Git remotes
 	"git.autofetch": false,
 	"git.blame.editorDecoration.enabled": true,
+	"git.openRepositoryInParentFolders": "always",
 	// ------------------------------
 	// Workbench
 	// ------------------------------
@@ -181,5 +182,4 @@
 	},
 	"redhat.telemetry.enabled": false,
 	"remote.restoreForwardedPorts": false,
-	"git.openRepositoryInParentFolders": "always"
 }
