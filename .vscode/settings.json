@@ -149,6 +149,9 @@
 	// GitHub Copilot
 	// ------------------------------
 	"github.copilot.chat.agent.thinkingTool": true,
+	"chat.tools.urls.autoApprove": {
+		"https://*.githubusercontent.com": true
+	},
 	"github.copilot.nextEditSuggestions.enabled": true,
 	"chat.mcp.autostart": "newAndOutdated",
 	"chat.tools.terminal.autoApprove": {
