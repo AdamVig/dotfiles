@@ -69,3 +69,10 @@ if [ -n "$KITTY_INSTALLATION_DIR" ]; then
   kitty-integration
   unfunction kitty-integration
 fi
+
+# Start Emacs server in Dev Container (Systemd unit not present)
+if [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV_CONTAINER ]] && \
+	(( $+commands[emacsclient] )); then
+  emacsclient -e t >/dev/null 2>&1 || \
+    ( mkdir -p ~/.cache && flock --nonblock ~/.cache/emacs-daemon.lock emacs --daemon >/dev/null 2>&1 &! )
+fi
