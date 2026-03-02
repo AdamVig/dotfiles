@@ -179,7 +179,8 @@
 		"sed": true,
 		"sqlc": true,
 		"node --run test": true,
-		"node --test": true
+		"node --test": true,
+		"gh": true
 	},
 	// ------------------------------
 	// Misc
