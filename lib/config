@@ -71,5 +71,7 @@ if ! [ -s "$codex_home"/config.toml ]; then
 	envsubst <"$script_dir"/../config/codex/config.toml >"$codex_home"/config.toml
 fi
 _ln "$script_dir"/../config/codex/codex-agents.md "$codex_home"/AGENTS.md
+mkdir -p "$codex_home"/rules
+_ln "$script_dir"/../config/codex/rules/custom.rules "$codex_home"/rules/custom.rules
 
 log_end

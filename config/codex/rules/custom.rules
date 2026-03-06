@@ -1,0 +1,11 @@
+# Validate any candidate command before bootstrap/apply:
+# codex execpolicy check --rules config/codex/rules/custom.rules <command> [args...] --pretty
+#
+# `match` and `not_match` are validation examples (default `[]`). Codex checks
+# them when loading rules so mistakes are caught before a rule takes effect.
+prefix_rule(
+    pattern=["gh", "review-comments"],
+    decision="allow",
+    match=[["gh", "review-comments", "list"]],
+    not_match=[["gh", "pr", "view"]],
+)

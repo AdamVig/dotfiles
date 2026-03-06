@@ -1,5 +1,6 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 # https://github.com/openai/codex/blob/main/docs/config.md
+# Shell command approval allow rules live in `rules/*.rules`.
 
 approval_policy = "on-request"
 check_for_update_on_startup = false
