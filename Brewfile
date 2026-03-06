@@ -64,7 +64,6 @@ brew "grep" if OS.mac?
 # applications
 cask "brave-browser"
 cask "figma"
-cask "gpg-suite"
 cask "inkscape" # Vector image editor and command-line conversion tool
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool

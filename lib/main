@@ -56,7 +56,6 @@ log_start 'running user environment setup scripts'
 "$script_dir"/ssh-key
 "$script_dir"/git
 "$script_dir"/gh
-"$script_dir"/gpg
 "$script_dir"/ssh
 "$script_dir"/vscode
 "$script_dir"/zsh

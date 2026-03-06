@@ -39,12 +39,6 @@ if command -v kitty >/dev/null; then
 	export TERMINAL='kitty'
 fi
 
-# Allow GPG to make prompts
-if [ -t 0 ]; then
-	export GPG_TTY
-	GPG_TTY=$(tty)
-fi
-
 # Make word-related macros observe special characters
 export WORDCHARS=''
 
@@ -110,16 +104,6 @@ if [[ "$OSTYPE" == *linux* ]]; then
 
 	# When in a graphical environment
 	if [ -n "${DESKTOP_SESSION-}" ]; then
-		# Initialize the already-running GNOME Keyring daemon
-		if [ -z "${SSH_AUTH_SOCK-}" ]; then
-			# From `man gpg-agent`
-			unset SSH_AGENT_PID
-			if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-				SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-				export SSH_AUTH_SOCK
-			fi
-		fi
-
 		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
 			# Map right meta key to the "compose" key for special characters
 			setxkbmap -option compose:ralt
