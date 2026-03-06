@@ -33,26 +33,27 @@ if ! [ -e "$config_path"/config ]; then
 	[ -n "$email" ] && git config --global user.email "$email"
 	[ -n "$github" ] && git config --global github.user "$github"
 	log_end
-else
-	log_start 'updating Git configuration'
-	# Read all values from current Git configuration
-	git config --list --file "$script_dir"/../config/git/config | while read -r conf_line; do
-		# Split line into name and value at equals sign
-		IFS='=' read -r name value <<<"$conf_line"
-
-		# If this configuration key is not already set, set it
-		if ! git config --global "$name" &>/dev/null ||
-			[ "$(git config --global "$name")" != "$value" ]; then
-			# shellcheck disable=SC2016
-			value="${value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
-			# Replace home directory with tilde for readability/portability to Dev Container
-			value="${value/#$HOME/\~}"
-			log "setting '$name' to '$value'"
-			git config --global "$name" "$value"
-		fi
-	done
-	log_end
 fi
+
+
+log_start 'updating Git configuration'
+# Read all values from current Git configuration
+git config --list --file "$script_dir"/../config/git/config | while read -r conf_line; do
+	# Split line into name and value at equals sign
+	IFS='=' read -r name desired_value <<<"$conf_line"
+
+	# shellcheck disable=SC2016
+	desired_value="${desired_value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
+	# Replace home directory with tilde for readability/portability to Dev Container
+	desired_value="${desired_value/#$HOME/\~}"
+	current_value="$(git config --global --get "$name" || true)"
+	if [ "$current_value" != "$desired_value" ]; then
+		log "setting '$name' to '$desired_value'"
+		git config --global "$name" "$desired_value"
+	fi
+done
+log_end
+
 
 log_start 'configuring Delta themes'
 if ! _curl https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig --output "$config_path"/delta-themes.gitconfig; then
