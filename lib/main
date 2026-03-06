@@ -61,7 +61,6 @@ log_start 'running user environment setup scripts'
 "$script_dir"/vscode
 "$script_dir"/zsh
 "$script_dir"/profile-picture
-"$script_dir"/gpg-keys
 log_end
 
 log "done. start a new login shell or run 'source zsh/.zshrc'."
