@@ -13,14 +13,19 @@ if ! command -v gh >/dev/null; then
 	warn_and_bail 'could not find command "gh", skipping'
 fi
 
+signing_key_path="$(git config --global --path --get user.signingkey || true)"
+if [ -z "$signing_key_path" ]; then
+	signing_key_path="$HOME/.ssh/id_rsa.pub"
+fi
+
 log_start 'checking authentication'
 if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
-	gh auth login --hostname=github.com --clipboard --web --scopes=admin:public_key,user,write:gpg_key,read:packages --git-protocol=https
+	gh auth login --hostname=github.com --clipboard --web --scopes=admin:public_key,admin:ssh_signing_key,user,read:packages --git-protocol=https
 	log_end
 elif ! is_devcontainer; then
 	log_start 'ensuring scopes'
-	gh auth refresh --hostname=github.com --clipboard --scopes=admin:public_key,user,write:gpg_key,read:packages
+	gh auth refresh --hostname=github.com --clipboard --scopes=admin:public_key,admin:ssh_signing_key,user,read:packages
 	log_end
 fi
 log_end
@@ -33,6 +38,20 @@ log_start 'setting configuration'
 gh config set git_protocol https
 # Do not use the default pager, bat, because it adds unnecessary clutter
 gh config set pager less
+log_end
+
+log_start 'ensuring SSH signing key is in GitHub'
+if [ ! -f "$signing_key_path" ]; then
+	warn "did not find SSH signing key at \"$signing_key_path\", skipping GitHub signing key setup"
+else
+	signing_key="$(<"$signing_key_path")"
+	signing_keys="$(gh ssh-key list 2>/dev/null | awk -F '\t' '$5 == "signing" {print $2}')"
+	if grep --fixed-strings --quiet --line-regexp "$signing_key" <<<"$signing_keys"; then
+		log 'found existing SSH signing key in GitHub'
+	elif ! gh ssh-key add "$signing_key_path" --type signing --title "$(hostname -s) signing"; then
+		warn 'failed to add SSH signing key in GitHub'
+	fi
+fi
 log_end
 
 log_start 'installing extensions'

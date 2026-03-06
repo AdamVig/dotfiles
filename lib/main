@@ -50,20 +50,17 @@ log_start 'running programming language setup scripts'
 "$script_dir"/python-tools
 log_end
 
-log_start 'running application setup scripts'
+log_start 'running user environment setup scripts'
 "$script_dir"/bat
 "$script_dir"/emacs
+"$script_dir"/ssh-key
 "$script_dir"/git
 "$script_dir"/gh
 "$script_dir"/gpg
 "$script_dir"/ssh
 "$script_dir"/vscode
 "$script_dir"/zsh
-log_end
-
-log_start 'running system setup scripts'
 "$script_dir"/profile-picture
-"$script_dir"/ssh-key
 "$script_dir"/gpg-keys
 log_end
 

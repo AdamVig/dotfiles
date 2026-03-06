@@ -35,6 +35,11 @@ if ! [ -e "$config_path"/config ]; then
 	log_end
 fi
 
+if ! git config --global --includes --get gpg.format >/dev/null; then
+	log_start 'migrating commit signing configuration'
+	git config unset --global user.signingkey gpg.program gpg.openpgp.program || true
+	log_end
+fi
 
 log_start 'updating Git configuration'
 # Read all values from current Git configuration
@@ -54,6 +59,21 @@ git config --list --file "$script_dir"/../config/git/config | while read -r conf
 done
 log_end
 
+log_start 'ensuring SSH allowed signers file exists'
+signing_key_path="$HOME/.ssh/id_rsa.pub"
+if [ ! -f "$signing_key_path" ]; then
+	warn "did not find SSH signing key at \"$signing_key_path\", skipping allowed signers setup"
+else
+	allowed_signers_path="$config_path/allowed_signers"
+	signing_key="$(<"$signing_key_path")"
+	if [ ! -f "$allowed_signers_path" ] ||
+		! grep --fixed-strings --quiet " $signing_key" "$allowed_signers_path"; then
+		log "adding SSH signing key to \"$allowed_signers_path\""
+		echo "* $signing_key" >>"$allowed_signers_path"
+	fi
+	chmod 600 "$allowed_signers_path"
+fi
+log_end
 
 log_start 'configuring Delta themes'
 if ! _curl https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig --output "$config_path"/delta-themes.gitconfig; then

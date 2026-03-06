@@ -8,4 +8,3 @@
   6. Wrap the body at 72 characters
   7. Use the body to explain what and why vs. how
 	8. Use GitHub-flavored Markdown to add (minimal) formatting, code blocks (e.g. shell snippets showing a command and its output), etc.
-- Use the `--no-gpg-sign` flag with `git commit` and `git rebase` to avoid sandbox-related errors with GPG signing.
