@@ -58,6 +58,7 @@ log_start 'installing extensions'
 declare -a gh_extensions=(
 	AdamVig/gh-automerge
 	AdamVig/gh-pr-body-commits
+	AdamVig/gh-review-comments
 	AdamVig/gh-watch
 	davidraviv/gh-clean-branches
 )
