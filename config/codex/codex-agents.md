@@ -8,3 +8,11 @@
   6. Wrap the body at 72 characters
   7. Use the body to explain what and why vs. how
 	8. Use GitHub-flavored Markdown to add (minimal) formatting, code blocks (e.g. shell snippets showing a command and its output), etc.
+
+When committing, treat the message as raw text:
+- write it via a single-quoted heredoc
+- commit with `git commit --file <file>` or `git commit --file -`
+
+Never inline a multi-line message into shell quotes.
+Never use backticks or `$()` in the shell command within double quotes.
+Never use literal `\n` instead of real newlines.
