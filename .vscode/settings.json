@@ -168,6 +168,7 @@
 		"go fmt": true,
 		"go list": true,
 		"go test": true,
+		"go vet": true,
 		"gofmt": true,
 		"jq": true,
 		"ls": true,
