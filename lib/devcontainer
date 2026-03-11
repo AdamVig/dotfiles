@@ -58,6 +58,7 @@ if command -v apt-get >/dev/null; then
 		# command line tools
 		fzf                         # Fuzzy finder
 		"$(<"$glow_deb_path_file")" # Markdown viewer
+		tig                         # Visual Git client
 
 		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
