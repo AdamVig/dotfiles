@@ -35,6 +35,14 @@ log_start 'installing b2'
 install_binary_from_github_release 'b2' 'Backblaze/B2_Command_Line_Tool' 'linux'
 log_end
 
+log_start 'installing Copilot'
+copilot_url="$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')"
+copilot_tmp="$(download_to_tmp "$copilot_url" '.tar.gz')"
+copilot_extracted_tmp="$(extract_tarball_to_tmp "$copilot_tmp")"
+cleanup_paths+=("$copilot_extracted_tmp")
+install "$copilot_extracted_tmp"/copilot "$HOME"/.local/bin/copilot
+log_end
+
 log_start 'installing difftastic'
 difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"

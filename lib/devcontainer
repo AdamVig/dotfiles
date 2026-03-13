@@ -20,12 +20,14 @@ trap cleanup EXIT
 log_start 'setting up devcontainer'
 
 log_start 'downloading all packages in parallel'
+copilot_bin_file=$(mktemp)
 codex_bin_file=$(mktemp)
 kitty_tarball_path_file=$(mktemp)
 git_who_tarball_path_file=$(mktemp)
 git_spice_tarball_path_file=$(mktemp)
 yq_bin_file=$(mktemp)
-cleanup_paths+=("$codex_bin_file" "$kitty_tarball_path_file" "$git_who_tarball_path_file" "$git_spice_tarball_path_file" "$yq_bin_file")
+cleanup_paths+=("$copilot_bin_file" "$codex_bin_file" "$kitty_tarball_path_file" "$git_who_tarball_path_file" "$git_spice_tarball_path_file" "$yq_bin_file")
+_curl "$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')" | tar --extract --gzip --to-stdout >"$copilot_bin_file" &
 _curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" | unzstd --stdout >"$codex_bin_file" &
 download_to_tmp "$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')" '.txz' >"$kitty_tarball_path_file" &
 download_to_tmp "$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')" '.tar.gz' >"$git_who_tarball_path_file" &
@@ -81,6 +83,12 @@ if command -v apt-get >/dev/null; then
 	_ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 	log_end
 fi
+
+log_start 'installing Copilot'
+if ! install --mode='u=rwx,go=rx' "$copilot_bin_file" "$HOME"/.local/bin/copilot; then
+	fatal 'failed to install copilot'
+fi
+log_end
 
 log_start 'installing Codex'
 if ! install --mode='u=rwx,go=rx' "$codex_bin_file" "$HOME"/.local/bin/codex; then
