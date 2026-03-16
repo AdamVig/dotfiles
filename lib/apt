@@ -181,7 +181,6 @@ declare -a packages=(
 	libglib2.0-dev-bin # For compiling .gresources files
 	nextdns            # DNS client
 	p7zip
-	pandoc
 	postgresql-client # PostgreSQL CLI
 	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
 	scdoc             # For building darkman
@@ -253,7 +252,7 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	thunderbird # Switched to Fastmail desktop
+	pandoc # Switched to direct binary install
 )
 
 log_start 'removing unwanted packages'
