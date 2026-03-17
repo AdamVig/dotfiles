@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component claude-code "$@"
+}
+
+log_start 'setting up Claude Code'
+curl -fsSL https://claude.ai/install.sh | bash
+log_end

@@ -17,6 +17,7 @@ log_start 'running OS-specific scripts'
 
 if is_devcontainer; then
 	"$script_dir"/devcontainer
+	"$script_dir"/claude-code
 	"$script_dir"/emacs
 	"$script_dir"/gh
 	"$script_dir"/zsh
@@ -52,6 +53,7 @@ log_end
 
 log_start 'running user environment setup scripts'
 "$script_dir"/bat
+"$script_dir"/claude-code
 "$script_dir"/emacs
 "$script_dir"/ssh-key
 "$script_dir"/git
