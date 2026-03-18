@@ -14,6 +14,10 @@ log_start 'installing'
 curl -fsSL https://claude.ai/install.sh | bash
 log_end
 
+log_start 'installing settings'
+_ln "$script_dir"/../config/claude-code-settings.json "$claude_config_dir"/settings.json
+log_end
+
 log_start 'seeding local CLAUDE.md'
 claude_md_path="$claude_config_dir"/CLAUDE.md
 if ! [[ -f $claude_md_path ]]; then
