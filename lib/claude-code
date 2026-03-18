@@ -7,6 +7,26 @@ log() {
 	log_with_component claude-code "$@"
 }
 
+claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+
 log_start 'setting up Claude Code'
+log_start 'installing'
 curl -fsSL https://claude.ai/install.sh | bash
+log_end
+
+log_start 'seeding local CLAUDE.md'
+claude_md_path="$claude_config_dir"/CLAUDE.md
+if ! [[ -f $claude_md_path ]]; then
+	cp "$script_dir"/../config/codex/codex-agents.md "$claude_md_path"
+
+	if is_devcontainer; then
+		echo $'\n''You are running inside a Dev Container.' >>"$claude_md_path"
+	fi
+
+	log "seeded $claude_md_path"
+else
+	log "$claude_md_path already exists, skipping seed"
+fi
+log_end
+
 log_end

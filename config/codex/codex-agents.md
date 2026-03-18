@@ -17,3 +17,9 @@ When committing, treat the message as raw text:
 Never inline a multi-line message into shell quotes.
 Never use backticks or `$()` in the shell command within double quotes.
 Never use literal `\n` instead of real newlines.
+
+## Command line tools
+When running terminal commands, prefer the following commands over the default ones:
+- `fd` instead of `find`
+- `rg` instead of `grep`
+If you can't figure out how to use these commands, you can fall back to the original commands.

@@ -37,6 +37,7 @@ candidate_files=(
 	"$HOME"/.locals
 	"$HOME"/.profile-local
 	"$emacs_local_config_dir"/lisp/*
+	"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/CLAUDE.md"
 	"${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/,update-local"
 	"${XDG_CONFIG_HOME:-$HOME/.config}"/kitty/{kitty-local.conf,startup-session-local.conf}
 )
