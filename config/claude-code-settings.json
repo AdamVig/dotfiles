@@ -1,16 +1,23 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+	"$schema": "https://json.schemastore.org/claude-code-settings.json",
 	"attribution": {
-    "commit": "",
-    "pr": ""
-  },
-  "permissions": {
-    "allow": [
+		"commit": "",
+		"pr": ""
+	},
+	"enabledPlugins": {
+		"code-simplifier@claude-plugins-official": true,
+		"context7@claude-plugins-official": true,
+		"gopls-lsp@claude-plugins-official": true,
+		"superpowers@claude-plugins-official": true,
+		"typescript-lsp@claude-plugins-official": true
+	},
+	"permissions": {
+		"allow": [
 			"Bash(fd *)",
 			"Bash(find *)",
 			"Bash(grep *)",
 			"Bash(node --run *)",
-      "Bash(node --test *)",
+			"Bash(node --test *)",
 			"Bash(npm run *)",
 			"Bash(gh review-comments *)",
 			"Bash(gh run *)",
@@ -23,8 +30,13 @@
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
 			"Bash(sed *)",
-      "Bash(* --version)",
-      "Bash(* --help *)"
-    ],
-  }
+			"Bash(* --version)",
+			"Bash(* --help *)"
+		]
+	},
+	"spinnerTipsEnabled": false,
+	"statusLine": {
+		"type": "command",
+		"command": "jq -r '\"[\\(.model.display_name)] \\(.context_window.used_percentage // 0)% context\"'"
+	}
 }
