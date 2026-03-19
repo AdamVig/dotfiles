@@ -20,6 +20,7 @@
 			"Bash(node --test *)",
 			"Bash(npm run *)",
 			"Bash(gh review-comments *)",
+			"Bash(gh pr view *)",
 			"Bash(gh run *)",
 			"Bash(git add *)",
 			"Bash(git diff *)",
