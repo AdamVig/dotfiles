@@ -11,7 +11,7 @@ claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
 log_start 'setting up Claude Code'
 log_start 'installing'
-curl -fsSL https://claude.ai/install.sh | bash
+_curl https://downloads.claude.ai/claude-code-releases/bootstrap.sh | bash
 log_end
 
 log_start 'installing settings'
