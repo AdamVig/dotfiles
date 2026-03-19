@@ -22,17 +22,15 @@
 			"Bash(gh review-comments *)",
 			"Bash(gh pr view *)",
 			"Bash(gh run *)",
-			"Bash(git add *)",
-			"Bash(git diff *)",
-			"Bash(git rev-parse *)",
-			"Bash(git log *)",
+			"Bash(git *)",
 			"Bash(git-spice *)",
 			"Bash(go *)",
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
 			"Bash(sed *)",
 			"Bash(* --version)",
-			"Bash(* --help *)"
+			"Bash(* --help *)",
+			"mcp__claude_ai_Linear__**"
 		]
 	},
 	"spinnerTipsEnabled": false,
