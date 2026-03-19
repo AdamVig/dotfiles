@@ -23,3 +23,9 @@ When running terminal commands, prefer the following commands over the default o
 - `fd` instead of `find`
 - `rg` instead of `grep`
 If you can't figure out how to use these commands, you can fall back to the original commands.
+
+## `git-spice`
+I use [`git-spice`](https://abhinav.github.io/git-spice/llms.txt) to stack pull requests. Note that the old command name, `gs`, is no longer available; use exclusively `git-spice`. You will not always be in a `git-spice`-tracked branch or even a `git-spice`-initialized repository, but that will frequently be the case.
+
+## GitHub pull request review comments
+Use my custom `gh review-comments --help` plugin to fetch review comments from the pull request for a given commit and optionally reply to/resolve them. Do not use other `gh` commands for this purpose unless you're trying to do something that `gh review-comments` does not support.

@@ -18,6 +18,7 @@
 			"Bash(git diff *)",
 			"Bash(git rev-parse *)",
 			"Bash(git log *)",
+			"Bash(git-spice *)",
 			"Bash(go *)",
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
