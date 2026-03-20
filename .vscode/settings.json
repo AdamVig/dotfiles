@@ -191,7 +191,9 @@
 		"sqlc": true,
 		"node --run test": true,
 		"node --test": true,
-		"gh": true
+		"gh": true,
+		"shfmt": true,
+		"shellcheck": true
 	},
 	// ------------------------------
 	// Misc
