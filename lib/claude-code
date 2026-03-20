@@ -15,7 +15,13 @@ _curl https://downloads.claude.ai/claude-code-releases/bootstrap.sh | bash
 log_end
 
 log_start 'installing settings'
-_ln "$script_dir"/../config/claude-code-settings.json "$claude_config_dir"/settings.json
+claude_settings_path="$claude_config_dir"/settings.json
+existing="$([[ -f $claude_settings_path ]] && cat "$claude_settings_path" || echo '{}')"
+# Merge: repo keys win at the top level; object values are merged recursively, preserving keys Claude Code adds itself.
+jq --argjson existing "$existing" \
+	'$existing * .' \
+	"$script_dir"/../config/claude-code-settings.json \
+	>"$claude_settings_path"
 log_end
 
 log_start 'seeding local CLAUDE.md'
