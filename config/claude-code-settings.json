@@ -28,6 +28,7 @@
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
 			"Bash(sed *)",
+			"Bash(tail *)",
 			"Bash(* --version)",
 			"Bash(* --help *)",
 			"mcp__claude_ai_Linear__**"
