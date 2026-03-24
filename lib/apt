@@ -133,15 +133,27 @@ if ! is_repository_configured 'brave-browser-apt-release'; then
 	log_end
 fi
 
+if command -v nala >/dev/null; then
+	_apt_update() { request_sudo nala update >/dev/null; }
+	_apt_upgrade() { request_sudo nala full-upgrade --assume-yes >/dev/null; }
+	_apt_install() { request_sudo nala install --assume-yes "$@"; }
+	_apt_remove() { request_sudo nala remove --assume-yes --autoremove "$@" &>/dev/null; }
+else
+	_apt_update() { request_sudo apt-get update >/dev/null; }
+	_apt_upgrade() { request_sudo apt-get upgrade --yes --autoremove >/dev/null; }
+	_apt_install() { request_sudo apt-get install --yes "$@"; }
+	_apt_remove() { request_sudo apt-get remove --yes --autoremove "$@" &>/dev/null; }
+fi
+
 log_start 'updating lists'
-if request_sudo apt-get update >/dev/null; then
+if _apt_update; then
 	log_end
 else
 	warn 'failed to update lists'
 fi
 
 log_start 'upgrading packages'
-if request_sudo apt-get upgrade --yes --autoremove >/dev/null; then
+if _apt_upgrade; then
 	log_end
 else
 	warn 'failed to upgrade packages, continuing'
@@ -167,6 +179,7 @@ declare -a packages=(
 	fd-find  # Better find
 	htop     # Better top
 	httpie   # Better curl
+	nala     # Better apt
 	ripgrep  # Better grep
 
 	# command line tools
@@ -246,7 +259,7 @@ declare -a packages=(
 )
 
 log_start 'installing packages'
-if ! request_sudo apt-get install --yes "${packages[@]}"; then
+if ! _apt_install "${packages[@]}"; then
 	warn 'failed to install apt packages; this may require manual resolution'
 fi
 log_end
@@ -257,7 +270,7 @@ declare -a unwanted_packages=(
 
 log_start 'removing unwanted packages'
 for unwanted_package in "${unwanted_packages[@]}"; do
-	request_sudo apt-get remove --yes --autoremove "$unwanted_package" &>/dev/null || true
+	_apt_remove "$unwanted_package" || true
 done
 log_end
 

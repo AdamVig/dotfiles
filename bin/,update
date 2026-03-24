@@ -124,17 +124,9 @@ update_python_tools() {
 }
 
 update_apt() {
-	# For all commands, use "quiet" to avoid overwriting lines, which breaks formatting
-	# https://salsa.debian.org/apt-team/apt/-/blob/dccfe14ffb9713fbf320691c0f6cd679f2acf4fc/apt-private/acqprogress.cc#L356-357
-
-	echo 'apt registry'
-	sudo apt-get --quiet=2 update
-
 	echo 'apt packages'
-	sudo apt-get --quiet=2 upgrade --yes
-
-	echo 'apt cleanup'
-	sudo apt-get --quiet=2 autoremove --yes
+	# Equivalent of `apt update && apt full-upgrade && apt autoremove`
+	sudo nala full-upgrade --assume-yes --autoremove
 }
 
 update_linux_software() {
@@ -195,7 +187,7 @@ main() {
 
 	run_operation 'python tools' update_python_tools
 
-	if command -v apt-get >/dev/null; then
+	if command -v nala >/dev/null; then
 		run_operation 'apt' update_apt
 	fi
 
