@@ -165,6 +165,14 @@ elif sudo --version 2>&1 | grep --quiet sudo-rs; then
 	log_end
 fi
 
+if ! [ -f /etc/sudoers.d/apt-update ]; then
+	log_start 'allowing apt update to run without a password'
+	echo "# Allow running apt update and apt-get update without a password.
+$USER ALL=NOPASSWD: /usr/bin/apt update, /usr/bin/apt-get update" |
+		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/apt-update' >/dev/null)
+	log_end
+fi
+
 if ! systemctl --user is-enabled --quiet appimaged.service; then
 	log_start 'setting up AppImage support'
 	mkdir -p "$HOME"/applications
