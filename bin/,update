@@ -173,13 +173,18 @@ main() {
 
 	log_operation sudo
 	tput sc
-	if read -r -s -p "${background_blue} password: ${reset} " user_password &&
+	if sudo --non-interactive --validate 2>/dev/null; then
+		tput rc
+		log_success
+		user_password=''
+	elif read -r -s -p "${background_blue} password: ${reset} " user_password &&
 		echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
 		tput rc
 		log_success
 	else
 		tput rc
 		echo "${dim} proceeding without sudo${reset}"
+		user_password=''
 	fi
 
 	if command -v brew >/dev/null; then
