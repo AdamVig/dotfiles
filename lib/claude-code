@@ -39,4 +39,9 @@ else
 fi
 log_end
 
+log_start 'linking skills'
+mkdir -p "$claude_config_dir"/skills
+_ln "$script_dir"/../config/skills/* "$claude_config_dir"/skills
+log_end
+
 log_end
