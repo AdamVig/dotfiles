@@ -31,7 +31,9 @@
 			"Bash(tail *)",
 			"Bash(* --version)",
 			"Bash(* --help *)",
-			"mcp__claude_ai_Linear__**"
+			"Edit(/tmp/**)",
+			"mcp__claude_ai_Linear__**",
+			"Write(/tmp/**)"
 		]
 	},
 	"spinnerTipsEnabled": false,
