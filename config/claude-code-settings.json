@@ -13,6 +13,7 @@
 	},
 	"permissions": {
 		"allow": [
+			"Bash(cat *)",
 			"Bash(fd *)",
 			"Bash(find *)",
 			"Bash(grep *)",
