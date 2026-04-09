@@ -12,32 +12,9 @@ disable-model-invocation: true
 2. **Plan**: for each thread, decide agree/disagree, what action to take, and draft a reply
 3. **Show the user** a summary before posting — include: what the comment says, agree/disagree with justification, and action taken or why none is needed
 4. **Wait for approval**, then make any code changes freely — no commit or push without explicit instruction
-5. **Post each reply** and **resolve each thread** — both required, no exceptions
+5. **Post each reply** — `reply` resolves the thread automatically
 
-## Commands
-
-Run `gh review-comments --help` or `gh review-comments <subcommand> --help` for full flag reference.
-
-```sh
-# List all unresolved threads from all authors (default)
-gh review-comments list
-
-# Only Copilot comments (e.g. "address copilot comments")
-gh review-comments list --author copilot-pull-request-reviewer
-
-# Specific human reviewer
-gh review-comments list --author someuser
-
-# Write reply content to a temp file, then post
-gh review-comments reply 987654 --message-file /tmp/reply.md
-
-# Resolve
-gh review-comments resolve 987654
-```
-
-## Key Notes
-
-- Always use `--message-file` for replies — write the content with the Write tool first, then post
+Run `gh review-comments --help` or `gh review-comments <subcommand> --help` for full command and flag reference.
 
 ## User Expectations
 
