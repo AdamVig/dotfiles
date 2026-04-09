@@ -6,7 +6,9 @@
 	"editor.fontFamily": "Input Mono",
 	"editor.fontWeight": "600",
 	"editor.fontLigatures": false,
-	"editor.rulers": [120],
+	"editor.rulers": [
+		120
+	],
 	"editor.wordWrap": "on",
 	"editor.semanticHighlighting.enabled": true,
 	// Disable minimap
@@ -82,7 +84,10 @@
 	// ------------------------------
 	// Add a ruler at 50 characters (for commit subjects)
 	"[git-commit]": {
-		"editor.rulers": [50, 72],
+		"editor.rulers": [
+			50,
+			72
+		],
 		// Wrap at 72 characters instead of 50
 		"rewrap.wrappingColumn": 72
 	},
@@ -121,6 +126,8 @@
 		"vue",
 		"vue-html"
 	],
+	"githubPullRequests.pullBranch": "never",
+	"githubPullRequests.commentExpandState": "collapseAll",
 	// Hide persistent Live Share buttons in status bar
 	"liveshare.showInStatusBar": "whileCollaborating",
 	// Enable automatic line wrapping
