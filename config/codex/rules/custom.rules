@@ -9,3 +9,7 @@ prefix_rule(
     match=[["gh", "review-comments", "list"]],
     not_match=[["gh", "pr", "view"]],
 )
+prefix_rule(
+    pattern=["fd"],
+    decision="allow",
+)
