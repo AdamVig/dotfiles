@@ -37,6 +37,18 @@
 			"Write(/tmp/**)"
 		]
 	},
+	"hooks": {
+		"Notification": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "jq -r '[\"Claude · \" + (.cwd // \"\" | split(\"/\") | .[-1] // \"unknown\"), (.message // \"Turn complete.\")] | @sh' | xargs kitten notify --sound=complete"
+					}
+				]
+			}
+		]
+	},
 	"spinnerTipsEnabled": false,
 	"statusLine": {
 		"type": "command",
