@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component sops-age-key "$@"
+}
+
+log_start 'setting up SOPS age key'
+
+keys_dir="$(xdg_config)/sops/age"
+keys_file="$keys_dir/keys.txt"
+
+if [ -f "$keys_file" ]; then
+	log 'found existing age key, exiting'
+	log_end
+	exit
+fi
+
+unlock_bitwarden_vault
+
+if ! hostname="$(hostname --short)"; then
+	fatal 'failed to get system hostname'
+fi
+
+log "using hostname \"$hostname\""
+
+if ! sops_folder_id="$(bw get folder sops | jq --raw-output '.id')"; then
+	fatal 'failed to get ID of Bitwarden folder "sops"'
+fi
+
+log_start 'checking for existing age key'
+if item="$(2>/dev/null bw list --folderid "$sops_folder_id" items |
+	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
+	log_end
+	log_start 'existing key found, installing key'
+	mkdir --parents "$keys_dir"
+	echo "$item" | jq --raw-output '.notes' >"$keys_file"
+	chmod 600 "$keys_file"
+	log_end
+else
+	log_end
+	log_start 'no existing key found, creating key'
+	mkdir --parents "$keys_dir"
+	age-keygen --output "$keys_file"
+	chmod 600 "$keys_file"
+
+	if ! item="$(bw get template item |
+		jq \
+			--arg hostname "$hostname" \
+			--rawfile key "$keys_file" \
+			--arg sops_folder_id "$sops_folder_id" \
+			'.name="SOPS Age Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes=$key | .folderId=$sops_folder_id | .fields=[]' |
+		bw encode |
+		bw create item)"; then
+		warn 'failed to create Bitwarden item, back up the key manually'
+	fi
+	bw sync
+	log_end
+fi
+
+if [ ! -f "$keys_file" ]; then
+	warn 'did not find an age key, did you install or create one?'
+fi
+
+log_end

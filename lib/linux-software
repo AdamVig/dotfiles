@@ -263,6 +263,10 @@ if is_ubuntu; then
 	install_deb_from_github_release 'jgm/pandoc' '-amd64.deb'
 	log_end
 
+	log_start 'installing SOPS'
+	install_deb_from_github_release 'getsops/sops' '_amd64.deb'
+	log_end
+
 	log_start 'removing no-longer-needed software'
 	request_sudo apt-get remove --yes --autoremove jan &>/dev/null || true
 	log_end

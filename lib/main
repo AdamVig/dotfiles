@@ -32,6 +32,7 @@ elif is_linux; then
 	if command -v apt >/dev/null; then
 		"$script_dir"/apt
 	fi
+	"$script_dir"/sops-age-key
 	"$script_dir"/grub
 	if is_ubuntu; then
 		"$script_dir"/ubuntu
