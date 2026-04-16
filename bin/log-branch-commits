@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-remote='origin'
 branch=
 args=()
 
@@ -10,7 +9,8 @@ args=()
 if [ -z "${1-}" ] || [[ ${1-} == -* ]]; then
 	# In a git-spice stack, use the downstack branch as the base
 	if ! branch="$(git-spice down --dry-run 2>/dev/null)"; then
-		if ! branch="$(get-default-branch)"; then
+		# Use remote-tracking branch to avoid comparing against possibly-behind local `main`
+		if ! branch="origin/$(get-default-branch)"; then
 			echo 'error: could not get default branch'
 			exit 1
 		fi
@@ -21,4 +21,4 @@ else
 	args+=("${@:2}")
 fi
 
-git log "$remote"/"$branch".. --oneline --pretty=who-when-what "${args[@]}" --
+git log "$branch".. --oneline --pretty=who-when-what "${args[@]}" --
