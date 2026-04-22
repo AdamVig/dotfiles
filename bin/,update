@@ -157,26 +157,27 @@ main() {
 	if [ "${1-}" != 'updated' ]; then
 		# Reset terminal to ensure log_output's overwriting logic works correctly
 		reset
+
+		log_operation sudo
+		tput sc
+		if sudo --non-interactive --validate 2>/dev/null; then
+			tput rc
+			log_success
+			user_password=''
+		elif read -r -s -p "${background_blue} password: ${reset} " user_password &&
+			echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
+			tput rc
+			log_success
+		else
+			tput rc
+			echo "${dim} proceeding without sudo${reset}"
+			user_password=''
+		fi
+
 		run_operation 'dotfiles' update_dotfiles
 	else
 		# When we restart the script after an update, it doesn't log success, so we have to do it in the restarted script
 		log_success
-	fi
-
-	log_operation sudo
-	tput sc
-	if sudo --non-interactive --validate 2>/dev/null; then
-		tput rc
-		log_success
-		user_password=''
-	elif read -r -s -p "${background_blue} password: ${reset} " user_password &&
-		echo "$user_password" | sudo --stdin --validate 2>/dev/null; then
-		tput rc
-		log_success
-	else
-		tput rc
-		echo "${dim} proceeding without sudo${reset}"
-		user_password=''
 	fi
 
 	if command -v brew >/dev/null; then
