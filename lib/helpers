@@ -147,8 +147,19 @@ fatal() {
 
 # cURL wrapper with common default options, use `CURL_ARGS` env var to add/override flags.
 _curl() {
+	# --speed-limit/--speed-time aborts stalled transfers without waiting the full --max-time
 	# shellcheck disable=SC2086
-	curl --styled-output --no-progress-meter --fail --location --connect-timeout 0.5 --max-time 30 --retry 2 ${CURL_ARGS-} "$@"
+	curl \
+		--styled-output \
+		--no-progress-meter \
+		--fail \
+		--location \
+		--connect-timeout 10 \
+		--max-time 300 \
+		--speed-limit 1024 --speed-time 30 \
+		--retry 5 \
+		--retry-delay 2 \
+		${CURL_ARGS-} "$@"
 }
 
 # ln wrapper with common default options
