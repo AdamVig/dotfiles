@@ -20,49 +20,67 @@ trap cleanup EXIT
 log_start 'setting up devcontainer'
 
 log_start 'downloading all packages in parallel'
-copilot_bin_file=$(mktemp)
-codex_bin_file=$(mktemp)
-kitty_tarball_path_file=$(mktemp)
-git_who_tarball_path_file=$(mktemp)
-git_spice_tarball_path_file=$(mktemp)
-yq_bin_file=$(mktemp)
-cleanup_paths+=("$copilot_bin_file" "$codex_bin_file" "$kitty_tarball_path_file" "$git_who_tarball_path_file" "$git_spice_tarball_path_file" "$yq_bin_file")
-_curl "$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')" | tar --extract --gzip --to-stdout >"$copilot_bin_file" &
-_curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-musl.zst')" | unzstd --stdout >"$codex_bin_file" &
-download_to_tmp "$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')" '.txz' >"$kitty_tarball_path_file" &
-download_to_tmp "$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')" '.tar.gz' >"$git_who_tarball_path_file" &
-download_to_tmp "$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')" '.tar.gz' >"$git_spice_tarball_path_file" &
-_curl "$(get_release_url 'mikefarah/yq' 'linux_amd64')" >"$yq_bin_file" &
+copilot_tarball="$(mktemp --suffix=.tar.gz)"
+codex_zst="$(mktemp --suffix=.zst)"
+kitty_tarball="$(mktemp --suffix=.txz)"
+git_who_tarball="$(mktemp --suffix=.tar.gz)"
+git_spice_tarball="$(mktemp --suffix=.tar.gz)"
+yq_bin_file="$(mktemp)"
+cleanup_paths+=("$copilot_tarball" "$codex_zst" "$kitty_tarball" "$git_who_tarball" "$git_spice_tarball" "$yq_bin_file")
 
+declare -A downloads=(
+	["$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')"]="$copilot_tarball"
+	["$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-musl.zst')"]="$codex_zst"
+	["$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"]="$kitty_tarball"
+	["$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"]="$git_who_tarball"
+	["$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"]="$git_spice_tarball"
+	["$(get_release_url 'mikefarah/yq' 'linux_amd64')"]="$yq_bin_file"
+)
 if command -v apt-get >/dev/null; then
-	bat_deb_path_file=$(mktemp)
-	delta_deb_path_file=$(mktemp)
-	glow_deb_path_file=$(mktemp)
-	cleanup_paths+=("$bat_deb_path_file" "$delta_deb_path_file" "$glow_deb_path_file")
-	download_deb_from_github_release 'sharkdp/bat' '_amd64.deb' >"$bat_deb_path_file" &
-	download_deb_from_github_release 'dandavison/delta' '_amd64.deb' >"$delta_deb_path_file" &
-	download_deb_from_github_release 'charmbracelet/glow' '_amd64.deb' >"$glow_deb_path_file" &
+	bat_deb="$(mktemp --suffix=.deb)"
+	delta_deb="$(mktemp --suffix=.deb)"
+	glow_deb="$(mktemp --suffix=.deb)"
+	cleanup_paths+=("$bat_deb" "$delta_deb" "$glow_deb")
+	downloads+=(
+		["$(get_release_url 'sharkdp/bat' '_amd64.deb')"]="$bat_deb"
+		["$(get_release_url 'dandavison/delta' '_amd64.deb')"]="$delta_deb"
+		["$(get_release_url 'charmbracelet/glow' '_amd64.deb')"]="$glow_deb"
+	)
 fi
 
-wait || fatal 'failed to download packages'
+# Single curl invocation downloads everything in parallel
+for url in "${!downloads[@]}"; do
+	printf 'url = "%s"\noutput = "%s"\n\n' "$url" "${downloads[$url]}"
+done | _curl --parallel --parallel-immediate --config -
+
+if command -v apt-get >/dev/null; then
+	# Avoid "Download is performed unsandboxed as root" warning from apt-get install
+	request_sudo chown _apt:root "$bat_deb" "$delta_deb" "$glow_deb"
+fi
+
+copilot_bin_file="$(mktemp)"
+codex_bin_file="$(mktemp)"
+cleanup_paths+=("$copilot_bin_file" "$codex_bin_file")
+tar --extract --gzip --file "$copilot_tarball" --to-stdout >"$copilot_bin_file"
+unzstd --stdout "$codex_zst" >"$codex_bin_file"
 log_end
 
 if command -v apt-get >/dev/null; then
 
 	declare -a packages=(
 		# replacements of default utilities
-		"$(<"$bat_deb_path_file")"   # Better cat
-		"$(<"$delta_deb_path_file")" # Better git diff
-		eza                          # Better ls
-		fd-find                      # Better find
-		htop                         # Better top
-		httpie                       # Better curl
-		ripgrep                      # Better grep
+		"$bat_deb"   # Better cat
+		"$delta_deb" # Better git diff
+		eza          # Better ls
+		fd-find      # Better find
+		htop         # Better top
+		httpie       # Better curl
+		ripgrep      # Better grep
 
 		# command line tools
-		fzf                         # Fuzzy finder
-		"$(<"$glow_deb_path_file")" # Markdown viewer
-		tig                         # Visual Git client
+		fzf         # Fuzzy finder
+		"$glow_deb" # Markdown viewer
+		tig         # Visual Git client
 
 		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
@@ -103,13 +121,13 @@ fi
 log_end
 
 log_start 'installing git-who'
-git_who_extracted_tmp="$(extract_tarball_to_tmp "$(<"$git_who_tarball_path_file")")"
+git_who_extracted_tmp="$(extract_tarball_to_tmp "$git_who_tarball")"
 cleanup_paths+=("$git_who_extracted_tmp")
 install "$git_who_extracted_tmp"/linux_amd64/git-who "$HOME"/.local/bin/git-who
 log_end
 
 log_start 'installing git-spice'
-git_spice_extracted_tmp="$(extract_tarball_to_tmp "$(<"$git_spice_tarball_path_file")")"
+git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tarball")"
 cleanup_paths+=("$git_spice_extracted_tmp")
 install "$git_spice_extracted_tmp"/git-spice "$HOME"/.local/bin/git-spice
 git_spice_config_path="$(xdg_config)/git-spice"
@@ -128,7 +146,7 @@ echo '{
 log_end
 
 log_start 'installing kitty'
-kitty_extracted_tmp="$(extract_tarball_to_tmp "$(<"$kitty_tarball_path_file")")"
+kitty_extracted_tmp="$(extract_tarball_to_tmp "$kitty_tarball")"
 cleanup_paths+=("$kitty_extracted_tmp")
 mv "$kitty_extracted_tmp"/bin/kitten "$HOME"/.local/bin
 log_end
