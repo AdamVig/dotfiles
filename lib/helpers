@@ -151,7 +151,7 @@ _curl() {
 	# shellcheck disable=SC2086
 	curl \
 		--styled-output \
-		--no-progress-meter \
+		--progress-bar \
 		--fail \
 		--location \
 		--connect-timeout 10 \
