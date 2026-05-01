@@ -28,7 +28,7 @@ git_spice_tarball_path_file=$(mktemp)
 yq_bin_file=$(mktemp)
 cleanup_paths+=("$copilot_bin_file" "$codex_bin_file" "$kitty_tarball_path_file" "$git_who_tarball_path_file" "$git_spice_tarball_path_file" "$yq_bin_file")
 _curl "$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')" | tar --extract --gzip --to-stdout >"$copilot_bin_file" &
-_curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-gnu.zst')" | unzstd --stdout >"$codex_bin_file" &
+_curl "$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-musl.zst')" | unzstd --stdout >"$codex_bin_file" &
 download_to_tmp "$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')" '.txz' >"$kitty_tarball_path_file" &
 download_to_tmp "$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')" '.tar.gz' >"$git_who_tarball_path_file" &
 download_to_tmp "$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')" '.tar.gz' >"$git_spice_tarball_path_file" &
