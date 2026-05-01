@@ -211,11 +211,14 @@ get_release_url() {
 	fi
 
 	filter=".assets | map(.browser_download_url | select(${matching_mode}(\$pattern))) | first"
-	if ! get_latest_github_release "$repository" | jq --exit-status --arg pattern "$pattern" --raw-output "$filter"; then
+	# Capture into a local so jq's "null" output on a no-match isn't leaked to the caller's command substitution
+	local url
+	if ! url="$(get_latest_github_release "$repository" | jq --exit-status --arg pattern "$pattern" --raw-output "$filter")"; then
 		warn 'failed to find a matching asset in the latest release'
 		log "See https://github.com/${repository}/releases/latest"
 		return 100
 	fi
+	echo "$url"
 }
 
 # Install a binary to ~/.local/bin from a URL
