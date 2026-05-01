@@ -37,10 +37,14 @@ declare -A downloads=(
 	["$(get_release_url 'mikefarah/yq' 'linux_amd64')"]="$yq_bin_file"
 )
 if command -v apt-get >/dev/null; then
-	bat_deb="$(mktemp --suffix=.deb)"
-	delta_deb="$(mktemp --suffix=.deb)"
-	glow_deb="$(mktemp --suffix=.deb)"
-	cleanup_paths+=("$bat_deb" "$delta_deb" "$glow_deb")
+	# Own the dir (711 lets _apt traverse) so the .debs can be chown'd to _apt for apt's sandbox check while we keep
+	# delete rights via the parent dir.
+	deb_dir="$(mktemp -d)"
+	chmod 711 "$deb_dir"
+	bat_deb="$deb_dir/bat.deb"
+	delta_deb="$deb_dir/delta.deb"
+	glow_deb="$deb_dir/glow.deb"
+	cleanup_paths+=("$deb_dir")
 	downloads+=(
 		["$(get_release_url 'sharkdp/bat' '_amd64.deb')"]="$bat_deb"
 		["$(get_release_url 'dandavison/delta' '_amd64.deb')"]="$delta_deb"
