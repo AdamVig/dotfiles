@@ -31,8 +31,15 @@ if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [[ -v VSCOD
 		[[ ! -e $lock ]] ||
 		(($(date +%s) - $(stat -c %Y "$lock" 2>/dev/null || echo 0) > 86400)); then
 		echo 'updating apt lists...'
-		sudo apt-get --option='Acquire::Languages=none' update --quiet=2
-		echo 'done updating apt lists'
+		if ! sudo apt-get \
+			--option='Acquire::Languages=none' \
+			--option='Acquire::http::Timeout=10' \
+			--option='Acquire::https::Timeout=10' \
+			update --quiet=2; then
+			echo 'failed to update apt lists, proceeding anyway'
+		else
+			echo 'done updating apt lists'
+		fi
 	fi
 
 	echo 'installing dependencies...'
