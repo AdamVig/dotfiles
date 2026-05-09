@@ -22,6 +22,11 @@
       (package-refresh-contents)
       (package-install 'use-package)))
 (require 'use-package)
+
+;; Ensure compat is available for packages that use newer Emacs APIs
+(use-package compat
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
