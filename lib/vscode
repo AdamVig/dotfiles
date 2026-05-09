@@ -37,6 +37,7 @@ declare -a extensions=(
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-azuretools.vscode-containers       # Dockerfile language server (auto-recommended by VS Code)
 	ms-vsliveshare.vsliveshare            # Live code sharing
+	redhat.vscode-yaml                    # YAML support
 	ryanluker.vscode-coverage-gutters     # Code coverage visualizer
 	streetsidesoftware.code-spell-checker # Spell checker
 	tamasfe.even-better-toml              # TOML support

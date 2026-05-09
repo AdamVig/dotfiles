@@ -122,6 +122,12 @@
 		"vue",
 		"vue-html"
 	],
+	// https://github.com/docker/vscode-extension/blob/main/FAQ.md
+	"docker.extension.enableComposeLanguageServer": true,
+	"yaml.schemas": {
+    // this tells Red Hat's YAML extension to consider Compose YAML files as not having a schema
+    "https://raw.githubusercontent.com/docker/vscode-extension/6a88caada42b57090df7ce91ec2a6561b422afe1/misc/empty.json": ["compose*y*ml", "docker-compose*y*ml"]
+  },
 	"githubPullRequests.pullBranch": "never",
 	"githubPullRequests.commentExpandState": "collapseAll",
 	// Hide persistent Live Share buttons in status bar
