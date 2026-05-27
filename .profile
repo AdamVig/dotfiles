@@ -57,8 +57,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	# Disable Homebrew cleanup after installation
 	export HOMEBREW_NO_INSTALL_CLEANUP='true'
 
-	# On ARM Macs, the Brew prefix is different and needs to be added to PATH manually
-	if ! command -v brew >/dev/null; then
+	if [ -x /opt/homebrew/bin/brew ]; then
 		eval "$(/opt/homebrew/bin/brew shellenv)"
 	fi
 

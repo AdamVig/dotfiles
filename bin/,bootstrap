@@ -1,29 +1,51 @@
 #!/usr/bin/env bash
+# This file must be parseable by macOS's system bash 3.2.
 
 if ! command -v uname >/dev/null; then
 	echo 'error: uname is not available, cannot proceed'
 	exit 1
 fi
 
-# If running on a fresh boot of macOS
-if [ "$(uname)" = 'Darwin' ] && ! [ -f /opt/homebrew/bin/brew ]; then
-	echo 'detected fresh macOS system, running pre-bootstrap steps...'
-	echo "installing Homebrew..."
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	echo "done installing Homebrew."
+# If running on macOS and pre-bootstrap dependencies are not present yet
+if [ "$(uname)" = 'Darwin' ]; then
+	did_prebootstrap=0
 
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+	if ! command -v brew >/dev/null 2>&1; then
+		if [ -x /opt/homebrew/bin/brew ]; then
+			eval "$(/opt/homebrew/bin/brew shellenv)"
+		else
+			echo 'detected fresh macOS system, running pre-bootstrap steps...'
+			echo 'installing Homebrew...'
+			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+			echo 'done installing Homebrew.'
+			eval "$(/opt/homebrew/bin/brew shellenv)"
+			did_prebootstrap=1
+		fi
+	fi
 
-	echo 'installing dependencies...'
-	brew install coreutils bash
-	echo 'done installing dependencies.'
+	if ! brew list --versions coreutils bash >/dev/null 2>&1; then
+		if [ "$did_prebootstrap" -eq 0 ]; then
+			echo 'detected fresh macOS system, running pre-bootstrap steps...'
+		fi
+		echo 'installing dependencies...'
+		brew install coreutils bash
+		echo 'done installing dependencies.'
+		did_prebootstrap=1
+	fi
 
-	echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
-	exit
+	if [ "$did_prebootstrap" -eq 1 ]; then
+		echo 'done running pre-bootstrap steps, create a new shell and run this script again.'
+		exit
+	fi
+fi
+
+# Re-exec under Homebrew bash on macOS so the rest of the script can use modern bash features
+if [ "$(uname)" = 'Darwin' ] && [ -x /opt/homebrew/bin/bash ] && [ "${BASH-}" != /opt/homebrew/bin/bash ]; then
+	exec /opt/homebrew/bin/bash "$0" "$@"
 fi
 
 # If running on a fresh boot of a Linux system that uses apt, including devcontainers
-if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [[ -v VSCODE_REMOTE_CONTAINERS_SESSION || -v REMOTE_CONTAINERS || -v IN_DEV_CONTAINER ]]); then
+if command -v apt-get >/dev/null && (! command -v curl >/dev/null || [ -n "${VSCODE_REMOTE_CONTAINERS_SESSION+x}" ] || [ -n "${REMOTE_CONTAINERS+x}" ] || [ -n "${IN_DEV_CONTAINER+x}" ]); then
 	echo 'detected fresh Linux system, running pre-bootstrap steps...'
 	# Update only if /var/lib/apt/lists is missing/empty or if no apt operation has run in >1 day
 	lock=/var/lib/dpkg/lock-frontend

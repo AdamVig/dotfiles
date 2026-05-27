@@ -18,7 +18,7 @@ brew update >/dev/null
 log_end
 
 log_start 'installing formulas'
-if ! brew bundle install --no-lock; then
+if ! brew bundle install; then
 	warn 'installing formulas may have failed'
 fi
 log_end

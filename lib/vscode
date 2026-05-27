@@ -31,8 +31,6 @@ declare -a extensions=(
 	docker.docker                         # Dockerfile linting/Docker Compose IntelliSense
 	EditorConfig.editorconfig             # Editor text style configuration
 	esbenp.prettier-vscode                # Code formatting with Prettier
-	figma.figma-vscode-extension          # Figma integration
-	GitHub.copilot                        # Support for Copilot
 	github.vscode-github-actions          # GitHub Actions IntelliSense (auto-recommended by VS Code)
 	mrmlnc.vscode-scss                    # SCSS IntelliSense and autocomplete
 	ms-azuretools.vscode-containers       # Dockerfile language server (auto-recommended by VS Code)

@@ -37,7 +37,9 @@ candidate_files=(
 	"$HOME"/.locals
 	"$HOME"/.profile-local
 	"$emacs_local_config_dir"/lisp/init-local.el
+	"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/CLAUDE.md"
 	"${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/,update-local"
+	"${XDG_CONFIG_HOME:-$HOME/.config}"/kitty/{kitty-local.conf,startup-session-local.conf}
 )
 
 files=()
@@ -68,6 +70,7 @@ for f in "${files[@]}"; do
 	f_basename="$(basename "$f")"
 	if content="$(gh gist view --raw "$gist_to_restore" --filename="$f_basename")"; then
 		echo "  restoring file..."
+		mkdir -p "$(dirname "$f")"
 		echo "$content" >"$f"
 	fi
 done

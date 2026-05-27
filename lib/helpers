@@ -164,22 +164,14 @@ _curl() {
 
 # ln wrapper with common default options
 _ln() {
-	# Use short flags for portability
-	# -s: make symbolic links instead of hard links
-	# -f: overwrite link if it already exists
-	# (Linux only) -r: make links relative to link location
-	if is_linux; then
-		ln \
-			-s \
-			-f \
-			-r \
-			"$@"
-	else
-		ln \
-			-s \
-			-f \
-			"$@"
-	fi
+	local flags=(-sf)
+	is_linux && flags+=(-r)
+	local dest="${!#}" src
+	for src in "${@:1:$#-1}"; do
+		local target="$dest"
+		[ -d "$dest" ] && target="${dest%/}/$(basename "$src")"
+		ln "${flags[@]}" "$src" "$target"
+	done
 }
 
 # Get the latest GitHub release in JSON format

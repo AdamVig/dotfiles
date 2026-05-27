@@ -10,9 +10,11 @@ log() {
 claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
 log_start 'setting up Claude Code'
-log_start 'installing'
-_curl https://downloads.claude.ai/claude-code-releases/bootstrap.sh | bash
-log_end
+if ! is_macos; then
+	log_start 'installing'
+	_curl https://downloads.claude.ai/claude-code-releases/bootstrap.sh | bash
+	log_end
+fi
 
 log_start 'installing settings'
 claude_settings_path="$claude_config_dir"/settings.json

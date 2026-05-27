@@ -16,7 +16,9 @@ brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
+brew "bitwarden-cli"
 brew "colima" # Container runtime
+brew "devcontainer"
 brew "difftastic" # Syntax-aware diff tool
 brew "docker" # Docker client
 brew "ffmpeg" # Video file converter
@@ -27,8 +29,6 @@ brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
 brew "hunspell" # Spell checker used by Emacs
 brew "jq" # JSON processor
-tap "lucapette/tap"
-brew "fakedata" # Fake data generator
 brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter
@@ -63,11 +63,16 @@ brew "grep" if OS.mac?
 
 # applications
 cask "brave-browser"
+cask "claude"
+cask "claude-code"
+cask "emacs"
 cask "figma"
 cask "inkscape" # Vector image editor and command-line conversion tool
 cask "karabiner-elements" # Keyboard customizer
 cask "kdiff3" # Merge tool
 cask "kitty" # GPU-accelerated terminal emulator
+cask "linear"
+cask "linearmouse"
 cask "meld" # Comparison tool for version control, files, and directories
 cask "motu-m-series" # Driver for Motu audio interface
 cask "nextcloud"
@@ -76,15 +81,9 @@ cask "slack" # Messaging
 cask "spotify"
 cask "visual-studio-code"
 cask "wacom-tablet" # Driver for Wacom drawing tablets
-cask "zoom" # Video conferencing
 
 # fonts
-tap "homebrew/cask-fonts"
 cask "font-input"
 cask "font-noto-sans"
 cask "font-open-sans"
 cask "font-roboto"
-
-# from Cask versions
-tap "homebrew/cask-versions"
-cask "emacs-pretest"

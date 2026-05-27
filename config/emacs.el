@@ -194,14 +194,31 @@
 	(setq catppuccin-flavor 'latte)
   (catppuccin-reload))
 
-;; Install and use Auto-Dark (https://github.com/LionyxML/auto-dark-emacs)
-;; Only enable in graphical environments
+;; Install and use Auto-Dark
+;; (https://github.com/LionyxML/auto-dark-emacs). When running as a
+;; daemon, defer activation until the first GUI frame is created so
+;; the initial theme is detected correctly. See
+;; https://github.com/LionyxML/auto-dark-emacs#notes-for-emacs-daemon--server-mode-users
+(defun av/enable-auto-dark-on-first-gui-frame (frame)
+	"Enable `auto-dark-mode' once FRAME is a graphical frame."
+	(with-selected-frame frame
+		(when (display-graphic-p)
+			(auto-dark-mode 1)
+			(remove-hook 'after-make-frame-functions
+				#'av/enable-auto-dark-on-first-gui-frame))))
+
 (use-package auto-dark
 	:ensure t
-	:if (display-graphic-p)
 	:config
-	(setq auto-dark-allow-osascript t)
-	(auto-dark-mode t)
+	;; Use the native NS appearance API instead of shelling out to
+	;; `osascript'. This avoids the AppleScript/Automation permission
+	;; prompt, which fails silently with "AppleScript error 1" when
+	;; Emacs is launched as a daemon.
+	(setq auto-dark-detection-method 'ns)
+	(if (display-graphic-p)
+		(auto-dark-mode 1)
+		(add-hook 'after-make-frame-functions
+			#'av/enable-auto-dark-on-first-gui-frame))
 	:hook
   (auto-dark-dark-mode
    . (lambda ()

@@ -64,8 +64,8 @@ if echo "$HOSTNAME" | grep --quiet -E '[A-Z]+'; then
 	log_end
 fi
 
-# Disable screensaver
-request_sudo osascript -e 'tell application "System Events" to set delay interval of screen saver preferences to 0'
+# Disable screensaver (idleTime=0 means never start)
+defaults -currentHost write com.apple.screensaver idleTime -int 0
 
 # Set machine sleep while charging (minutes)
 request_sudo pmset -c displaysleep 180
