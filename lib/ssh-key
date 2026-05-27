@@ -14,70 +14,74 @@ ssh_key_exists() {
 }
 
 if ssh_key_exists; then
-	log 'found existing SSH key, exiting'
-	log_end
-	exit
-fi
-
-unlock_bitwarden_vault
-
-if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
-	fatal 'failed to get ID of Bitwarden folder "ssh"'
-fi
-
-if ! hostname="$(hostname -s)"; then
-	fatal 'failed to get system hostname'
-fi
-
-log "using hostname \"$hostname\""
-
-log_start 'checking for existing SSH key'
-if item="$(2>/dev/null bw list --folderid "$ssh_folder_id" items |
-	jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
-	log_end
-	log_start 'existing key found, installing key'
-	tmp_dir="$(mktemp -d)"
-	item_id="$(echo "$item" | jq --raw-output '.id')"
-	bw get attachment id_rsa --itemid="$item_id" --output="${tmp_dir}/"
-	bw get attachment id_rsa.pub --itemid="$item_id" --output="${tmp_dir}/"
-	mv "$tmp_dir"/* "$HOME"/.ssh
-	rm -rf "$tmp_dir"
-	log_end
+	log 'found existing SSH key, skipping acquisition'
 else
-	log_end
-	log_start 'no existing key found, creating key'
-	if ! passphrase="$(bw generate --uppercase --lowercase --number --length=45)"; then
-		warn 'failed to generate password, generate one manually'
-	fi
-
-	ssh-keygen ${passphrase:+-N $passphrase} -f "$HOME"/.ssh/id_rsa
+	unlock_bitwarden_vault
 
 	if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
 		fatal 'failed to get ID of Bitwarden folder "ssh"'
 	fi
 
-	if ! item="$(bw get template item |
-		jq \
-			--arg hostname "$(hostname -s)" \
-			--argjson passphrase "$(bw get template item.field | jq --arg passphrase "${passphrase-}" '.name="Passphrase" | .value=$passphrase | .type=1')" \
-			--argjson created "$(bw get template item.field | jq --arg date "$(date '+%B %-d, %Y')" '.name="Created" | .value=$date | .type=0')" \
-			--argjson public "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa.pub '.name="Public" | .value=$key | .type=0')" \
-			--argjson private "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa '.name="Private" | .value=$key | .type=1')" \
-			--arg ssh_folder_id "$ssh_folder_id" \
-			'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' |
-		bw encode |
-		bw create item)"; then
-		warn 'failed to create item, create manually'
-	else
-		bw create attachment --file "$HOME"/.ssh/id_rsa --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
-		bw create attachment --file "$HOME"/.ssh/id_rsa.pub --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
+	if ! hostname="$(hostname -s)"; then
+		fatal 'failed to get system hostname'
 	fi
-	bw sync
-	log_end
+
+	log "using hostname \"$hostname\""
+
+	log_start 'checking for existing SSH key'
+	if item="$(2>/dev/null bw list --folderid "$ssh_folder_id" items |
+		jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
+		log_end
+		log_start 'existing key found, installing key'
+		tmp_dir="$(mktemp -d)"
+		item_id="$(echo "$item" | jq --raw-output '.id')"
+		bw get attachment id_rsa --itemid="$item_id" --output="${tmp_dir}/"
+		bw get attachment id_rsa.pub --itemid="$item_id" --output="${tmp_dir}/"
+		mv "$tmp_dir"/* "$HOME"/.ssh
+		rm -rf "$tmp_dir"
+		log_end
+	else
+		log_end
+		log_start 'no existing key found, creating key'
+		if ! passphrase="$(bw generate --uppercase --lowercase --number --length=45)"; then
+			warn 'failed to generate password, generate one manually'
+		fi
+
+		ssh-keygen ${passphrase:+-N $passphrase} -f "$HOME"/.ssh/id_rsa
+
+		if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
+			fatal 'failed to get ID of Bitwarden folder "ssh"'
+		fi
+
+		if ! item="$(bw get template item |
+			jq \
+				--arg hostname "$(hostname -s)" \
+				--argjson passphrase "$(bw get template item.field | jq --arg passphrase "${passphrase-}" '.name="Passphrase" | .value=$passphrase | .type=1')" \
+				--argjson created "$(bw get template item.field | jq --arg date "$(date '+%B %-d, %Y')" '.name="Created" | .value=$date | .type=0')" \
+				--argjson public "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa.pub '.name="Public" | .value=$key | .type=0')" \
+				--argjson private "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa '.name="Private" | .value=$key | .type=1')" \
+				--arg ssh_folder_id "$ssh_folder_id" \
+				'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' |
+			bw encode |
+			bw create item)"; then
+			warn 'failed to create item, create manually'
+		else
+			bw create attachment --file "$HOME"/.ssh/id_rsa --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
+			bw create attachment --file "$HOME"/.ssh/id_rsa.pub --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
+		fi
+		bw sync
+		log_end
+	fi
+
+	if ! ssh_key_exists; then
+		warn 'did not find an SSH key, did you install or create one?'
+	fi
 fi
 
-if ! ssh_key_exists; then
-	warn 'did not find an SSH key, did you install or create one?'
+if is_macos && ssh_key_exists; then
+	log_start 'loading key into ssh-agent (passphrase cached in Keychain)'
+	ssh-add --apple-use-keychain "$HOME"/.ssh/id_rsa
+	log_end
 fi
 
 log_end

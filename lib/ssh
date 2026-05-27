@@ -10,11 +10,19 @@ log() {
 log_start 'configuring SSH'
 
 mkdir -p "$HOME"/.ssh
-ssh_config='AddKeysToAgent yes'
 ssh_config_path="$HOME"/.ssh/config
-if ! [ -f "$ssh_config_path" ] || ! grep --quiet "$ssh_config" "$ssh_config_path"; then
-	echo "$ssh_config" >>"$ssh_config_path"
-fi
+touch "$ssh_config_path"
+
+add_ssh_config() {
+	if ! grep --quiet --fixed-strings "$1" "$ssh_config_path"; then
+		echo "$1" >>"$ssh_config_path"
+	fi
+}
+
+add_ssh_config 'AddKeysToAgent yes'
+# `IgnoreUnknown` lets Linux SSH silently skip the macOS-only `UseKeychain`
+add_ssh_config 'IgnoreUnknown UseKeychain'
+add_ssh_config 'UseKeychain yes'
 
 ssh_authorized_keys_exist() {
 	[ -f "$HOME"/.ssh/authorized_keys ]
