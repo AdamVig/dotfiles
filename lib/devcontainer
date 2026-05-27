@@ -19,6 +19,24 @@ trap cleanup EXIT
 
 log_start 'setting up devcontainer'
 
+case "$HOSTTYPE" in
+	x86_64)
+		copilot_arch=x64
+		gnu_arch=x86_64  # codex, git-spice
+		kitty_arch=x86_64
+		deb_arch=amd64   # also git-who, yq
+		;;
+	aarch64)
+		copilot_arch=arm64
+		gnu_arch=aarch64
+		kitty_arch=arm64
+		deb_arch=arm64
+		;;
+	*)
+		fatal "unsupported arch: $HOSTTYPE"
+		;;
+esac
+
 log_start 'downloading all packages in parallel'
 copilot_tarball="$(mktemp --suffix=.tar.gz)"
 codex_zst="$(mktemp --suffix=.zst)"
@@ -29,12 +47,12 @@ yq_bin_file="$(mktemp)"
 cleanup_paths+=("$copilot_tarball" "$codex_zst" "$kitty_tarball" "$git_who_tarball" "$git_spice_tarball" "$yq_bin_file")
 
 declare -A downloads=(
-	["$(get_release_url 'github/copilot-cli' 'copilot-linux-x64.tar.gz')"]="$copilot_tarball"
-	["$(get_release_url 'openai/codex' 'codex-x86_64-unknown-linux-musl.zst')"]="$codex_zst"
-	["$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"]="$kitty_tarball"
-	["$(get_release_url 'sinclairtarget/git-who' '_linux_amd64.tar.gz')"]="$git_who_tarball"
-	["$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"]="$git_spice_tarball"
-	["$(get_release_url 'mikefarah/yq' 'linux_amd64')"]="$yq_bin_file"
+	["$(get_release_url 'github/copilot-cli' "copilot-linux-${copilot_arch}.tar.gz")"]="$copilot_tarball"
+	["$(get_release_url 'openai/codex' "codex-${gnu_arch}-unknown-linux-musl.zst")"]="$codex_zst"
+	["$(get_release_url 'kovidgoyal/kitty' "${kitty_arch}.txz")"]="$kitty_tarball"
+	["$(get_release_url 'sinclairtarget/git-who' "_linux_${deb_arch}.tar.gz")"]="$git_who_tarball"
+	["$(get_release_url 'abhinav/git-spice' ".Linux-${gnu_arch}.tar.gz")"]="$git_spice_tarball"
+	["$(get_release_url 'mikefarah/yq' "linux_${deb_arch}")"]="$yq_bin_file"
 )
 if command -v apt-get >/dev/null; then
 	# Own the dir (711 lets _apt traverse) so the .debs can be chown'd to _apt for apt's sandbox check while we keep
@@ -46,9 +64,9 @@ if command -v apt-get >/dev/null; then
 	glow_deb="$deb_dir/glow.deb"
 	cleanup_paths+=("$deb_dir")
 	downloads+=(
-		["$(get_release_url 'sharkdp/bat' '_amd64.deb')"]="$bat_deb"
-		["$(get_release_url 'dandavison/delta' '_amd64.deb')"]="$delta_deb"
-		["$(get_release_url 'charmbracelet/glow' '_amd64.deb')"]="$glow_deb"
+		["$(get_release_url 'sharkdp/bat' "_${deb_arch}.deb")"]="$bat_deb"
+		["$(get_release_url 'dandavison/delta' "_${deb_arch}.deb")"]="$delta_deb"
+		["$(get_release_url 'charmbracelet/glow' "_${deb_arch}.deb")"]="$glow_deb"
 	)
 fi
 
@@ -127,7 +145,7 @@ log_end
 log_start 'installing git-who'
 git_who_extracted_tmp="$(extract_tarball_to_tmp "$git_who_tarball")"
 cleanup_paths+=("$git_who_extracted_tmp")
-install "$git_who_extracted_tmp"/linux_amd64/git-who "$HOME"/.local/bin/git-who
+install "$git_who_extracted_tmp/linux_${deb_arch}/git-who" "$HOME"/.local/bin/git-who
 log_end
 
 log_start 'installing git-spice'
