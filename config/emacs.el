@@ -145,6 +145,7 @@
 (setq inhibit-startup-screen t) ; Disable startup screen
 (setq ring-bell-function 'ignore) ; Disable audio bell
 (setq initial-scratch-message "") ; Disable scratch buffer comment
+(setq initial-major-mode 'fundamental-mode) ; Scratch buffer in fundamental mode so pasted content isn't linted
 (setq column-number-mode t) ; Enable column number
 (if (functionp 'tool-bar-mode) (tool-bar-mode -1)) ; Disable toolbar
 (if (functionp 'menu-bar-mode) (menu-bar-mode -1)) ; Disable menu bar
