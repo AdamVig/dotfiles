@@ -23,6 +23,7 @@ brew "difftastic" # Syntax-aware diff tool
 brew "docker" # Docker client
 brew "ffmpeg" # Video file converter
 brew "fzf" # Fuzzy finder
+brew "git-spice" # Git stacking tool
 brew "git-who" # Git contributor statistics
 brew "glow" # Markdown viewer
 brew "hyperfine" # Command-line benchmarking tool
