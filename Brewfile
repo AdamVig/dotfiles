@@ -26,10 +26,11 @@ brew "fzf" # Fuzzy finder
 brew "git-spice" # Git stacking tool
 brew "git-who" # Git contributor statistics
 brew "glow" # Markdown viewer
+brew "hunspell" # Spell checker used by Emacs
 brew "hyperfine" # Command-line benchmarking tool
 brew "imagemagick"
-brew "hunspell" # Spell checker used by Emacs
 brew "jq" # JSON processor
+brew "just" # Command runner
 brew "p7zip"
 brew "pandoc"
 brew "scc" # Lines of code counter

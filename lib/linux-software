@@ -103,6 +103,17 @@ log 'linking'
 request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
 log_end
 
+log_start 'installing just'
+just_url="$(get_release_url 'casey/just' '-x86_64-unknown-linux-musl.tar.gz')"
+just_tmp="$(download_to_tmp "$just_url" '.tar.gz')"
+just_extracted_tmp="$(extract_tarball_to_tmp "$just_tmp")"
+cleanup_paths+=("$just_extracted_tmp")
+install "$just_extracted_tmp"/just "$HOME"/.local/bin
+mkdir -p "$HOME"/.local/share/man/man1
+install "$just_extracted_tmp"/just.1 "$HOME"/.local/share/man/man1
+install "$just_extracted_tmp"/completions/just.zsh "$(xdg_data)"/zsh-site-functions/_just
+log_end
+
 log_start 'installing kitty'
 kitty_url="$(get_release_url 'kovidgoyal/kitty' 'x86_64.txz')"
 kitty_tmp="$(download_to_tmp "$kitty_url" '.txz')"
