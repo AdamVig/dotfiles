@@ -68,7 +68,7 @@ brew "grep" if OS.mac?
 cask "brave-browser"
 cask "claude"
 cask "claude-code"
-cask "emacs"
+cask "emacs-app"
 cask "figma"
 cask "inkscape" # Vector image editor and command-line conversion tool
 cask "karabiner-elements" # Keyboard customizer
