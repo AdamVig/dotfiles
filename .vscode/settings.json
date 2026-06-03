@@ -152,7 +152,7 @@
 	// Hide spell check indicator in status bar
 	"cSpell.showStatus": false,
 	"dotfiles.repository": "AdamVig/dotfiles",
-	"dotfiles.targetPath": "~/dotfiles",
+	"dotfiles.targetPath": "~/src/dotfiles",
 	"dotfiles.installCommand": "bin/,bootstrap",
 	"evenBetterToml.semanticTokens": true,
 	"json.schemaDownload.trustedDomains": {

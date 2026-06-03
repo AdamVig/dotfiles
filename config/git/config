@@ -1,4 +1,4 @@
-# $XDG_CONFIG_HOME will be replaced with its value when set in the global Git config
+# $XDG_CONFIG_HOME and $DOTFILES will be replaced with their values when set in the global Git config
 
 [core]
 	# Use a less-common character to allow lines to start with `#` (the default)
@@ -12,7 +12,7 @@
 	defaultBranch = main
 [commit]
   gpgSign = true
-  template = $XDG_CONFIG_HOME/git/template
+  template = $DOTFILES/config/git/template
 [gpg]
   format = ssh
 [gpg "ssh"]

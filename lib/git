@@ -12,9 +12,6 @@ log_start 'setting up Git'
 config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
 
-log 'symlinking commit template'
-_ln "$script_dir"/../config/git/template "$config_path"/template
-
 log 'symlinking attributes'
 _ln "$script_dir"/../config/git/attributes "$config_path"/attributes
 
@@ -42,6 +39,7 @@ if ! git config --global --includes --get gpg.format >/dev/null; then
 fi
 
 log_start 'updating Git configuration'
+dotfiles_root="$(cd -P -- "$script_dir"/.. && pwd -P)"
 # Read all values from current Git configuration
 git config --list --file "$script_dir"/../config/git/config | while read -r conf_line; do
 	# Split line into name and value at equals sign
@@ -49,6 +47,8 @@ git config --list --file "$script_dir"/../config/git/config | while read -r conf
 
 	# shellcheck disable=SC2016
 	desired_value="${desired_value/'$XDG_CONFIG_HOME'/$(xdg_config)}"
+	# shellcheck disable=SC2016
+	desired_value="${desired_value/'$DOTFILES'/$dotfiles_root}"
 	# Replace home directory with tilde for readability/portability to Dev Container
 	desired_value="${desired_value/#$HOME/\~}"
 	current_value="$(git config --global --get "$name" || true)"

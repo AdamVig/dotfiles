@@ -173,10 +173,9 @@ cleanup_paths+=("$kitty_extracted_tmp")
 mv "$kitty_extracted_tmp"/bin/kitten "$HOME"/.local/bin
 log_end
 
-log 'symlinking Git commit template and attributes'
+log 'symlinking Git attributes'
 config_path="$(xdg_config)"/git
 mkdir -p "$config_path"
-_ln "$script_dir"/../config/git/template "$config_path"/template
 _ln "$script_dir"/../config/git/attributes "$config_path"/attributes
 
 log_end
