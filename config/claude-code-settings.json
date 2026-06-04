@@ -37,17 +37,19 @@
 		]
 	},
 	"hooks": {
-		"Notification": [
+		"Stop": [
 			{
 				"hooks": [
 					{
 						"type": "command",
-						"command": "jq -r '[\"Claude · \" + (.cwd // \"\" | split(\"/\") | .[-1] // \"unknown\"), (.message // \"Turn complete.\")] | @sh' | xargs kitten notify --sound=complete"
+						"async": true,
+						"command": "jq -r '[\"Claude · \" + (.cwd // \"\" | split(\"/\") | .[-1] // \"unknown\"), \"Turn complete.\"] | @sh' | xargs kitten notify --sound=complete"
 					}
 				]
 			}
 		]
 	},
+	"autoDreamEnabled": true,
 	"recapEnabled": false,
 	"spinnerTipsEnabled": false,
 	"statusLine": {
