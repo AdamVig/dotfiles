@@ -9,14 +9,7 @@
   7. Use the body to explain what and why vs. how
   8. Use GitHub-flavored Markdown to add (minimal) formatting, code blocks (e.g. shell snippets showing a command and its output), etc.
 		- Feel free to use `inline code` (backticks) in the subject line where applicable
-
-When committing, treat the message as raw text:
-- write it via a single-quoted heredoc
-- commit with `git commit --file <file>` or `git commit --file -`
-
-Never inline a multi-line message into shell quotes.
-Never use backticks or `$()` in the shell command within double quotes.
-Never use literal `\n` instead of real newlines.
+	9. Let the diff do the talking; commit bodies should reference the diff, not repeat it.
 
 ## Command line tools
 When running terminal commands, prefer the following commands over the default ones:
@@ -27,5 +20,5 @@ If you can't figure out how to use these commands, you can fall back to the orig
 ## `git-spice`
 I use [`git-spice`](https://abhinav.github.io/git-spice/llms.txt) to stack pull requests. Note that the old command name, `gs`, is no longer available; use exclusively `git-spice`. You will not always be in a `git-spice`-tracked branch or even a `git-spice`-initialized repository, but that will frequently be the case.
 
-## GitHub pull request review comments
-Use my custom `gh review-comments --help` plugin to fetch review comments from the pull request for a given commit and optionally reply to/resolve them. Do not use other `gh` commands for this purpose unless you're trying to do something that `gh review-comments` does not support.
+## Code comments
+Write for the future reader, not the reviewer. Comments explain durable *why*; rot-prone justification goes in the commit message. One line where possible (≤120 chars).
