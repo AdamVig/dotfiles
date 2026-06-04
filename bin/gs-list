@@ -43,8 +43,18 @@ while IFS=$'\t' read -r item_num branch down url; do
 
 	printf '%d. [%s](%s) (+%s, -%s)\n' "$item_num" "$title" "$url" "$add" "$del"
 done <<<"$selected_branches" | tee >(
-	# Copy both HTML and plain text for Slack formatting support
+	# Copy both HTML and plain text so links paste as formatted text in Slack.
 	content="$(cat)"
-	echo "$content" | pandoc -f markdown -t html | wl-copy --type text/html
-	echo "$content" | wl-copy --primary
+	html="$(echo "$content" | pandoc -f markdown -t html)"
+	if [[ "$OSTYPE" == darwin* ]]; then
+		# macOS has one pasteboard and no plain-text "primary selection", so set
+		# both flavors at once via osascript. Hex-encoding sidesteps AppleScript
+		# string quoting (PR titles may contain quotes or backslashes).
+		html_hex="$(echo "$html" | hexdump -ve '1/1 "%02x"')"
+		text_hex="$(echo "$content" | hexdump -ve '1/1 "%02x"')"
+		osascript -e "set the clipboard to {«class HTML»:«data HTML${html_hex}», «class utf8»:«data utf8${text_hex}»}"
+	else
+		echo "$html" | wl-copy --type text/html
+		echo "$content" | wl-copy --primary
+	fi
 )
