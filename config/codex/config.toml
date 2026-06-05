@@ -11,6 +11,7 @@ notify = ["$HOME/.local/bin/codex-notify"]
 file_opener = "vscode"
 
 [features]
+experimental_use_rmcp_client = true
 shell_snapshot = true
 unified_exec = true
 
