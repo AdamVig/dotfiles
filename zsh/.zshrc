@@ -59,6 +59,12 @@ if command -v fnm >/dev/null && [[ "$PATH" != *"fnm"* ]]; then
 	eval "$(fnm env --shell=zsh --use-on-cd --version-file-strategy=recursive)"
 fi
 
+# macOS empties the launchd ssh-agent at login and won't reload Keychain keys, so
+# commit signing would prompt every time; repopulate the agent when it's empty.
+if [[ "$OSTYPE" == darwin* ]] && ! ssh-add -l &>/dev/null; then
+	ssh-add --apple-load-keychain &>/dev/null
+fi
+
 # Load file if exists, suppress error if missing
 # shellcheck source=/dev/null
 source ~/.locals &> /dev/null || true
