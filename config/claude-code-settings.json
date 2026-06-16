@@ -50,7 +50,7 @@
 		]
 	},
 	"autoDreamEnabled": true,
-	"recapEnabled": false,
+	"awaySummaryEnabled": false,
 	"spinnerTipsEnabled": false,
 	"statusLine": {
 		"type": "command",
