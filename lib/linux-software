@@ -258,16 +258,24 @@ if is_ubuntu; then
 	_ln "$script_dir"/../config/go-hass-agent/webcam-in-use "$HOME"/.config/go-hass-agent/scripts
 	log_end
 
+	log_start 'installing Joplin'
+	install_deb_from_github_release 'laurent22/joplin' '.deb'
+	echo 'abi <abi/4.0>,
+include <tunables/global>
+
+profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
+  userns,
+  include if exists <local/joplin>
+}' | request_sudo tee /etc/apparmor.d/joplin >/dev/null
+	request_sudo apparmor_parser -r /etc/apparmor.d/joplin
+	log_end
+
 	log_start 'installing Hugo'
 	install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'
 	log_end
 
 	log_start 'installing hyperfine'
 	install_deb_from_github_release 'sharkdp/hyperfine' '_amd64.deb'
-	log_end
-
-	log_start 'installing Obsidian'
-	install_deb_from_github_release 'obsidianmd/obsidian-releases' '_amd64.deb'
 	log_end
 
 	log_start 'installing Pandoc'
