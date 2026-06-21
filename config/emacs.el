@@ -211,11 +211,10 @@
 (use-package auto-dark
 	:ensure t
 	:config
-	;; Use the native NS appearance API instead of shelling out to
-	;; `osascript'. This avoids the AppleScript/Automation permission
-	;; prompt, which fails silently with "AppleScript error 1" when
-	;; Emacs is launched as a daemon.
-	(setq auto-dark-detection-method 'ns)
+	;; macOS: native NS API. Linux: XDG appearance portal via D-Bus.
+	(setq auto-dark-detection-method (if (eq system-type 'darwin) 'ns 'dbus))
+	;; Same theme both modes; else auto-dark reloads on every poll.
+	(setq auto-dark-themes '((catppuccin) (catppuccin)))
 	(if (display-graphic-p)
 		(auto-dark-mode 1)
 		(add-hook 'after-make-frame-functions
