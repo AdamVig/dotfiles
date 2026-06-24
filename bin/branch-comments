@@ -1,0 +1,467 @@
+#!/usr/bin/env -S uv run --script --python 3.14
+# /// script
+# dependencies = [
+#   "tree-sitter-language-pack>=1.10,<2",
+# ]
+# ///
+"""
+Print added/modified comment blocks in the current branch.
+
+By default this includes committed branch commits and uncommitted work
+(staged, unstaged, and untracked files), all measured against the branch's
+merge-base. Pass --committed to consider only what is committed.
+
+Generated and vendored files are always excluded, via .gitattributes
+(linguist-generated / linguist-vendored) plus a small suffix heuristic.
+
+Comments are extracted by tree-sitter-language-pack, which detects the language
+from the path and downloads the grammar on first use. Files in a language it
+cannot place fall back to a whole-line scan that only catches comments
+occupying their own line.
+
+Flags reported per block:
+- multiline: comment block spans multiple lines
+- multiline-wrapped-early: repeated line-comment block would fit on one line <=120 chars
+"""
+
+import argparse
+import re
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+from tree_sitter_language_pack import ProcessConfig, detect_language, process
+
+MAX_COMMENT_LINE = 120
+
+HUNK_RE = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@")
+
+LINE_COMMENT_PREFIXES = ("//", "#", "--", ";")
+
+SKIP_COMMENT_PREFIXES = (
+    "#!",
+    "# shellcheck",
+    "# yamllint",
+    "# noqa",
+    "# type:",
+    "//go:",
+    "//nolint",
+    "// revive:",
+    "//lint:",
+    "// Code generated",
+    "/* Code generated",
+)
+
+
+@dataclass(frozen=True, slots=True)
+class CommentBlock:
+    path: str
+    start_line: int
+    end_line: int
+    text: str
+    start_column: int = 0
+    own_line: bool = True
+
+    @property
+    def lines(self) -> list[str]:
+        return self.text.splitlines() or [self.text]
+
+    def covers_any(self, added_lines: set[int]) -> bool:
+        return not added_lines.isdisjoint(range(self.start_line, self.end_line + 1))
+
+    def flags(self) -> list[str]:
+        flags: list[str] = []
+
+        if self.start_line != self.end_line:
+            flags.append("multiline")
+
+        if self.is_multiline_wrapped_early():
+            flags.append("multiline-wrapped-early")
+
+        return flags
+
+    def is_multiline_wrapped_early(self) -> bool:
+        lines = self.lines
+        if len(lines) <= 1:
+            return False
+
+        parsed = [split_line_comment(line) for line in lines]
+        if any(item is None for item in parsed):
+            return False
+
+        prefixes = [item[0] for item in parsed if item is not None]
+        bodies = [item[1] for item in parsed if item is not None]
+
+        if len(set(prefixes)) != 1 or not all(bodies):
+            return False
+
+        joined_body = " ".join(body.strip() for body in bodies)
+        candidate_len = self.start_column + len(prefixes[0]) + 1 + len(joined_body)
+        return candidate_len <= MAX_COMMENT_LINE
+
+
+@dataclass(frozen=True, slots=True)
+class CmdResult:
+    returncode: int
+    stdout: str
+
+
+def run(args: list[str]) -> CmdResult:
+    # Optional helpers (git-spice, get-default-branch) may be absent; treat a
+    # missing executable like a non-zero exit so callers fall back gracefully.
+    try:
+        proc = subprocess.run(
+            args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            errors="replace",
+        )
+    except FileNotFoundError:
+        return CmdResult(returncode=127, stdout="")
+    return CmdResult(returncode=proc.returncode, stdout=proc.stdout)
+
+
+def output(args: list[str]) -> str | None:
+    proc = run(args)
+    if proc.returncode != 0:
+        return None
+    return proc.stdout.strip() or None
+
+
+def default_branch() -> str:
+    origin_head = output(["git", "symbolic-ref", "--short", "refs/remotes/origin/HEAD"])
+    if origin_head:
+        return origin_head.removeprefix("origin/")
+
+    helper = output(["get-default-branch"])
+    if helper:
+        return helper
+
+    for candidate in ("main", "master"):
+        if output(["git", "rev-parse", "--verify", f"origin/{candidate}"]):
+            return candidate
+        if output(["git", "rev-parse", "--verify", candidate]):
+            return candidate
+
+    return "main"
+
+
+def branch_base(explicit_base: str | None) -> str:
+    if explicit_base:
+        return explicit_base
+
+    gs_down = output(["git-spice", "down", "--dry-run"])
+    if gs_down:
+        return gs_down
+
+    branch = default_branch()
+    if output(["git", "rev-parse", "--verify", f"origin/{branch}"]):
+        return f"origin/{branch}"
+
+    return branch
+
+
+def changed_added_lines(base: str, committed: bool) -> dict[str, set[int] | None]:
+    """Map each changed path to its set of added line numbers.
+
+    Changes are measured from the merge-base of `base` and HEAD: to HEAD when
+    `committed`, otherwise to the working tree. A value of None means the whole
+    file is new (untracked), so every comment in it is in scope.
+    """
+    diff = [
+        "git", "diff",
+        "--no-prefix", "--no-color", "--no-ext-diff",
+        "--unified=0", "--diff-filter=AMRT",
+        "--merge-base", base,
+    ]
+    if committed:
+        diff.append("HEAD")
+    diff.append("--")
+
+    proc = run(diff)
+    if proc.returncode != 0:
+        print(f"error: git diff failed against base {base!r}", file=sys.stderr)
+        sys.exit(2)
+
+    by_file: dict[str, set[int] | None] = {}
+    path: str | None = None
+    new_line: int | None = None
+    in_hunk = False
+
+    for raw in proc.stdout.splitlines():
+        # "diff --git" is unambiguous (content lines are prefixed) and starts
+        # each file section, so reset here rather than trusting the "+++ "
+        # header, which collides with added content lines such as "++ x".
+        if raw.startswith("diff --git "):
+            path, new_line, in_hunk = None, None, False
+            continue
+
+        if not in_hunk and raw.startswith("+++ "):
+            path = strip_git_path(raw[4:])
+            if path:
+                by_file.setdefault(path, set())
+            continue
+
+        hunk = HUNK_RE.match(raw)
+        if hunk:
+            new_line = int(hunk.group(1))
+            in_hunk = True
+            continue
+
+        if path is None or new_line is None:
+            continue
+
+        if raw.startswith("+"):  # in a hunk: any "+" line (incl. "+++ x") is added content
+            lines = by_file[path]
+            assert lines is not None
+            lines.add(new_line)
+            new_line += 1
+        elif raw.startswith(" "):
+            new_line += 1
+
+    if not committed:
+        for path in untracked_files():
+            by_file.setdefault(path, None)
+
+    in_scope = {path: lines for path, lines in by_file.items() if lines is None or lines}
+    ignored = repo_ignored_paths(list(in_scope)) | {
+        path for path in in_scope if is_probably_generated_path(path)
+    }
+    return {path: lines for path, lines in in_scope.items() if path not in ignored}
+
+
+def untracked_files() -> list[str]:
+    out = output(["git", "ls-files", "--others", "--exclude-standard"])
+    return out.splitlines() if out else []
+
+
+def repo_ignored_paths(paths: list[str]) -> set[str]:
+    """Paths the repo itself declares as generated or vendored in .gitattributes.
+
+    Authoritative per-repo signal, so generated/vendored code never reaches the
+    reviewer. Read the resolved attribute value (set/true) rather than matching
+    pathspecs, which only see a boolean attribute and miss the common `=true`.
+    """
+    if not paths:
+        return set()
+
+    proc = subprocess.run(
+        ["git", "check-attr", "-z", "--stdin", "linguist-generated", "linguist-vendored"],
+        input="\0".join(paths),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        errors="replace",
+    )
+    fields = proc.stdout.split("\0")  # repeating path\0attr\0value triples
+    return {
+        fields[i]
+        for i in range(0, len(fields) - 2, 3)
+        if fields[i + 2].lower() in ("set", "true")
+    }
+
+
+def strip_git_path(path: str) -> str | None:
+    # Paths are already repo-relative thanks to --no-prefix (no a/ b/ to strip).
+    path = path.strip()
+    return None if path == "/dev/null" else path
+
+
+def is_probably_generated_path(path: str) -> bool:
+    # Backstop for repos that don't mark generated files in .gitattributes.
+    # Directory names (node_modules, dist, build) are normally gitignored and
+    # never reach here, so only suffixes earn their keep.
+    return Path(path).name.endswith(
+        (".pb.go", "_generated.go", "_gen.go", ".gen.go", ".min.js", ".min.css")
+    )
+
+
+def read_text(path: str) -> str | None:
+    try:
+        return Path(path).read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+
+
+def extract_blocks(path: str) -> list[CommentBlock]:
+    text = read_text(path)
+    if text is None:
+        return []
+
+    lang = detect_language(path)
+    if lang:
+        blocks = tree_sitter_blocks(path, text, lang)
+        if blocks is not None:
+            return blocks
+
+    return fallback_blocks(path, text)
+
+
+def tree_sitter_blocks(path: str, text: str, lang: str) -> list[CommentBlock] | None:
+    # Grammars download on first use, and the native API can shift between
+    # versions; fall back rather than fail if extraction breaks for any reason.
+    try:
+        result = process(text, ProcessConfig(language=lang, comments=True))
+        source_lines = text.split("\n")  # match tree-sitter's newline-only rows
+        blocks = [
+            CommentBlock(
+                path=path,
+                start_line=c.span.start_line + 1,
+                end_line=c.span.end_line + 1,
+                text=c.text,
+                start_column=c.span.start_column,
+                own_line=is_own_line(source_lines, c.span.start_line, c.span.start_column),
+            )
+            for c in result.comments
+        ]
+    except Exception:
+        return None
+
+    return group_adjacent_line_comment_blocks(blocks)
+
+
+def is_own_line(source_lines: list[str], line_index: int, column: int) -> bool:
+    """True when only whitespace precedes the comment on its line (not inline)."""
+    if line_index >= len(source_lines):
+        return True
+    return not source_lines[line_index][:column].strip()
+
+
+def fallback_blocks(path: str, text: str) -> list[CommentBlock]:
+    """Whole-line comment scan for files tree-sitter cannot place.
+
+    Only catches comments that occupy their own line; trailing/inline comments
+    and block comments in unknown languages are missed by design.
+    """
+    comments: list[CommentBlock] = []
+
+    for idx, line in enumerate(text.splitlines(), start=1):
+        if split_line_comment(line) is None:
+            continue
+        stripped = line.strip()
+        if is_skipped_comment(stripped):
+            continue
+        comments.append(
+            CommentBlock(
+                path=path,
+                start_line=idx,
+                end_line=idx,
+                text=stripped,
+                start_column=len(line) - len(line.lstrip()),
+            )
+        )
+
+    return group_adjacent_line_comment_blocks(comments)
+
+
+def group_adjacent_line_comment_blocks(blocks: list[CommentBlock]) -> list[CommentBlock]:
+    grouped: list[CommentBlock] = []
+
+    for block in sorted(blocks, key=lambda b: (b.path, b.start_line, b.end_line)):
+        if is_skipped_comment(block.text):
+            continue
+
+        if (
+            grouped
+            and grouped[-1].path == block.path
+            and grouped[-1].own_line
+            and block.own_line
+            and grouped[-1].end_line + 1 == block.start_line
+            and same_line_comment_prefix(grouped[-1].lines[-1], block.lines[0])
+        ):
+            prev = grouped[-1]
+            grouped[-1] = CommentBlock(
+                path=prev.path,
+                start_line=prev.start_line,
+                end_line=block.end_line,
+                text=prev.text + "\n" + block.text,
+                start_column=prev.start_column,
+                own_line=True,  # the merge gate above requires both sides own-line
+            )
+        else:
+            grouped.append(block)
+
+    return grouped
+
+
+def split_line_comment(line: str) -> tuple[str, str] | None:
+    stripped = line.lstrip()
+
+    for prefix in LINE_COMMENT_PREFIXES:
+        if stripped.startswith(prefix):
+            return prefix, stripped[len(prefix):].strip()
+
+    return None
+
+
+def same_line_comment_prefix(a: str, b: str) -> bool:
+    a_split = split_line_comment(a)
+    b_split = split_line_comment(b)
+    return a_split is not None and b_split is not None and a_split[0] == b_split[0]
+
+
+def is_skipped_comment(text: str) -> bool:
+    stripped = text.strip()
+    return stripped.startswith(SKIP_COMMENT_PREFIXES)
+
+
+def intersecting_blocks(path: str, added_lines: set[int] | None) -> list[CommentBlock]:
+    blocks = extract_blocks(path)
+
+    if added_lines is None:
+        return blocks
+
+    return [block for block in blocks if block.covers_any(added_lines)]
+
+
+def print_blocks(base: str, blocks: list[CommentBlock]) -> None:
+    if not blocks:
+        print(f"no added/modified comments found against {base}")
+        return
+
+    print(f"added/modified comments against {base}")
+    print()
+
+    last_path: str | None = None
+
+    for block in sorted(blocks, key=lambda b: (b.path, b.start_line, b.end_line)):
+        if last_path is not None and block.path != last_path:
+            print()
+
+        loc = (
+            f"{block.path}:{block.start_line}"
+            if block.start_line == block.end_line
+            else f"{block.path}:{block.start_line}-{block.end_line}"
+        )
+
+        print(loc)
+
+        flags = block.flags()
+        if flags:
+            print(f"flags: {', '.join(flags)}")
+
+        print(block.text)
+        last_path = block.path
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("base", nargs="?", help="base branch/ref; defaults to git-spice down, then origin/default")
+    parser.add_argument("--committed", action="store_true", help="only consider committed changes, ignoring the working tree")
+    args = parser.parse_args()
+
+    base = branch_base(args.base)
+    added = changed_added_lines(base, args.committed)
+
+    blocks: list[CommentBlock] = []
+    for path, lines in added.items():
+        blocks.extend(intersecting_blocks(path, lines))
+
+    print_blocks(base, blocks)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
