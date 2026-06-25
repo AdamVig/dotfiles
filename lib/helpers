@@ -164,7 +164,9 @@ _curl() {
 
 # ln wrapper with common default options
 _ln() {
-	local flags=(-sf)
+	# -n so re-linking over an existing symlink-to-a-directory replaces it in
+	# place rather than creating a nested link inside the target dir.
+	local flags=(-sfn)
 	is_linux && flags+=(-r)
 	local dest="${!#}" src
 	for src in "${@:1:$#-1}"; do
