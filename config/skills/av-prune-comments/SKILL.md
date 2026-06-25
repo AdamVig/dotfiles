@@ -32,60 +32,47 @@ prompt" procedure inline yourself.
 
 ## Subagent prompt
 
-You are pruning the code comments added or modified on this branch. Work only on comments;
-never change code logic, and never edit commit messages. Because you touch only comments, your
-edits cannot change behavior — ignore any build, test, or lint diagnostics that surface while
-you work; they are pre-existing, not caused by you, and not yours to fix or investigate.
+You are pruning the code comments added or modified on this branch. Edit only comments — never
+change code logic or commit messages. Comment-only edits cannot change behavior, so ignore any
+build/lint/test diagnostics that surface; they are pre-existing, not yours to fix.
 
-Procedure:
+1. Run `branch-comments` (append `Base ref: <ref>` as an argument if one was given above).
+   Trust its list for discovery; do not hunt for comments yourself.
+2. For each block, read just enough surrounding code to judge it. Its flags (`multiline`,
+   `multiline-wrapped-early`) are hints, not verdicts.
+3. Pick one of the three outcomes below and apply it directly with your editor.
+4. Report (format below).
 
-1. Run `branch-comments` (append `Base ref` as an argument if one was given above). It prints
-   every added/modified comment block with `file:line` and hint flags. Trust it for
-   discovery — do not hunt for comments yourself.
-2. For each block, read just enough surrounding code to judge it. The flags
-   (`multiline`, `multiline-wrapped-early`) are *hints* that a comment may be overlong, not
-   verdicts.
-3. `branch-comments` already excludes generated and vendored files. If one still slips through
-   (a surfaced file with a `DO NOT EDIT` / `@generated` header), leave its comments alone.
-4. Apply edits directly: rewrite, shorten, delete, or relocate comments per the rubric.
-5. Report in the format below.
+**The bar: every comment must earn its place. Default to one terse line — or gone.** Be
+decisive: trimming a comment a little and moving on, when it should be one line or deleted, is
+the failure mode here. For each comment, pick:
 
-Rubric — a comment explains the durable **why**, not the **what** or **how**:
+- **Delete it** when the code already carries the meaning — it restates what the
+  names/signature say, narrates the obvious, labels a section, or repeats a nearby comment.
+  This is common and expected; most bloated comments are mostly deletable filler. Do not soften
+  a delete into a trim.
+- **Collapse to one line** (≤120 chars) when it holds a real *why* but rambles. Cut to the
+  shortest line that keeps that why, and strip rot-prone specifics — concrete filenames, paths,
+  symbols, build mechanics ("it FROMs X"). Those go in the commit body, not the code.
+- **Keep more than one line** only when the *why* genuinely will not fit — subtle, non-obvious
+  reasoning you could not reconstruct from the code. This is the rare exception, not a safe
+  default; if you keep three lines, be sure each earns it.
 
-- **Prefer one terse line** (≤120 chars). Multi-line comments are suspect: collapse to one
-  line when the content fits and the extra lines were just wrapping or restating.
-- **Strip rot-prone specifics** — concrete file names, generated-path references, build
-  mechanics ("it FROMs X"), exact code paths and symbol names. Keep the human-centric general
-  statement; the specifics belong in the commit body. Don't restate something a nearby
-  comment already says.
-- **Function / type / doc comments are for consumers** — keep them about contract and intent.
-  Push granular "how it works" detail down onto the specific lines inside the body it
-  describes.
-- **Weigh the comment against its code.** A comment longer than the function it documents, or
-  a large comment guarding a tiny or obvious change, should usually shrink or go. Weigh the
-  size and subtlety of the change *lightly* when deciding whether any comment is merited.
-- **When in doubt, delete** a comment that restates the code or narrates the obvious.
+Function/type/doc comments are for callers — keep them to contract and intent; push
+implementation detail onto the lines it describes. When a comment's only real content is a
+*why* that is misplaced in code, cut it and surface it under "Move to commit message" so it
+lands in the commit body.
 
-Calibration — don't over-correct:
+**Leave alone:** machine/directive syntax — shebangs, codegen markers, `go:generate`,
+lint-disable pragmas (`eslint-disable*`/`oxlint-disable*` in `//`, `/* */`, `<!-- -->`),
+PEP 723 blocks — and any clearly machine-generated file (a `DO NOT EDIT` / `@generated` header)
+that slipped past `branch-comments`. A lint-disable pragma's trailing ` -- <explanation>` is an
+ordinary comment, though — hold it to the bar. Never delete a genuinely non-obvious *why* just
+to hit one line, and match the file's comment style.
 
-- Genuinely subtle code earns a comment, sometimes more than one line. Don't strip a real,
-  non-obvious *why* you couldn't reconstruct from the code alone.
-- Never delete or rewrite the **directive** itself — shebangs, codegen markers, `go:generate`,
-  and lint-disable pragmas (`eslint-disable*`, `oxlint-disable*`, and the like, in `//`,
-  `/* */`, or `<!-- -->` form) are load-bearing machine syntax. The human-readable
-  ` -- <explanation>` that can follow a lint-disable pragma is **not** sacred, though: it's an
-  ordinary justification comment and a common hiding spot for bloat, so hold it to the rules
-  like any other and tighten it when it's overlong — just keep the directive part intact. Also
-  leave machine-read metadata blocks alone, e.g. PEP 723 inline script deps
-  (`# /// script` … `# ///`). `branch-comments` filters some of these, but stay alert.
-- Match the existing comment style of the surrounding file.
+Report — concise, no diffs:
 
-Report format — concise, no full diffs:
-
-- **Edited:** one line per changed comment — `path:line` then what + why
-  (e.g. `ci.yml:42 — collapsed 5 lines → 1; dropped the FROM mechanics`). Include a short
-  before→after only when it is illuminating.
-- **Kept (notable):** only borderline comments you deliberately left, one line each. Skip if none.
-- **Move to commit message:** any real rationale you stripped from code that is worth
-  preserving, so the user can paste it into the commit body. Skip if none.
-- **Tally:** one line, e.g. `Edited 6 comments across 3 files (2 deleted, 4 shortened). Review with git diff.`
+- **Edited:** one line per change — `path:line`, action, and why (e.g.
+  `ci.yml:42 — deleted; restated the job name` / `bake.go:9 — 5 lines → 1; dropped FROM mechanics`).
+- **Move to commit message:** real rationale you cut from code, for the commit body. Skip if none.
+- **Tally:** one line, e.g. `14 comments: 6 deleted, 8 collapsed across 4 files. Review with git diff.`
