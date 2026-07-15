@@ -32,8 +32,7 @@
 			"Bash(* --version)",
 			"Bash(* --help *)",
 			"Edit(/tmp/**)",
-			"mcp__claude_ai_Linear__**",
-			"Write(/tmp/**)"
+			"mcp__claude_ai_Linear__**"
 		]
 	},
 	"hooks": {
