@@ -29,7 +29,7 @@ log_end
 log_start 'seeding local CLAUDE.md'
 claude_md_path="$claude_config_dir"/CLAUDE.md
 if ! [[ -f $claude_md_path ]]; then
-	cp "$script_dir"/../config/codex/codex-agents.md "$claude_md_path"
+	cp "$script_dir"/../config/AGENTS.md-template.md "$claude_md_path"
 
 	if is_devcontainer; then
 		echo $'\n''You are running inside a Dev Container.' >>"$claude_md_path"
