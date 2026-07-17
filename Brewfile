@@ -68,6 +68,7 @@ brew "grep" if OS.mac?
 cask "brave-browser"
 cask "claude"
 cask "claude-code@latest"
+cask "copilot-cli"
 cask "emacs-app"
 cask "figma"
 cask "inkscape" # Vector image editor and command-line conversion tool

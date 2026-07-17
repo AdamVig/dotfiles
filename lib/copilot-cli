@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component copilot-cli "$@"
+}
+
+copilot_home="${COPILOT_HOME:-$HOME/.copilot}"
+
+log_start 'setting up Copilot CLI'
+
+if ! is_macos; then
+	log_start 'installing'
+	_curl https://gh.io/copilot-install | bash
+	log_end
+fi
+
+log_start 'installing settings'
+mkdir -p "$copilot_home"
+settings_path="$copilot_home"/settings.json
+existing="$([[ -f $settings_path ]] && cat "$settings_path" || echo '{}')"
+jq --argjson existing "$existing" \
+	'$existing * .' \
+	"$script_dir"/../config/copilot-cli-settings.json \
+	>"$settings_path"
+log_end
+
+log_start 'installing MCP configuration'
+mcp_config_path="$copilot_home"/mcp-config.json
+existing_mcp="$([[ -f $mcp_config_path ]] && cat "$mcp_config_path" || echo '{}')"
+jq --argjson existing "$existing_mcp" \
+	'$existing * .' \
+	"$script_dir"/../config/copilot-cli-mcp-config.json \
+	>"$mcp_config_path"
+log_end
+
+log_start 'seeding local copilot-instructions.md'
+instructions_path="$copilot_home"/copilot-instructions.md
+if ! [[ -f $instructions_path ]]; then
+	cp "$script_dir"/../config/AGENTS.md-template.md "$instructions_path"
+
+	if is_devcontainer; then
+		echo $'\n''You are running inside a Dev Container.' >>"$instructions_path"
+	fi
+
+	log "seeded $instructions_path"
+else
+	log "$instructions_path already exists, skipping seed"
+fi
+log_end
+
+log_start 'linking skills'
+mkdir -p "$copilot_home"/skills
+_ln "$script_dir"/../config/skills/* "$copilot_home"/skills
+log_end
+
+log_end

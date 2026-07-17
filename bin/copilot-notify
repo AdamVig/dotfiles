@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+json="$(cat)"
+
+notification=("${(@f)$(
+	jq --raw-output '
+    (.cwd // ""
+      | split("/")
+      | .[-1] // "unknown"
+    ) as $project |
+
+    "Copilot · \($project)",
+    "Turn complete."
+  ' <<<"$json"
+)}")
+
+kitten notify --sound=complete "$notification[1]" "$notification[2]"

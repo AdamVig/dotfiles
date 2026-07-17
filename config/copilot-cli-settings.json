@@ -1,0 +1,15 @@
+{
+	"banner": "never",
+	"showTipsOnStartup": false,
+	"model": "auto",
+	"includeCoAuthoredBy": false,
+	"hooks": {
+		"agentStop": [
+			{
+				"type": "command",
+				"bash": "copilot-notify",
+				"timeoutSec": 5
+			}
+		]
+	}
+}
