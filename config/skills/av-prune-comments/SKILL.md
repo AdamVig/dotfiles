@@ -1,7 +1,6 @@
 ---
 name: av-prune-comments
 description: Sweep a branch's added/modified code comments and prune them to match my comment rules — durable *why*, one terse line, rot-prone detail belongs in the commit message. Run on a branch before pushing.
-disable-model-invocation: true
 ---
 
 # Prune branch comments
