@@ -105,10 +105,6 @@
 	"typescript.preferences.useAliasesForRenames": false,
 	// Disable jarring scroll behavior
 	"markdown.preview.scrollEditorWithPreview": false,
-	"markdown.styles": [
-		// https://gist.github.com/AdamVig/3e5f302a26d603845a4fe21ff638c5c2
-		"https://gist.githack.com/AdamVig/3e5f302a26d603845a4fe21ff638c5c2/raw/markdown-preview.css"
-	],
 	"go.toolsManagement.autoUpdate": true,
 	"gopls": {
 		// Enable semantic highlighting for Golang
