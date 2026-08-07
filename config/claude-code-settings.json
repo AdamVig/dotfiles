@@ -50,6 +50,7 @@
 	},
 	"autoDreamEnabled": true,
 	"awaySummaryEnabled": false,
+	"feedbackSurveyRate": 0,
 	"spinnerTipsEnabled": false,
 	"statusLine": {
 		"type": "command",
