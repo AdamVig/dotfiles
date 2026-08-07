@@ -52,6 +52,9 @@
 	"awaySummaryEnabled": false,
 	"feedbackSurveyRate": 0,
 	"spinnerTipsEnabled": false,
+	"env": {
+		"CLAUDE_CODE_AUTO_CONNECT_IDE": "false"
+	},
 	"statusLine": {
 		"type": "command",
 		"command": "jq -r '\"[\\(.model.display_name)] \\(.context_window.used_percentage // 0)% context\"'"
