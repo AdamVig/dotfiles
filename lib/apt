@@ -124,12 +124,9 @@ if ! is_repository_configured 'nextdns'; then
 	log_end
 fi
 
-if ! is_repository_configured 'brave-browser-apt-release'; then
-	log_start 'adding Brave repository'
-	_curl https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg |
-		request_sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg >/dev/null
-	_curl https://brave-browser-apt-release.s3.brave.com/brave-browser.sources |
-		request_sudo tee /etc/apt/sources.list.d/brave-browser-release.sources >/dev/null
+if ! is_repository_configured 'microsoft.com/repos/edge'; then
+	log_start 'adding Microsoft Edge repository'
+	add_repository 'microsoft-edge' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/edge stable main'
 	log_end
 fi
 
@@ -236,7 +233,6 @@ declare -a packages=(
 	docker-compose-plugin
 
 	# applications
-	brave-browser
 	code
 	easyeffects # Audio effects
 	emacs-pgtk  # Text editor
@@ -245,7 +241,8 @@ declare -a packages=(
 	libreoffice
 	lxpolkit # Polkit authentication agent
 	meld     # Comparison tool for version control, files, and directories
-	mpv      # Media player
+	microsoft-edge-stable
+	mpv # Media player
 	signal-desktop
 	slack-desktop
 	spotify-client

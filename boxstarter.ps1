@@ -95,13 +95,13 @@ cinst procexp
 cinst battle.net --allow-empty-checksums
 cinst bitwarden
 cinst bluescreenview
-cinst brave
 cinst discord
 cinst epicgameslauncher
 cinst foxitreader
 cinst hass-agent
 cinst hwmonitor
 cinst IrfanView
+cinst microsoft-edge
 cinst mpvio.install
 cinst signal
 cinst spotify

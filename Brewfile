@@ -65,7 +65,6 @@ brew "gnu-time" if OS.mac? # Better than BSD time
 brew "grep" if OS.mac?
 
 # applications
-cask "brave-browser"
 cask "claude"
 cask "claude-code@latest"
 cask "copilot-cli"
@@ -78,6 +77,7 @@ cask "kitty" # GPU-accelerated terminal emulator
 cask "linear"
 cask "linearmouse"
 cask "meld" # Comparison tool for version control, files, and directories
+cask "microsoft-edge"
 cask "motu-m-series" # Driver for Motu audio interface
 cask "nextcloud"
 cask "rectangle"
