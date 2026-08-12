@@ -12,7 +12,56 @@ claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 log_start 'setting up Claude Code'
 if ! is_macos; then
 	log_start 'installing'
-	_curl https://downloads.claude.ai/claude-code-releases/bootstrap.sh | bash
+
+	claude_local_bin="$HOME/.local/bin/claude"
+
+	# Clean up installs made by Anthropic's official install script
+	claude_versions_dir="$(xdg_data)/claude/versions"
+	if [ -L "$claude_local_bin" ] || [ -d "$claude_versions_dir" ]; then
+		rm -f "$claude_local_bin"
+		rm -rf "$claude_versions_dir"
+		log "removed legacy versioned install at $claude_versions_dir"
+	fi
+
+	claude_download_base_url='https://downloads.claude.ai/claude-code-releases'
+	if ! claude_version="$(_curl "$claude_download_base_url"/latest)"; then
+		fatal 'failed to check the latest Claude Code version'
+	fi
+
+	case "$HOSTTYPE" in
+	x86_64 | amd64) claude_arch=x64 ;;
+	arm64 | aarch64) claude_arch=arm64 ;;
+	*) fatal "unsupported architecture for Claude Code: $HOSTTYPE" ;;
+	esac
+	claude_platform="linux-$claude_arch"
+
+	if [ -x "$claude_local_bin" ] && [ "$("$claude_local_bin" --version 2>/dev/null | awk '{print $1}')" = "$claude_version" ]; then
+		log "already at latest version ($claude_version)"
+	else
+		if ! claude_manifest="$(_curl "$claude_download_base_url/$claude_version/manifest.json")"; then
+			fatal "failed to download the manifest for Claude Code $claude_version"
+		fi
+
+		if ! claude_checksum="$(jq --exit-status --raw-output --arg platform "$claude_platform" '.platforms[$platform].checksum' <<<"$claude_manifest")"; then
+			fatal "no checksum found for platform '$claude_platform' in the Claude Code manifest"
+		fi
+
+		# Ensure the download of this large file has enough time to complete
+		# shellcheck disable=SC2034
+		CURL_ARGS='--max-time 1800'
+		claude_tmp="$(download_to_tmp "$claude_download_base_url/$claude_version/$claude_platform/claude")"
+		claude_actual="$(sha256sum "$claude_tmp" | cut -d' ' -f1)"
+		if [ "$claude_actual" != "$claude_checksum" ]; then
+			rm -f "$claude_tmp"
+			fatal 'Claude Code checksum verification failed'
+		fi
+
+		mkdir -p "$HOME/.local/bin"
+		install "$claude_tmp" "$claude_local_bin"
+		rm -f "$claude_tmp"
+		log "installed Claude Code $claude_version"
+	fi
+
 	log_end
 fi
 

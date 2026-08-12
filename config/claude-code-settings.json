@@ -53,7 +53,8 @@
 	"feedbackSurveyRate": 0,
 	"spinnerTipsEnabled": false,
 	"env": {
-		"CLAUDE_CODE_AUTO_CONNECT_IDE": "false"
+		"CLAUDE_CODE_AUTO_CONNECT_IDE": "false",
+		"DISABLE_AUTOUPDATER": "1"
 	},
 	"statusLine": {
 		"type": "command",
