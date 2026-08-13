@@ -218,10 +218,8 @@ declare -a packages=(
 	php
 	python3
 	ruby
-	rustc
 
 	# programming language tools
-	cargo       # Rust
 	python3-pip # Python
 	shellcheck  # Shell script linter
 
@@ -263,7 +261,8 @@ fi
 log_end
 
 declare -a unwanted_packages=(
-	pandoc # Switched to direct binary install
+	cargo # Switched to rustup
+	rustc # Switched to rustup
 )
 
 log_start 'removing unwanted packages'

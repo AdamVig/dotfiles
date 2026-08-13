@@ -175,6 +175,11 @@ bzip2 -dc "$restic_archive" >"$restic_binary_tmp"
 install "$restic_binary_tmp" "$HOME"/.local/bin/restic
 log_end
 
+log_start 'installing rustup'
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+rustup completions zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions/_rustup
+log_end
+
 log_start 'installing Typst'
 typst_url="$(get_release_url 'typst/typst' 'typst-x86_64-unknown-linux-musl.tar.xz')"
 typst_tmp="$(download_to_tmp "$typst_url" '.tar.xz')"
