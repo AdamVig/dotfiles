@@ -1,26 +1,18 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 
-log_json="$(git-spice log long --json)"
-
 branch_rows="$(
-	jq --raw-output --slurp '
-    def build_stack($name; $idx):
-      $idx[$name] as $n
-      | if $n.down.name? then build_stack($n.down.name; $idx) + [$n] else [$n] end;
-
-    INDEX(.name) as $idx
-    | build_stack((.[] | select(.current).name); $idx)
-    | map(select(has("change")))  # Only branches with pull requests
+	gh stack view --json | jq --raw-output '
+    [.branches[] | select(.pr and (.isMerged | not))]
     | to_entries[]
     | [
-        (.key + 1),  # 1-based index for display
+        (.key + 1),
         .value.name,
-        (.value.down.name // "main"),
-        .value.change.url
+        .value.base,
+        .value.pr.url
       ]
     | @tsv
-	' <<<"$log_json"
+	'
 )"
 
 selected_branches="$(
@@ -34,12 +26,10 @@ selected_branches="$(
 # Sort by item number to maintain stack order (fzf returns in selection order)
 selected_branches="$(echo "$selected_branches" | sort -t$'\t' -k1 -n)"
 
-while IFS=$'\t' read -r item_num branch down url; do
+while IFS=$'\t' read -r item_num branch base url; do
 	title="$(gh pr view "$url" --json title --jq '.title')"
-	diff_stats=($(git diff --numstat "$down..$branch" |
-		awk 'BEGIN{a=0;d=0}{a+=$1;d+=$2}END{print a, d}'))
-	add=${diff_stats[1]:-0}
-	del=${diff_stats[2]:-0}
+	read -r add del <<<"$(git diff --numstat "$base..$branch" |
+		awk '{a+=$1; d+=$2} END {print a+0, d+0}')"
 
 	printf '%d. [%s](%s) (+%s, -%s)\n' "$item_num" "$title" "$url" "$add" "$del"
 done <<<"$selected_branches" | tee >(

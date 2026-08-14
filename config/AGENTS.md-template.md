@@ -20,8 +20,7 @@ If you can't figure out how to use these commands, you can fall back to the orig
 ## Git
 My git sets `rebase.abbreviateCommands = true` and `core.commentChar = %`, so rebase-todo verbs are `p`/`r`/`f` and comment lines start with `%`. When scripting a rebase, match those forms — the long verbs (`pick`/`reword`) silently no-op, leaving hashes unchanged.
 
-## `git-spice`
-I use [`git-spice`](https://abhinav.github.io/git-spice/llms.txt) to stack pull requests. Note that the old command name, `gs`, is no longer available; use exclusively `git-spice`. You will not always be in a `git-spice`-tracked branch or even a `git-spice`-initialized repository, but that will frequently be the case.
+I often use `gh stack --help` to stack pull requests (I may refer to this as `gs`, a shell alias not available to you).
 
 ## Code comments
 Write for the future reader, not the reviewer. Comments explain durable *why*; rot-prone justification goes in the commit message. One line where possible (≤120 chars).

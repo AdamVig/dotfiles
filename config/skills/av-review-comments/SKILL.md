@@ -25,4 +25,4 @@ Run `gh review-comments --help` or `gh review-comments <subcommand> --help` for 
 
 ## Stack mode (only when explicitly asked)
 
-Use `list-stack` instead of `list` to discover threads across all PRs in the stack automatically. Code changes still span multiple branches (navigate with `git-spice up`/`down` or `git-spice branch checkout`) and commits are made by you after approval — this is a materially different workflow, do not attempt it without explicit instruction.
+Use `list-stack` instead of `list` to discover threads across all PRs in the stack automatically. Code changes still span multiple branches (navigate with `gh stack up`/`down` or `gh stack checkout`) and commits are made by you after approval — this is a materially different workflow, do not attempt it without explicit instruction.

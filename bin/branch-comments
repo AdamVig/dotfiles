@@ -25,6 +25,7 @@ Flags reported per block:
 """
 
 import argparse
+import json
 import re
 import subprocess
 import sys
@@ -108,7 +109,7 @@ class CmdResult:
 
 
 def run(args: list[str]) -> CmdResult:
-    # Optional helpers (git-spice, get-default-branch) may be absent; treat a
+    # Optional helpers (gh stack, get-default-branch) may be absent; treat a
     # missing executable like a non-zero exit so callers fall back gracefully.
     try:
         proc = subprocess.run(
@@ -152,9 +153,14 @@ def branch_base(explicit_base: str | None) -> str:
     if explicit_base:
         return explicit_base
 
-    gs_down = output(["git-spice", "down", "--dry-run"])
-    if gs_down:
-        return gs_down
+    stack = output(["gh", "stack", "view", "--json"])
+    if stack:
+        try:
+            branch = json.loads(stack)["branches"][0]["name"]
+            if isinstance(branch, str) and branch:
+                return branch
+        except (json.JSONDecodeError, KeyError, IndexError, TypeError):
+            pass
 
     branch = default_branch()
     if output(["git", "rev-parse", "--verify", f"origin/{branch}"]):
@@ -448,7 +454,7 @@ def print_blocks(base: str, blocks: list[CommentBlock]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("base", nargs="?", help="base branch/ref; defaults to git-spice down, then origin/default")
+    parser.add_argument("base", nargs="?", help="base branch/ref; defaults to gh stack base, then origin/default")
     parser.add_argument("--committed", action="store_true", help="only consider committed changes, ignoring the working tree")
     args = parser.parse_args()
 
