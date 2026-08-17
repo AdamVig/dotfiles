@@ -250,8 +250,10 @@
 (use-package markdown-mode
 	:ensure t
 	:mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+					("\\.md\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"
+					;; Do not prompt for "Title" when inserting links with C-c C-l
+					markdown-disable-tooltip-prompt t))
 
 ;; Add yaml-mode and add handling for .yml files
 (use-package yaml-mode
