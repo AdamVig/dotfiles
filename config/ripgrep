@@ -20,11 +20,6 @@
 --glob
 !package-lock.json
 
-# Only show a preview instead of outputting long lines in full
---max-columns-preview
---max-columns
-150
-
 # Add a type for test files
 --type-add
 test:*.spec.*
