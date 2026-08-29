@@ -140,6 +140,9 @@
   :config
   (editorconfig-mode 1))
 
+;; Emacs scans the whole heap on each collection: collecting less often means fewer pauses, more garbage between them.
+(setq gc-cons-threshold (* 64 1024 1024))
+
 (setq backup-inhibited t) ; Disable backup
 (setq auto-save-default nil) ; Disable auto save
 (setq inhibit-startup-screen t) ; Disable startup screen
