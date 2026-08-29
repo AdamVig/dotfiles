@@ -5,12 +5,6 @@
 
 ;;; Code:
 
-;; Helper function to check if a font is available
-(defun font-available-p (font-name)
-  "Check if FONT-NAME is available on the system."
-  (and (display-graphic-p)
-       (find-font (font-spec :name font-name))))
-
 ;; Initialize package.el (http://melpa.org/#/getting-started)
 (require 'package)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
@@ -66,10 +60,6 @@
  '(org-level-2 ((t (:weight light))))
  '(variable-pitch ((t (:family "Input Sans")))))
 
-;; Override variable-pitch font only if Input Sans is available
-(when (font-available-p "Input Sans")
-  (set-face-attribute 'variable-pitch nil :family "Input Sans"))
-
 ;; Install and set up auto-package-update (https://github.com/rranelli/auto-package-update.el)
 (use-package auto-package-update
   :ensure t
@@ -109,11 +99,10 @@
             (setq browse-url-browser-function #'browse-url-generic
                   browse-url-generic-program "open")))
 
-;; Set the font and font size (in 1/10pt), custom for macOS
-(when (font-available-p "Input Mono")
-  (if (eq system-type 'darwin)
-      (set-face-attribute 'default nil :font "Input Mono" :height 160)
-    (set-face-attribute 'default nil :font "Input Mono" :height 120)))
+;; Set the default font and size (in 1/10pt), custom for macOS. Face attributes resolve
+;; per frame, so this reaches frames a daemon creates later, and falls back if absent.
+(set-face-attribute 'default nil :family "Input Mono"
+	:height (if (eq system-type 'darwin) 160 120))
 
 ;; Customize the mode line
 (setq-default mode-line-format
