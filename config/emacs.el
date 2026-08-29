@@ -372,7 +372,9 @@
 ;; Add Flycheck (https://github.com/flycheck/flycheck)
 (use-package flycheck
 	:ensure t
-	:init (global-flycheck-mode))
+	:init (global-flycheck-mode)
+	;; Org selects the `org-lint' checker, which reparses the whole document on every newline.
+	:config (setq flycheck-global-modes '(not org-mode)))
 
 ;; Add TypeScript Interactive Development Environment (https://github.com/ananthakumaran/tide)
 (use-package tide
