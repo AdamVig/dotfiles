@@ -36,8 +36,15 @@ _ln /usr/bin/fdfind "$HOME"/.local/bin/fd
 log_end
 
 log_start 'putting WirePlumber device disabling configuration in place'
-mkdir -p "$(xdg_config)"/wireplumber/main.lua.d
-_ln "$script_dir"/../config/wireplumber-disable-devices.lua "$(xdg_config)"/wireplumber/main.lua.d/99-disable-devices.lua
+wireplumber_config_dir="$(xdg_config)"/wireplumber
+
+# Remove after Ubuntu 26.04 upgrade.
+if [ -e "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ]; then
+	rm -f "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua
+	rmdir --ignore-fail-on-non-empty "$wireplumber_config_dir"/main.lua.d 2>/dev/null || true
+fi
+mkdir -p "$wireplumber_config_dir"/wireplumber.conf.d
+_ln "$script_dir"/../config/wireplumber-disable-devices.conf "$wireplumber_config_dir"/wireplumber.conf.d/99-disable-devices.conf
 log_end
 
 log_start 'updating user directories'
@@ -54,15 +61,26 @@ XDG_PICTURES_DIR="$HOME/pictures"
 echo 'enabled=false' >~/.config/user-dirs.conf
 log_end
 
-if ! grep --quiet "logo=''" /etc/gdm3/greeter.dconf-defaults; then
+if ! grep --extended-regexp --quiet "^[[:space:]]*logo=''" /etc/gdm3/greeter.dconf-defaults; then
 	log_start 'disabling Ubuntu logo on login screen'
-	request_sudo sed -i "s|#.*logo=.*|logo=''|" /etc/gdm3/greeter.dconf-defaults
+	if grep --extended-regexp --quiet '^[[:space:]#]*logo=' /etc/gdm3/greeter.dconf-defaults; then
+		request_sudo sed --in-place --regexp-extended "s|^[[:space:]#]*logo=.*|logo=''|" /etc/gdm3/greeter.dconf-defaults
+	else
+		echo "
+[org/gnome/login-screen]
+logo=''" | request_sudo tee --append /etc/gdm3/greeter.dconf-defaults >/dev/null
+	fi
 	log_end
 fi
-if ! grep --quiet "clock-format=''" /etc/gdm3/greeter.dconf-defaults; then
+if ! grep --extended-regexp --quiet "^[[:space:]]*clock-format='12h'" /etc/gdm3/greeter.dconf-defaults; then
 	log_start 'setting login screen to 12-hour time'
-	echo "[org/gnome/desktop/interface]
-clock-format='12h'" | request_sudo tee /etc/gdm3/greeter.dconf-defaults >/dev/null
+	if grep --extended-regexp --quiet '^[[:space:]#]*clock-format=' /etc/gdm3/greeter.dconf-defaults; then
+		request_sudo sed --in-place --regexp-extended "s|^[[:space:]#]*clock-format=.*|clock-format='12h'|" /etc/gdm3/greeter.dconf-defaults
+	else
+		echo "
+[org/gnome/desktop/interface]
+clock-format='12h'" | request_sudo tee --append /etc/gdm3/greeter.dconf-defaults >/dev/null
+	fi
 	log_end
 fi
 
@@ -224,7 +242,7 @@ mkdir -p "$autostart_dir"
 echo "[Desktop Entry]
 Name=Nextcloud
 GenericName=File Synchronizer
-Exec=$HOME/.local/bin/nextcloud --background
+Exec=nextcloud --background
 Terminal=false
 Icon=Nextcloud
 Categories=Network

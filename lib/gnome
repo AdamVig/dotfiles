@@ -41,7 +41,9 @@ gsettings set org.gnome.desktop.interface show-battery-percentage true
 # Disable automatic screen brightness
 gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
 # Disable "Enhanced Tiling"
-gnome-extensions disable tiling-assistant@ubuntu.com
+if gnome-extensions list | grep --fixed-strings --quiet 'tiling-assistant@ubuntu.com'; then
+	gnome-extensions disable tiling-assistant@ubuntu.com
+fi
 gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
 
 if ! [[ -f "$HOME"/.config/gtk-3.0/bookmarks ]]; then

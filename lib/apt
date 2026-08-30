@@ -25,11 +25,6 @@ log "detected distribution \"${distro}\" version codename \"${codename}\""
 log_end
 
 log_start 'configuring repositories'
-# $1: string that uniquely identifies repository
-is_repository_configured() {
-	grep --quiet --recursive "$1" /etc/apt/sources.list /etc/apt/sources.list.d/
-}
-
 # $1: human-readable name, used in filenames of sources file and key
 # $2: URL to signing key
 # $3: latter part of repository configuration string, e.g. "http://repository.spotify.com stable non-free", not
@@ -63,72 +58,39 @@ add_ppa() {
 		"http://ppa.launchpad.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
-if ! is_repository_configured 'docker'; then
-	log_start 'adding Docker repository'
-	add_repository 'docker' 'https://download.docker.com/linux/ubuntu/gpg' "https://download.docker.com/linux/ubuntu ${codename} stable"
-	log_end
-fi
-
-if ! is_repository_configured 'microsoft.com/repos/code'; then
-	log_start 'adding Visual Studio Code repository'
-	add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
-	log_end
-fi
-
-if ! is_repository_configured 'spotify'; then
-	log_start 'adding Spotify repository'
-	# https://www.spotify.com/us/download/linux/
-	add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg' 'https://repository.spotify.com stable non-free'
-	log_end
-fi
-
-if ! is_repository_configured 'slack'; then
-	log_start 'adding Slack repository'
-	add_repository 'slack' 'https://packagecloud.io/slacktechnologies/slack/gpgkey' 'https://packagecloud.io/slacktechnologies/slack/debian/ jessie main'
-	log_end
-fi
-
-if ! is_repository_configured 'signal'; then
-	log_start 'adding Signal repository'
-	add_repository 'signal' 'https://updates.signal.org/desktop/apt/keys.asc' 'https://updates.signal.org/desktop/apt xenial main'
-	log_end
-fi
-
-if ! is_repository_configured 'git-core'; then
-	log_start 'adding git repository'
-	add_ppa 'git' 'F911AB184317630C59970973E363C90F8F1B6217' 'git-core/ppa'
-	log_end
-fi
-
-if ! is_repository_configured 'cli.github.com'; then
-	log_start 'adding GitHub CLI repository'
-	add_repository 'githubcli' 'https://cli.github.com/packages/githubcli-archive-keyring.gpg' 'https://cli.github.com/packages stable main'
-	log_end
-fi
-
-if is_repository_configured 'mozillateam'; then
+# Remove after Ubuntu 26.04 upgrade.
+if [ -e /etc/apt/sources.list.d/mozillateam.list ] || [ -e /usr/share/keyrings/mozillateam-archive-keyring.gpg ] || [ -e /etc/apt/preferences.d/mozillateamppa ]; then
 	log_start 'removing Mozilla Team repository (Thunderbird)'
 	request_sudo rm -f /etc/apt/sources.list.d/mozillateam.list /usr/share/keyrings/mozillateam-archive-keyring.gpg /etc/apt/preferences.d/mozillateamppa
 	log_end
 fi
 
-if ! is_repository_configured 'eza'; then
-	log_start 'adding Eza repository'
-	add_repository 'eza' 'https://raw.githubusercontent.com/eza-community/eza/main/deb.asc' 'http://deb.gierens.de stable main'
+# Remove after Ubuntu 26.04 upgrade.
+if [ -f /etc/apt/sources.list.d/brave-browser-release.sources ]; then
+	log_start 'removing Brave repository'
+	request_sudo rm -f /etc/apt/sources.list.d/brave-browser-release.sources /usr/share/keyrings/brave-browser-archive-keyring.gpg
 	log_end
 fi
 
-if ! is_repository_configured 'nextdns'; then
-	log_start 'adding NextDNS repository'
-	add_repository 'nextdns' 'https://repo.nextdns.io/nextdns.gpg' 'https://repo.nextdns.io/deb stable main'
+if [ -e /etc/apt/sources.list.d/vscode.sources ] || [ -e /etc/apt/sources.list.d/microsoft-edge.sources ] || [ -e /etc/apt/sources.list.d/slack.sources ]; then
+	log_start 'removing vendor-managed repository files'
+	request_sudo rm -f /etc/apt/sources.list.d/vscode.sources /etc/apt/sources.list.d/microsoft-edge.sources /etc/apt/sources.list.d/slack.sources
 	log_end
 fi
 
-if ! is_repository_configured 'microsoft.com/repos/edge'; then
-	log_start 'adding Microsoft Edge repository'
-	add_repository 'microsoft-edge' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/edge stable main'
-	log_end
-fi
+log_start 'adding repositories'
+add_repository 'docker' 'https://download.docker.com/linux/ubuntu/gpg' "https://download.docker.com/linux/ubuntu ${codename} stable"
+add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
+add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg' 'https://repository.spotify.com stable non-free'
+add_repository 'slack' 'https://packagecloud.io/slacktechnologies/slack/gpgkey' 'https://packagecloud.io/slacktechnologies/slack/debian/ jessie main'
+add_repository 'signal' 'https://updates.signal.org/desktop/apt/keys.asc' 'https://updates.signal.org/desktop/apt xenial main'
+add_ppa 'git' 'F911AB184317630C59970973E363C90F8F1B6217' 'git-core/ppa'
+add_repository 'githubcli' 'https://cli.github.com/packages/githubcli-archive-keyring.gpg' 'https://cli.github.com/packages stable main'
+add_repository 'dbeaver' 'https://dbeaver.io/debs/dbeaver.gpg.key' 'https://dbeaver.io/debs/dbeaver-ce /'
+add_repository 'eza' 'https://raw.githubusercontent.com/eza-community/eza/main/deb.asc' 'http://deb.gierens.de stable main'
+add_repository 'nextdns' 'https://repo.nextdns.io/nextdns.gpg' 'https://repo.nextdns.io/deb stable main'
+add_repository 'microsoft-edge' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/edge stable main'
+log_end
 
 if command -v nala >/dev/null; then
 	_apt_update() { request_sudo nala update >/dev/null; }
@@ -156,12 +118,23 @@ else
 	warn 'failed to upgrade packages, continuing'
 fi
 
+declare -a unwanted_packages=(
+	git-delta-musl
+	hyperfine-musl
+	p7zip # Replaced by 7zip
+)
+log_start 'removing unwanted packages'
+for unwanted_package in "${unwanted_packages[@]}"; do
+	_apt_remove "$unwanted_package" || true
+done
+log_end
+
 declare -a packages=(
 	# system dependencies
 	apt-listchanges # Part of automatic update system
-	apt-transport-https
-	kitty-terminfo # System-wide terminfo for Kitty terminal emulator
-	libfuse2t64    # FUSE for AppImage
+	kitty-terminfo  # System-wide terminfo for Kitty terminal emulator
+	libfuse2t64     # FUSE for AppImage
+	nextcloud-desktop
 	software-properties-common
 
 	# default utilities
@@ -191,7 +164,7 @@ declare -a packages=(
 	jq                 # JSON processor
 	libglib2.0-dev-bin # For compiling .gresources files
 	nextdns            # DNS client
-	p7zip
+	7zip
 	postgresql-client # PostgreSQL CLI
 	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
 	scdoc             # For building darkman
@@ -232,8 +205,11 @@ declare -a packages=(
 
 	# applications
 	code
+	dbeaver-ce
 	easyeffects # Audio effects
 	emacs-pgtk  # Text editor
+	git-delta   # Better Git diff viewer
+	hyperfine   # Command-line benchmarking tool
 	inkscape
 	kdiff3 # Merge tool
 	libreoffice
@@ -246,6 +222,7 @@ declare -a packages=(
 	spotify-client
 	viewnior  # Image viewer
 	xournalpp # PDF editor
+	yubikey-manager-qt
 
 	# fonts
 	fonts-noto
@@ -258,17 +235,6 @@ log_start 'installing packages'
 if ! _apt_install "${packages[@]}"; then
 	warn 'failed to install apt packages; this may require manual resolution'
 fi
-log_end
-
-declare -a unwanted_packages=(
-	cargo # Switched to rustup
-	rustc # Switched to rustup
-)
-
-log_start 'removing unwanted packages'
-for unwanted_package in "${unwanted_packages[@]}"; do
-	_apt_remove "$unwanted_package" || true
-done
 log_end
 
 log_start 'configuring automatic upgrades'

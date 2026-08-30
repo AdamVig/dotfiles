@@ -28,7 +28,7 @@ find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
 log_end
 
 log_start 'removing no-longer-needed software'
-rm -vrf "$HOME"/.local/bin/undercutf1
+rm -vrf "$HOME"/.local/bin/{nextcloud,yubikey-manager}
 if [ -e "$HOME"/.local/bin/git-spice ]; then
 	rm -f "$HOME"/.local/bin/git-spice
 fi
@@ -156,10 +156,6 @@ cleanup_paths+=("$bw_extracted_tmp")
 install "$bw_extracted_tmp"/bw "$HOME"/.local/bin/bw
 log_end
 
-log_start 'installing NextCloud'
-install_binary_from_github_release 'nextcloud' 'nextcloud-releases/desktop' 'x86_64.AppImage'
-log_end
-
 log_start 'installing restic'
 restic_url="$(get_release_url 'restic/restic' '_linux_amd64.bz2')"
 restic_archive="$(download_to_tmp "$restic_url" '.bz2')"
@@ -203,10 +199,6 @@ log_start 'installing yq'
 install_binary_from_github_release 'yq' 'mikefarah/yq' 'linux_amd64'
 log_end
 
-log_start 'installing YubiKey Manager'
-install_binary_from_url 'yubikey-manager' 'https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-latest-linux.AppImage'
-log_end
-
 if is_ubuntu; then
 	log_start 'installing bat'
 	if ! request_sudo apt-mark unhold bat; then
@@ -239,14 +231,6 @@ if is_ubuntu; then
 	fi
 	log_end
 
-	log_start 'installing DBeaver'
-	install_deb_from_github_release 'dbeaver/dbeaver' '-x86_64.deb'
-	log_end
-
-	log_start 'installing git-delta'
-	install_deb_from_github_release 'dandavison/delta' '_amd64.deb'
-	log_end
-
 	log_start 'installing glow'
 	install_deb_from_github_release 'charmbracelet/glow' '_amd64.deb'
 	log_end
@@ -272,10 +256,6 @@ profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
 
 	log_start 'installing Hugo'
 	install_deb_from_github_release 'gohugoio/hugo' 'linux-amd64.deb'
-	log_end
-
-	log_start 'installing hyperfine'
-	install_deb_from_github_release 'sharkdp/hyperfine' '_amd64.deb'
 	log_end
 
 	log_start 'installing Pandoc'

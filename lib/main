@@ -28,11 +28,11 @@ elif is_macos; then
 	"$script_dir"/macos
 	"$script_dir"/brew
 elif is_linux; then
-	"$script_dir"/linux-software
-	"$script_dir"/flatpak
 	if command -v apt >/dev/null; then
 		"$script_dir"/apt
 	fi
+	"$script_dir"/linux-software
+	"$script_dir"/flatpak
 	"$script_dir"/sops-age-key
 	"$script_dir"/grub
 	if is_ubuntu; then
