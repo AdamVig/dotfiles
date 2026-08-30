@@ -29,6 +29,12 @@ log_end
 
 log_start 'removing no-longer-needed software'
 rm -vrf "$HOME"/.local/bin/undercutf1
+if [ -e "$HOME"/.local/bin/git-spice ]; then
+	rm -f "$HOME"/.local/bin/git-spice
+fi
+if [ -d "$(xdg_config)"/git-spice ]; then
+	rm -rf "$(xdg_config)"/git-spice
+fi
 log_end
 
 log_start 'installing b2'
@@ -58,27 +64,6 @@ fnm_extracted_tmp="$(extract_zip_to_tmp "$fnm_tmp")"
 cleanup_paths+=("$fnm_extracted_tmp")
 install "$fnm_extracted_tmp"/fnm "$HOME"/.local/bin/fnm
 fnm completions --shell=zsh >"${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions/_fnm
-log_end
-
-log_start 'installing git-spice'
-git_spice_url="$(get_release_url 'abhinav/git-spice' '.Linux-x86_64.tar.gz')"
-git_spice_tmp="$(download_to_tmp "$git_spice_url" '.tar.gz')"
-git_spice_extracted_tmp="$(extract_tarball_to_tmp "$git_spice_tmp")"
-cleanup_paths+=("$git_spice_extracted_tmp")
-install "$git_spice_extracted_tmp"/git-spice "$HOME"/.local/bin/git-spice
-git_spice_config_path="$(xdg_config)/git-spice"
-mkdir -p "$git_spice_config_path"
-echo '{
-  "services": {
-    "https://github.com": {
-      "secrets": {
-        "token": {
-          "value": "{\"AuthenticationToken\":null,\"github_cli\":true}"
-        }
-      }
-    }
-  }
-}' >"$git_spice_config_path/secrets.json"
 log_end
 
 log_start 'installing git-who'

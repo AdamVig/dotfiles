@@ -23,7 +23,6 @@
 			"Bash(gh pr view *)",
 			"Bash(gh run *)",
 			"Bash(git *)",
-			"Bash(git-spice *)",
 			"Bash(go *)",
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
