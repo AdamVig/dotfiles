@@ -121,7 +121,7 @@ log_end
 
 if is_laptop; then
 	log_start 'installing Moonlight'
-	moonlight_url="$(get_release_url 'moonlight-stream/moonlight-qt' '_x86_64.AppImage')"
+	moonlight_url="$(get_release_url 'moonlight-stream/moonlight-qt' 'x86_64.AppImage')"
 	moonlight_appimage="$(download_to_tmp "$moonlight_url" '.AppImage')"
 	cleanup_paths+=("$moonlight_appimage")
 	mkdir -p "$HOME"/applications
