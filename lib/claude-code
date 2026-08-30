@@ -67,7 +67,13 @@ fi
 
 log_start 'installing settings'
 claude_settings_path="$claude_config_dir"/settings.json
-existing="$([[ -f $claude_settings_path ]] && cat "$claude_settings_path" || echo '{}')"
+existing='{}'
+if [[ -f $claude_settings_path ]]; then
+	existing="$(cat "$claude_settings_path")"
+else
+	mkdir -p "$(dirname "$claude_settings_path")"
+	echo '{}' >"$claude_settings_path"
+fi
 # Merge: repo keys win at the top level; object values are merged recursively, preserving keys Claude Code adds itself.
 jq --argjson existing "$existing" \
 	'$existing * .' \
