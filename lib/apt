@@ -134,6 +134,7 @@ declare -a packages=(
 	apt-listchanges # Part of automatic update system
 	kitty-terminfo  # System-wide terminfo for Kitty terminal emulator
 	libfuse2t64     # FUSE for AppImage
+	linux-generic   # Keep the supported generic kernel meta-package installed
 	nextcloud-desktop
 	software-properties-common
 
