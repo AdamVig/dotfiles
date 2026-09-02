@@ -12,10 +12,24 @@ request_sudo
 
 log_start 'setting up Ubuntu'
 
-if command -v snap >/dev/null; then
+log_start 'ensuring Ubuntu desktop meta-package is installed'
+request_sudo apt-get install --yes --no-install-recommends ubuntu-desktop >/dev/null
+log_end
+
+if request_sudo apt-mark showhold | grep --fixed-strings --quiet --line-regexp snapd; then
+	log_start 'removing obsolete snapd hold'
+	request_sudo apt-mark unhold snapd
+	log_end
+fi
+
+if dpkg-query --show --showformat='${db:Status-Status}' snapd 2>/dev/null | grep --fixed-strings --quiet --line-regexp installed; then
 	log_start 'disabling snaps'
-	request_sudo apt autoremove --purge --yes snapd
-	request_sudo apt-mark hold snapd
+	request_sudo apt-get purge --yes snapd
+	log_end
+fi
+
+if [ -e "$HOME"/snap ]; then
+	log_start 'removing Snap user data'
 	rm -rf "$HOME"/snap
 	log_end
 fi
