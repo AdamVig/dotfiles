@@ -55,7 +55,7 @@ add_ppa() {
 	add_repository \
 		"$1" \
 		"https://keyserver.ubuntu.com/pks/lookup?op=get&options=mr&search=0x${key_fingerprint}" \
-		"http://ppa.launchpad.net/${repo_name}/ubuntu/ ${codename} main"
+		"https://ppa.launchpadcontent.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
 # Remove after Ubuntu 26.04 upgrade.
