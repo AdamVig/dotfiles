@@ -39,7 +39,8 @@ log_start 'putting WirePlumber device disabling configuration in place'
 wireplumber_config_dir="$(xdg_config)"/wireplumber
 
 # Remove after Ubuntu 26.04 upgrade.
-if [ -e "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ]; then
+# -L, not -e: the old .lua is a symlink whose repo target is deleted, and -e follows symlinks.
+if [ -L "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ] || [ -e "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ]; then
 	rm -f "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua
 	rmdir --ignore-fail-on-non-empty "$wireplumber_config_dir"/main.lua.d 2>/dev/null || true
 fi
