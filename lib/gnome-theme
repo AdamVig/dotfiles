@@ -69,11 +69,18 @@ greeter_background_styles_pattern='#lockDialogGroup {.*?}'
 greeter_background_color='#263238'
 greeter_background_styles_replacement="#lockDialogGroup { background-color: ${greeter_background_color}; }"
 # Use "gdm*.css" to capture both "gdm.css" (21.10+) and "gdm3.css" (20.10)
-perl \
+shopt -s nullglob
+gdm_stylesheets=("$tmp_dir"/gdm*.css)
+shopt -u nullglob
+if [ "${#gdm_stylesheets[@]}" -eq 0 ]; then
+	warn 'could not find a GDM stylesheet, skipping login screen background customization'
+elif ! perl \
 	-i \
 	-p0 \
-	-e "s/${greeter_background_styles_pattern}/${greeter_background_styles_replacement}/s" \
-	"$tmp_dir"/gdm*.css
+	-e "\$replacements += s/${greeter_background_styles_pattern}/${greeter_background_styles_replacement}/s; END { exit !\$replacements }" \
+	"${gdm_stylesheets[@]}"; then
+	warn 'could not update the login screen background selector, skipping its customization'
+fi
 log_end
 
 log_start 'compiling resources'

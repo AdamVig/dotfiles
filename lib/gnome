@@ -9,10 +9,18 @@ log() {
 
 log_start 'setting up GNOME'
 
-gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
-gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
-gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
-gsettings set org.gnome.shell.extensions.ding show-home false
+if gsettings list-schemas | grep --fixed-strings --quiet --line-regexp org.gnome.shell.extensions.dash-to-dock; then
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
+	gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
+else
+	warn 'Dash to Dock schema is unavailable, skipping its settings'
+fi
+if gsettings list-schemas | grep --fixed-strings --quiet --line-regexp org.gnome.shell.extensions.ding; then
+	gsettings set org.gnome.shell.extensions.ding show-home false
+else
+	warn 'Desktop Icons NG schema is unavailable, skipping its settings'
+fi
 gsettings set org.gnome.desktop.peripherals.touchpad click-method 'fingers'
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 gsettings set org.gnome.desktop.peripherals.touchpad speed -0.1
