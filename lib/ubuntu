@@ -16,12 +16,6 @@ log_start 'ensuring Ubuntu desktop meta-package is installed'
 request_sudo apt-get install --yes --no-install-recommends ubuntu-desktop >/dev/null
 log_end
 
-if request_sudo apt-mark showhold | grep --fixed-strings --quiet --line-regexp snapd; then
-	log_start 'removing obsolete snapd hold'
-	request_sudo apt-mark unhold snapd
-	log_end
-fi
-
 if dpkg-query --show --showformat='${db:Status-Status}' snapd 2>/dev/null | grep --fixed-strings --quiet --line-regexp installed; then
 	log_start 'disabling snaps'
 	request_sudo apt-get purge --yes snapd
@@ -52,12 +46,6 @@ log_end
 log_start 'putting WirePlumber device disabling configuration in place'
 wireplumber_config_dir="$(xdg_config)"/wireplumber
 
-# Remove after Ubuntu 26.04 upgrade.
-# -L, not -e: the old .lua is a symlink whose repo target is deleted, and -e follows symlinks.
-if [ -L "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ] || [ -e "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua ]; then
-	rm -f "$wireplumber_config_dir"/main.lua.d/99-disable-devices.lua
-	rmdir --ignore-fail-on-non-empty "$wireplumber_config_dir"/main.lua.d 2>/dev/null || true
-fi
 mkdir -p "$wireplumber_config_dir"/wireplumber.conf.d
 _ln "$script_dir"/../config/wireplumber-disable-devices.conf "$wireplumber_config_dir"/wireplumber.conf.d/99-disable-devices.conf
 log_end
@@ -187,19 +175,6 @@ log_end
 log_start 'adding user to the Docker group'
 request_sudo usermod --append --groups docker "$USER"
 log_end
-
-if sudo --version 2>&1 | grep --invert-match --quiet sudo-rs && ! [ -f /etc/sudoers.d/disable-sudo-as-admin-successful ]; then
-	log_start 'preventing creation of ~/.sudo_as_admin_successful'
-	rm -f "$HOME"/.sudo_as_admin_successful
-	echo '# Disable creation of ~/.sudo_as_admin_successful
-Defaults !admin_flag' |
-		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/disable-sudo-as-admin-successful' >/dev/null)
-	log_end
-elif sudo --version 2>&1 | grep --quiet sudo-rs; then
-	log_start 'removing left over ~/.sudo_as_admin_successful file'
-	request_sudo rm -f /etc/sudoers.d/disable-sudo-as-admin-successful
-	log_end
-fi
 
 if ! [ -f /etc/sudoers.d/apt-update ]; then
 	log_start 'allowing apt update to run without a password'

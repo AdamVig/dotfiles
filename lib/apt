@@ -58,20 +58,6 @@ add_ppa() {
 		"https://ppa.launchpadcontent.net/${repo_name}/ubuntu/ ${codename} main"
 }
 
-# Remove after Ubuntu 26.04 upgrade.
-if [ -e /etc/apt/sources.list.d/mozillateam.list ] || [ -e /usr/share/keyrings/mozillateam-archive-keyring.gpg ] || [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-	log_start 'removing Mozilla Team repository (Thunderbird)'
-	request_sudo rm -f /etc/apt/sources.list.d/mozillateam.list /usr/share/keyrings/mozillateam-archive-keyring.gpg /etc/apt/preferences.d/mozillateamppa
-	log_end
-fi
-
-# Remove after Ubuntu 26.04 upgrade.
-if [ -f /etc/apt/sources.list.d/brave-browser-release.sources ]; then
-	log_start 'removing Brave repository'
-	request_sudo rm -f /etc/apt/sources.list.d/brave-browser-release.sources /usr/share/keyrings/brave-browser-archive-keyring.gpg
-	log_end
-fi
-
 if [ -e /etc/apt/sources.list.d/vscode.sources ] || [ -e /etc/apt/sources.list.d/microsoft-edge.sources ] || [ -e /etc/apt/sources.list.d/slack.sources ]; then
 	log_start 'removing vendor-managed repository files'
 	request_sudo rm -f /etc/apt/sources.list.d/vscode.sources /etc/apt/sources.list.d/microsoft-edge.sources /etc/apt/sources.list.d/slack.sources
