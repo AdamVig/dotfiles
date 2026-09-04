@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component vpn "$@"
+}
+
+is_laptop || exit 0
+
+env_file=/etc/default/vpn-by-ssid
+dispatcher_name=90-vpn-by-ssid
+# no-wait.d avoids NetworkManager deadlocking on nmcli calls; only dispatcher.d is scanned, hence the symlink.
+dispatcher_dir=/etc/NetworkManager/dispatcher.d
+
+if ! [ -f "$env_file" ]; then
+	log_start 'configuring VPN-by-SSID'
+	read -r -p "$(make_prompt 'home wifi SSID (VPN stays off here):') " home_ssid
+	read -r -p "$(make_prompt 'VPN connection name:') " vpn_connection
+	[ -n "$home_ssid" ] && [ -n "$vpn_connection" ] ||
+		warn_and_bail 'must provide both an SSID and a connection name, skipping setup'
+	printf 'HOME_SSID=%q\nVPN_CONNECTION=%q\n' "$home_ssid" "$vpn_connection" |
+		request_sudo tee "$env_file" >/dev/null
+	request_sudo chmod 600 "$env_file"
+	log_end
+fi
+
+log_start 'installing NetworkManager dispatcher script'
+# Copied, not symlinked: NetworkManager ignores dispatcher scripts not owned by root, or writable by others.
+request_sudo install -D -m 755 -o root -g root \
+	"$script_dir"/../config/network-manager-vpn-by-ssid \
+	"$dispatcher_dir"/no-wait.d/"$dispatcher_name"
+request_sudo ln -sfn no-wait.d/"$dispatcher_name" "$dispatcher_dir"/"$dispatcher_name"
+log_end

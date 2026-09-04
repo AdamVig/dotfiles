@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# NetworkManager dispatcher: VPN on except home network; config lives outside to avoid committing SSID/VPN name.
+
+env_file=/etc/default/vpn-by-ssid
+[ -r "$env_file" ] || exit 0
+# shellcheck source=/dev/null
+. "$env_file"
+[ -n "$HOME_SSID" ] && [ -n "$VPN_CONNECTION" ] || exit 0
+
+nmcli=/usr/bin/nmcli
+iface="$1"
+action="$2"
+
+# The VPN's own up/down events would otherwise recurse.
+[ "$CONNECTION_ID" = "$VPN_CONNECTION" ] && exit 0
+
+case "$action" in
+up | down | connectivity-change) ;;
+*) exit 0 ;;
+esac
+
+# Docker bridges and veths raise events too; only wifi and connectivity-change can matter here.
+case "$iface" in
+wl*) ;;
+*) [ "$action" = connectivity-change ] || exit 0 ;;
+esac
+
+vpn_is_active() {
+	[ "$("$nmcli" -g GENERAL.STATE con show "$VPN_CONNECTION" 2>/dev/null)" = activated ]
+}
+
+ssid="$("$nmcli" -t -f active,ssid dev wifi list --rescan no 2>/dev/null | sed -n '/^yes:/{s/^yes://;p;q;}')"
+
+if [ -z "$ssid" ] || [ "$ssid" = "$HOME_SSID" ]; then
+	vpn_is_active && "$nmcli" con down "$VPN_CONNECTION"
+# Waiting for full connectivity keeps captive portals' resolver working until their login completes.
+elif [ "$("$nmcli" -g CONNECTIVITY general 2>/dev/null)" = full ] && ! vpn_is_active; then
+	"$nmcli" con up "$VPN_CONNECTION"
+fi
+
+exit 0

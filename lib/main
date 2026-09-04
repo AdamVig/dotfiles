@@ -41,6 +41,7 @@ elif is_linux; then
 		"$script_dir"/gnome-theme
 	fi
 	"$script_dir"/dns
+	"$script_dir"/vpn
 	if is_ubuntu || is_debian; then
 		"$script_dir"/remote-management
 	fi
