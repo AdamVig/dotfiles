@@ -4,6 +4,7 @@
 		"commit": "",
 		"pr": ""
 	},
+	"disableClaudeAiConnectors": true,
 	"enabledPlugins": {
 		"code-simplifier@claude-plugins-official": true,
 		"context7@claude-plugins-official": true
