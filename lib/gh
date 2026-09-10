@@ -15,7 +15,7 @@ fi
 
 signing_key_path="$(git config --global --path --get user.signingkey || true)"
 if [ -z "$signing_key_path" ]; then
-	signing_key_path="$HOME/.ssh/id_rsa.pub"
+	signing_key_path="$HOME/.ssh/id_ed25519.pub"
 fi
 
 log_start 'checking authentication'

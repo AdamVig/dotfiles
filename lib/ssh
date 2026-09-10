@@ -9,9 +9,11 @@ log() {
 
 log_start 'configuring SSH'
 
-mkdir -p "$HOME"/.ssh
+mkdir --parents "$HOME"/.ssh
+chmod 700 "$HOME"/.ssh
 ssh_config_path="$HOME"/.ssh/config
 touch "$ssh_config_path"
+chmod 600 "$ssh_config_path"
 
 add_ssh_config() {
 	if ! grep --quiet --fixed-strings "$1" "$ssh_config_path"; then
@@ -24,24 +26,10 @@ add_ssh_config 'AddKeysToAgent yes'
 add_ssh_config 'IgnoreUnknown UseKeychain'
 add_ssh_config 'UseKeychain yes'
 
-ssh_authorized_keys_exist() {
-	[ -f "$HOME"/.ssh/authorized_keys ]
-}
-
-if ssh_authorized_keys_exist; then
-	log 'found existing SSH authorized keys, exiting'
-	log_end
-	exit
-fi
-
 unlock_bitwarden_vault
 
-if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
-	fatal 'failed to get ID of Bitwarden folder "ssh"'
-fi
-
-if ! items="$(bw list items --folderid="$ssh_folder_id")"; then
-	fatal 'failed to list items in SSH folder'
+if ! items="$(bw list items)"; then
+	fatal 'failed to list Bitwarden items'
 fi
 
 if ! hostname="$(hostname -s)"; then
@@ -50,19 +38,44 @@ fi
 
 log "using hostname \"$hostname\""
 
-while read -r item; do
-	item_name="$(echo "$item" | jq --raw-output '.name')"
-	if [[ $item_name == *$hostname ]]; then
-		continue
-	fi
-	log_start "installing key \"$item_name\""
-	tmp="$(mktemp)"
-	item_id="$(echo "$item" | jq --raw-output '.id')"
-	bw get attachment --itemid="$item_id" --output="$tmp" -- '.pub'
-	cat "$tmp" >>"$HOME"/.ssh/authorized_keys
+if ! authorized_key_items="$(
+	jq --exit-status --raw-output --arg hostname "$hostname" '
+		def trim: gsub("^\\s+|\\s+$"; "");
+		[
+			.[]
+			| select(.type == 5)
+			| select(
+				[
+					.fields[]?
+					| select(.name == "Authorized hosts")
+					| (.value // "")
+					| split(",")[]
+					| trim
+				] | index($hostname)
+			)
+			| {item_name: .name, public_key: ((.sshKey.publicKey // "") | trim)}
+		]
+		| unique_by(.public_key)
+		| map([.item_name, .public_key] | @tsv)
+		| if length == 0 then "" else .[] end
+	' <<<"$items"
+)"; then
+	fatal "failed to read SSH keys authorized for \"$hostname\""
+fi
 
-	rm -f "$tmp"
-	log_end
-done < <(echo "$items" | jq --compact-output '.[]')
+tmp_authorized_keys="$(mktemp "$HOME"/.ssh/authorized_keys.XXXXXX)"
+trap 'rm -f "$tmp_authorized_keys"' EXIT
+printf '%s\n' '# Managed by dotfiles lib/ssh.' >"$tmp_authorized_keys"
+
+if [ -n "$authorized_key_items" ]; then
+	while IFS=$'\t' read -r item_name public_key; do
+		if ! printf '%s\n' "$public_key" | ssh-keygen -lf /dev/stdin >/dev/null 2>&1; then
+			fatal "Bitwarden SSH key item \"$item_name\" has an invalid public key"
+		fi
+		printf '%s\n' "$public_key" >>"$tmp_authorized_keys"
+	done <<<"$authorized_key_items"
+fi
+
+install --mode=600 "$tmp_authorized_keys" "$HOME"/.ssh/authorized_keys
 
 log_end

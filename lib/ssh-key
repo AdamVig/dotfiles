@@ -9,18 +9,23 @@ log() {
 
 log_start 'setting up SSH key'
 
-ssh_key_exists() {
-	stat -t "$HOME"/.ssh/id_* >/dev/null 2>&1
-}
+mkdir --parents "$HOME"/.ssh
+chmod 700 "$HOME"/.ssh
 
-if ssh_key_exists; then
+readonly ssh_private_key_path="$HOME"/.ssh/id_ed25519
+readonly ssh_public_key_path="$ssh_private_key_path".pub
+readonly item_notes='- The "Private key" field has no passphrase, install the attached passphrase-protected key file instead.
+- "Authorized hosts" is a comma-separated list of the hostnames that this key should be able to access.'
+
+if { [ -e "$ssh_private_key_path" ] && [ ! -e "$ssh_public_key_path" ]; } ||
+	{ [ ! -e "$ssh_private_key_path" ] && [ -e "$ssh_public_key_path" ]; }; then
+	fatal 'found an incomplete id_ed25519 key pair'
+fi
+
+if [ -f "$ssh_private_key_path" ] && [ -f "$ssh_public_key_path" ]; then
 	log 'found existing SSH key, skipping acquisition'
 else
 	unlock_bitwarden_vault
-
-	if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
-		fatal 'failed to get ID of Bitwarden folder "ssh"'
-	fi
 
 	if ! hostname="$(hostname -s)"; then
 		fatal 'failed to get system hostname'
@@ -28,59 +33,97 @@ else
 
 	log "using hostname \"$hostname\""
 
-	log_start 'checking for existing SSH key'
-	if item="$(2>/dev/null bw list --folderid "$ssh_folder_id" items |
-		jq --exit-status --arg hostname "$hostname" '.[] | select(.name != null and (.name | endswith($hostname)))')"; then
-		log_end
-		log_start 'existing key found, installing key'
-		tmp_dir="$(mktemp -d)"
-		item_id="$(echo "$item" | jq --raw-output '.id')"
-		bw get attachment id_rsa --itemid="$item_id" --output="${tmp_dir}/"
-		bw get attachment id_rsa.pub --itemid="$item_id" --output="${tmp_dir}/"
-		mv "$tmp_dir"/* "$HOME"/.ssh
+	if ! items="$(bw list items)"; then
+		fatal 'failed to list Bitwarden items'
+	fi
+
+	item_name="SSH Key: $hostname"
+	if ! item="$(
+		jq --arg item_name "$item_name" '
+			[.[] | select(.type == 5 and .name == $item_name)]
+			| if length > 1 then error("multiple matches") else .[0] // empty end
+		' <<<"$items"
+	)"; then
+		fatal "found multiple SSH keys named \"$item_name\""
+	fi
+
+	if [ -n "$item" ]; then
+		log_start 'installing existing key'
+		item_id="$(jq --raw-output '.id' <<<"$item")"
+		stored_public_key="$(jq --raw-output '.sshKey.publicKey' <<<"$item")"
+
+		tmp_dir="$(mktemp --directory)"
+		trap 'rm -rf "$tmp_dir"' EXIT
+		tmp_private_key_path="$tmp_dir"/id_ed25519
+		if ! bw get attachment id_ed25519 --itemid "$item_id" --output "$tmp_private_key_path" >/dev/null; then
+			fatal 'failed to download passphrase-protected id_ed25519 attachment'
+		fi
+
+		install --mode 600 "$tmp_private_key_path" "$ssh_private_key_path"
+		echo "$stored_public_key" >"$ssh_public_key_path"
+		chmod 644 "$ssh_public_key_path"
 		rm -rf "$tmp_dir"
+		trap - EXIT
 		log_end
 	else
-		log_end
-		log_start 'no existing key found, creating key'
+		log_start 'creating new key'
+		read -r -p "$(make_prompt 'Authorized hosts (comma-separated, optional):') " authorized_hosts
 		if ! passphrase="$(bw generate --uppercase --lowercase --number --length=45)"; then
-			warn 'failed to generate password, generate one manually'
+			fatal 'failed to generate SSH key passphrase'
+		fi
+		# `-a 64` quadruples OpenSSH’s default bcrypt KDF rounds, strengthening against offline passphrase attacks
+		ssh-keygen -q -t ed25519 -a 64 -N "$passphrase" -C "$USER@$hostname" -f "$ssh_private_key_path"
+
+		tmp_dir="$(mktemp --directory)"
+		trap 'rm -rf "$tmp_dir"' EXIT
+		tmp_private_key_path="$tmp_dir"/id_ed25519
+		cp "$ssh_private_key_path" "$tmp_private_key_path"
+		ssh-keygen -q -p -P "$passphrase" -N '' -f "$tmp_private_key_path"
+		fingerprint="$(ssh-keygen -lf "$ssh_public_key_path" | awk '{print $2}')"
+
+		if ! item_id="$(
+			bw get template item |
+				jq \
+					--arg item_name "$item_name" \
+					--arg passphrase "$passphrase" \
+					--arg created "$(date '+%B %-d, %Y')" \
+					--arg authorized_hosts "$authorized_hosts" \
+					--arg notes "$item_notes" \
+					--arg fingerprint "$fingerprint" \
+					--rawfile private_key "$tmp_private_key_path" \
+					--rawfile public_key "$ssh_public_key_path" \
+					'.name = $item_name
+					| .type = 5
+					| .notes = $notes
+					| .sshKey = {
+						privateKey: $private_key,
+						publicKey: $public_key,
+						keyFingerprint: $fingerprint
+					}
+					| .fields = [
+						{name: "Passphrase", value: $passphrase, type: 1},
+						{name: "Authorized hosts", value: $authorized_hosts, type: 0},
+						{name: "Created", value: $created, type: 0}
+					]' |
+				bw encode |
+				bw create item |
+				jq --exit-status --raw-output '.id'
+		)"; then
+			warn 'failed to save SSH key to Bitwarden; back up the key manually'
+		elif ! bw create attachment --file "$ssh_private_key_path" --itemid "$item_id" >/dev/null; then
+			warn 'failed to attach the passphrase-protected private key; attach it manually as id_ed25519'
 		fi
 
-		ssh-keygen ${passphrase:+-N $passphrase} -f "$HOME"/.ssh/id_rsa
-
-		if ! ssh_folder_id="$(bw get folder ssh | jq --raw-output '.id')"; then
-			fatal 'failed to get ID of Bitwarden folder "ssh"'
-		fi
-
-		if ! item="$(bw get template item |
-			jq \
-				--arg hostname "$(hostname -s)" \
-				--argjson passphrase "$(bw get template item.field | jq --arg passphrase "${passphrase-}" '.name="Passphrase" | .value=$passphrase | .type=1')" \
-				--argjson created "$(bw get template item.field | jq --arg date "$(date '+%B %-d, %Y')" '.name="Created" | .value=$date | .type=0')" \
-				--argjson public "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa.pub '.name="Public" | .value=$key | .type=0')" \
-				--argjson private "$(bw get template item.field | jq --rawfile key "$HOME"/.ssh/id_rsa '.name="Private" | .value=$key | .type=1')" \
-				--arg ssh_folder_id "$ssh_folder_id" \
-				'.name="SSH Key: \($hostname)" | .type = 2 | .secureNote.type = 0 | .notes="" | .folderId=$ssh_folder_id | .fields=[$passphrase, $created, $public, $private]' |
-			bw encode |
-			bw create item)"; then
-			warn 'failed to create item, create manually'
-		else
-			bw create attachment --file "$HOME"/.ssh/id_rsa --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
-			bw create attachment --file "$HOME"/.ssh/id_rsa.pub --itemid="$(echo "$item" | jq --raw-output '.id')" >/dev/null
-		fi
+		rm -rf "$tmp_dir"
+		trap - EXIT
 		bw sync
 		log_end
 	fi
-
-	if ! ssh_key_exists; then
-		warn 'did not find an SSH key, did you install or create one?'
-	fi
 fi
 
-if is_macos && ssh_key_exists; then
+if is_macos; then
 	log_start 'loading key into ssh-agent (passphrase cached in Keychain)'
-	ssh-add --apple-use-keychain "$HOME"/.ssh/id_rsa
+	ssh-add --apple-use-keychain "$ssh_private_key_path"
 	log_end
 fi
 

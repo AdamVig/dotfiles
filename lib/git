@@ -60,7 +60,7 @@ done
 log_end
 
 log_start 'ensuring SSH allowed signers file exists'
-signing_key_path="$HOME/.ssh/id_rsa.pub"
+signing_key_path="$HOME/.ssh/id_ed25519.pub"
 if [ ! -f "$signing_key_path" ]; then
 	warn "did not find SSH signing key at \"$signing_key_path\", skipping allowed signers setup"
 else
