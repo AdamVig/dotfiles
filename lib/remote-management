@@ -20,6 +20,8 @@ log() {
 	log_with_component remote-management "$@"
 }
 
+! is_laptop || exit 0
+
 request_sudo
 
 log_start 'initializing remote management user'
