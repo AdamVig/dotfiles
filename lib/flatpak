@@ -41,8 +41,11 @@ log_start 'installing KOReader'
 flatpak install --assumeyes --noninteractive --or-update rocks.koreader.KOReader
 log_end
 
+log_start 'installing Bitwarden Desktop'
+flatpak install flathub com.bitwarden.desktop
+log_end
+
 log_start 'removing no-longer-needed packages'
-flatpak uninstall --assumeyes --noninteractive com.bitwarden.desktop >/dev/null || true
 flatpak uninstall --assumeyes --noninteractive com.github.wwmm.easyeffects >/dev/null || true
 log_end
 

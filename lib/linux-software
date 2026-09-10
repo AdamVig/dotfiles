@@ -212,10 +212,6 @@ if is_ubuntu; then
 	fi
 	log_end
 
-	log_start 'installing Bitwarden'
-	install_deb_from_url 'https://bitwarden.com/download/?app=desktop&platform=linux&variant=deb'
-	log_end
-
 	log_start 'installing darkman'
 	if command -v scdoc >/dev/null; then
 		darkman_tmp="$(mktemp -d)"
@@ -274,7 +270,7 @@ profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
 	fi
 
 	log_start 'removing no-longer-needed software'
-	request_sudo apt-get remove --yes --autoremove jan &>/dev/null || true
+	request_sudo apt-get remove --yes --autoremove bitwarden &>/dev/null || true
 	log_end
 fi
 
