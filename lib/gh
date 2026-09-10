@@ -23,7 +23,14 @@ if ! gh auth status &>/dev/null; then
 	log_start 'authenticating'
 	gh auth login --hostname=github.com --clipboard --web --scopes=admin:public_key,admin:ssh_signing_key,user,read:packages --git-protocol=https
 	log_end
-elif ! is_devcontainer; then
+elif ! is_devcontainer &&
+	! gh auth status --active --hostname=github.com --json hosts |
+	jq --exit-status '
+			.hosts["github.com"][]
+			| select(.active and .state == "success")
+			| ["admin:public_key", "admin:ssh_signing_key", "user", "read:packages"] - (.scopes / ", ")
+			| length == 0
+		' >/dev/null; then
 	log_start 'ensuring scopes'
 	gh auth refresh --hostname=github.com --clipboard --scopes=admin:public_key,admin:ssh_signing_key,user,read:packages
 	log_end
