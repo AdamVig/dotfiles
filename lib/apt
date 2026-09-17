@@ -76,6 +76,7 @@ add_repository 'dbeaver' 'https://dbeaver.io/debs/dbeaver.gpg.key' 'https://dbea
 add_repository 'eza' 'https://raw.githubusercontent.com/eza-community/eza/main/deb.asc' 'http://deb.gierens.de stable main'
 add_repository 'nextdns' 'https://repo.nextdns.io/nextdns.gpg' 'https://repo.nextdns.io/deb stable main'
 add_repository 'microsoft-edge' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/edge stable main'
+add_repository 'lefthook' 'https://dl.cloudsmith.io/public/evilmartians/lefthook/gpg.A05F5DDE3A0BB1D2.key' "https://dl.cloudsmith.io/public/evilmartians/lefthook/deb/ubuntu ${codename} main"
 log_end
 
 if command -v nala >/dev/null; then
@@ -149,6 +150,7 @@ declare -a packages=(
 	hunspell-en-us # Dictionary for hunspell
 	imagemagick
 	jq                 # JSON processor
+	lefthook           # Git hook manager
 	libglib2.0-dev-bin # For compiling .gresources files
 	nextdns            # DNS client
 	7zip
