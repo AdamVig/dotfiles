@@ -50,7 +50,7 @@ install "$copilot_extracted_tmp"/copilot "$HOME"/.local/bin/copilot
 log_end
 
 log_start 'installing difftastic'
-difftastic_url="$(get_release_url 'Wilfred/difftastic' 'difft-x86_64-unknown-linux-gnu.tar.gz')"
+difftastic_url="$(get_release_url 'Wilfred/difftastic' 'x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"
 difftastic_extracted_tmp="$(extract_tarball_to_tmp "$difftastic_tmp")"
 cleanup_paths+=("$difftastic_extracted_tmp")
