@@ -29,3 +29,4 @@ writable_roots = [
 
 [tui]
 notifications = [ "approval-requested" ]
+status_line = ["model-with-reasoning", "current-dir", "thread-name", "context-used"]
