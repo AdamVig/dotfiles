@@ -265,7 +265,7 @@ profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
 	if ! is_laptop; then
 		log_start 'installing Sunshine'
 		ubuntu_version="$(source /etc/os-release && echo "$VERSION_ID")"
-		install_deb_from_github_release 'LizardByte/Sunshine' "ubuntu-${ubuntu_version}-amd64.deb"
+		install_deb_from_github_release 'LizardByte/Sunshine' "ubuntu${ubuntu_version}_amd64.deb"
 		log_end
 	fi
 
