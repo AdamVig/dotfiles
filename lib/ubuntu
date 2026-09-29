@@ -88,6 +88,18 @@ if [ -f "$gdm_defaults_path" ]; then
 		fi
 		log_end
 	fi
+	# A fingerprint can't unlock the login keyring, so the boot greeter should only ask for a password
+	if is_laptop && ! grep --extended-regexp --quiet '^[[:space:]]*enable-fingerprint-authentication=false' "$gdm_defaults_path"; then
+		log_start 'disabling fingerprint authentication on login screen'
+		if grep --extended-regexp --quiet '^[[:space:]#]*enable-fingerprint-authentication=' "$gdm_defaults_path"; then
+			request_sudo sed --in-place --regexp-extended 's|^[[:space:]#]*enable-fingerprint-authentication=.*|enable-fingerprint-authentication=false|' "$gdm_defaults_path"
+		else
+			echo "
+[org/gnome/login-screen]
+			enable-fingerprint-authentication=false" | request_sudo tee --append "$gdm_defaults_path" >/dev/null
+		fi
+		log_end
+	fi
 else
 	warn "could not find $gdm_defaults_path, skipping login screen customizations"
 fi
