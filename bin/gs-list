@@ -3,12 +3,13 @@ set -euo pipefail
 
 branch_rows="$(
 	gh stack view --json | jq --raw-output '
-    [.branches[] | select(.pr and (.isMerged | not))]
-    | to_entries[]
+    .trunk as $trunk
+    | [.branches[] | select(.pr and (.isMerged | not))] as $branches
+    | $branches | to_entries[]
     | [
         (.key + 1),
         .value.name,
-        .value.base,
+        (if .key == 0 then "origin/" + $trunk else $branches[.key - 1].name end),
         .value.pr.url
       ]
     | @tsv
@@ -28,7 +29,7 @@ selected_branches="$(echo "$selected_branches" | sort -t$'\t' -k1 -n)"
 
 while IFS=$'\t' read -r item_num branch base url; do
 	title="$(gh pr view "$url" --json title --jq '.title')"
-	read -r add del <<<"$(git diff --numstat "$base..$branch" |
+	read -r add del <<<"$(git diff -w --numstat "$base...$branch" |
 		awk '{a+=$1; d+=$2} END {print a+0, d+0}')"
 
 	printf '%d. [%s](%s) (+%s, -%s)\n' "$item_num" "$title" "$url" "$add" "$del"

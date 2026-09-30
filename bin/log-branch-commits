@@ -7,8 +7,14 @@ args=()
 
 # If first argument is empty or looks like a flag, use the default branch
 if [ -z "${1-}" ] || [[ ${1-} == -* ]]; then
-	# In a stack, use the downstack branch as the base
-	if ! branch="$(2>/dev/null gh stack view --json | jq --raw-output '.branches[0].name')"; then
+	# In a stack, use the nearest unmerged downstack branch as the base
+	if ! branch="$(2>/dev/null gh stack view --json | jq -er '
+		. as $stack
+		| ($stack.branches | map(.name) | index($stack.currentBranch)) as $index
+		| if $index == null then empty
+		  else ([ $stack.branches[:$index][] | select(.isMerged | not) | .name ] | last) // ("origin/" + $stack.trunk)
+		  end
+	')"; then
 		# Use remote-tracking branch to avoid comparing against possibly-behind local `main`
 		if ! branch="origin/$(get-default-branch)"; then
 			echo 'error: could not get default branch'
