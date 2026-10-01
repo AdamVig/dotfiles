@@ -2,11 +2,6 @@
 
 # Initialize command completion.
 
-gh_completion_path="${XDG_DATA_HOME:-$HOME/.local/share}"/gh
-if [ -d "$gh_completion_path" ] && [[ "$FPATH" != *"$gh_completion_path"* ]]; then
-	fpath=("$gh_completion_path" $fpath)
-fi
-
 if [[ $OSTYPE == darwin* ]]; then
 	brew_completion_path="$(brew --prefix)"/share/zsh/site-functions
 	if [ -d "$brew_completion_path" ] && [[ "$FPATH" != *"$brew_completion_path"* ]]; then
@@ -14,8 +9,17 @@ if [[ $OSTYPE == darwin* ]]; then
 	fi
 fi
 
-if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions ]; then
-	fpath=("${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions $fpath)
+site_functions_path="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/site-functions
+legacy_site_functions_path="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh-site-functions
+if [ -d "$legacy_site_functions_path" ]; then
+	# TODO: Remove after all machines have migrated.
+	mkdir -p "$site_functions_path" &&
+		mv -f "$legacy_site_functions_path"/*(DN) "$site_functions_path"/ &&
+		rm -rf "$legacy_site_functions_path"
+fi
+
+if [ -d "$site_functions_path" ]; then
+	fpath=("$site_functions_path" $fpath)
 fi
 
 completion_path=/usr/local/share/zsh/site-functions
@@ -55,4 +59,3 @@ if [[ -x "$HOME"/.local/bin/gs ]]; then
 	autoload -U +X bashcompinit && bashcompinit
 	complete -C "$HOME"/.local/bin/gs gs
 fi
-

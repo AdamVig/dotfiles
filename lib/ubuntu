@@ -35,8 +35,9 @@ if [[ -f /etc/xdg/autostart/update-notifier.desktop ]]; then
 fi
 
 log_start 'installing GitHub CLI completions'
-mkdir -p "$HOME"/.local/share/gh
-gh completion --shell zsh >"$HOME"/.local/share/gh/_gh
+gh_completion_dir="$(xdg_data)"/zsh/site-functions
+mkdir -p "$gh_completion_dir"
+gh completion --shell zsh >"$gh_completion_dir"/_gh
 log_end
 
 log_start 'linking fdfind to fd'
