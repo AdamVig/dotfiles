@@ -28,18 +28,17 @@
  ;; If there is more than one, they won't work right.
  '(company-dabbrev-downcase nil)
  '(custom-safe-themes
-		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" default))
+		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875"
+			 "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
+			 default))
  '(org-agenda-prefix-format
-		'((agenda . "")
-			 (todo . " %i %-12:c")
-			 (tags . " %i %-12:c")
+		'((agenda . "") (todo . " %i %-12:c") (tags . " %i %-12:c")
 			 (search . " %i %-12:c")))
  '(org-agenda-scheduled-leaders '("" "[Overdue %d days] "))
  '(org-agenda-sorting-strategy
 		'((agenda todo-state-up priority-down)
 			 (todo priority-down category-keep todo-state-up)
-			 (tags priority-down category-keep)
-			 (search category-keep)))
+			 (tags priority-down category-keep) (search category-keep)))
  '(org-agenda-span 'day)
  '(org-agenda-window-setup 'only-window)
  '(org-archive-location "%s-archive::")
@@ -49,6 +48,12 @@
  '(org-html-checkbox-type 'html)
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
+ '(package-selected-packages
+		'(add-node-modules-path auto-dark auto-package-update catppuccin-theme
+			 company exec-path-from-shell go-mode helpful lua-mode magit
+			 magit-section markdown-mode olivetti orderless ox-gfm
+			 prettier-js super-save tide vertico with-editor writegood-mode
+			 yaml-mode))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
