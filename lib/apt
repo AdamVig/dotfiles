@@ -136,7 +136,6 @@ declare -a packages=(
 	eza      # Better ls
 	fd-find  # Better find
 	htop     # Better top
-	httpie   # Better curl
 	nala     # Better apt
 	ripgrep  # Better grep
 

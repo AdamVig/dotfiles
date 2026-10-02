@@ -94,7 +94,6 @@ if command -v apt-get >/dev/null; then
 		eza          # Better ls
 		fd-find      # Better find
 		htop         # Better top
-		httpie       # Better curl
 		ripgrep      # Better grep
 
 		# command line tools

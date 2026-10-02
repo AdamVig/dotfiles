@@ -12,7 +12,6 @@ brew "eza" # Better ls
 brew "fd" # Better find
 brew "git-delta" # Better Git diff viewer
 brew "htop" # Better top
-brew "httpie" # Better curl
 brew "ripgrep" # Better grep
 
 # command line tools
