@@ -35,7 +35,7 @@ zmodload -i zsh/complist
 autoload -Uz compinit
 _comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
 # #q expands globs in conditional expressions
-if [[ $_comp_path(#qNmh-20) ]]; then
+if () { setopt local_options extended_glob; [[ -n $_comp_path(#qNmh-20) ]] }; then
   # -C (skip function check) implies -i (skip security check)
   compinit -C -d "$_comp_path"
 else
