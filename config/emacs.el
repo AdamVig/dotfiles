@@ -1,4 +1,4 @@
-;;; emacs.el --- Configure Emacs.
+;;; emacs.el --- Configure Emacs.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;;; This file configures Emacs.  See the bottom of the file for instructions on providing local, machine-specific configuration.
