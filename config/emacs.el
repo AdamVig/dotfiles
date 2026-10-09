@@ -23,17 +23,17 @@
  ;; If there is more than one, they won't work right.
  '(company-dabbrev-downcase nil)
  '(custom-safe-themes
-		'("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875"
-			 "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
-			 default))
+   '("6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875"
+     "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
+     default))
  '(org-agenda-prefix-format
-		'((agenda . "") (todo . " %i %-12:c") (tags . " %i %-12:c")
-			 (search . " %i %-12:c")))
+   '((agenda . "") (todo . " %i %-12:c") (tags . " %i %-12:c")
+     (search . " %i %-12:c")))
  '(org-agenda-scheduled-leaders '("" "[Overdue %d days] "))
  '(org-agenda-sorting-strategy
-		'((agenda todo-state-up priority-down)
-			 (todo priority-down category-keep todo-state-up)
-			 (tags priority-down category-keep) (search category-keep)))
+   '((agenda todo-state-up priority-down)
+     (todo priority-down category-keep todo-state-up)
+     (tags priority-down category-keep) (search category-keep)))
  '(org-agenda-span 'day)
  '(org-agenda-window-setup 'only-window)
  '(org-archive-location "%s-archive::")
@@ -44,11 +44,13 @@
  '(org-html-doctype "html5")
  '(org-html-html5-fancy t)
  '(package-selected-packages
-		'(add-node-modules-path auto-dark auto-package-update catppuccin-theme
-			 company exec-path-from-shell go-mode helpful lua-mode magit
-			 magit-section markdown-mode olivetti orderless ox-gfm
-			 prettier-js super-save tide vertico with-editor writegood-mode
-			 yaml-mode))
+   '(add-node-modules-path auto-dark auto-package-update catppuccin-theme
+			   company exec-path-from-shell go-mode
+			   helpful lsp-mode lua-mode magit
+			   magit-section markdown-mode olivetti
+			   orderless ox-gfm prettier-js super-save
+			   typescript-mode vertico with-editor
+			   writegood-mode yaml-mode))
  '(reb-re-syntax 'string)
  '(use-short-answers t))
 (custom-set-faces
@@ -227,12 +229,8 @@
 (use-package olivetti
   :ensure t)
 
-;; Add go-mode and automatic format/import on save
 (use-package go-mode
   :ensure t)
-(add-hook 'go-mode-hook (lambda () (
-  add-hook 'before-save-hook 'gofmt-before-save)
- (setq gofmt-command "goimports")))
 
 ;; Add mode for lua scripts (https://github.com/immerrr/lua-mode)
 (use-package lua-mode
@@ -368,12 +366,51 @@
 	;; Org selects the `org-lint' checker, which reparses the whole document on every newline.
 	:config (setq flycheck-global-modes '(not org-mode)))
 
-;; Add TypeScript Interactive Development Environment (https://github.com/ananthakumaran/tide)
-(use-package tide
+(use-package typescript-mode
   :ensure t
-  :after (typescript-mode company flycheck exec-path-from-shell)
-  :hook ((typescript-mode . tide-setup)
-					(typescript-mode . tide-hl-identifier-mode)))
+  :defer t)
+
+;; Defer language servers until their buffers are visible.
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-completion-provider :capf)
+  (lsp-diagnostics-provider :flycheck)
+  (lsp-enable-snippet nil)
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-lens-enable nil)
+  (lsp-enable-links nil)
+  (lsp-enable-on-type-formatting nil)
+  :hook ((go-mode . lsp-deferred)
+         (go-ts-mode . lsp-deferred)
+         (js-mode . lsp-deferred)
+         (js-ts-mode . lsp-deferred)
+         (typescript-mode . lsp-deferred)
+         (typescript-ts-mode . lsp-deferred)
+         (tsx-ts-mode . lsp-deferred)
+         (lua-mode . lsp-deferred)
+         (yaml-mode . lsp-deferred)
+         (yaml-ts-mode . lsp-deferred)
+         (lsp-managed-mode
+          . (lambda ()
+              ;; gopls handles formatting and imports without a separate goimports executable.
+              (when (derived-mode-p 'go-mode 'go-ts-mode)
+                (add-hook 'before-save-hook
+                          (lambda ()
+                            (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+                              (lsp-organize-imports)
+                              (lsp-format-buffer)))
+                          nil t))))))
+
+(use-package lsp-javascript
+  :after lsp-mode
+  :config
+  ;; typescript-language-server uses tsserver, which TypeScript 7 no longer bundles.
+  (lsp-dependency 'typescript
+                  '(:system "tsserver")
+                  '(:npm :package "typescript" :version "6" :path "tsserver")))
 
 ;; Use sh-mode for local shell files
 (add-to-list 'auto-mode-alist '(".locals" . sh-mode))
