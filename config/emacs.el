@@ -10,11 +10,6 @@
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; Install and set up use-package (https://github.com/jwiegley/use-package)
-(if (not (package-installed-p 'use-package))
-    (progn
-      (package-refresh-contents)
-      (package-install 'use-package)))
 (require 'use-package)
 
 ;; Ensure compat is available for packages that use newer Emacs APIs
