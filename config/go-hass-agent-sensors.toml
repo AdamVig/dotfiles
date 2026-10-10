@@ -1,0 +1,47 @@
+# go-hass-agent has group switches rather than a global sensor allowlist.
+[sensors]
+agent.version.disabled = false
+agent.connection_latency.disabled = true
+agent.external_ip.disabled = true
+batteries.disabled = true
+cpu.frequencies.disabled = true
+cpu.load_averages.disabled = true
+cpu.usage.disabled = true
+desktop.app.disabled = true
+desktop.app_sensors.disabled = true
+desktop.preferences.disabled = true
+desktop.desktop_settings_sensors.disabled = true
+disk.rates.disabled = true
+disk.smart.disabled = true
+disk.usage.disabled = true
+location.disabled = true
+media.microphone_in_use.disabled = false
+media.webcam_in_use.disabled = true
+media.mpris.disabled = false
+media.audio.disabled = false
+media.video.disabled = true
+memory.oom_events.disabled = true
+memory.usage.disabled = true
+network.connections.disabled = true
+network.links.disabled = true
+network.usage.disabled = true
+power.laptop.disabled = false
+power.profile.disabled = true
+power.screen_lock.disabled = false
+power.state.disabled = false
+system.app_sensors.disabled = false
+system.last_active.disabled = false
+system.hardware_sensors.disabled = true
+system.info_sensors.disabled = true
+system.users.disabled = true
+system.abrt_problems.disabled = true
+system.chrony.disabled = true
+
+[cpu_vulnerabilities]
+disabled = true
+
+[scripts]
+disabled = false
+
+[controls.power.power_controls]
+disabled = false

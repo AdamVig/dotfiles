@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component go-hass-agent "$@"
+}
+
+log_start 'configuring go-hass-agent'
+agent_config_dir="$(xdg_config)"/go-hass-agent
+mkdir -p "$agent_config_dir"/scripts
+_ln "$script_dir"/../config/go-hass-agent/audio-output "$agent_config_dir"/scripts
+_ln "$script_dir"/../config/go-hass-agent/webcam-in-use "$agent_config_dir"/scripts
+
+umask 077
+preferences_file="$agent_config_dir"/preferences.toml
+
+# Stop the agent so its preference writes cannot overwrite the shared policy.
+if systemctl --user is-active --quiet go-hass-agent; then
+	systemctl --user stop go-hass-agent
+	trap 'systemctl --user start go-hass-agent' EXIT
+fi
+
+touch "$preferences_file"
+# shellcheck disable=SC2016
+yq eval-all --input-format toml --output-format toml --inplace \
+	'. as $item ireduce ({}; . * $item)' \
+	"$preferences_file" "$script_dir"/../config/go-hass-agent-sensors.toml
+log_end
