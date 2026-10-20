@@ -6,9 +6,11 @@
 #
 # This system is designed with security in mind, but undoubtedly has vulnerabilities anyways.
 # - Separate user with no password, no group membership, and an isolated home directory to limit access to the system.
-# - SSH authorized_keys entry is configured to restrict access to many features of SSH, including allocating a TTY.
+# - SSH authorized_keys entry is configured to restrict access to many features of SSH, including allocating a TTY,
+#   and to only accept connections from a single IP address.
 # - Login shell limits user to executing a single command.
-# - The user is prevented from editing the SSH authorized_keys file, login shell, and ,remotecontrol script.
+# - The user's home directory and everything in it are owned by root, so the user can't modify its SSH
+#   authorized_keys file, login shell, or ,remotecontrol script.
 #
 # The remote host must have an SSH key without a passphrase. The remote host's public key must be inserted in
 # /usr/local/share/remote-management/.ssh/authorized_keys in place of "<insert key here>".
@@ -29,6 +31,7 @@ log_start 'initializing remote management user'
 readonly remote_management_username='remote-management'
 readonly remote_management_user_home_path=/usr/local/share/"$remote_management_username"
 readonly remote_management_shell_path="$remote_management_user_home_path"/remote-management-shell
+readonly authorized_keys_path="$remote_management_user_home_path"/.ssh/authorized_keys
 
 # To delete the user, run: sudo deluser --system remote-management && sudo rm -r /usr/local/share/remote-management
 if ! id "$remote_management_username" &>/dev/null; then
@@ -42,23 +45,36 @@ if ! id "$remote_management_username" &>/dev/null; then
 	# Apply restrictions except for TTY access
 	# shellcheck disable=SC2016
 	echo 'restrict <insert key here>' |
-		request_sudo tee "$remote_management_user_home_path"/.ssh/authorized_keys >/dev/null
-	request_sudo chown --recursive "$remote_management_username" "$remote_management_user_home_path"/.ssh
-	# Set permissions to r-x------
-	request_sudo chmod 500 "$remote_management_user_home_path"/.ssh
-	# Set permissions to r--------
-	request_sudo chmod 400 "$remote_management_user_home_path"/.ssh/authorized_keys
+		request_sudo tee "$authorized_keys_path" >/dev/null
 	log_end
 fi
 
-if ! [ -f /etc/sudoers.d/remote-management ]; then
-	log_start 'creating sudoers file to allow non-interactive power control'
-	echo "# Allow for non-interactive execution of system power commands.
-
-$remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot,/usr/sbin/grub-reboot,/usr/bin/cat" |
-		(request_sudo su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/remote-management' >/dev/null)
+if ! request_sudo grep --quiet 'from=' "$authorized_keys_path"; then
+	log_start 'restricting SSH access to a single IP address'
+	read -r -p "$(make_prompt 'IP address of the host allowed to connect (e.g. Home Assistant):') " allowed_ip
+	if [ -n "$allowed_ip" ]; then
+		request_sudo sed -i "s|^restrict |restrict,from=\"$allowed_ip\" |" "$authorized_keys_path"
+	else
+		warn 'must provide an IP address, skipping restriction'
+	fi
 	log_end
 fi
+
+log_start 'making remote management files root-owned'
+request_sudo chown root:root "$remote_management_user_home_path" "$remote_management_user_home_path"/.ssh "$authorized_keys_path"
+request_sudo chmod 755 "$remote_management_user_home_path" "$remote_management_user_home_path"/.ssh
+request_sudo chmod 644 "$authorized_keys_path"
+log_end
+
+log_start 'configuring sudoers to allow non-interactive power control'
+sudoers_tmp="$(mktemp)"
+echo "# Allow for non-interactive execution of system power commands.
+
+$remote_management_username ALL=NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl suspend,/usr/bin/systemctl reboot,/usr/sbin/grub-reboot,/usr/bin/cat /boot/grub/grub.cfg" >"$sudoers_tmp"
+visudo --check --file "$sudoers_tmp" >/dev/null || fatal 'generated sudoers file is invalid'
+request_sudo install --owner=root --group=root --mode=440 "$sudoers_tmp" /etc/sudoers.d/remote-management
+rm "$sudoers_tmp"
+log_end
 
 log_start 'setting up remote management shell'
 echo "#!/bin/bash
@@ -67,14 +83,11 @@ if [[ \"\$1\" != '-c' || -z \"\$2\" ]]; then
     exit 1
 fi
 
-exec ./,remotecontrol \"\$2\"
+exec $remote_management_user_home_path/,remotecontrol \"\$2\"
 " | request_sudo tee "$remote_management_shell_path" >/dev/null
-request_sudo chmod +x "$remote_management_shell_path"
+request_sudo chmod 755 "$remote_management_shell_path"
 # Copy instead of symlinking because symlink yields "cannot execute: Permission denied"
-request_sudo cp "$script_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
-request_sudo chown "$remote_management_username" "$remote_management_user_home_path"/,remotecontrol
-# Set permissions to r-x------
-request_sudo chmod 500 "$remote_management_user_home_path"/,remotecontrol
+request_sudo install --owner=root --group=root --mode=755 "$script_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
 log_end
 
 log_end

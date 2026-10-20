@@ -35,10 +35,9 @@ elif [ "$command" = 'suspend' ]; then
 elif [ "$command" = 'switch-to-windows' ]; then
 	# awk program inspired by Grub's Bash completion script
 	if ! grub_menuentry_windows="$(
-		sudo cat /boot/grub/grub.cfg | awk \
-			--field-separator "[\"']" \
-			'BEGIN{IGNORECASE = 1} /menuentry / { if ($2 ~ "windows") {print $2; exit} }'
-	)"; then
+		sudo cat /boot/grub/grub.cfg |
+			awk -F "[\"']" '/menuentry / { if (tolower($2) ~ /windows/) {print $2; exit} }'
+	)" || [ -z "$grub_menuentry_windows" ]; then
 		echo "error: failed to get title of Grub menuentry for Windows"
 		exit 1
 	fi

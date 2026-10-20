@@ -48,6 +48,8 @@ log_end
 
 log_start 're-generating Grub configuration'
 request_sudo grub-mkconfig -o /boot/grub/grub.cfg
+# Match the mode grub-mkconfig gives a new grub.cfg; it keeps an existing file's mode, so older installs vary
+request_sudo chmod 600 /boot/grub/grub.cfg
 log_end
 
 log_end
