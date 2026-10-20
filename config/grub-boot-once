@@ -1,0 +1,8 @@
+#!/bin/sh
+cat <<'EOF'
+# Boot a `grub-reboot` entry immediately; os-prober's forced menu timeout is only useful for interactive boots.
+if [ "${boot_once}" = true ]; then
+	set timeout_style=hidden
+	set timeout=0
+fi
+EOF

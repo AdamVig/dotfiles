@@ -39,6 +39,13 @@ if ! grep --quiet "$grub_memtest_variable" /etc/default/grub; then
 	log_end
 fi
 
+log_start 'skipping menu timeout for one-time boot entries'
+# Sorts after 30_os-prober, whose dual-boot timeout this overrides
+request_sudo install --owner=root --group=root --mode=755 \
+	"$script_dir"/../config/grub-boot-once \
+	/etc/grub.d/41_dotfiles-boot-once
+log_end
+
 log_start 're-generating Grub configuration'
 request_sudo grub-mkconfig -o /boot/grub/grub.cfg
 log_end
