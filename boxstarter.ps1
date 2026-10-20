@@ -153,6 +153,12 @@ If (-Not (Test-Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Adv
 }
 Set-ItemProperty -Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" -Name PeopleBand -Type DWord -Value 0
 
+# Allow ping from Home Assistant so it can tell this computer is on, set its IP before uncommenting
+#$home_assistant_ip = ""
+#if (-Not (Get-NetFirewallRule -DisplayName "Allow ping from Home Assistant" -ErrorAction SilentlyContinue)) {
+#	New-NetFirewallRule -DisplayName "Allow ping from Home Assistant" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -RemoteAddress $home_assistant_ip -Action Allow -Profile Any
+#}
+
 #--- Restore Temporary Settings ---
 Enable-UAC
 Enable-MicrosoftUpdate
