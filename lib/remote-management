@@ -90,4 +90,11 @@ request_sudo chmod 755 "$remote_management_shell_path"
 request_sudo install --owner=root --group=root --mode=755 "$script_dir"/../bin/,remotecontrol "$remote_management_user_home_path"/,remotecontrol
 log_end
 
+log_start 'enabling wake-on-LAN for wired connections'
+# Takes effect when a connection next activates, e.g. on the next boot
+request_sudo install --owner=root --group=root --mode=644 \
+	"$script_dir"/../config/network-manager-wake-on-lan.conf \
+	/etc/NetworkManager/conf.d/dotfiles-wake-on-lan.conf
+log_end
+
 log_end
