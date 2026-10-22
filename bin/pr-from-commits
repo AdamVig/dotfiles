@@ -1,0 +1,233 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+name="${0##*/}"
+
+usage="Usage: $name <command> [flags]
+Create and update the current branch's GitHub pull request from its commits.
+
+The description is generated from the branch's local commits: a single commit's body verbatim,
+or a newest-first list of each commit's subject and body.
+It replaces the whole description; put anything else in PR comments.
+
+Commands:
+    create   push the branch and open a pull request
+    sync     replace the open pull request's description (and optionally title)
+    body     print the description 'create' or 'sync' would set
+
+Run '$name <command> --help' for a command's flags."
+
+create_usage="Usage: $name create [-h|--help] [-b|--base BRANCH] [-t|--title TITLE] [-d|--draft]
+Push the current branch, open a pull request assigned to you with a description generated from its commits,
+and open it in the browser.
+
+Flags:
+    -b, --base BRANCH   base branch (default: output of \`get-base-branch\`)
+    -t, --title TITLE   pull request title (default: HEAD's subject, plus ' (ABC-123)' if the branch name has a ticket ID)
+    -d, --draft         create as a draft
+    -h, --help          show this help text"
+
+sync_usage="Usage: $name sync [-h|--help] [-t|--title]
+Replace the open pull request's description with one generated from the branch's local commits.
+Does not push.
+
+Flags:
+    -t, --title   also set the title to HEAD's subject, keeping a trailing ' (ABC-123)' ticket ID from the current title
+    -h, --help    show this help text"
+
+body_usage="Usage: $name body [-h|--help] [-b|--base BRANCH]
+Print the description that 'sync' would set, or 'create' if the branch has no open pull request.
+
+Flags:
+    -b, --base BRANCH   base branch, as passed to 'create --base'
+    -h, --help          show this help text"
+
+die() {
+	echo >&2 "error: $*"
+	exit 1
+}
+
+# $1: usage, $2+: getopt arguments; prints normalized arguments for `eval set --`, or usage on failure
+parse() {
+	local usage="$1"
+	shift
+	getopt --name "$name" "$@" || {
+		echo >&2 "$usage"
+		return 1
+	}
+}
+
+# Linear issue ID, e.g. `ABC-123`; see https://github.com/linear/linear-release/blob/main/src/extractors.ts
+ticket_id='[A-Za-z][A-Za-z0-9]{0,6}-[0-9]{1,9}'
+
+# Same remote that `get-base-branch` compares against
+remote=origin
+if git remote get-url upstream &>/dev/null; then
+	remote=upstream
+fi
+
+# Print shell assignments of `pr_path` (REST API path), `pr_base`, `pr_head` and `pr_title` for the open pull request
+open_pr_vars() {
+	local vars
+	# One request for everything at once, quoted for `eval`
+	# shellcheck disable=SC2016
+	vars="$(gh pr view --json state,url,baseRefName,headRefOid,title --jq '
+		select(.state == "OPEN")
+		# A literal API path, e.g. `repos/owner/repo/pulls/123`, saves `gh api` resolving `{owner}/{repo}` from git remotes;
+		# built from the URL as the only field naming the base repository (`headRepository` may be a fork)
+		| (.url | sub("^https://[^/]+/"; "repos/") | sub("/pull/"; "/pulls/")) as $path
+		| @sh "pr_path=\($path) pr_base=\(.baseRefName) pr_head=\(.headRefOid) pr_title=\(.title)"
+	')" || return
+	[ -n "$vars" ] || die 'the pull request for the current branch is not open'
+	echo "$vars"
+}
+
+# Print the ref to compare against for a pull request's base branch: its local copy (e.g. a stack branch) if there is one,
+# except for the default branch, whose local copy may be behind
+# $1: base branch name
+pr_base_ref() {
+	if [ "$remote/$1" != "$(git symbolic-ref --short "refs/remotes/$remote/HEAD" 2>/dev/null)" ] &&
+		git show-ref --verify --quiet "refs/heads/$1"; then
+		echo "$1"
+	else
+		echo "$remote/$1"
+	fi
+}
+
+# Print the pull request description for the commits on HEAD that are not on a base
+# $1: base ref
+render_body() {
+	# Same commit selection as `gh pr create --fill`, minus commits already on the base under another hash (e.g. rebased)
+	local range=(--cherry-pick --right-only --no-merges "$1...HEAD")
+	case "$(git rev-list --count "${range[@]}")" in
+	0) die "no commits found in '$1...HEAD'" ;;
+	1) git log --no-show-signature --format=%b "${range[@]}" ;;
+	# Markdown list of `- <subject>`, then a blank line and the body indented two spaces (`%w`) if there is one (`%+b`)
+	# `%w` also indents blank lines, so strip those back to empty
+	*) git log --no-show-signature --format='- %s%n%w(0,2,2)%+b' "${range[@]}" | sed 's/^ *$//' ;;
+	esac
+}
+
+sync() {
+	local set_title="$1" vars pr_path pr_base pr_head pr_title body title args=()
+	vars="$(open_pr_vars)" || exit 1
+	eval "$vars"
+	body="$(render_body "$(pr_base_ref "$pr_base")")"
+	if ((set_title)); then
+		title="$(git log --max-count=1 --format=%s)"
+		# Keep the ticket ID suffix that `create` adds
+		if [[ $pr_title =~ \ (\($ticket_id\))$ ]]; then
+			title+=" ${BASH_REMATCH[1]}"
+		fi
+		args+=(-f "title=$title")
+	fi
+	if [ "$(git rev-parse HEAD)" != "$pr_head" ]; then
+		echo >&2 "warning: HEAD differs from the pull request's head, so the description may not match its commits"
+	fi
+	# Unlike `gh pr edit`, this skips fetching the whole pull request first, saving a round trip
+	gh api --method PATCH "$pr_path" -F body=@- "${args[@]}" --jq .html_url <<<"$body"
+}
+
+# $1: base branch, $2: title, $3+: extra `gh pr create` arguments
+create() {
+	local base_branch="$1" title="$2" base_ref body login url
+	if [ -n "$base_branch" ]; then
+		base_ref="$(pr_base_ref "$base_branch")"
+	else
+		base_ref="$(get-base-branch)"
+		base_branch="${base_ref#"$remote"/}"
+	fi
+	if [ -z "$title" ]; then
+		title="$(git log --max-count=1 --format=%s)"
+		# Only at the start of a branch name segment, e.g. `user/abc-123-slug`, so words like `utf-8` don't match
+		if [[ "$(git symbolic-ref --short HEAD)" =~ (^|/)($ticket_id)(-|$) ]]; then
+			title+=" (${BASH_REMATCH[2]^^})"
+		fi
+	fi
+	body="$(render_body "$base_ref")"
+
+	git push --set-upstream
+	# Read the login locally, since `--assignee @me` costs an API request to resolve it
+	login="$(gh config get user --host github.com)"
+	url="$(gh pr create --assignee "$login" --base "$base_branch" --title "$title" --body-file - "${@:3}" <<<"$body")"
+	echo "$url"
+	if [[ $OSTYPE == darwin* ]]; then
+		open "$url"
+	else
+		xdg-open "$url"
+	fi
+}
+
+# $1: base branch (optional)
+body() {
+	local vars pr_path pr_base pr_head pr_title
+	if [ -n "$1" ]; then
+		render_body "$(pr_base_ref "$1")"
+	elif vars="$(open_pr_vars 2>/dev/null)"; then
+		eval "$vars"
+		render_body "$(pr_base_ref "$pr_base")"
+	else
+		render_body "$(get-base-branch)"
+	fi
+}
+
+command="${1-}"
+shift || true
+
+case "$command" in
+create)
+	opts="$(parse "$create_usage" --options 'hb:t:d' --longoptions 'help,base:,title:,draft' -- "$@")"
+	eval set -- "$opts"
+	base_branch='' title='' create_args=()
+	while true; do
+		case "$1" in
+		-h | --help) echo "$create_usage" && exit ;;
+		-b | --base) base_branch="$2" && shift 2 ;;
+		-t | --title) title="$2" && shift 2 ;;
+		-d | --draft) create_args+=(--draft) && shift ;;
+		--) shift && break ;;
+		esac
+	done
+	(($# == 0)) || die "unexpected argument '$1'; pass the base branch with --base"
+	create "$base_branch" "$title" "${create_args[@]}"
+	;;
+sync)
+	opts="$(parse "$sync_usage" --options 'ht' --longoptions 'help,title' -- "$@")"
+	eval set -- "$opts"
+	set_title=0
+	while true; do
+		case "$1" in
+		-h | --help) echo "$sync_usage" && exit ;;
+		-t | --title) set_title=1 && shift ;;
+		--) shift && break ;;
+		esac
+	done
+	(($# == 0)) || die "unexpected argument '$1'"
+	sync "$set_title"
+	;;
+body)
+	opts="$(parse "$body_usage" --options 'hb:' --longoptions 'help,base:' -- "$@")"
+	eval set -- "$opts"
+	base_branch=''
+	while true; do
+		case "$1" in
+		-h | --help) echo "$body_usage" && exit ;;
+		-b | --base) base_branch="$2" && shift 2 ;;
+		--) shift && break ;;
+		esac
+	done
+	(($# == 0)) || die "unexpected argument '$1'; pass the base branch with --base"
+	body "$base_branch"
+	;;
+-h | --help)
+	echo "$usage"
+	;;
+'')
+	echo >&2 "$usage"
+	exit 1
+	;;
+*)
+	die "unknown command '$command'; run '$name --help'"
+	;;
+esac

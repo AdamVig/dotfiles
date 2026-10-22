@@ -1,41 +1,18 @@
-# Create a pull request
-# Pushes before creating the pull request to skip the `gh` prompt for where to push
-# Opens the pull request in the browser after creation
-# $1: base branch
-# $2: title
+# Create a pull request from the current branch's commits (see `pr-from-commits create --help`)
 prc: >-
-  !git push --set-upstream &&
-  gh pr create
-  --assignee=@me
-  --base="$1"
-  --body="$(gh pr-body-commits --no-markers "$1")"
-  --title="$2"
-  && gh pr view --web
+  !pr-from-commits create "$@"
 
-# Create a draft pull request (see `prc` for more details)
-# $1: base branch
-# $2: title
+# Create a draft pull request (see `prc`)
 prcd: >-
-  !git push --set-upstream &&
-  gh pr create
-  --assignee=@me
-  --base="$1"
-  --body="$(gh pr-body-commits --no-markers "$1")"
-  --title="$2"
-  --draft
-  && gh pr view --web
+  !pr-from-commits create --draft "$@"
 
 # Convenience shortcut for checking out a pull request
 co: >-
   pr checkout
 
-# Convenience shortcut for gh-pr-body-commits extension
+# Replace the pull request description with one generated from its commits (see `pr-from-commits sync --help`)
 pbc: >-
-  pr-body-commits
-
-# Convenience shortcut for gh-pr-body-commits extension in "overwrite" mode
-pbcr: >-
-  pr-body-commits --no-markers
+  !pr-from-commits sync "$@"
 
 # Inverse of "co": switch back to the previous branch and delete the current branch
 unco: >-

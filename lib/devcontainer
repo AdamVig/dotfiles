@@ -101,7 +101,6 @@ if command -v apt-get >/dev/null; then
 		"$glow_deb" # Markdown viewer
 		tig         # Visual Git client
 
-		ed # Needed by `gh-pr-body-commits`
 		emacs-nox
 		hunspell       # Needed by Emacs config
 		hunspell-en-us # Needed by Emacs config (dictionary)
