@@ -12,6 +12,7 @@
   8. Use GitHub-flavored Markdown to add (minimal) formatting, code blocks (e.g. shell snippets showing a command and its output), etc.
 		- Feel free to use `inline code` (backticks) in the subject line where applicable
 	9. Let the diff do the talking; commit bodies should reference the diff, not repeat it.
+- Don't put the current task's ticket ID in commit subjects, bodies, or trailers (e.g. `Fix X (ABC-123)`, `Refs: ABC-123`): the branch name and PR title already carry it. Mentioning *other* related tickets in a body is fine.
 
 ## Command line tools
 When running terminal commands, prefer the following commands over the default ones:
