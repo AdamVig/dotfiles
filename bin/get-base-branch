@@ -10,12 +10,33 @@ if git remote get-url upstream &>/dev/null; then
 	remote=upstream
 fi
 
-if ! 2>/dev/null gh stack view --json | jq --exit-status --raw-output --arg remote "$remote" '
-	. as $stack
-	| ($stack.branches | map(.name) | index($stack.currentBranch)) as $index
-	| if $index == null then empty
-	  else ([ $stack.branches[:$index][] | select(.isMerged | not) | .name ] | last) // "\($remote)/\($stack.trunk)"
-	  end
-'; then
+# gh-stack's local state, read directly because `gh stack view --json` costs an API request per PR in the stack
+# Path: https://github.com/github/gh-stack/blob/v0.2.1/internal/stack/stack.go#L16
+# Format: https://github.com/github/gh-stack/blob/v0.2.1/internal/stack/schema.json
+state_file="$(git rev-parse --git-common-dir)/gh-stack"
+# Prints the nearest unmerged branch below `$branch`, or the stack's trunk on `$remote`; nothing if not in a stack
+# shellcheck disable=SC2016
+stack_parent_filter='
+	if .schemaVersion != 1 then
+		error("unsupported gh-stack state schema version \(.schemaVersion) in \($file); update get-base-branch")
+	end
+	| first(
+		.stacks[]
+		| (.branches | map(.branch) | index($branch)) as $index
+		| select($index)
+		| ([ .branches[:$index][] | select(.pullRequest.merged | not) | .branch ] | last) // "\($remote)/\(.trunk.branch)"
+	)
+'
+
+parent=''
+# Detached HEAD has no branch, so it can't be in a stack
+if [ -f "$state_file" ] && branch="$(git symbolic-ref --quiet --short HEAD)"; then
+	parent="$(jq --raw-output --arg branch "$branch" --arg remote "$remote" --arg file "$state_file" \
+		"$stack_parent_filter" "$state_file")"
+fi
+
+if [ -n "$parent" ]; then
+	echo "$parent"
+else
 	git symbolic-ref --short "refs/remotes/$remote/HEAD"
 fi
