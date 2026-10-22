@@ -31,7 +31,6 @@ brew "jq" # JSON processor
 brew "just" # Command runner
 brew "p7zip"
 brew "pandoc"
-brew "scc" # Lines of code counter
 brew "tig" # Visual Git client
 brew "unzip"
 brew "switchaudio-osx" # Audio output switcher

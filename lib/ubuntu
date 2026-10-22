@@ -120,43 +120,13 @@ else
 fi
 log_end
 
+# Temporary: remove the retired Home Assistant daemon; delete this once it has run on every machine
 home_assistant_daemon_unit_path="$(xdg_config)"/systemd/user/home-assistant-daemon.service
-if ! [ -f "$home_assistant_daemon_unit_path" ]; then
-	home_assistant_daemon_environment_file_path="$(xdg_config)"/home-assistant-daemon.env
-	if ! [ -f "$home_assistant_daemon_environment_file_path" ]; then
-		log_start 'creating Home Assistant daemon environment file'
-		echo '# Home Assistant daemon environment variables, in the format of a Systemd unit EnvironmentFile
-# Hostname of Home Assistant instance
-HOME_ASSISTANT_HOST=example.com
-# API token for Home Assistant instance
-HOME_ASSISTANT_TOKEN=
-' >"$home_assistant_daemon_environment_file_path"
-		log_end
-		warn "Home Assistant daemon configuration created at $home_assistant_daemon_environment_file_path, open the file and fill in the values"
-	fi
-
-	log_start 'creating Home Assistant daemon Systemd unit'
-	mkdir -p "$(xdg_config)"/systemd/user
-	echo "[Unit]
-Description=\"Home Assistant Daemon\"
-
-[Service]
-EnvironmentFile=$home_assistant_daemon_environment_file_path
-ExecStart=$(realpath "$script_dir"/../bin/home-assistant-daemon)
-Restart=on-failure
-# Wait two minutes before attempting to restart
-RestartSec=2min
-
-[Install]
-WantedBy=default.target
-" >"$home_assistant_daemon_unit_path"
-	systemctl --user daemon-reload
-	log_end
-fi
-
-if ! systemctl --user is-enabled --quiet home-assistant-daemon.service; then
-	log_start 'setting up Home Assistant daemon'
-	systemctl --user enable --now home-assistant-daemon.service
+if [ -f "$home_assistant_daemon_unit_path" ]; then
+	log_start 'removing Home Assistant daemon'
+	systemctl --user disable --now home-assistant-daemon.service || true
+	rm -f "$home_assistant_daemon_unit_path" "$(xdg_config)"/home-assistant-daemon.env
+	systemctl --user daemon-reload || true
 	log_end
 fi
 

@@ -189,10 +189,6 @@ cleanup_paths+=("$uv_extracted_tmp")
 install "$uv_extracted_tmp"/{uv,uvx} "$HOME"/.local/bin
 log_end
 
-log_start 'installing websocat'
-install_binary_from_github_release 'websocat' 'vi/websocat' 'x86_64-unknown-linux-musl'
-log_end
-
 log_start 'installing yt-dlp'
 install_binary_from_github_release 'yt-dlp' 'yt-dlp/yt-dlp' '_linux'
 log_end
