@@ -109,7 +109,7 @@ class CmdResult:
 
 
 def run(args: list[str]) -> CmdResult:
-    # Optional helpers (gh stack, get-default-branch) may be absent; treat a
+    # Optional helpers (gh stack) may be absent; treat a
     # missing executable like a non-zero exit so callers fall back gracefully.
     try:
         proc = subprocess.run(
@@ -135,10 +135,6 @@ def default_branch() -> str:
     origin_head = output(["git", "symbolic-ref", "--short", "refs/remotes/origin/HEAD"])
     if origin_head:
         return origin_head.removeprefix("origin/")
-
-    helper = output(["get-default-branch"])
-    if helper:
-        return helper
 
     for candidate in ("main", "master"):
         if output(["git", "rev-parse", "--verify", f"origin/{candidate}"]):

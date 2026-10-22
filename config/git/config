@@ -43,6 +43,8 @@
 [fetch]
 	prune = true
 	all = true
+	# Keep `<remote>/HEAD` pointing at the remote's default branch, even after it is renamed
+	followRemoteHEAD = always
 [pull]
   # make `git pull --rebase` the default mode (override with `git pull --rebase=false`)
   rebase = true

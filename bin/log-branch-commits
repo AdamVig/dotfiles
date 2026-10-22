@@ -16,10 +16,7 @@ if [ -z "${1-}" ] || [[ ${1-} == -* ]]; then
 		  end
 	')"; then
 		# Use remote-tracking branch to avoid comparing against possibly-behind local `main`
-		if ! branch="origin/$(get-default-branch)"; then
-			echo 'error: could not get default branch'
-			exit 1
-		fi
+		branch="$(git symbolic-ref --short refs/remotes/origin/HEAD)"
 	fi
 	args+=("${@:1}")
 else
