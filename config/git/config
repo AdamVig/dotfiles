@@ -32,8 +32,6 @@
 [alias]
   last = log --max-count=1 --pretty=who-when-what
   tags-by-date = tag --list --sort=committerdate
-  files = !git diff --name-only "$(gh prbase)"..
-  stat = !git diff --stat "$(gh prbase)"..
 	# `git log` with patches shown with	difftastic
   dl = -c diff.external=difft log -p --ext-diff
   # Show the most recent commit with difftastic

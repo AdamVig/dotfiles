@@ -25,11 +25,6 @@ prcd: >-
   --draft
   && gh pr view --web
 
-# Get the base branch for the current branch's pull request
-# shellcheck disable=SC2016
-prbase: >-
-  pr view --json baseRefName --jq '.baseRefName'
-
 # Convenience shortcut for checking out a pull request
 co: >-
   pr checkout

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Get the ref the current branch is based on: the nearest unmerged branch below it in a gh stack, otherwise the
+# default branch of the `upstream` remote if there is one (i.e. a fork), or of `origin` (e.g. `origin/main`).
+
+remote=origin
+if git remote get-url upstream &>/dev/null; then
+	remote=upstream
+fi
+
+if ! 2>/dev/null gh stack view --json | jq --exit-status --raw-output --arg remote "$remote" '
+	. as $stack
+	| ($stack.branches | map(.name) | index($stack.currentBranch)) as $index
+	| if $index == null then empty
+	  else ([ $stack.branches[:$index][] | select(.isMerged | not) | .name ] | last) // "\($remote)/\($stack.trunk)"
+	  end
+'; then
+	git symbolic-ref --short "refs/remotes/$remote/HEAD"
+fi

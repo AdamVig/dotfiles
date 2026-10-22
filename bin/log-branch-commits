@@ -5,19 +5,9 @@ set -euo pipefail
 branch=
 args=()
 
-# If first argument is empty or looks like a flag, use the default branch
+# If first argument is empty or looks like a flag, use the base branch
 if [ -z "${1-}" ] || [[ ${1-} == -* ]]; then
-	# In a stack, use the nearest unmerged downstack branch as the base
-	if ! branch="$(2>/dev/null gh stack view --json | jq -er '
-		. as $stack
-		| ($stack.branches | map(.name) | index($stack.currentBranch)) as $index
-		| if $index == null then empty
-		  else ([ $stack.branches[:$index][] | select(.isMerged | not) | .name ] | last) // ("origin/" + $stack.trunk)
-		  end
-	')"; then
-		# Use remote-tracking branch to avoid comparing against possibly-behind local `main`
-		branch="$(git symbolic-ref --short refs/remotes/origin/HEAD)"
-	fi
+	branch="$(get-base-branch)"
 	args+=("${@:1}")
 else
 	branch="${1-}"

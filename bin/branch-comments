@@ -25,7 +25,6 @@ Flags reported per block:
 """
 
 import argparse
-import json
 import re
 import subprocess
 import sys
@@ -109,8 +108,7 @@ class CmdResult:
 
 
 def run(args: list[str]) -> CmdResult:
-    # Optional helpers (gh stack) may be absent; treat a
-    # missing executable like a non-zero exit so callers fall back gracefully.
+    # Treat a missing executable like a non-zero exit so callers can report it.
     try:
         proc = subprocess.run(
             args,
@@ -131,38 +129,15 @@ def output(args: list[str]) -> str | None:
     return proc.stdout.strip() or None
 
 
-def default_branch() -> str:
-    origin_head = output(["git", "symbolic-ref", "--short", "refs/remotes/origin/HEAD"])
-    if origin_head:
-        return origin_head.removeprefix("origin/")
-
-    for candidate in ("main", "master"):
-        if output(["git", "rev-parse", "--verify", f"origin/{candidate}"]):
-            return candidate
-        if output(["git", "rev-parse", "--verify", candidate]):
-            return candidate
-
-    return "main"
-
-
 def branch_base(explicit_base: str | None) -> str:
     if explicit_base:
         return explicit_base
 
-    stack = output(["gh", "stack", "view", "--json"])
-    if stack:
-        try:
-            branch = json.loads(stack)["branches"][0]["name"]
-            if isinstance(branch, str) and branch:
-                return branch
-        except (json.JSONDecodeError, KeyError, IndexError, TypeError):
-            pass
-
-    branch = default_branch()
-    if output(["git", "rev-parse", "--verify", f"origin/{branch}"]):
-        return f"origin/{branch}"
-
-    return branch
+    base = output(["get-base-branch"])
+    if not base:
+        print("error: could not get base branch; pass one explicitly", file=sys.stderr)
+        sys.exit(2)
+    return base
 
 
 def changed_added_lines(base: str, committed: bool) -> dict[str, set[int] | None]:
@@ -450,7 +425,7 @@ def print_blocks(base: str, blocks: list[CommentBlock]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("base", nargs="?", help="base branch/ref; defaults to gh stack base, then origin/default")
+    parser.add_argument("base", nargs="?", help="base branch/ref; defaults to `get-base-branch`")
     parser.add_argument("--committed", action="store_true", help="only consider committed changes, ignoring the working tree")
     args = parser.parse_args()
 

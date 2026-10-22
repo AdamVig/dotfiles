@@ -23,6 +23,7 @@
 			"Bash(gh run *)",
 			"Bash(git *)",
 			"Bash(go *)",
+			"Bash(get-base-branch)",
 			"Bash(log-branch-commits *)",
 			"Bash(rg *)",
 			"Bash(sed *)",
