@@ -9,31 +9,6 @@
 		"code-simplifier@claude-plugins-official": true,
 		"context7@claude-plugins-official": true
 	},
-	"permissions": {
-		"allow": [
-			"Bash(cat *)",
-			"Bash(fd *)",
-			"Bash(find *)",
-			"Bash(grep *)",
-			"Bash(node --run *)",
-			"Bash(node --test *)",
-			"Bash(npm run *)",
-			"Bash(gh review-comments *)",
-			"Bash(gh pr view *)",
-			"Bash(gh run *)",
-			"Bash(git *)",
-			"Bash(go *)",
-			"Bash(get-base-branch)",
-			"Bash(log-branch-commits *)",
-			"Bash(rg *)",
-			"Bash(sed *)",
-			"Bash(tail *)",
-			"Bash(* --version)",
-			"Bash(* --help *)",
-			"Edit(/tmp/**)",
-			"mcp__claude_ai_Linear__**"
-		]
-	},
 	"hooks": {
 		"Stop": [
 			{
