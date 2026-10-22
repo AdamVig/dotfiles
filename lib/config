@@ -28,6 +28,14 @@ bin_dir="$HOME"/.local/bin
 log "creating \"$bin_dir\""
 mkdir -p "$bin_dir"
 
+log "removing links to deleted executables from \"$bin_dir\""
+for link in "$bin_dir"/*; do
+	if [ -L "$link" ] && ! [ -e "$link" ] &&
+		[ "$(dirname "$(realpath -m "$link")")" = "$(realpath "$script_dir"/../bin)" ]; then
+		rm "$link"
+	fi
+done
+
 log "symlinking executables to \"$bin_dir\""
 _ln "$script_dir"/../bin/* "$bin_dir"
 
