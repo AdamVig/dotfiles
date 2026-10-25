@@ -147,6 +147,7 @@ declare -a packages=(
 	graphviz       # Graph visualization tool
 	hunspell       # Spell checker used by Emacs
 	hunspell-en-us # Dictionary for hunspell
+	i2c-tools      # Reads monitor EDIDs over DP AUX
 	imagemagick
 	jq                 # JSON processor
 	lefthook           # Git hook manager

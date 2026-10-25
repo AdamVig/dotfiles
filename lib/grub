@@ -46,6 +46,53 @@ request_sudo install --owner=root --group=root --mode=755 \
 	/etc/grub.d/41_dotfiles-boot-once
 log_end
 
+if ! is_laptop; then
+	log_start 'keeping the monitor connected while the KVM is switched away'
+	connector_paths=()
+	for status_path in /sys/class/drm/card*-*/status; do
+		if [ "$(<"$status_path")" = connected ]; then
+			connector_paths+=("${status_path%/status}")
+		fi
+	done
+
+	grub_display_config=/etc/default/grub.d/dotfiles-display.cfg
+	edid_tmp="$(mktemp)"
+	if [ "${#connector_paths[@]}" -ne 1 ]; then
+		warn "expected one connected monitor but found ${#connector_paths[@]}, skipping"
+	elif [ -f "$grub_display_config" ]; then
+		connector="${connector_paths[0]#*/card*-}"
+		# sysfs reports the forced copy, so read the monitor's base EDID block, which identifies it, over DP AUX
+		# The connector's `ddc` link is the GPU's legacy DDC bus, which DisplayPort monitors don't answer on
+		aux_adapter_paths=("${connector_paths[0]}"/i2c-*)
+		if ! edid_hex="$(request_sudo i2ctransfer -y "${aux_adapter_paths[0]##*i2c-}" w1@0x50 0x00 r128@0x50)"; then
+			warn 'failed to read the monitor over DP AUX, keeping the saved EDID'
+		else
+			edid_hex="${edid_hex//0x/\\x}"
+			printf '%b' "${edid_hex// /}" >"$edid_tmp"
+			if ! cmp --quiet --bytes=128 "$edid_tmp" /usr/lib/firmware/edid/dotfiles-"$connector".bin; then
+				read -r -p "$(make_prompt 'The connected monitor differs from the saved one. Stop forcing the saved one? [y/N]') " replace_monitor
+				if [ "$replace_monitor" = y ]; then
+					request_sudo rm "$grub_display_config"
+					warn 'reboot, then re-run this to save the connected monitor'
+				fi
+			fi
+		fi
+	elif ! cat "${connector_paths[0]}"/edid >"$edid_tmp" || ! [ -s "$edid_tmp" ]; then
+		warn "failed to read the monitor's EDID, skipping"
+	else
+		connector="${connector_paths[0]#*/card*-}"
+		edid_firmware="edid/dotfiles-$connector.bin"
+		request_sudo install -D --owner=root --group=root --mode=644 "$edid_tmp" /usr/lib/firmware/"$edid_firmware"
+
+		grub_display_tmp="$(mktemp)"
+		echo "GRUB_CMDLINE_LINUX_DEFAULT=\"\$GRUB_CMDLINE_LINUX_DEFAULT video=$connector:e drm.edid_firmware=$connector:$edid_firmware\"" >"$grub_display_tmp"
+		request_sudo install --owner=root --group=root --mode=644 "$grub_display_tmp" "$grub_display_config"
+		rm "$grub_display_tmp"
+	fi
+	rm "$edid_tmp"
+	log_end
+fi
+
 log_start 're-generating Grub configuration'
 request_sudo grub-mkconfig -o /boot/grub/grub.cfg
 # Match the mode grub-mkconfig gives a new grub.cfg; it keeps an existing file's mode, so older installs vary
