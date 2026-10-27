@@ -66,6 +66,7 @@ declare -a gh_extensions=(
 	AdamVig/gh-automerge
 	AdamVig/gh-review-comments
 	AdamVig/gh-watch
+	github/gh-actions-lock
 	github/gh-stack
 )
 
