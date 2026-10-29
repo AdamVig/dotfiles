@@ -65,6 +65,7 @@ if [ -e /etc/apt/sources.list.d/vscode.sources ] || [ -e /etc/apt/sources.list.d
 fi
 
 log_start 'adding repositories'
+add_repository 'naps2' 'https://www.naps2.com/naps2-public.pgp' 'https://downloads.naps2.com ./'
 add_repository 'docker' 'https://download.docker.com/linux/ubuntu/gpg' "https://download.docker.com/linux/ubuntu ${codename} stable"
 add_repository 'vscode' 'https://packages.microsoft.com/keys/microsoft.asc' 'https://packages.microsoft.com/repos/code stable main'
 add_repository 'spotify' 'https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg' 'https://repository.spotify.com stable non-free'
@@ -119,6 +120,7 @@ log_end
 declare -a packages=(
 	# system dependencies
 	apt-listchanges # Part of automatic update system
+	gettext-base    # envsubst for configuration templates
 	kitty-terminfo  # System-wide terminfo for Kitty terminal emulator
 	libfuse2t64     # FUSE for AppImage
 	linux-generic   # Keep the supported generic kernel meta-package installed
@@ -206,6 +208,7 @@ declare -a packages=(
 	meld     # Comparison tool for version control, files, and directories
 	microsoft-edge-stable
 	mpv # Media player
+	naps2
 	signal-desktop
 	slack-desktop
 	spotify-client

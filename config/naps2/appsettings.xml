@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppConfig>
+  <Version>3</Version>
+  <LockSystemProfiles>true</LockSystemProfiles>
+  <AlwaysRememberDevice>true</AlwaysRememberDevice>
+  <KeepSession>true</KeepSession>
+  <SingleInstance>true</SingleInstance>
+  <HiddenButtons>EmailPdf, Language</HiddenButtons>
+  <EnableOcr>true</EnableOcr>
+  <OcrLanguageCode>eng</OcrLanguageCode>
+  <OcrMode>Fast</OcrMode>
+  <OcrAfterScanning>true</OcrAfterScanning>
+  <OcrPreProcessing>false</OcrPreProcessing>
+  <BatchSettings>
+    <ScanType>MultipleWithPrompt</ScanType>
+    <OutputType>Load</OutputType>
+  </BatchSettings>
+  <PdfSettings>
+    <DefaultFileName>$HOME/files/scans/$(YYYY)-$(MM)-$(DD)_$(hh)-$(mm)-$(ss).pdf</DefaultFileName>
+    <SkipSavePrompt>true</SkipSavePrompt>
+    <Metadata>
+      <Author />
+      <Creator>NAPS2</Creator>
+      <Keywords />
+      <Subject />
+      <Title />
+    </Metadata>
+  </PdfSettings>
+  <ImageSettings>
+    <DefaultFileName>$HOME/files/scans/$(YYYY)-$(MM)-$(DD)_$(hh)-$(mm)-$(ss).jpg</DefaultFileName>
+    <SkipSavePrompt>true</SkipSavePrompt>
+    <JpegQuality>85</JpegQuality>
+  </ImageSettings>
+</AppConfig>

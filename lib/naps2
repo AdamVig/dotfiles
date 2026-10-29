@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component naps2 "$@"
+}
+
+if ! [ -x /usr/lib/naps2/naps2 ]; then
+	warn_and_bail 'NAPS2 is not installed; skipping configuration'
+fi
+
+# shellcheck disable=SC2119
+request_sudo
+
+log_start 'configuring NAPS2'
+# Preserve the shared-profile policy when the package replaces its default appsettings.xml.
+request_sudo dpkg-divert --local --add --rename /usr/lib/naps2/appsettings.xml
+# NAPS2 checks for an absolute save path before expanding filename placeholders.
+naps2_appsettings="$(mktemp)"
+trap 'rm -f -- "$naps2_appsettings"' EXIT
+# shellcheck disable=SC2016
+envsubst '$HOME' <"$script_dir"/../config/naps2/appsettings.xml >"$naps2_appsettings"
+request_sudo install --owner=root --group=root --mode=644 "$naps2_appsettings" /usr/lib/naps2/appsettings.xml
+request_sudo ln -sfn "$(realpath "$script_dir"/../config/naps2/profiles.xml)" /usr/lib/naps2/profiles.xml
+mkdir -p "$HOME/files/scans"
+# NAPS2 can report a failed download with a zero exit status.
+naps2_tessdata="$(xdg_config)/naps2/components/tesseract4"
+if ! /usr/lib/naps2/naps2 console --install ocr-eng ||
+	! [ -s "$naps2_tessdata/fast/eng.traineddata" ] ||
+	! [ -s "$naps2_tessdata/best/eng.traineddata" ]; then
+	warn 'failed to install NAPS2 English OCR data'
+fi
+log_end
