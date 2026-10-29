@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage="Usage: $(basename "$0") [-h|--help]
+Rename entries in the current directory interactively.
+
+Flags:
+  -h, --help  show this help text"
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+
+if (($#)); then
+	echo "$usage" >&2
+	exit 1
+fi
+
+if [[ ! -t 0 ]]; then
+	echo 'Interactive input is required.' >&2
+	exit 1
+fi
+
+shopt -s nullglob
+mv_flags=(-n)
+if [[ $OSTYPE == linux* ]]; then
+	mv_flags+=(--no-target-directory)
+fi
+
+printf 'Starting interactive rename in %q\n' "$PWD"
+
+for original_name in *; do
+	# Preserve uppercase Markdown document names, including word separators.
+	if [[ $original_name =~ \.[mM][dD]$ ]] &&
+		[[ ${original_name%.*} =~ ^[A-Z0-9_-]+$ ]] &&
+		[[ ${original_name%.*} =~ [A-Z] ]]; then
+		printf 'Skipping %q\n' "$original_name"
+		continue
+	fi
+
+	suggested_name=${original_name// - /-}
+	suggested_name=${suggested_name// /-}
+	suggested_name=${suggested_name,,}
+	suggested_name=${suggested_name//_/-}
+	suggested_name=${suggested_name//\'/}
+	suggested_name=${suggested_name//;/}
+	suggested_name=${suggested_name//(/}
+	suggested_name=${suggested_name//)/}
+	if [[ $suggested_name == "$original_name" ]]; then
+		printf 'Skipping %q\n' "$original_name"
+		continue
+	fi
+
+	printf 'Processing %q\n' "$original_name"
+	printf '  Suggested: %q\n' "$suggested_name"
+	read -e -r -p '  New name (clear to skip): ' -i "$suggested_name" new_name || exit 1
+	if [[ -z $new_name ]]; then
+		echo '  Skipping.'
+		continue
+	fi
+
+	if [[ $new_name == . || $new_name == .. || $new_name == */* ]]; then
+		echo '  Invalid name; skipping.' >&2
+		continue
+	fi
+	if [[ $new_name == "$original_name" ]]; then
+		echo '  Name unchanged; skipping.'
+		continue
+	fi
+	if [[ -e $new_name || -L $new_name ]]; then
+		printf '  Destination %q already exists; skipping.\n' "$new_name" >&2
+		continue
+	fi
+
+	printf '  Moving %q to %q\n' "$original_name" "$new_name"
+	mv "${mv_flags[@]}" "./$original_name" "./$new_name"
+done
