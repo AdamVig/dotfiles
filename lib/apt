@@ -27,12 +27,12 @@ log_end
 log_start 'configuring repositories'
 # $1: human-readable name, used in filenames of sources file and key
 # $2: URL to signing key
-# $3: latter part of repository configuration string, e.g. "http://repository.spotify.com stable non-free", not
-# including the arch or signed-by options
+# $3: repository URI, suite, and optional components
 add_repository() {
 	local friendly_name="${1-}"
 	local key_url="${2-}"
-	local repo_config="${3-}"
+	local uri suite components
+	read -r uri suite components <<<"${3-}"
 
 	local key_path=/usr/share/keyrings/"$friendly_name"-archive-keyring.gpg
 
@@ -40,14 +40,19 @@ add_repository() {
 		fatal 'failed to add key'
 	fi
 
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=$key_path] $repo_config" |
-		request_sudo tee /etc/apt/sources.list.d/"$friendly_name".list >/dev/null
+	{
+		printf 'Types: deb\nURIs: %s\nSuites: %s\n' "$uri" "$suite"
+		if [ -n "$components" ]; then
+			printf 'Components: %s\n' "$components"
+		fi
+		printf 'Architectures: %s\nSigned-By: %s\n' "$(dpkg --print-architecture)" "$key_path"
+	} | request_sudo tee /etc/apt/sources.list.d/"$friendly_name".sources >/dev/null
+	request_sudo rm -f /etc/apt/sources.list.d/"$friendly_name".list
 }
 
 # $1: human-readable name, used in filenames of sources file and key
 # $2: fingerprint of signing key
-# $3: latter part of repository configuration string, e.g. "http://repository.spotify.com stable non-free", not
-# including the arch or signed-by options
+# $3: Launchpad PPA in owner/name format
 add_ppa() {
 	local key_fingerprint="${2-}"
 	local repo_name="${3-}"
@@ -57,12 +62,6 @@ add_ppa() {
 		"https://keyserver.ubuntu.com/pks/lookup?op=get&options=mr&search=0x${key_fingerprint}" \
 		"https://ppa.launchpadcontent.net/${repo_name}/ubuntu/ ${codename} main"
 }
-
-if [ -e /etc/apt/sources.list.d/vscode.sources ] || [ -e /etc/apt/sources.list.d/microsoft-edge.sources ] || [ -e /etc/apt/sources.list.d/slack.sources ]; then
-	log_start 'removing vendor-managed repository files'
-	request_sudo rm -f /etc/apt/sources.list.d/vscode.sources /etc/apt/sources.list.d/microsoft-edge.sources /etc/apt/sources.list.d/slack.sources
-	log_end
-fi
 
 log_start 'adding repositories'
 add_repository 'naps2' 'https://www.naps2.com/naps2-public.pgp' 'https://downloads.naps2.com ./'
