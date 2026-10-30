@@ -90,6 +90,15 @@ log 'linking'
 request_sudo ln -sfr /usr/local/go/bin/* /usr/bin/
 log_end
 
+log_start 'installing golangci-lint'
+golangci_lint_url="$(get_release_url 'golangci/golangci-lint' '-linux-amd64.tar.gz')"
+golangci_lint_tmp="$(download_to_tmp "$golangci_lint_url" '.tar.gz')"
+golangci_lint_extracted_tmp="$(extract_tarball_to_tmp "$golangci_lint_tmp" --strip-components 1)"
+cleanup_paths+=("$golangci_lint_extracted_tmp")
+install "$golangci_lint_extracted_tmp"/golangci-lint "$HOME"/.local/bin
+golangci-lint completion zsh >"$site_functions_dir"/_golangci-lint
+log_end
+
 log_start 'installing just'
 just_url="$(get_release_url 'casey/just' '-x86_64-unknown-linux-musl.tar.gz')"
 just_tmp="$(download_to_tmp "$just_url" '.tar.gz')"

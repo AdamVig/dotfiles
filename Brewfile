@@ -48,6 +48,7 @@ brew "ruby"
 
 # programming language tools
 brew "fnm" # Node version manager
+brew "golangci-lint" # Go linter
 brew "shellcheck" # Shell script linter
 brew "shfmt" # Shell script formatter
 brew "uv" # Python package manager
