@@ -150,10 +150,11 @@ declare -a packages=(
 	hunspell-en-us # Dictionary for hunspell
 	i2c-tools      # Reads monitor EDIDs over DP AUX
 	imagemagick
-	jq                 # JSON processor
-	lefthook           # Git hook manager
-	libglib2.0-dev-bin # For compiling .gresources files
-	nextdns            # DNS client
+	jq                  # JSON processor
+	lefthook            # Git hook manager
+	libglib2.0-dev-bin  # For compiling .gresources files
+	libheif-plugin-x265 # HEIF encoding in ImageMagick
+	nextdns             # DNS client
 	7zip
 	postgresql-client # PostgreSQL CLI
 	pulseaudio-utils  # PulseAudio CLI pactl (works with WirePlumber)
