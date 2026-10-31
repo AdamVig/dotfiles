@@ -9,8 +9,8 @@
     <IsDefault>true</IsDefault>
     <UseNativeUI>false</UseNativeUI>
     <AfterScanScale>OneToOne</AfterScanScale>
-    <Brightness>-200</Brightness>
-    <Contrast>200</Contrast>
+    <Brightness>-50</Brightness>
+    <Contrast>50</Contrast>
     <BitDepth>C24Bit</BitDepth>
     <PageAlign>Right</PageAlign>
     <PageSize>Custom</PageSize>
@@ -55,8 +55,8 @@
     <IsDefault>false</IsDefault>
     <UseNativeUI>false</UseNativeUI>
     <AfterScanScale>OneToOne</AfterScanScale>
-    <Brightness>0</Brightness>
-    <Contrast>0</Contrast>
+    <Brightness>-50</Brightness>
+    <Contrast>50</Contrast>
     <BitDepth>C24Bit</BitDepth>
     <PageAlign>Right</PageAlign>
     <PageSize>Letter</PageSize>
