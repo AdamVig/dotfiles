@@ -10,7 +10,8 @@ log() {
 log_start 'installing golang tools'
 
 go_packages=(
-	golang.org/x/tools/gopls # Go language server
+	golang.org/x/tools/gopls        # Go language server
+	golang.org/x/tools/cmd/deadcode # Go dead code finder
 )
 
 for package in "${go_packages[@]}"; do
