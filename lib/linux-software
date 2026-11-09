@@ -182,6 +182,19 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-mod
 rustup completions zsh >"$site_functions_dir"/_rustup
 log_end
 
+log_start 'installing tflint'
+tflint_tmp="$(mktemp -d)"
+cleanup_paths+=("$tflint_tmp")
+gh release download \
+	--repo terraform-linters/tflint \
+	--pattern 'tflint_linux_amd64.zip' \
+	--dir "$tflint_tmp"
+gh release verify-asset --repo terraform-linters/tflint "$tflint_tmp"/tflint_linux_amd64.zip
+tflint_extracted_tmp="$(extract_zip_to_tmp "$tflint_tmp"/tflint_linux_amd64.zip)"
+cleanup_paths+=("$tflint_extracted_tmp")
+install "$tflint_extracted_tmp"/tflint "$HOME"/.local/bin
+log_end
+
 log_start 'installing Typst'
 typst_url="$(get_release_url 'typst/typst' 'typst-x86_64-unknown-linux-musl.tar.xz')"
 typst_tmp="$(download_to_tmp "$typst_url" '.tar.xz')"
