@@ -20,6 +20,9 @@ When running terminal commands, prefer the following commands over the default o
 - `rg` instead of `grep`
 If you can't figure out how to use these commands, you can fall back to the original commands.
 
+## Research
+- Use native web tools first; on bot blocks, try `curl` or `curl-impersonate`, then ask me to fetch the page or allow CDP access. Read primary sources rather than inferring from search snippets.
+
 ## Git
 My git sets `rebase.abbreviateCommands = true` and `core.commentChar = %`, so rebase-todo verbs are `p`/`r`/`f` and comment lines start with `%`. When scripting a rebase, match those forms — the long verbs (`pick`/`reword`) silently no-op, leaving hashes unchanged.
 
