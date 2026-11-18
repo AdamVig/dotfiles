@@ -278,6 +278,17 @@ profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
 	install_deb_from_github_release 'jgm/pandoc' '-amd64.deb'
 	log_end
 
+	log_start 'installing Paseo'
+	paseo_tmp="$(mktemp -d)"
+	cleanup_paths+=("$paseo_tmp")
+	gh release download \
+		--repo getpaseo/paseo \
+		--pattern 'Paseo-*-amd64.deb' \
+		--output "$paseo_tmp/paseo.deb"
+	chmod 755 "$paseo_tmp"
+	request_sudo apt-get install --yes "$paseo_tmp/paseo.deb"
+	log_end
+
 	log_start 'installing SOPS'
 	install_deb_from_github_release 'getsops/sops' '_amd64.deb'
 	log_end
