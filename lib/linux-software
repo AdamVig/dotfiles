@@ -30,7 +30,7 @@ find "$HOME"/.local/bin -maxdepth 1 -xtype l -delete
 log_end
 
 log_start 'removing no-longer-needed software'
-rm -vrf "$HOME"/.local/bin/{nextcloud,yubikey-manager}
+rm -vf "$HOME"/applications/Moonlight.AppImage
 if [ -e "$HOME"/.local/bin/git-spice ]; then
 	rm -f "$HOME"/.local/bin/git-spice
 fi
@@ -142,16 +142,6 @@ sed -i "s|Icon=kitty|Icon=$HOME/.local/share/kitty/share/icons/hicolor/256x256/a
 sed -i "s|Exec=kitty|Exec=$HOME/.local/share/kitty/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 echo 'kitty.desktop' >"$HOME"/.config/xdg-terminals.list
 log_end
-
-if is_laptop; then
-	log_start 'installing Moonlight'
-	moonlight_url="$(get_release_url 'moonlight-stream/moonlight-qt' 'x86_64.AppImage')"
-	moonlight_appimage="$(download_to_tmp "$moonlight_url" '.AppImage')"
-	cleanup_paths+=("$moonlight_appimage")
-	mkdir -p "$HOME"/applications
-	install --mode 755 "$moonlight_appimage" "$HOME"/applications/Moonlight.AppImage
-	log_end
-fi
 
 fonts_dir="$(xdg_data)"/fonts
 if ! [ -d "$fonts_dir"/input ]; then
@@ -292,15 +282,8 @@ profile joplin "/opt/Joplin/joplin" flags=(unconfined) {
 	install_deb_from_github_release 'getsops/sops' '_amd64.deb'
 	log_end
 
-	if ! is_laptop; then
-		log_start 'installing Sunshine'
-		ubuntu_version="$(source /etc/os-release && echo "$VERSION_ID")"
-		install_deb_from_github_release 'LizardByte/Sunshine' "ubuntu${ubuntu_version}_amd64.deb"
-		log_end
-	fi
-
 	log_start 'removing no-longer-needed software'
-	request_sudo apt-get remove --yes --autoremove bitwarden &>/dev/null || true
+	request_sudo apt-get remove --yes --autoremove sunshine &>/dev/null || true
 	log_end
 fi
 
