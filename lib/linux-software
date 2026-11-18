@@ -51,6 +51,19 @@ cleanup_paths+=("$copilot_extracted_tmp")
 install "$copilot_extracted_tmp"/copilot "$HOME"/.local/bin/copilot
 log_end
 
+log_start 'installing curl-impersonate'
+curl_impersonate_tmp="$(mktemp -d)"
+cleanup_paths+=("$curl_impersonate_tmp")
+gh release download \
+	--repo lexiforest/curl-impersonate \
+	--pattern 'curl-impersonate-*.x86_64-linux-gnu.tar.gz' \
+	--dir "$curl_impersonate_tmp"
+gh release verify-asset --repo lexiforest/curl-impersonate "$curl_impersonate_tmp"/*.tar.gz
+curl_impersonate_extracted_tmp="$(extract_tarball_to_tmp "$curl_impersonate_tmp"/*.tar.gz)"
+cleanup_paths+=("$curl_impersonate_extracted_tmp")
+install "$curl_impersonate_extracted_tmp"/curl* "$HOME"/.local/bin
+log_end
+
 log_start 'installing difftastic'
 difftastic_url="$(get_release_url 'Wilfred/difftastic' 'x86_64-unknown-linux-gnu.tar.gz')"
 difftastic_tmp="$(download_to_tmp "$difftastic_url" '.tar.gz')"

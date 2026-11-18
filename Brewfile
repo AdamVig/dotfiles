@@ -17,6 +17,7 @@ brew "ripgrep" # Better grep
 # command line tools
 brew "bitwarden-cli"
 brew "colima" # Container runtime
+brew "lexiforest/tap/curl-impersonate"
 brew "devcontainer"
 brew "difftastic" # Syntax-aware diff tool
 brew "docker" # Docker client
