@@ -1,0 +1,2 @@
+# JDK 17 takes its UI scale from this property alone, as an integer; 2 matches GNOME's 150% with Xwayland native scaling
+-Dsun.java2d.uiScale=2

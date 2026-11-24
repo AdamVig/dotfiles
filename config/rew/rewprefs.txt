@@ -1,0 +1,9 @@
+# Seeds ~/.config/rew/rewprefs.txt when it is missing; REW rewrites that file on every exit, so it is never linked
+# Start the API without the -api argument
+rew.apionstartup=true
+# These three keep the help manual window and the welcome text from opening at startup
+rew.firststartup=false
+rew.hidewelcomemessage=true
+rew.v5_4helpshown=true
+# Hide the donation banner
+rew.dclicked=true

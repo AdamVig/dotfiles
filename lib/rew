@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/helpers
+source "${BASH_SOURCE[0]%/*}/helpers"
+
+log() {
+	log_with_component rew "$@"
+}
+
+installer_tmp=''
+trap 'rm -f -- "$installer_tmp"' EXIT
+
+rew_dir="$(xdg_data)"/rew
+# These two must match the paths in config/rew/roomeqwizard.vmoptions
+config_dir="$HOME"/.config/rew
+state_dir="$HOME"/.local/state/rew
+installers_url='https://roomeqwizard.com/installers/'
+mkdir -p "$config_dir" "$state_dir"
+
+log_start 'installing REW'
+# Only beta builds include the API; ?C=M;O=D has Apache list the newest upload first
+# shellcheck disable=SC2016
+if ! listing="$(_curl "$installers_url?C=M;O=D")" ||
+	! latest_installer="$(rg --only-matching --max-count 1 --replace '$1' \
+		'href="(REW_linux_AMD64_[0-9_]+_beta_[0-9]+-api\.sh)"' <<<"$listing")"; then
+	fatal "could not find a REW beta installer at $installers_url"
+fi
+
+installed_version="$(yq --input-format xml --output-format yaml '.config.general."+@applicationVersion"' \
+	"$rew_dir"/.install4j/i4jparams.conf 2>/dev/null)" || installed_version=''
+# install4j reports e.g. "5.40 beta 152", which is "5_40_beta_152" in the installer's filename
+if [ "REW_linux_AMD64_${installed_version//[. ]/_}-api.sh" = "$latest_installer" ]; then
+	log "$installed_version is already installed"
+else
+	log "installing $latest_installer (installed: ${installed_version:-none})"
+	installer_tmp="$(CURL_ARGS='--max-time 900' download_to_tmp "$installers_url$latest_installer" '.sh')"
+	# -q is unattended and replaces an existing install. Its JVMs need REW's user.home redirect, and headless mode
+	# because they crash on an unreachable DISPLAY while still exiting 0.
+	INSTALL4J_ADD_VM_PARAMS="-Duser.home=$state_dir -Djava.awt.headless=true" \
+		sh "$installer_tmp" -q -console -dir "$rew_dir"
+fi
+log_end
+
+log_start 'configuring REW'
+# The installer recreates roomeqwizard.vmoptions on every install, so this link is made after it
+_ln "$script_dir"/../config/rew/roomeqwizard.vmoptions "$rew_dir"/roomeqwizard.vmoptions
+# REW rewrites its prefs on exit, so they are copied once to seed a new machine rather than linked into the repo
+[ -e "$config_dir"/rewprefs.txt ] || cp "$script_dir"/../config/rew/rewprefs.txt "$config_dir"/rewprefs.txt
+if ! is_laptop; then
+	_ln "$script_dir"/../config/rew/hidpi.vmoptions "$config_dir"
+fi
+_ln "$rew_dir"/roomeqwizard "$HOME"/.local/bin/rew
+log_end

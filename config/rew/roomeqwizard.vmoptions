@@ -1,0 +1,9 @@
+# Paths use ${HOME} because XDG variables may be unset when launched from the desktop; lib/rew mirrors them
+-Xmx1024m
+-Dsun.java2d.opengl=False
+# The JVM ignores $HOME, so without this REW writes ~/REW and ~/.java
+-Duser.home=${HOME}/.local/state/rew
+# Keep preferences under XDG config rather than in the Java preferences store
+-Drew.preferences.file=${HOME}/.config/rew/rewprefs.txt
+# lib/rew links this on machines that need a Java UI scale; a missing file is ignored
+-include-options ${HOME}/.config/rew/hidpi.vmoptions
