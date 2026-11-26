@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/alsa"
+config="$config_dir/asoundrc"
+
+usage="Usage: $(basename "$0") [-h|--help]
+Give a PipeWire input or output a name in ALSA device lists.
+Edit $config to rename or remove a label."
+
+if [ "${1-}" = "-h" ] || [ "${1-}" = "--help" ]; then
+	echo "$usage"
+	exit 0
+fi
+if (($#)); then
+	echo "$usage" >&2
+	exit 1
+fi
+
+devices=$(pw-dump --no-colors | jq --raw-output '
+	.[] | select(.type == "PipeWire:Interface:Node") | .info.props
+	| select(."node.name" and (."media.class" == "Audio/Sink" or ."media.class" == "Audio/Source"))
+	| (if ."media.class" == "Audio/Sink" then "playback" else "capture" end) as $direction
+	| ([$direction, (."node.description" // ."node.name")] | @tsv) + "\t" + (."node.name" | @json)
+')
+if [[ -z $devices ]]; then
+	echo 'No PipeWire inputs or outputs found.' >&2
+	exit 1
+fi
+selection=$(fzf --no-multi --prompt='Audio device> ' <<<"$devices")
+IFS=$'\t' read -r direction _ node <<<"$selection"
+
+read -r -p 'New ALSA name (Enter to cancel): ' label || exit 0
+[[ -n $label ]] || exit 0
+if [[ $label == *:* || $label == *[[:cntrl:]]* ]]; then
+	echo 'ALSA names cannot contain a colon or control characters.' >&2
+	exit 1
+fi
+names=$(aplay --list-pcms && arecord --list-pcms)
+if grep --fixed-strings --line-regexp --quiet -- "$label" <<<"$names"; then
+	echo "ALSA already uses the name '$label'." >&2
+	exit 1
+fi
+
+quoted_label=$(jq --null-input --arg label "$label" '$label')
+mkdir -p "$config_dir"
+cat >>"$config" <<PCM
+
+pcm.$quoted_label {
+	type asym
+	$direction.pcm {
+		type pipewire
+		${direction}_node $node
+	}
+	hint.show on
+}
+PCM
+echo "Saved '$label' in $config. Restart audio apps to refresh their device lists."
