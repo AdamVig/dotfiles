@@ -7,3 +7,6 @@ rew.hidewelcomemessage=true
 rew.v5_4helpshown=true
 # Hide the donation banner
 rew.dclicked=true
+# General and graph font sizes; REW's defaults are small on both machines
+rew.uifontsize=18
+rew.uigraphfontsize=18
