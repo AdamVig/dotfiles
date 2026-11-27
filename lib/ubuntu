@@ -120,36 +120,6 @@ else
 fi
 log_end
 
-# Temporary: remove the retired Home Assistant daemon; delete this once it has run on every machine
-home_assistant_daemon_unit_path="$(xdg_config)"/systemd/user/home-assistant-daemon.service
-if [ -f "$home_assistant_daemon_unit_path" ]; then
-	log_start 'removing Home Assistant daemon'
-	systemctl --user disable --now home-assistant-daemon.service || true
-	rm -f "$home_assistant_daemon_unit_path" "$(xdg_config)"/home-assistant-daemon.env
-	systemctl --user daemon-reload || true
-	log_end
-fi
-
-calibre_desktop_path="$HOME"/.local/share/applications/calibre.desktop
-if ! [ -f "$calibre_desktop_path" ]; then
-	log_start 'installing Calibre desktop file'
-	mkdir -p "$(dirname "$calibre_desktop_path")"
-	# From https://github.com/kovidgoyal/calibre/blob/3df6200ca7cf5499a496ab165d12d6e7294830fc/src/calibre/linux.py#L1123-L1135
-	echo "[Desktop Entry]
-Version=1.0
-Type=Application
-Name=calibre
-GenericName=E-book library management
-Comment=E-book library management: Convert, view, share, catalogue all your e-books
-TryExec=calibre
-Exec=calibre %U
-Icon=calibre-gui
-Categories=Office;
-X-GNOME-UsesNotifications=true
-" >"$calibre_desktop_path"
-	log_end
-fi
-
 log_start 'adding user to the video group'
 # For brightnessctl
 request_sudo usermod --append --groups input,video "$USER"

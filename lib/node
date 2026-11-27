@@ -33,8 +33,4 @@ if is_macos && [ -f "$NPM_CONFIG_USERCONFIG" ] && ! [ -h "$HOME"/.npmrc ]; then
 	log_end
 fi
 
-log_start 'removing nodenv'
-rm -rf ~/.local/share/nodenv/ || true
-log_end
-
 log_end
